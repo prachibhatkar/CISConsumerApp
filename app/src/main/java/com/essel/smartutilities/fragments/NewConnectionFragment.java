@@ -31,11 +31,8 @@ import java.util.List;
  * Use the {@link NewConnectionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewConnectionFragment extends Fragment implements View.OnClickListener{
-
-    private  GridView gridViewConnectionTypes;
-    private ArrayList<String> connectionTypes = new ArrayList<>();
-    private ArrayAdapter<String> adapterConnectionTypes;
+public class NewConnectionFragment extends Fragment implements View.OnClickListener
+{
     private Context mContext;
     private EditText editTextFullName,editTextAddress1,editTextAddress2,editTextAddress3,editTextPhone,editTextConsumerId,editTextEmailId;
     private TextInputLayout inputLayoutFullName,inputLayoutAddress1,inputLayoutAddress2,inputLayoutAddress3,inputLayoutPhone,inputLayoutConsumerId,inputLayoutEmailId;
@@ -47,7 +44,6 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
     public NewConnectionFragment() {
         // Required empty public constructor
     }
-
 
     public static NewConnectionFragment newInstance() {
         NewConnectionFragment fragment = new NewConnectionFragment();
@@ -65,18 +61,16 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_new_connection, container, false);
         initialize(rootView);
         return rootView;
     }
+
     private void initialize(View rootView){
         mToolBar = (Toolbar)  getActivity().findViewById(R.id.toolbar);
         mToolBar.setVisibility(View.VISIBLE);
-
-
         editTextFullName = (EditText)rootView.findViewById(R.id.editFullName);
         editTextAddress1 = (EditText)rootView.findViewById(R.id.editAddressLine1);
         editTextAddress2 = (EditText)rootView.findViewById(R.id.editAddressLine2);
@@ -84,7 +78,6 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
         editTextPhone = (EditText)rootView.findViewById(R.id.editPhone);
         editTextConsumerId = (EditText)rootView.findViewById(R.id.editConsumerId);
         editTextEmailId = (EditText)rootView.findViewById(R.id.editEmailId);
-
         inputLayoutFullName = (TextInputLayout)rootView.findViewById(R.id.inputLayoutFullName);
         inputLayoutAddress1 = (TextInputLayout)rootView.findViewById(R.id.inputLayoutAddressLine1);
         inputLayoutAddress2 = (TextInputLayout)rootView.findViewById(R.id.inputLayoutAddressLine2);
@@ -92,16 +85,8 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
         inputLayoutPhone = (TextInputLayout)rootView.findViewById(R.id.inputLayoutPhone);
         inputLayoutConsumerId = (TextInputLayout)rootView.findViewById(R.id.inputLayoutConsumerId);
         inputLayoutEmailId = (TextInputLayout)rootView.findViewById(R.id.inputLayoutEmailId);
-
         btnActionSubmit = (AppCompatButton)rootView.findViewById(R.id.action_submit);
         actionLogin = (TextView)rootView.findViewById(R.id.action_login);
-
-        gridViewConnectionTypes =  (GridView)rootView.findViewById(R.id.grid_connection_type);
-        List<String> connections = Arrays.asList(getResources().getStringArray(R.array.connection_types));
-        connectionTypes.addAll(connections);
-        adapterConnectionTypes = new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_single_choice,connectionTypes);
-        gridViewConnectionTypes.setAdapter(adapterConnectionTypes);
-
         btnActionSubmit.setOnClickListener(this);
         actionLogin.setOnClickListener(this);
     }
@@ -132,10 +117,11 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
         inflater.inflate(R.menu.top_right_menu, menu);
     }
 
-
     @Override
     public void onClick(View v) {
         if(v==btnActionSubmit){
+          //  int selection = gridViewConnectionTypes.getCheckedItemPosition();
+          //  Log.d("",""+selection);
             int selection = gridViewConnectionTypes.getCheckedItemPosition();
             Log.d("",""+selection);
             validate();
@@ -144,6 +130,5 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
             Fragment fragment = new LoginFragment();
             ((ActivityMainSL)mContext).addFragment(fragment,true);
         }
-
     }
 }

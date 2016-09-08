@@ -17,6 +17,8 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_empty_consumer_id">Enter consumer id or mobile no</string>
     <string name="error_empty_password">Enter Password</string>
+    <string name="exit">Exit</string>
+    <string name="exit_message">Do you want to close this application?</string>
 
     <!-- Strings related to signup -->
     <string name="promt_sconsumer_id">Consumer Id</string>
@@ -115,6 +117,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="message_about_us">Company is entrusted to provide quality power supply.Maintaning the dedicated focus on distributing power supply.</string>
+    <string name="residential">Residential</string>
+    <string name="commercial">Commercial</string>
+    <string name="industrial">Industrial</string>
+    <string name="other">Other</string>
 
 
 </resources>

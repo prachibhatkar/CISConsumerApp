@@ -22,16 +22,17 @@
         android:theme="@style/Theme.DesignDemo"
         android:screenOrientation="portrait">
         <activity
-            android:name=".activity.SplashScreenActivity"
-            android:label="@string/title_activity_splash_screen" />
-        <activity android:name=".activity.StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".activity.SplashScreenActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity android:name=".activity.StartActivity"/>
         <activity android:name=".activity.SignupStepTwo" />
+        <activity android:name=".activity.LandingLoginActivity" />
         <activity android:name=".activity.LandingSkipLogin" />
         <activity
             android:name=".activity.ActivityMainSL"
