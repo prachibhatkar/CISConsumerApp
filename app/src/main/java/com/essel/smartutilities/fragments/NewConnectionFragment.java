@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.ActivityMainSL;
@@ -105,6 +106,20 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
         actionLogin.setOnClickListener(this);
     }
 
+    public void validate() {
+        String fullname = editTextFullName.getText().toString().trim();
+        String address1 = editTextAddress1.getText().toString().trim();
+        String address2 = editTextAddress2.getText().toString().trim();
+        String address3 = editTextAddress3.getText().toString().trim();
+        String phoneno = editTextPhone.getText().toString().trim();
+        String emailid = editTextEmailId.getText().toString().trim();
+        String consumerid = editTextConsumerId.getText().toString().trim();
+        if (fullname.equals("") || address1.equals("") || address2.equals("") || address3.equals("") || phoneno.equals("") || emailid.equals("") || consumerid.equals("")) {
+            Toast.makeText(mContext.getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
+            return;
+        }
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -123,6 +138,7 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
         if(v==btnActionSubmit){
             int selection = gridViewConnectionTypes.getCheckedItemPosition();
             Log.d("",""+selection);
+            validate();
         }
         else if(v==actionLogin){
             Fragment fragment = new LoginFragment();
