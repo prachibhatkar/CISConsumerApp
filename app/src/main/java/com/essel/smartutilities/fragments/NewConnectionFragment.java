@@ -41,6 +41,8 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
     private Toolbar mToolBar;
     private LinearLayout toolbarContainer;
 
+
+
     public NewConnectionFragment() {
         // Required empty public constructor
     }
