@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:paddingTop="@dimen/margin_large" android:paddingRight="@dimen/margin_medium" android:paddingLeft="@dimen/margin_medium"  android:background="@drawable/success_dialog_bg">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:src="@drawable/ic_checkmark"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sent Succesfully"
+                android:textColor="@color/colorPrimaryDarkText"
+                android:textSize="@dimen/text_size_h3"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textColor="@color/colorPrimaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="Password has been sent to \nconsumers register email id and \nmobile number"
+                    android:textSize="@dimen/text_size_h5" />
+
+                <Button
+                    android:id="@+id/BTNOk"
+                    android:layout_gravity="end"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="OK"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_h3" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+</RelativeLayout>

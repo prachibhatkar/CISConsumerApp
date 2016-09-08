@@ -1,0 +1,57 @@
+<resources>
+
+    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo"/>
+
+    <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+    </style>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">11sp</item>
+
+    </style>
+
+    <style name="verify_dialog" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@color/colorTextWhite</item>
+        <item name="android:colorForeground">@color/colorTextWhite</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="Theme.DesignDemo">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Theme.DesignDemo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DesignDemo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="CustomWhiteEditText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+</resources>

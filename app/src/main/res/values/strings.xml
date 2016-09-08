@@ -1,0 +1,119 @@
+<resources>
+    <string name="app_name">Smart Utilities</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!--Landing Screen-->
+    <string name="title_login_button">Login</string>
+    <string name="title_signup_button">Sign Up</string>
+    <string name="title_new_connection">New Connection</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="title_activity_signup">SignupActivity</string>
+
+    <!-- Strings related to login -->
+    <string name="promt_consumer_id">Consumer Id or Mobile No.</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Log In</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_empty_consumer_id">Enter consumer id or mobile no</string>
+    <string name="error_empty_password">Enter Password</string>
+
+    <!-- Strings related to signup -->
+    <string name="promt_sconsumer_id">Consumer Id</string>
+    <string name="action_register">Register</string>
+    <string name="action_next">Next</string>
+    <string name="prompt_email_id">Enter Alternate Email</string>
+    <string name="prompt_mobile_number">Enter Alternate Mobile Number</string>
+    <string name="prompt_epassword">Enter Password</string>
+    <string name="prompt_repassword">Retype Password</string>
+    <string name="error_valid_emailid">Enter valid email id</string>
+    <string name="error_valid_mobile_number">Enter 10 digit mobile number</string>
+    <string name="error_retype_password">Password missmatch</string>
+    <string name="prompt_otp">Enter Code</string>
+    <string name="title_verify_number">Verify Number</string>
+    <string name="title_verify_desc_line1">We have sent a verification code on your</string>
+    <string name="title_verify_desc_line2">registered mobile number </string>
+    <string name="action_verify">Verify</string>
+    <string name="error_receive_otp">Didn\'t get verification code? </string>
+    <string name="title_cancel">Cancel</string>
+    <string name="title_success">Congratulations</string>
+    <string name="title_success_desc">You have successfully registered as a Smart Utilities Consumer</string>
+    <string name="title_success_login">Now you can login with your</string>
+    <string name="title_success_primary_ca_number">Primary CA Number - </string>
+    <string name="title_success_registered_mobile">Registered Mobile Number - </string>
+    <string name="title_success_add">Add additional CA number</string>
+
+
+    <!--Strings related to new connection-->
+    <string name="prompt_newcomnection_full_name">Enter Full Name</string>
+    <string name="prompt_newcomnection_address_line_1">Address Line 1</string>
+    <string name="prompt_newcomnection_address_line_2">Address Line 2</string>
+    <string name="prompt_newcomnection_address_line_3">Address Line 3</string>
+    <string name="prompt_newcomnection_mobile_number">Enter Your Mobile Number</string>
+    <string name="prompt_newcomnection_nearest_consumer_id">Enter Nearest Consumer Id/Pole no</string>
+    <string name="prompt_newcomnection_email_id">Enter Email Id</string>
+    <string name="prompt_newcomnection_type_of_connection">Type of connection</string>
+    <string name="prompt_newcomnection_type_residential">Residential</string>
+    <string name="prompt_newcomnection_type_commercial">Commercial</string>
+    <string name="prompt_newcomnection_type_industrial">Industrial</string>
+    <string name="prompt_newcomnection_type_other">Other</string>
+
+    <string name="prompt_newcomnection_action_submit">Submit</string>
+    <array name="connection_types">
+        <item>Residential</item>
+        <item>Commercial</item>
+        <item>Industrial</item>
+        <item>Other</item>
+    </array>
+
+    <string name="title_activity_landing_skip_login">LandingSkipLogin</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_activity_main_sl">ActivityMainSL</string>
+
+    <!-- navigation drawer skip login labels  -->
+    <string-array name="nav_drawer_labels_sl">
+        <item>Quick Pay</item>
+        <item>Login</item>
+        <item>Register</item>
+        <item>Apply for New Connection</item>
+        <item>My Tariffs</item>
+        <item>Tips</item>
+        <item>About Us</item>
+        <item>Contact Us</item>
+    </string-array>
+
+    <string name="quick_pay">Quick Pay</string>
+    <string name="login">Log In</string>
+    <string name="register">Register</string>
+    <string name="apply_for_new_connection">New Connection</string>
+    <string name="my_tariffs">My Tariffs</string>
+    <string name="tips">Tips</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us">Contact Us</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+
+    <!--Quick pay fragment-->
+    <string name="prompt_ca_number">Enter Acc Number</string>
+    <string name="prompt_proceed">Proceed</string>
+    <string name="prompt_total_amount">Enter Total Amount</string>
+    <string name="prompt_proceed_to_pay">Proceed to Pay</string>
+
+
+    <string name="title_activity_forgot">ForgotActivity</string>
+    <string name="want_to">Want to</string>
+    <string name="new_n_connection">New \n Connection</string>
+    <string name="home">HOME</string>
+    <string name="nagpur">NAGPUR</string>
+
+    <string name="allow_to_ask_permission_again">Allow to Ask Again</string>
+    <string name="permission_rejected_already">" permission(s) were previously rejected"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

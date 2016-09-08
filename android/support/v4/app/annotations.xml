@@ -1,0 +1,5 @@
+<root>
+  <item name='android.support.v4.app.FragmentTransaction TRANSIT_FRAGMENT_FADE'>
+    <annotation name='java.lang.annotation.Deprecated' />
+  </item>
+</root>

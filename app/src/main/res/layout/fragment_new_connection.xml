@@ -1,0 +1,225 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.NewConnectionFragment">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_large">
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLayoutFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/editFullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_newcomnection_full_name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size_medium"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLayoutAddressLine1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/editAddressLine1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_newcomnection_address_line_1"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size_medium"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLayoutAddressLine2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/editAddressLine2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_newcomnection_address_line_2"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size_medium"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLayoutAddressLine3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/editAddressLine3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_newcomnection_address_line_3"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size_medium"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLayoutPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/editPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_newcomnection_mobile_number"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size_medium"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLayoutConsumerId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/editConsumerId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_newcomnection_nearest_consumer_id"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size_medium"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputLayoutEmailId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/editEmailId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_newcomnection_email_id"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size_medium"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/prompt_newcomnection_type_of_connection" />
+                    <GridView
+                        android:id="@+id/grid_connection_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="2"
+
+                        android:choiceMode="singleChoice">
+
+
+                    </GridView>
+
+
+                </LinearLayout>
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/action_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/red_button_rounded"
+                    android:text="@string/prompt_newcomnection_action_submit"
+                    android:textAppearance="@style/AlertDialog.AppCompat.Light"
+                    android:textColor="@color/colorTextWhite"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/button_text_size_medium" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Want to " />
+                    <TextView
+                        android:id="@+id/action_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Login?"
+                        android:textColor="@color/colorPrimaryDark"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </RelativeLayout>
+
+
+</FrameLayout>

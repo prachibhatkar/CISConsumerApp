@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:padding="@dimen/margin_large" android:background="@drawable/dialog_bg">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_success"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/button_text_size_large"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center_horizontal">
+
+                <TextView
+
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_success_desc"
+
+                    android:textSize="@dimen/button_text_size_small"
+
+                    />
+                <TextView
+
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_success_login"
+
+                    android:textSize="@dimen/button_text_size_small"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_horizontal">
+                    <TextView
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_success_primary_ca_number"
+
+                        android:textSize="@dimen/button_text_size_small"
+
+                        />
+                    <TextView
+
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 1001568173"
+                        android:textColor="@color/colorPrimary"
+
+                        android:textSize="@dimen/button_text_size_small"
+                        />
+
+                    <TextView
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" or"
+
+                        android:textSize="@dimen/button_text_size_small"
+
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_horizontal">
+                    <TextView
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_success_registered_mobile"
+
+                        android:textSize="@dimen/button_text_size_small"
+
+                        />
+                    <TextView
+
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 959XXXX117"
+                        android:textColor="@color/colorPrimary"
+
+                        android:textSize="@dimen/button_text_size_small"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_success_add" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/action_cancel"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <android.support.v7.widget.AppCompatButton
+
+                    android:id="@+id/btn_skip"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/red_button_rounded"
+                    android:text="Skip"
+                    android:textAppearance="@style/AlertDialog.AppCompat.Light"
+                    android:textColor="@color/colorTextWhite"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/button_text_size_medium" />
+                <android.support.v7.widget.AppCompatButton
+
+                    android:id="@+id/btn_yes"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/red_button_rounded"
+                    android:text="YES"
+                    android:textAppearance="@style/AlertDialog.AppCompat.Light"
+                    android:textColor="@color/colorTextWhite"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/button_text_size_medium" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
