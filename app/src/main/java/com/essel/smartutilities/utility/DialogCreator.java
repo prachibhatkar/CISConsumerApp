@@ -3,7 +3,10 @@ package com.essel.smartutilities.utility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+
+import com.essel.smartutilities.activity.StartActivity;
 
 
 /**
@@ -37,6 +40,7 @@ public class DialogCreator {
             public void onClick(DialogInterface dialog, int id) {
                 activity.finish();
                 dialog.cancel();
+
             }
         });
         builder.setNegativeButton(
@@ -49,6 +53,33 @@ public class DialogCreator {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    public static void showLogoutDialog(final Activity activity, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(true);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                CommonUtils.logout(activity);
+                Intent in =new Intent(activity, StartActivity.class);
+                activity.startActivity(in);
+                activity.finish();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
 
 }

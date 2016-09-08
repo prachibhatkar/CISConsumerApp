@@ -11,11 +11,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Amol on 11/22/15.
@@ -43,6 +46,23 @@ public class CommonUtils {
     public boolean isValidNumber(String number){
         return android.util.Patterns.PHONE.matcher(number).matches();
     }
+
+    public static void hideKeyBoard(Context context) {
+        View view = ((Activity)context).getCurrentFocus();
+        if(view!=null) {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static void saveCredentials(Context context, String email, String password) {
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        SharedPrefManager.saveValue(context, AppConstants.USER_NAME,email);
+        SharedPrefManager.saveValue(context, AppConstants.USER_PASSWORD,password);
+        SharedPrefManager.saveValue(context, AppConstants.USER_LOGGED_IN_DATE,date);
+    }
+
+
     /**
      * Check for network connectivity.Ping host server if it is reachable
      *
@@ -185,12 +205,32 @@ public class CommonUtils {
         return result;
     }
 
+    public static boolean isLoggedIn(Context context) {
+        String logged_in_date = SharedPrefManager.getStringValue(context, AppConstants.USER_LOGGED_IN_DATE);
+        if (!logged_in_date.equals("")) {
+            String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            if (logged_in_date.equals(current_date)) {
+                String uname = SharedPrefManager.getStringValue(context, AppConstants.USER_NAME);
+                String password = SharedPrefManager.getStringValue(context, AppConstants.USER_PASSWORD);
+                return !(uname.equals("") && password.equals(""));
+            }
+        }
+        return false;
+    }
+
     /**
      * Just a check to see if we have marshmallows (version 23)
      * @return
      */
     private static boolean canMakeSmores() {
         return(Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    public static void logout(Context context) {
+        SharedPrefManager.saveValue( context, AppConstants.USER_NAME,"");
+        SharedPrefManager.saveValue(context, AppConstants.USER_PASSWORD,"");
+        SharedPrefManager.saveValue(context, AppConstants.USER_LOGGED_IN_DATE,"");
+
     }
 
 }
