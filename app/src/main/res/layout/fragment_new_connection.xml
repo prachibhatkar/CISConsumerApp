@@ -171,16 +171,57 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/prompt_newcomnection_type_of_connection" />
-                    <GridView
-                        android:id="@+id/grid_connection_type"
+
+                    <com.essel.smartutilities.widget.ToggleButtonGroupTableLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:numColumns="2"
+                        android:layout_height="wrap_content">
 
-                        android:choiceMode="singleChoice">
+                        <TableRow
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="2">
 
+                            <RadioButton
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/residential"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:id="@+id/rb_residential" />
 
-                    </GridView>
+                            <RadioButton
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/commercial"
+                                android:layout_weight="1"
+                                android:layout_margin="5dp"
+                                android:id="@+id/rb_commercial" />
+                        </TableRow>
+
+                        <TableRow
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/industrial"
+                                android:layout_weight="1"
+                                android:layout_margin="5dp"
+                                android:id="@+id/rb_industrial" />
+
+                            <RadioButton
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/other"
+                                android:layout_weight="1"
+                                android:layout_margin="5dp"
+                                android:id="@+id/rb_other" />
+                        </TableRow>
+                    </com.essel.smartutilities.widget.ToggleButtonGroupTableLayout>
 
 
                 </LinearLayout>
