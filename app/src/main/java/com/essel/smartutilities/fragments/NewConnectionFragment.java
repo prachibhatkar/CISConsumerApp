@@ -122,8 +122,7 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
         if(v==btnActionSubmit){
           //  int selection = gridViewConnectionTypes.getCheckedItemPosition();
           //  Log.d("",""+selection);
-            int selection = gridViewConnectionTypes.getCheckedItemPosition();
-            Log.d("",""+selection);
+
             validate();
         }
         else if(v==actionLogin){
