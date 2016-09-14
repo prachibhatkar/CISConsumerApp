@@ -23,4 +23,5 @@
     <dimen name="text_size_h9">01sp</dimen>
 
     <dimen name="nav_drawer_width">260dp</dimen>
+    <dimen name="mini_layout_height">32dp</dimen>
 </resources>

@@ -4,6 +4,52 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ContactUsFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:id="@+id/rel_image">
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/image_logo"
+            />
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        style="@style/MyCustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="false"
+        android:background="@color/black_overlay"
+        android:layout_below="@+id/rel_image"
+        android:layout_toRightOf="@+id/container"
+        android:layout_toEndOf="@+id/container">
+
+
+    </android.support.design.widget.TabLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_contact_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabs"
+            android:background="@android:color/white"
+            android:layout_gravity="center_horizontal|bottom">
+
+        </android.support.v4.view.ViewPager>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/container"
+            android:orientation="vertical"/>
+    </RelativeLayout>
+
+
 
 
 </FrameLayout>

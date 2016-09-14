@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.fragments.AboutUsFragment;
 import com.essel.smartutilities.fragments.ContactUsFragment;
+import com.essel.smartutilities.fragments.FAQFragment;
 import com.essel.smartutilities.fragments.FragmentDrawer;
 import com.essel.smartutilities.fragments.LoginFragment;
 import com.essel.smartutilities.fragments.MyProfileFragment;
@@ -130,6 +131,14 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
                 fragment = new MyTariffFragment();
                 title = getString(R.string.my_tariff);
                 break;
+            case 4:
+                fragment = new FAQFragment();
+                title = getString(R.string.faq);
+                break;
+            case 5:
+                fragment = new TipsFragment();
+                title = getString(R.string.tips);
+                break;
             default:
                 break;
         }
@@ -196,7 +205,11 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
             setTitle(getString(R.string.contact_us));
         }else  if (fragment instanceof TipsFragment) {
             setTitle(getString(R.string.tips));
-        }else {
+        }
+          else  if (fragment instanceof FAQFragment) {
+        setTitle(getString(R.string.faq));
+        }
+        else {
             setTitle(getString(R.string.app_name));
         }
     }

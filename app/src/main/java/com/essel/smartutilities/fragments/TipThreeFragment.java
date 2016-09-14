@@ -3,31 +3,26 @@ package com.essel.smartutilities.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.adapter.ContactUsAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ContactUsFragment#newInstance} factory method to
+ * Activities that contain this fragment must implement the
+ * {@link TipThreeFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link TipThreeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ContactUsFragment extends Fragment {
+public class TipThreeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private ViewPager vp_contact_pager;
-    private TabLayout tablayout;
-    private ContactUsAdapter contactUsAdapter;
-    private Context mContext;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -35,14 +30,8 @@ public class ContactUsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ContactUsFragment() {
+    public TipThreeFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext=context;
     }
 
     /**
@@ -51,23 +40,17 @@ public class ContactUsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ContactUsFragment.
+     * @return A new instance of fragment TipThreeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ContactUsFragment newInstance(String param1, String param2) {
-        ContactUsFragment fragment = new ContactUsFragment();
+    public static TipThreeFragment newInstance(int param1, String param2) {
+        TipThreeFragment fragment = new TipThreeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM1, String.valueOf(param1));
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-
-    private void setupUI(View layout) {
-        vp_contact_pager = (ViewPager) layout.findViewById(R.id.vp_contact_pager);
-        tablayout = (TabLayout) layout.findViewById(R.id.tabs);
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,51 +58,15 @@ public class ContactUsFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-
         }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        loadData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_contact_us, container, false);
-        setupUI(layout);
-        return layout;
+        return inflater.inflate(R.layout.fragment_tip_three, container, false);
     }
-
-
-    private void loadData() {
-        contactUsAdapter = new ContactUsAdapter(mContext, getChildFragmentManager());
-        vp_contact_pager.setAdapter(contactUsAdapter);
-        vp_contact_pager.addOnPageChangeListener(onPageChangedListener);
-        tablayout.setupWithViewPager(vp_contact_pager);
-
-    }
-
-    ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        public void onPageSelected(int position) {
-
-        }
-
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -128,7 +75,11 @@ public class ContactUsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
+    }
 
     @Override
     public void onDetach() {
@@ -150,5 +101,4 @@ public class ContactUsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }

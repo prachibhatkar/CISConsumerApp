@@ -1,34 +1,37 @@
 package com.essel.smartutilities.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.adapter.TipsAdapter;
+import com.essel.smartutilities.utility.DialogCreator;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TipsFragment.OnFragmentInteractionListener} interface
+ * {@link FAQFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TipsFragment#newInstance} factory method to
+ * Use the {@link FAQFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TipsFragment extends Fragment {
+public class FAQFragment extends Fragment implements View.OnClickListener {
+
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private ViewPager vp_tips;
-    private TipsAdapter tipsAdapter;
-    private Context mContext;
+    LinearLayout linearlayout_newconnection,linearlayout_changeownership,linearlayout_changeconnectiontype,linearlayout_loadextensionreduction,linearlayout_permanantdisconnection;
+    Context mContext = getActivity();
+    Dialog dialog_faq;
 
 
     // TODO: Rename and change types of parameters
@@ -37,7 +40,7 @@ public class TipsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TipsFragment() {
+    public FAQFragment() {
         // Required empty public constructor
     }
 
@@ -50,18 +53,13 @@ public class TipsFragment extends Fragment {
      * @return A new instance of fragment MyTariffFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TipsFragment newInstance(String param1, String param2) {
-        TipsFragment fragment = new TipsFragment();
+    public static FAQFragment newInstance(String param1, String param2) {
+        FAQFragment fragment = new FAQFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void setupUI(View layout) {
-        vp_tips = (ViewPager)layout.findViewById(R.id.vp_tips_pager);
-
     }
 
     @Override
@@ -76,12 +74,55 @@ public class TipsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragmentreturn inflater.inflate(R.layout.fragment_faq, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_faq, container, false);
+        initialize(rootView);
 
-        View layout = inflater.inflate(R.layout.fragment_tips, container, false);
-        setupUI(layout);
-        return layout;
+        return rootView;
     }
+
+
+
+    private void initialize(View rootView){
+        linearlayout_newconnection=(LinearLayout)rootView.findViewById(R.id.linear_layout_newconnection);
+        linearlayout_changeconnectiontype=(LinearLayout)rootView.findViewById(R.id.linear_layout_changeconnection);
+        linearlayout_changeownership=(LinearLayout)rootView.findViewById(R.id.linear_layout_changeownership);
+        linearlayout_loadextensionreduction=(LinearLayout)rootView.findViewById(R.id.linear_layout_loadextensionreduction);
+        linearlayout_permanantdisconnection=(LinearLayout)rootView.findViewById(R.id.linear_layout_permanantdisconnection);
+
+        linearlayout_newconnection.setOnClickListener(this);
+        linearlayout_changeconnectiontype.setOnClickListener(this);
+        linearlayout_changeownership.setOnClickListener(this);
+        linearlayout_loadextensionreduction.setOnClickListener(this);
+        linearlayout_permanantdisconnection.setOnClickListener(this);
+
+
+
+
+    }
+
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.linear_layout_newconnection:
+                DialogCreator.showMessageDialog(mContext,getString(R.string.documents));
+                break;
+            case R.id.linear_layout_changeconnection:
+                DialogCreator.showMessageDialog(mContext,getString(R.string.documents));
+                break;
+            case R.id.linear_layout_changeownership:
+                DialogCreator.showMessageDialog(mContext,getString(R.string.documents));
+                break;
+            case R.id.linear_layout_loadextensionreduction:
+                DialogCreator.showMessageDialog(mContext,getString(R.string.documents));
+                break;
+            case R.id.linear_layout_permanantdisconnection:
+                DialogCreator.showMessageDialog(mContext,getString(R.string.documents));
+                break;
+        }
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -97,55 +138,18 @@ public class TipsFragment extends Fragment {
 
     }
 
-
-
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        loadData();
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
-
-    private void loadData() {
-        tipsAdapter = new TipsAdapter(mContext, getChildFragmentManager());
-        vp_tips.setAdapter(tipsAdapter);
-        vp_tips.addOnPageChangeListener(onPageChangedListener);
-
-
-    }
-
-    ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        public void onPageSelected(int position) {
-        }
-
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-
-
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
@@ -154,20 +158,4 @@ public class TipsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }
-
-
-/**
- * This interface must be implemented by activities that contain this
- * fragment to allow an interaction in this fragment to be communicated
- * to the activity and potentially other fragments contained in that
- * activity.
- * <p>
- * See the Android Training lesson <a href=
- * "http://developer.android.com/training/basics/fragments/communicating.html"
- * >Communicating with Other Fragments</a> for more information.
- */
-
-
-

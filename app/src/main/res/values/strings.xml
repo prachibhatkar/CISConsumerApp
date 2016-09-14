@@ -103,6 +103,9 @@
     <string name="contact_us">Contact Us</string>
     <string name="my_profile">My Profile</string>
     <string name="my_tariff">My Tariff</string>
+    <string name="locate_us">Locate Us</string>
+    <string name="faq">FAQ</string>
+
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -146,6 +149,14 @@
     <string name="commercial">Commercial</string>
     <string name="industrial">Industrial</string>
     <string name="other">Other</string>
+
+    <string name="documents">" Following Document Required "\n"1) Application Form"\n"2) Electric Bill"\n"3) ID Proof"</string>
+    <string name="tipone"> Switch Off the lights when not in use.</string>
+    <string name="tiptwo">AC Temperature should be set between 24-26. </string>
+    <string name="tipthree">Use LEDs instead of regular Tubelights.</string>
+
+
+
 
 
 </resources>

@@ -98,7 +98,7 @@
                     android:minHeight="60dp" android:gravity="center">
                     <ImageView
 
-                        android:src="@drawable/ic_share"
+                        android:src="@drawable/quickpay_icon"
                         android:scaleType="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -135,7 +135,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/newconnection"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -173,7 +173,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/mytariff"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -216,7 +216,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/tips"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -253,7 +253,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/aboutus"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -291,7 +291,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/contact_us"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -335,7 +335,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/faq"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -372,7 +372,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/feedback"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -410,7 +410,7 @@
                         android:minHeight="60dp" android:gravity="center">
                         <ImageView
 
-                            android:src="@drawable/ic_share"
+                            android:src="@drawable/share"
                             android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
