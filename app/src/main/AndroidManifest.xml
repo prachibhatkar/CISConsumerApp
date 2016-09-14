@@ -31,8 +31,10 @@
         </intent-filter>
         </activity>
         <activity android:name=".activity.StartActivity"/>
+        <activity android:name=".activity.ActivityLandingMoreOptions" />
+
         <activity android:name=".activity.SignupStepTwo" />
-        <activity android:name=".activity.LandingLoginActivity" />
+        <activity android:name=".activity.ActivityLandingLogin" />
         <activity android:name=".activity.LandingSkipLogin" />
         <activity
             android:name=".activity.ActivityMainSL"

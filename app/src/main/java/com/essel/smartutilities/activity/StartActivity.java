@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.AppConstants;
+import com.essel.smartutilities.utility.DialogCreator;
 
 
 public class StartActivity extends BaseActivity implements View.OnClickListener{
@@ -59,5 +60,10 @@ public class StartActivity extends BaseActivity implements View.OnClickListener{
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogCreator.showExitDialog(this,getString(R.string.exit),getString(R.string.exit_message));
     }
 }

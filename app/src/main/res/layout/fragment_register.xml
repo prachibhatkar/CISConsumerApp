@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context=".fragments.LoginFragment">
+    tools:context="com.essel.smartutilities.fragments.LoginFragment">
 
     <RelativeLayout
 
@@ -21,13 +21,14 @@
             android:scaleType="centerCrop"
             android:src="@drawable/top_bg"
             app:layout_collapseMode="parallax"
-
-
             />
-
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            >
         <LinearLayout
             android:id="@+id/body"
-            android:layout_below="@id/header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp"
@@ -44,7 +45,8 @@
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/inputLayoutConsumerId"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_medium">
 
                     <EditText
                         android:id="@+id/editPassword"
@@ -60,6 +62,18 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <Spinner
+                    android:id="@+id/sp_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height_small"
+                    android:layout_weight="0.9"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/selector_city_spinner"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                />
+
                 <android.support.v7.widget.AppCompatButton
                     android:layout_marginTop="10dp"
                     android:id="@+id/BTNNext"
@@ -73,6 +87,7 @@
                     android:textColor="@color/colorTextWhite"
                     android:textAllCaps="true"
                     android:textSize="@dimen/button_text_size_medium" />
+
 
                 <LinearLayout
                     android:layout_marginTop="20dp"
@@ -95,12 +110,8 @@
 
                 </LinearLayout>
             </LinearLayout>
-
-
-
         </LinearLayout>
-
-
+            </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,6 +142,8 @@
                 android:layout_below="@+id/fab_new_connection"
                 android:gravity="center_horizontal"
                 android:text="New \n Connection" />
+
+
         </RelativeLayout>
     </RelativeLayout>
 

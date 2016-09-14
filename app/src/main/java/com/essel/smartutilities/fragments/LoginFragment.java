@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.ActivityMainSL;
 import com.essel.smartutilities.activity.ForgotActivity;
-import com.essel.smartutilities.activity.LandingLoginActivity;
+import com.essel.smartutilities.activity.ActivityLandingLogin;
 import com.essel.smartutilities.utility.CommonUtils;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     CommonUtils.hideKeyBoard(getActivity());
                     CommonUtils.saveCredentials(getActivity(),email,password);
 
-                    Intent i = new Intent(mContext, LandingLoginActivity.class);
+                    Intent i = new Intent(mContext, ActivityLandingLogin.class);
                     startActivity(i);
 
                 }

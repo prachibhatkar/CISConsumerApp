@@ -19,6 +19,8 @@ import com.essel.smartutilities.fragments.AboutUsFragment;
 import com.essel.smartutilities.fragments.ContactUsFragment;
 import com.essel.smartutilities.fragments.FragmentDrawer;
 import com.essel.smartutilities.fragments.LoginFragment;
+import com.essel.smartutilities.fragments.MyProfileFragment;
+import com.essel.smartutilities.fragments.MyTariffFragment;
 import com.essel.smartutilities.fragments.NewConnectionFragment;
 import com.essel.smartutilities.fragments.QuickPay;
 import com.essel.smartutilities.fragments.RegisterFragment;
@@ -94,30 +96,47 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
 
     private void displayView(int position) {
         Fragment fragment = null;
+        String title = getString(R.string.app_name);
         switch (position) {
             case 0:
                 fragment = new QuickPay();
+                title = getString(R.string.quick_pay);
                 break;
             case 1:
                 fragment = new LoginFragment();
+                title = getString(R.string.login);
                 break;
             case 2:
                 fragment = new RegisterFragment();
+                title = getString(R.string.register);
                 break;
             case 3:
                 fragment = new NewConnectionFragment();
+                title = getString(R.string.apply_for_new_connection);
                 break;
             case 6:
                 fragment = new AboutUsFragment();
+                title = getString(R.string.about_us);
                 break;
             case 7:
                 fragment = new ContactUsFragment();
+                title = getString(R.string.contact_us);
+                break;
+            case 8:
+                fragment = new MyProfileFragment();
+                title = getString(R.string.my_profile);
+                break;
+            case 9:
+                fragment = new MyTariffFragment();
+                title = getString(R.string.my_tariff);
                 break;
             default:
                 break;
         }
         if (fragment != null) {
             addFragment(fragment,true);
+            getSupportActionBar().setTitle(title);
+
         }
     }
 

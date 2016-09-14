@@ -2,35 +2,58 @@ package com.essel.smartutilities.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.activity.ActivityMainSL;
 import com.essel.smartutilities.activity.SignupStepTwo;
+
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link RegisterFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends Fragment implements View.OnClickListener {
-    private TextView btnLogin;
-    private AppCompatButton btnNext;
-    private EditText editTextConsumerId;
-    private TextInputLayout inputLayoutConsumerId;
-    private Context mContext;
-    private ImageView fabNewConnection;
-    private Toolbar mToolBar;
+public class RegisterFragment extends Fragment implements View.OnClickListener{
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
+    TextView btnLogin;
+    AppCompatButton btnNext;
+    EditText editTextConsumerId;
+    TextInputLayout inputLayoutConsumerId;
+    Context mContext;
+    ImageView fabNewConnection;
+    Toolbar mToolBar;
+    private Spinner sp_city;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -40,11 +63,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
      * @return A new instance of fragment RegisterFragment.
      */
-    public static RegisterFragment newInstance() {
+    // TODO: Rename and change types and number of parameters
+    public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,7 +82,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -67,49 +96,110 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         initialize(rootView);
         return rootView;
     }
+    private void initialize(View rootView){
 
-    private void initialize(View rootView) {
+        mToolBar = (Toolbar) ((AppCompatActivity) getActivity()).findViewById(R.id.toolbar);
+        setHasOptionsMenu(true);
 
-        mToolBar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        // setHasOptionsMenu(true);
-        mToolBar.setVisibility(View.GONE);
-        btnLogin = (TextView) rootView.findViewById(R.id.txt_login);
-        btnNext = (AppCompatButton) rootView.findViewById(R.id.BTNNext);
-        editTextConsumerId = (EditText) rootView.findViewById(R.id.editConsumerId);
-        inputLayoutConsumerId = (TextInputLayout) rootView.findViewById(R.id.inputLayoutConsumerId);
+        mToolBar.setVisibility(View.VISIBLE);
+        mToolBar.setBackgroundResource(R.drawable.background_toolbar_translucent);
+
+
+        btnLogin = (TextView)rootView.findViewById(R.id.txt_login);
+        btnNext = (AppCompatButton)rootView.findViewById(R.id.BTNNext);
+        editTextConsumerId = (EditText)rootView.findViewById(R.id.editConsumerId);
+        inputLayoutConsumerId = (TextInputLayout)rootView.findViewById(R.id.inputLayoutConsumerId);
+        sp_city=(Spinner)rootView.findViewById(R.id.sp_city);
 
         btnNext.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
-        fabNewConnection = (ImageView) rootView.findViewById(R.id.fab_new_connection);
+        fabNewConnection = (ImageView)rootView.findViewById(R.id.fab_new_connection);
         fabNewConnection.setOnClickListener(this);
+        String[] routes = mContext.getResources().getStringArray(R.array.City);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, Arrays.asList(routes));
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_city.setAdapter(dataAdapter);
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = context;
+
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
     @Override
     public void onClick(View v) {
-        if (v == btnLogin) {
+        if(v==btnLogin){
             Fragment fragment = new LoginFragment();
-            ((ActivityMainSL) mContext).addFragment(fragment, true);
-        } else if (v == btnNext) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body , fragment);
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.login);
+        }
+        else if (v==btnNext){
             Intent i = new Intent(mContext, SignupStepTwo.class);
             startActivity(i);
-            ((ActivityMainSL) mContext).overridePendingTransition(R.anim.slide_no_change, R.anim.slide_up);
-        } else if (v == fabNewConnection) {
+        }
+        else if (v==fabNewConnection){
             Fragment fragment = new NewConnectionFragment();
-            ((ActivityMainSL) mContext).addFragment(fragment, true);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body , fragment);
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.apply_for_new_connection);
         }
     }
 
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.top_right_menu, menu);
+
+        for (int i = 0; i < menu.size(); i++)
+            menu.getItem(i).setVisible(false);
+
+    }
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
     public void onDestroyView() {
+        mToolBar.setBackgroundResource(R.color.colorPrimary);
+
         super.onDestroyView();
     }
 }

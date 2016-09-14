@@ -61,7 +61,7 @@
                         >
 
                         <LinearLayout
-                            android:id="@+id/action_my_bill"
+                            android:id="@+id/action_tips"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -79,7 +79,7 @@
                                 android:gravity="center">
                                 <ImageView
 
-                                    android:src="@drawable/mybill"
+                                    android:src="@drawable/tips"
                                     android:scaleType="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
@@ -91,7 +91,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="My Bill"
+                                android:text="Tips"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
@@ -99,7 +99,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/action_services"
+                            android:id="@+id/action_about_us"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -116,7 +116,7 @@
                                 android:minHeight="60dp" android:gravity="center">
                                 <ImageView
 
-                                    android:src="@drawable/services"
+                                    android:src="@drawable/aboutus"
                                     android:scaleType="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
@@ -128,7 +128,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Services"
+                                android:text="About Us"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
@@ -137,7 +137,7 @@
 
                         <LinearLayout
 
-                            android:id="@+id/action_complaints"
+                            android:id="@+id/action_contact_us"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -155,7 +155,7 @@
                                 android:minHeight="60dp" android:gravity="center">
                                 <ImageView
 
-                                    android:src="@drawable/complaints"
+                                    android:src="@drawable/contact_us"
                                     android:scaleType="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
@@ -167,7 +167,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Complaints"
+                                android:text="Contact Us"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
@@ -181,7 +181,7 @@
                         >
 
                         <LinearLayout
-                            android:id="@+id/action_payment_history"
+                            android:id="@+id/action_faq"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -199,7 +199,7 @@
                                 android:gravity="center">
                                 <ImageView
 
-                                    android:src="@drawable/payment_history"
+                                    android:src="@drawable/faq"
                                     android:scaleType="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
@@ -211,7 +211,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Payment History"
+                                android:text="FAQ"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
@@ -219,7 +219,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/action_my_profile"                        android:layout_weight="1"
+                            android:id="@+id/action_feedback"                        android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:background="@color/colorPrimaryOverlay"
@@ -234,7 +234,7 @@
                                 android:gravity="center">
                                 <ImageView
 
-                                    android:src="@drawable/myprofile"
+                                    android:src="@drawable/feedback"
                                     android:scaleType="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
@@ -246,7 +246,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="My Profile"
+                                android:text="Feedback"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
@@ -254,7 +254,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/action_quick_pay"
+                            android:id="@+id/action_share"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -273,7 +273,7 @@
                                 android:gravity="center">
                                 <ImageView
 
-                                    android:src="@drawable/quickpay_icon"
+                                    android:src="@drawable/share"
                                     android:scaleType="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
@@ -285,7 +285,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Quick Pay"
+                                android:text="Share"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
@@ -294,13 +294,13 @@
                     </TableRow>
                     <TableRow
 
+
                         android:layout_marginTop="2dp"
-                        android:layout_width="match_parent"
-                        android:weightSum="3"
-                        >
+                        android:layout_width="wrap_content"
+                        android:weightSum="3">
 
                         <LinearLayout
-                            android:id="@+id/action_manage_accounts"
+                            android:id="@+id/action_back_menu"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -314,10 +314,11 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:minHeight="60dp" android:gravity="center">
+                                android:minHeight="60dp"
+                                android:gravity="center">
                                 <ImageView
 
-                                    android:src="@drawable/manage_account_icon"
+                                    android:src="@drawable/back_menu"
                                     android:scaleType="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
@@ -329,95 +330,17 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Manage Account"
+                                android:text="Back"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/action_my_tarrifs"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorPrimaryOverlay"
-                            android:orientation="vertical"
-                            android:padding="7dp"
 
 
-                            >
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:minHeight="60dp" android:gravity="center">
-                                <ImageView
-
-                                    android:src="@drawable/mytariff"
-                                    android:scaleType="center"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
-
-
-                            <TextView
-
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="My Tariff"
-                                android:gravity="center"
-                                android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/text_size_h5" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/action_more_menu"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorPrimaryOverlay"
-                            android:orientation="vertical"
-                            android:padding="@dimen/margin_medium"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginRight="@dimen/margin_small">
-
-                            <LinearLayout
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:minHeight="60dp" android:gravity="center">
-                                <ImageView
-
-                                    android:src="@drawable/more"
-                                    android:scaleType="center"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
-
-
-                            <TextView
-
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="More"
-                                android:gravity="center"
-                                android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/text_size_h5" />
-
-                        </LinearLayout>
                     </TableRow>
                 </TableLayout>
-                <Button
-                    android:id="@+id/BTNLogout"
-                    android:layout_width="80dp"
-                    android:layout_height="@dimen/button_height"
-                    android:text="LOGOUT"
-                    android:textSize="@dimen/button_text_size_small"
-                    android:textColor="@color/colorTextWhite"
-                    android:background="@color/colorPrimaryOverlay"/>
 
             </LinearLayout>
 
@@ -426,6 +349,4 @@
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
-
-
 

@@ -45,6 +45,14 @@
     <string name="title_success_registered_mobile">Registered Mobile Number - </string>
     <string name="title_success_add">Add additional CA number</string>
 
+    <string-array name="City">
+        <item>Select City</item>
+        <item>Muzaffarpur</item>
+        <item>Aurangabad</item>
+        <item>Nagpur</item>
+
+    </string-array>
+
 
     <!--Strings related to new connection-->
     <string name="prompt_newcomnection_full_name">Enter Full Name</string>
@@ -93,9 +101,26 @@
     <string name="tips">Tips</string>
     <string name="about_us">About Us</string>
     <string name="contact_us">Contact Us</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_tariff">My Tariff</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
+    <!--My Profile fragment-->
+    <string name="change_details">Change Details</string>
+    <string name="change_password">Change Password</string>
+    <string name="prompt_consumer_id">966354</string>
+    <string name="prompt_consumer_email_id">abcd@gmail.com</string>
+    <string name="save_details">Save</string>
+    <string name="save_password">Save</string>
+    <string name="prompt_old_password">Old Password</string>
+    <string name="prompt_new_password">New Password</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
+
+    <!--My Tariff Fragment-->
+    <string name="rate_schedule">Rate Schedule</string>
+    <string name="note_content">1) Additional fixed charge of Rs 100 per 10 kw load or part three of above 10 KW load should be payable.</string>
 
 
     <!--Quick pay fragment-->
