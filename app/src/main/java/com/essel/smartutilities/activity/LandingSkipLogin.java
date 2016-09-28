@@ -90,8 +90,12 @@ public class LandingSkipLogin extends BaseActivity implements View.OnClickListen
             Intent i = new Intent(mContext, ActivityMainSL.class);
             i.putExtra(AppConstants.SCREEN_ID, "1");
             startActivity(i);
-        }
 
+        } else if (v == actionMyTarrifs) {
+        Intent i = new Intent(mContext, ActivityMainSL.class);
+        i.putExtra(AppConstants.SCREEN_ID, "9");
+        startActivity(i);
+    }
     }
 
     private void shareTextUrl() {

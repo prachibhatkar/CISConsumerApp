@@ -55,11 +55,11 @@ public class CommonUtils {
         }
     }
 
-    public static void saveCredentials(Context context, String email, String password) {
+    public static void saveCredentials(Context context, String consumer_id, String password) {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        SharedPrefManager.saveValue(context, AppConstants.USER_NAME,email);
-        SharedPrefManager.saveValue(context, AppConstants.USER_PASSWORD,password);
-        SharedPrefManager.saveValue(context, AppConstants.USER_LOGGED_IN_DATE,date);
+        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_ID,consumer_id);
+        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_PASSWORD,password);
+        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE,date);
     }
 
 
@@ -206,13 +206,13 @@ public class CommonUtils {
     }
 
     public static boolean isLoggedIn(Context context) {
-        String logged_in_date = SharedPrefManager.getStringValue(context, AppConstants.USER_LOGGED_IN_DATE);
+        String logged_in_date = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE);
         if (!logged_in_date.equals("")) {
             String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             if (logged_in_date.equals(current_date)) {
-                String uname = SharedPrefManager.getStringValue(context, AppConstants.USER_NAME);
-                String password = SharedPrefManager.getStringValue(context, AppConstants.USER_PASSWORD);
-                return !(uname.equals("") && password.equals(""));
+                String consumer_id = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_ID);
+                String password = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_PASSWORD);
+                return !(consumer_id.equals("") && password.equals(""));
             }
         }
         return false;
@@ -227,9 +227,9 @@ public class CommonUtils {
     }
 
     public static void logout(Context context) {
-        SharedPrefManager.saveValue( context, AppConstants.USER_NAME,"");
-        SharedPrefManager.saveValue(context, AppConstants.USER_PASSWORD,"");
-        SharedPrefManager.saveValue(context, AppConstants.USER_LOGGED_IN_DATE,"");
+        SharedPrefManager.saveValue( context, AppConstants.CONSUMER_ID,"");
+        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_PASSWORD,"");
+        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE,"");
 
     }
 

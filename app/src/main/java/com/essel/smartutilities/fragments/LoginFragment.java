@@ -79,11 +79,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (v == btnLogin) {
             if (isBlankInput()) {
                 if (isValidPassword()) {
-                    String email=editTextUsername.getText().toString();
+                    String consumer_id=editTextUsername.getText().toString();
                     String password=editTextPassword.getText().toString();
 
                     CommonUtils.hideKeyBoard(getActivity());
-                    CommonUtils.saveCredentials(getActivity(),email,password);
+                    CommonUtils.saveCredentials(getActivity(),consumer_id,password);
 
                     Intent i = new Intent(mContext, ActivityLandingLogin.class);
                     startActivity(i);

@@ -111,6 +111,8 @@
     <string name="services">Services</string>
     <string name="feedback">Feedback</string>
 
+    <string name="services_header">Request Services</string>
+
 
     <string name="raise_complaint">Raise Complaint</string>
     <string name="complaint_status">Complaint Status</string>
@@ -132,6 +134,10 @@
     <string name="prompt_old_password">Old Password</string>
     <string name="prompt_new_password">New Password</string>
     <string name="prompt_confirm_password">Confirm Password</string>
+
+    <!--Services fragment-->
+    <string name="remark">Remark</string>
+    <string name="submit">Submit</string>
 
     <!--My Tariff Fragment-->
     <string name="rate_schedule">Rate Schedule</string>
