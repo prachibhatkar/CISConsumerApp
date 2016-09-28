@@ -125,6 +125,17 @@
     <string name="rate_schedule">Rate Schedule</string>
     <string name="note_content">1) Additional fixed charge of Rs 100 per 10 kw load or part three of above 10 KW load should be payable.</string>
 
+    <!--Locate Us Fragment-->
+
+    <string-array name="CSD_Centers">
+        <item>All CSD Centers</item>
+        <item>Amgola Road</item>
+        <item>Saraiganj</item>
+        <item>Kachhi Sarai</item>
+        <item>Pakki Sarai</item>
+
+    </string-array>
+
 
     <!--Quick pay fragment-->
     <string name="prompt_ca_number">Enter Acc Number</string>
