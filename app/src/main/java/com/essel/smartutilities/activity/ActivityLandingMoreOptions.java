@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.AppConstants;
 
 
 /**
@@ -38,6 +39,12 @@ public class ActivityLandingMoreOptions extends AppCompatActivity implements Vie
         actionbackmenu = (LinearLayout) findViewById(R.id.action_back_menu);
 
         actionbackmenu.setOnClickListener(this);
+        actiontips.setOnClickListener(this);
+        actionaboutus.setOnClickListener(this);
+        actioncontactus.setOnClickListener(this);
+        actionfaq.setOnClickListener(this);
+        actionfeedback.setOnClickListener(this);
+        actionshare.setOnClickListener(this);
 
     }
 
@@ -49,6 +56,37 @@ public class ActivityLandingMoreOptions extends AppCompatActivity implements Vie
             startActivity(i);
             overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
+        else  if(view==actiontips){
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "1");
+            startActivity(i);
+            }
+        else if(view==actionaboutus){
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "10");
+            startActivity(i);
+            }
+        else if(view==actioncontactus) {
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "2");
+            startActivity(i);
+        }
+        else if(view==actionfaq) {
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "11");
+            startActivity(i);
+        }
+        else if(view==actionfeedback) {
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "12");
+            startActivity(i);
+        }
+        else if(view==actionshare) {
+            shareTextUrl();
+
+
+        }
+
     }
     @Override
     public void onBackPressed() {
@@ -57,4 +95,18 @@ public class ActivityLandingMoreOptions extends AppCompatActivity implements Vie
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
 
     }
+
+    private void shareTextUrl() {
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        // Add data to the intent, the receiving app will decide
+        // what to do with it.
+        share.putExtra(Intent.EXTRA_SUBJECT, "Title Of The Post");
+        share.putExtra(Intent.EXTRA_TEXT, "http://www.codeofaninja.com");
+
+        startActivity(Intent.createChooser(share, "Share link!"));
+    }
+
 }

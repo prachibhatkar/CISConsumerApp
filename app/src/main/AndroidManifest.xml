@@ -18,17 +18,15 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DesignDemo"
-        android:screenOrientation="portrait">
-        <activity
-            android:name=".activity.SplashScreenActivity">
+        android:theme="@style/Theme.DesignDemo">
+        <activity android:name=".activity.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -37,17 +35,18 @@
 
         <activity android:name=".activity.StartActivity"/>
         <activity android:name=".activity.ActivityLandingMoreOptions" />
-
         <activity android:name=".activity.SignupStepTwo" />
         <activity android:name=".activity.ActivityLandingLogin" />
         <activity android:name=".activity.LandingSkipLogin" />
         <activity
             android:name=".activity.ActivityMainSL"
             android:theme="@style/Theme.DesignDemo"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ForgotActivity"
-            android:theme="@style/Theme.DesignDemo"/>
+            android:theme="@style/Theme.DesignDemo" />
+        <activity android:name=".activity.ActivityMainLogin" />
+        <activity android:name=".activity.ActivityMyBill"></activity>
     </application>
 
 </manifest>

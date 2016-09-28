@@ -219,7 +219,8 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/action_my_profile"                        android:layout_weight="1"
+                            android:id="@+id/action_my_profile"
+                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:background="@color/colorPrimaryOverlay"

@@ -45,7 +45,13 @@ public class ActivityLandingLogin extends Activity implements View.OnClickListen
         btnLogout=(Button)findViewById(R.id.BTNLogout);
 
         btnLogout.setOnClickListener(this);
+        actionmybill.setOnClickListener(this);
         actionmyprofile.setOnClickListener(this);
+        actionservices.setOnClickListener(this);
+        actioncomplaints.setOnClickListener(this);
+        actionpaymenthistory.setOnClickListener(this);
+        actionquickpay.setOnClickListener(this);
+        actionmanageaccount.setOnClickListener(this);
         actionmore.setOnClickListener(this);
         actionmytariff.setOnClickListener(this);
 
@@ -57,8 +63,32 @@ public class ActivityLandingLogin extends Activity implements View.OnClickListen
     public void onClick(View view) {
 
         if(view==actionmyprofile){
-            Intent i = new Intent(mContext, ActivityMainSL.class);
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
             i.putExtra(AppConstants.SCREEN_ID, "8");
+            startActivity(i);
+        }
+        else if(view==actionmybill){
+            Intent i = new Intent(mContext, ActivityMyBill.class);
+            startActivity(i);
+        }
+        else if(view==actionservices){
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "7");
+            startActivity(i);
+        }
+        else if(view==actioncomplaints){
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "6");
+            startActivity(i);
+        }
+        else if(view==actionmanageaccount){
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "5");
+            startActivity(i);
+        }
+        else if(view==actionquickpay){
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "4");
             startActivity(i);
         }
         else if(view==actionmore){
@@ -68,8 +98,13 @@ public class ActivityLandingLogin extends Activity implements View.OnClickListen
 
         }
         else if(view==actionmytariff){
-            Intent i = new Intent(mContext, ActivityMainSL.class);
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
             i.putExtra(AppConstants.SCREEN_ID, "9");
+            startActivity(i);
+
+        }else if(view==actionpaymenthistory){
+            Intent i = new Intent(mContext, ActivityMainLogin.class);
+            i.putExtra(AppConstants.SCREEN_ID, "3");
             startActivity(i);
         }
         else if(view==btnLogout){
