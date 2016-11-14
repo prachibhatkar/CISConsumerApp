@@ -1,6 +1,7 @@
 package com.essel.smartutilities.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,13 +14,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.utility.DialogCreator;
 
-public class ActivityLoginLanding extends AppCompatActivity {
+public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +35,10 @@ public class ActivityLoginLanding extends AppCompatActivity {
         getSupportActionBar().setSubtitle("Ashu Singh");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setSubtitleTextColor(Color.WHITE);
-
-
+        Button bill = (Button) findViewById(R.id.btn_mybill);
+        bill.setOnClickListener(this);
+        Button pay = (Button) findViewById(R.id.btn_paynow);
+        pay.setOnClickListener(this);
         // toolbar.setOnMenuItemClickListener(ActionBar.DISPLAY_SHOW_HOME);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -59,7 +63,6 @@ public class ActivityLoginLanding extends AppCompatActivity {
         }*/
 
 
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,7 +81,7 @@ public class ActivityLoginLanding extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            DialogCreator.showLogoutDialog(this,"Logout","Are you sure you want to logout?");
+            DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
             return true;
         }
 
@@ -88,6 +91,19 @@ public class ActivityLoginLanding extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_mybill:
+                Intent i = new Intent(this, MyBillActivity.class);
+                startActivity(i);
+                break;
+            case R.id.btn_paynow:
+                Intent in = new Intent(this, PayNowActivity.class);
+                startActivity(in);
+                        }
     }
 
     /*public static boolean snackBarMethod() {

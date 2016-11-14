@@ -4,48 +4,38 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 
-public class NewConnectionActivity extends AppCompatActivity implements View.OnClickListener{
+import java.util.Arrays;
+
+/**
+ * Created by hp on 11/5/2016.
+ */
+
+public class NewConnectionActivity extends BaseActivity implements View.OnClickListener {
     private Context mContext;
     private EditText editTextFullName,editTextAddress1,editTextAddress2,editTextAddress3,editTextPhone,editTextConsumerId,editTextEmailId;
     private TextInputLayout inputLayoutFullName,inputLayoutAddress1,inputLayoutAddress2,inputLayoutAddress3,inputLayoutPhone,inputLayoutConsumerId,inputLayoutEmailId;
-    private AppCompatButton btnActionSubmit;
+    private Button btnActionSubmit;
     private TextView actionLogin;
-    private Toolbar mToolBar;
-    private LinearLayout toolbarContainer;
+    Spinner connectiontype;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_connection);
-       // mToolBar = (Toolbar)findViewById(R.id.toolbar);
-        // mToolBar.setVisibility(VISIBLE);
-       // setSupportActionBar(mToolBar);
-       // getSupportActionBar().setTitle("New Service Connection");
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mContext = this;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("New Service Connection");
-
-        initialize();
-        return;
-
-    }
-
+    initialize();
+        }
     private void initialize(){
-
 
         editTextFullName = (EditText)findViewById(R.id.editFullName);
         editTextAddress1 = (EditText)findViewById(R.id.editAddressLine1);
@@ -61,12 +51,18 @@ public class NewConnectionActivity extends AppCompatActivity implements View.OnC
         inputLayoutPhone = (TextInputLayout)findViewById(R.id.inputLayoutPhone);
         inputLayoutConsumerId = (TextInputLayout)findViewById(R.id.inputLayoutConsumerId);
         inputLayoutEmailId = (TextInputLayout)findViewById(R.id.inputLayoutEmailId);
-        btnActionSubmit = (AppCompatButton)findViewById(R.id.action_submit);
-        actionLogin = (TextView)findViewById(R.id.action_login);
+        btnActionSubmit = (Button)findViewById(R.id.action_submit);
         btnActionSubmit.setOnClickListener(this);
-        actionLogin.setOnClickListener(this);
-    }
+//        actionLogin = (TextView)findViewById(R.id.action_login);
+//        actionLogin.setOnClickListener(this);
 
+
+         connectiontype = (Spinner) findViewById(R.id.sp_connectiontype);
+        String[] type = mContext.getResources().getStringArray(R.array.type);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, Arrays.asList(type));
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        connectiontype.setAdapter(dataAdapter);
+    }
 
     public void validate() {
         String fullname = editTextFullName.getText().toString().trim();
@@ -76,26 +72,26 @@ public class NewConnectionActivity extends AppCompatActivity implements View.OnC
         String phoneno = editTextPhone.getText().toString().trim();
         String emailid = editTextEmailId.getText().toString().trim();
         String consumerid = editTextConsumerId.getText().toString().trim();
-        if (fullname.equals("") || address1.equals("") || address2.equals("") || address3.equals("") || phoneno.equals("") || emailid.equals("") || consumerid.equals("")) {
+        if (fullname.equals("") || address1.equals("") || address2.equals("") || address3.equals("")
+                || phoneno.equals("") || emailid.equals("") || consumerid.equals(""))
+        {
             Toast.makeText(mContext.getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
-            return;
         }
-    }
 
+        Intent i=new Intent(this,NewConnectionActivity2.class);
+        startActivity(i);
+    }
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
+        switch (view.getId()) {
+//            case R.id.txt_login:
+//                break;
+            case R.id.action_submit:
+                validate();
+                break;
 
-        if(v==btnActionSubmit){
-            //  int selection = gridViewConnectionTypes.getCheckedItemPosition();
-            //  Log.d("",""+selection);
-
-            validate();
+            }
         }
-        else if(v==actionLogin){
-            Intent i = new Intent(this,LoginActivity.class);
-            startActivity(i);
-        }
-    }
+ }
 
-    }
 

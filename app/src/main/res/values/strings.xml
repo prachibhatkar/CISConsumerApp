@@ -53,6 +53,14 @@
 
     </string-array>
 
+    <string-array name="type">
+        <item>Connection Type</item>
+        <item>Residential</item>
+        <item>Commercial</item>
+        <item>Industrial</item>
+        <item>Other</item>
+
+    </string-array>
 
     <!--Strings related to new connection-->
     <string name="prompt_newcomnection_full_name">Enter Full Name</string>

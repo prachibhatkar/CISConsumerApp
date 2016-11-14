@@ -60,7 +60,18 @@
         <activity android:name=".activity.AboutUsActivity" />
         <activity android:name=".activity.ProfileActivity" />
         <activity android:name=".activity.ServiceStatusActivity" />
-        <activity android:name=".activity.ActivityMyBill"></activity>
+        <activity android:name=".activity.MyBillActivity" />
+        <activity android:name=".activity.BillHistoryActivity" />
+        <activity android:name=".activity.PayNowActivity" />
+        <activity android:name=".activity.QuickPayActivity" />
+        <activity android:name=".activity.NotificationActivity" />
+        <activity android:name=".activity.ManageAccountsActivity" />
+        <activity android:name=".activity.NewConnectionActivity2" />
+        <activity android:name=".activity.RegisterActivity2" />
+        <activity android:name=".activity.RegisterActivity3" />
+        <activity android:name=".activity.RegisterActivity4" />
+
+
     </application>
 
 </manifest>

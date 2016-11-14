@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_notification_card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/card1"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+        <!--android:background="@drawable/card_background_horizontal_small"-->
+
+        <TextView
+            android:id="@+id/tv_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#424242"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:text="asdfasdfasdfasdf asdf asdf asdf asdf asdf asdf "/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:textColor="#424242"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            android:background="#f0efef"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="4dp"
+            android:text="Today"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
