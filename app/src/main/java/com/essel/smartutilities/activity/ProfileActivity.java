@@ -4,17 +4,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.adapter.MyProfileAdapter;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
-
-import static com.essel.smartutilities.R.styleable.TabLayout;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
     private String mFragementName;
@@ -24,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     Button expandableButton_editprofile,expandableButton_changepass;
 
 
-    private MyProfileAdapter myProfileAdapter;
+
     private TabLayout profile_tabs;
 
     @Override

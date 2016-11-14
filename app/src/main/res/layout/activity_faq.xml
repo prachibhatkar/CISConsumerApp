@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:id="@+id/rel_image">
@@ -25,111 +25,204 @@
             android:scaleType="centerCrop"
             android:src="@drawable/top_bg"
             app:layout_collapseMode="parallax"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="3dp"
+        android:orientation="vertical">
 
-
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mini_layout_height"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/linear_layout_newconnection"
-        android:layout_below="@id/rel_image"
-        >
-
-
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/expandableButton_newconnection"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black_overlay"
+            android:paddingRight="10dp"
             android:text="New Service Connection"
-            android:textColor="@color/colorTextWhite"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_small"/>
+            android:textColor="@color/colorPrimaryDarkText"/>
 
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout_newconnection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ael_expanded="false"
+            app:ael_orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_newconnection"
+                    android:text=" New Service Connection"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" New Service Connection"/>
+
+
+
+            </LinearLayout>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/expandableButton_changeofowner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black_overlay"
+            android:paddingRight="10dp"
+            android:text="Change of OwnerShip"
+            android:textColor="@color/colorPrimaryDarkText"/>
+
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout_changeofownership"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ael_expanded="false"
+            app:ael_orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_changeofownership"
+                    android:text="Change of OwnerShip"/>
+
+
+            </LinearLayout>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mini_layout_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:layout_below="@+id/linear_layout_newconnection"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/linear_layout_changeownership"
-        >
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/expandableButton_changeofconnection"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Change of Ownership"
-            android:textColor="@color/colorTextWhite"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_small"/>
+            android:background="@color/black_overlay"
+            android:paddingRight="10dp"
+            android:text="Change of Connection Type"
+            android:textColor="@color/colorPrimaryDarkText"/>
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout_changeofconnection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ael_expanded="false"
+            app:ael_orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_changeofconnectiontype"
+                    android:text=" Change of Connection Type"/>
 
 
-    </LinearLayout>
+            </LinearLayout>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mini_layout_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/linear_layout_changeconnection"
-        >
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/expandableButton_loadextensionreduction"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Change Connection Type"
-            android:textColor="@color/colorTextWhite"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_small"/>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mini_layout_height"
-        android:layout_marginTop="3dp"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/linear_layout_loadextensionreduction"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@color/black_overlay"
+            android:paddingRight="10dp"
             android:text="Load Extension Reduction"
-            android:textColor="@color/colorTextWhite"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_small"/>
+            android:textColor="@color/colorPrimaryDarkText"/>
 
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout_loadextensionreduction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ael_expanded="false"
+            app:ael_orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_loadextensionreduction"
+                    android:text=" Load Extension Reduction"/>
+
+
+            </LinearLayout>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mini_layout_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/linear_layout_permanantdisconnection"
-        >
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/expandableButton_permanantdisconnect"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black_overlay"
+            android:paddingRight="10dp"
             android:text="Permanant Disconnection"
-            android:textColor="@color/colorTextWhite"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_small"/>
+            android:textColor="@color/colorPrimaryDarkText"/>
 
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout_permanantdisconnect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ael_expanded="false"
+            app:ael_orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_permanantdisconnect"
+                    android:text=" Permanant Disconnection"/>
+
+
+            </LinearLayout>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
     </LinearLayout>
-
-
-</LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+    </LinearLayout>

@@ -89,10 +89,8 @@
                 android:id="@+id/expandableLayout_editprofile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                app:ael_duration="400"
                 app:ael_expanded="false"
-                app:ael_interpolator="bounce"
+                android:paddingLeft="16dp"
                 app:ael_orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -126,11 +124,10 @@
 
                     <Button
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
+                        android:layout_height="50dp"
                         android:id="@+id/BTN_save_details"
                         android:text="@string/save_details"
                         android:textSize="@dimen/button_text_size_medium"
-                        android:textAlignment="center"
                         android:background="@color/colorPrimaryDark"
                         android:textColor="@color/colorTextWhite"/>
 
@@ -159,10 +156,8 @@
             android:id="@+id/expandableLayout_changepass"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
-            app:ael_duration="400"
+            android:paddingLeft="16dp"
             app:ael_expanded="false"
-            app:ael_interpolator="bounce"
             app:ael_orientation="vertical">
 
             <LinearLayout
@@ -207,10 +202,9 @@
 
                 <Button
                     android:layout_width="100dp"
-                    android:layout_height="45dp"
+                    android:layout_height="50dp"
                     android:id="@+id/BTN_save_password"
                     android:text="@string/save_details"
-                    android:textAlignment="center"
                     android:textSize="@dimen/button_text_size_medium"
                     android:background="@color/colorPrimaryDark"
                     android:textColor="@color/colorTextWhite"/>

@@ -104,8 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         else if (v == actioncontinueasguest) {
-            Intent in = new Intent(this, ActivityMainSL.class);
-            startActivity(in);
+
         }
 
     }

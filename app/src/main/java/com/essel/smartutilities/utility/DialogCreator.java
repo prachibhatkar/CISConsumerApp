@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
 import com.essel.smartutilities.activity.LoginActivity;
-import com.essel.smartutilities.activity.StartActivity;
 
 
 /**

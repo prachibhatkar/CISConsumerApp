@@ -76,14 +76,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         else if (v==btnNext){
-            Intent i = new Intent(this, SignupStepTwo.class);
-            startActivity(i);
 
 
         }
         else if (v==fabNewConnection){
-            Intent i = new Intent(this, SignupStepTwo.class);
-            startActivity(i);
+
 
 
             // set the toolbar title

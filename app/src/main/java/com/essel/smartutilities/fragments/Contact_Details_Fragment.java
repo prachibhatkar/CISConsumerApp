@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.essel.smartutilities.R;
 
@@ -23,6 +24,9 @@ public class Contact_Details_Fragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
+    TextView tv_helpline,tv_antiberibery,tv_onlinecomplaint,tv_igrcemail,tv_consumerportal;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,7 +68,22 @@ public class Contact_Details_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact__details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_contact__details, container, false);
+        initialize(rootView);
+        return rootView;
+
+    }
+
+
+    private void initialize(View rootView){
+        tv_helpline=(TextView)rootView.findViewById(R.id.tv_helpline);
+        tv_antiberibery=(TextView)rootView.findViewById(R.id.tv_antiberihelp);
+        tv_onlinecomplaint=(TextView)rootView.findViewById(R.id.tv_onlinehelp);
+        tv_igrcemail=(TextView)rootView.findViewById(R.id.tv_igrcemail);
+        tv_consumerportal=(TextView)rootView.findViewById(R.id.tv_consumerportal);
+
+
+
     }
 
 
