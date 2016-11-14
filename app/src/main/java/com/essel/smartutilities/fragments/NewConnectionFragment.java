@@ -128,8 +128,8 @@ public class NewConnectionFragment extends Fragment implements View.OnClickListe
             validate();
         }
         else if(v==actionLogin){
-            Fragment fragment = new LoginFragment();
-            ((ActivityMainSL)mContext).addFragment(fragment,true);
+           // Fragment fragment = new LoginFragment();
+           // ((ActivityMainSL)mContext).addFragment(fragment,true);
         }
     }
 }

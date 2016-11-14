@@ -5,16 +5,16 @@
     tools:context=".activity.ActivityMainSL">
 
     <item
-        android:id="@+id/action_call"
-        android:title="Call"
+        android:id="@+id/action_notifications"
+        android:title="Notification"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_action_call"
+        android:icon="@drawable/ic_action_notification"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_notifications"
-        android:title="Notification"
-        android:icon="@drawable/ic_action_notification"
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:icon="@drawable/logout"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
-</menu>
+    </menu>

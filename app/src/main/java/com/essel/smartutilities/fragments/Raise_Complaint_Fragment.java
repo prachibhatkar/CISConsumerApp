@@ -1,9 +1,12 @@
 package com.essel.smartutilities.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,12 +32,61 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class Raise_Complaint_Fragment extends Fragment implements View.OnClickListener {
+
+    private static final int CAPTURE_IMAGE=1;
+    private int count = 0;
+    ImageView iv;
     @Override
     public void onClick(View v) { if(v==img){
 
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 0);
+        Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
     }
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+      /*  super.onActivityResult(requestCode, resultCode, data);
+
+        Bitmap bp = (Bitmap) data.getExtras().get("data");
+        iv.setImageBitmap(bp);
+        iv.setVisibility(View.VISIBLE);*/
+
+       /* if (requestCode == CAPTURE_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+
+                i.setDataAndType(Uri.fromFile(output), "image/jpeg");
+                startActivity(i);
+                 Bitmap bp = (Bitmap) data.getExtras().get("data");
+                iv.setImageBitmap(bp);
+                iv.setVisibility(View.VISIBLE);
+
+            }
+        }*/
+
+
+        if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            iv.setImageBitmap(photo);
+            //storeCameraPhotoInSDCard(photo);
+            //saveImageToStorage();
+            iv.setVisibility(View.VISIBLE);
+        }
+
+        /*if (this.CAPTURE_IMAGE == requestCode && resultCode == RESULT_OK) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+            String partFilename = currentDateFormat();
+            storeCameraPhotoInSDCard(bitmap, partFilename);
+
+            // display the image from SD Card to ImageView Control
+            String storeFilename = "photo_" + partFilename + ".jpg";
+            Bitmap mBitmap = getImageFileFromSDCard(storeFilename);
+            iv.setImageBitmap(mBitmap);
+
+        }*/
     }
 
 
@@ -103,35 +155,36 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
         View rootView = inflater.inflate(R.layout.fragment_raise__complaint, null);
 
-        expListView = (ExpandableListView) rootView.findViewById(R.id.expListView);
+       // expListView = (ExpandableListView) rootView.findViewById(R.id.expListView);
        // linear_layout_imageview=(LinearLayout)rootView.findViewById(R.id.linear_layout_imageview);
         img=(ImageView)rootView.findViewById(R.id.imgv_camera);
+        iv = (ImageView)rootView.findViewById(R.id.iv_captured_image);
         img.setOnClickListener(this);
 
-        prepareListData();
+      //  prepareListData();
 
-        listAdapter = new ExpandablelistAdapter(getActivity(), listDataHeader, listDataChild);
-        expListView.setAdapter(listAdapter);
+        //listAdapter = new ExpandablelistAdapter(getActivity(), listDataHeader, listDataChild);
+       // expListView.setAdapter(listAdapter);
 
-        Log.i("groups", listDataHeader.toString());
-        Log.i("details", listDataChild.toString());
+      //  Log.i("groups", listDataHeader.toString());
+       // Log.i("details", listDataChild.toString());
 
        // linear_layout_imageview.setOnClickListener(this);
 
         // Listview Group click listener
-        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+       // expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,int groupPosition, long id) {
+
+           /* public boolean onGroupClick(ExpandableListView parent, View v,int groupPosition, long id) {
                 // Toast.makeText(getApplicationContext(),
                 // "Group Clicked " + listDataHeader.get(groupPosition),
                 // Toast.LENGTH_SHORT).show();
                 return false;
-            }
-        });
+            }*/
+       // });
 
         // Listview Group expanded listener
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+       /* expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -157,12 +210,12 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                 Toast.makeText(getActivity().getApplicationContext(),listDataHeader.get(groupPosition) + " : " + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
                 return false;
             }
-        });
+        });*/
         return rootView;
     }
 
 
-    private void prepareListData() {
+   /* private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
@@ -202,7 +255,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         listDataChild.put(listDataHeader.get(2), BillComplaints);
         listDataChild.put(listDataHeader.get(3), Reconnection);
 
-    }
+    }*/
 
     // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_raise__complaint, container, false);

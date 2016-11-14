@@ -39,9 +39,7 @@ public class ActivityMyBill extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_call) {
-            return true;
-        }
+
 
         if(id == R.id.action_notifications){
 

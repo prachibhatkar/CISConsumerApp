@@ -94,31 +94,38 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         mContext = getActivity();
         View rootView = inflater.inflate(R.layout.fragment_register, container, false);
         initialize(rootView);
+
+
+
+
         return rootView;
     }
     private void initialize(View rootView){
 
-        mToolBar = (Toolbar) ((AppCompatActivity) getActivity()).findViewById(R.id.toolbar);
+       /* mToolBar = (Toolbar) ((AppCompatActivity) getActivity()).findViewById(R.id.toolbar);
         setHasOptionsMenu(true);
 
         mToolBar.setVisibility(View.VISIBLE);
-        mToolBar.setBackgroundResource(R.drawable.background_toolbar_translucent);
+       mToolBar.setBackgroundResource(R.drawable.background_toolbar_translucent);*/
 
 
         btnLogin = (TextView)rootView.findViewById(R.id.txt_login);
         btnNext = (AppCompatButton)rootView.findViewById(R.id.BTNNext);
         editTextConsumerId = (EditText)rootView.findViewById(R.id.editConsumerId);
         inputLayoutConsumerId = (TextInputLayout)rootView.findViewById(R.id.inputLayoutConsumerId);
-        sp_city=(Spinner)rootView.findViewById(R.id.sp_city);
-
         btnNext.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         fabNewConnection = (ImageView)rootView.findViewById(R.id.fab_new_connection);
         fabNewConnection.setOnClickListener(this);
+
+
+        sp_city=(Spinner)rootView.findViewById(R.id.sp_city);
         String[] routes = mContext.getResources().getStringArray(R.array.City);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, Arrays.asList(routes));
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_city.setAdapter(dataAdapter);
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -143,7 +150,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v==btnLogin){
-            Fragment fragment = new LoginFragment();
+            /*Fragment fragment = new LoginFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body , fragment);
@@ -151,7 +158,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
             // set the toolbar title
 
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.login);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.login);*/
         }
         else if (v==btnNext){
             Intent i = new Intent(mContext, SignupStepTwo.class);
@@ -198,7 +205,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onDestroyView() {
-        mToolBar.setBackgroundResource(R.color.colorPrimary);
+//        mToolBar.setBackgroundResource(R.color.colorPrimary);
 
         super.onDestroyView();
     }

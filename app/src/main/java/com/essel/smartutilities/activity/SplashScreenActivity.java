@@ -26,9 +26,9 @@ public class SplashScreenActivity extends BaseActivity  {
     private void moveNext() {
         Intent intent = null;
         if(CommonUtils.isLoggedIn(SplashScreenActivity.this))
-            intent = new Intent(SplashScreenActivity.this, ActivityLandingLogin.class);
+            intent = new Intent(SplashScreenActivity.this,ActivityLoginLanding.class);
         else
-            intent = new Intent(SplashScreenActivity.this, StartActivity.class);
+            intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
         SplashScreenActivity.this.startActivity(intent);
         SplashScreenActivity.this.finish();
         overridePendingTransition(R.anim.slide_no_change, R.anim.slide_up);

@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,22 +15,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.fragments.AboutUsFragment;
-import com.essel.smartutilities.fragments.ComplaintFragment;
-import com.essel.smartutilities.fragments.ContactUsFragment;
-import com.essel.smartutilities.fragments.FAQFragment;
-import com.essel.smartutilities.fragments.FeedbackFragment;
 import com.essel.smartutilities.fragments.FragmentDrawer;
-import com.essel.smartutilities.fragments.LoginFragment;
 import com.essel.smartutilities.fragments.ManagedAccountFragment;
-import com.essel.smartutilities.fragments.MyProfileFragment;
-import com.essel.smartutilities.fragments.MyTariffFragment;
-import com.essel.smartutilities.fragments.NewConnectionFragment;
 import com.essel.smartutilities.fragments.Payment_History_Fragment;
 import com.essel.smartutilities.fragments.QuickPay;
-import com.essel.smartutilities.fragments.RegisterFragment;
-import com.essel.smartutilities.fragments.ServicesFragment;
-import com.essel.smartutilities.fragments.TipsFragment;
 import com.essel.smartutilities.utility.AppConstants;
 
 public class ActivityMainLogin extends BaseActivity implements FragmentDrawer.FragmentDrawerListener, View.OnClickListener {
@@ -88,8 +75,7 @@ public class ActivityMainLogin extends BaseActivity implements FragmentDrawer.Fr
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_call:
-                return true;
+
             case  R.id.action_notifications:
                 return true;
         }
@@ -107,12 +93,12 @@ public class ActivityMainLogin extends BaseActivity implements FragmentDrawer.Fr
         switch (position) {
 
             case 1:
-                fragment = new TipsFragment();
+               // fragment = new TipsFragment();
                 title = getString(R.string.tips);
                 break;
 
             case 2:
-                fragment = new ContactUsFragment();
+               // fragment = new ContactUsFragment();
                 title = getString(R.string.contact_us);
                 break;
 
@@ -131,33 +117,33 @@ public class ActivityMainLogin extends BaseActivity implements FragmentDrawer.Fr
                 break;
 
             case 6:
-                fragment = new ComplaintFragment();
+              //  fragment = new ComplaintFragment();
                 title = getString(R.string.complaint);
                 break;
             case 7:
-                fragment = new ServicesFragment();
+              //  fragment = new ServicesFragment();
                 title = getString(R.string.services);
                 break;
 
             case 8:
-                fragment = new MyProfileFragment();
+               // fragment = new MyProfileFragment();
                 title = getString(R.string.my_profile);
                 break;
             case 9:
-                fragment = new MyTariffFragment();
+                //fragment = new MyTariffFragment();
                 title = getString(R.string.my_tariff);
                 break;
             case 10:
-                fragment = new AboutUsFragment();
+               // fragment = new AboutUsFragment();
                 title = getString(R.string.about_us);
                 break;
             case 11:
-                fragment = new FAQFragment();
+               // fragment = new FAQFragment();
                 title = getString(R.string.faq);
                 break;
 
             case 12:
-                fragment = new FeedbackFragment();
+             //   fragment = new FeedbackFragment();
                 title = getString(R.string.feedback);
                 break;
             default:
@@ -205,12 +191,12 @@ public class ActivityMainLogin extends BaseActivity implements FragmentDrawer.Fr
         public void onBackStackChanged() {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_body);
             if (fragment != null) {
-                updateTitleAndDrawer(fragment);
+               // updateTitleAndDrawer(fragment);
             }
         }
     };
 
-    private void updateTitleAndDrawer (Fragment fragment){
+    /*private void updateTitleAndDrawer (Fragment fragment){
 
         if (fragment instanceof QuickPay){
             setTitle(getString(R.string.quick_pay));
@@ -233,7 +219,7 @@ public class ActivityMainLogin extends BaseActivity implements FragmentDrawer.Fr
         else {
             setTitle(getString(R.string.app_name));
         }
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

@@ -46,6 +46,20 @@
             android:name=".activity.ForgotActivity"
             android:theme="@style/Theme.DesignDemo" />
         <activity android:name=".activity.ActivityMainLogin" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.ActivityLoginLanding" />
+        <activity android:name=".activity.ComplaintActivity" />
+        <activity android:name=".activity.Contact_Us_Activity" />
+        <activity android:name=".activity.FAQActivity" />
+        <activity android:name=".activity.FeedBackActivity" />
+        <activity android:name=".activity.NewConnectionActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.ServiceActivity" />
+        <activity android:name=".activity.TipsActivity" />
+        <activity android:name=".activity.TraiffActivity" />
+        <activity android:name=".activity.AboutUsActivity" />
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.ServiceStatusActivity" />
         <activity android:name=".activity.ActivityMyBill"></activity>
     </application>
 

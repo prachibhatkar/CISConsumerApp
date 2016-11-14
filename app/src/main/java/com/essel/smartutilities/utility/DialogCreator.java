@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
+import com.essel.smartutilities.activity.LoginActivity;
 import com.essel.smartutilities.activity.StartActivity;
 
 
@@ -63,7 +64,7 @@ public class DialogCreator {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 CommonUtils.logout(activity);
-                Intent in =new Intent(activity, StartActivity.class);
+                Intent in =new Intent(activity, LoginActivity.class);
                 activity.startActivity(in);
                 activity.finish();
                 dialog.cancel();

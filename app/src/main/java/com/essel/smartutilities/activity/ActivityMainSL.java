@@ -15,17 +15,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.fragments.AboutUsFragment;
-import com.essel.smartutilities.fragments.ContactUsFragment;
-import com.essel.smartutilities.fragments.FAQFragment;
 import com.essel.smartutilities.fragments.FragmentDrawer;
-import com.essel.smartutilities.fragments.LoginFragment;
-import com.essel.smartutilities.fragments.MyProfileFragment;
-import com.essel.smartutilities.fragments.MyTariffFragment;
 import com.essel.smartutilities.fragments.NewConnectionFragment;
 import com.essel.smartutilities.fragments.QuickPay;
 import com.essel.smartutilities.fragments.RegisterFragment;
-import com.essel.smartutilities.fragments.TipsFragment;
 import com.essel.smartutilities.utility.AppConstants;
 
 public class ActivityMainSL extends BaseActivity implements FragmentDrawer.FragmentDrawerListener, View.OnClickListener {
@@ -82,8 +75,7 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_call:
-                return true;
+
             case  R.id.action_notifications:
                 return true;
         }
@@ -104,7 +96,7 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
                 title = getString(R.string.quick_pay);
                 break;
             case 1:
-                fragment = new LoginFragment();
+              //  fragment = new LoginFragment();
                 title = getString(R.string.login);
                 break;
             case 2:
@@ -116,27 +108,27 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
                 title = getString(R.string.apply_for_new_connection);
                 break;
             case 6:
-                fragment = new AboutUsFragment();
+               // fragment = new AboutUsFragment();
                 title = getString(R.string.about_us);
                 break;
             case 7:
-                fragment = new ContactUsFragment();
+               // fragment = new ContactUsFragment();
                 title = getString(R.string.contact_us);
                 break;
             case 8:
-                fragment = new MyProfileFragment();
+                //fragment = new MyProfileFragment();
                 title = getString(R.string.my_profile);
                 break;
             case 9:
-                fragment = new MyTariffFragment();
+               // fragment = new MyTariffFragment();
                 title = getString(R.string.my_tariff);
                 break;
             case 4:
-                fragment = new FAQFragment();
+              //  fragment = new FAQFragment();
                 title = getString(R.string.faq);
                 break;
             case 5:
-                fragment = new TipsFragment();
+               // fragment = new TipsFragment();
                 title = getString(R.string.tips);
                 break;
             default:
@@ -184,12 +176,12 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
         public void onBackStackChanged() {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_body);
             if (fragment != null) {
-                updateTitleAndDrawer(fragment);
+               // updateTitleAndDrawer(fragment);
             }
         }
     };
 
-    private void updateTitleAndDrawer (Fragment fragment){
+   /* private void updateTitleAndDrawer (Fragment fragment){
 
         if (fragment instanceof QuickPay){
             setTitle(getString(R.string.quick_pay));
@@ -209,10 +201,12 @@ public class ActivityMainSL extends BaseActivity implements FragmentDrawer.Fragm
           else  if (fragment instanceof FAQFragment) {
         setTitle(getString(R.string.faq));
         }
+        else  if (fragment instanceof MyTariffFragment) {
+            setTitle(getString(R.string.my_tariff));}
         else {
             setTitle(getString(R.string.app_name));
         }
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
