@@ -32,8 +32,7 @@ public class NewConnectionActivity2 extends BaseActivity implements View.OnClick
                 startActivity(i);
                 break;
             case R.id.btn_continuasguest:
-                 i = new Intent(this, ActivityLoginLanding.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                 i = new Intent(this, LandingSkipLoginActivity.class);
                 startActivity(i);
                 break;
         }

@@ -71,8 +71,8 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
             i = new Intent(this, RegisterActivity.class);
             startActivity(i);
         } else if (v.getId() == R.id.btn_continue) {
-//            i = new Intent(this, ActivityLandinLogin.class);
-//            startActivity(i);
+            i = new Intent(this, LoginActivity.class);
+            startActivity(i);
         }
     }
 

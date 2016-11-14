@@ -37,7 +37,7 @@
         <activity android:name=".activity.ActivityLandingMoreOptions" />
         <activity android:name=".activity.SignupStepTwo" />
         <activity android:name=".activity.ActivityLandingLogin" />
-        <activity android:name=".activity.LandingSkipLogin" />
+        <activity android:name=".activity.LandingSkipLoginActivity" />
         <activity
             android:name=".activity.ActivityMainSL"
             android:theme="@style/Theme.DesignDemo"
@@ -70,6 +70,7 @@
         <activity android:name=".activity.RegisterActivity2" />
         <activity android:name=".activity.RegisterActivity3" />
         <activity android:name=".activity.RegisterActivity4" />
+
 
 
     </application>

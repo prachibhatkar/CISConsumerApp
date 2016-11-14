@@ -104,6 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         else if (v == actioncontinueasguest) {
+            Intent in = new Intent(this, LandingSkipLoginActivity.class);
+            startActivity(in);
 
         }
 
@@ -112,38 +114,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private boolean isBlankInput() {
         boolean b = true;
-        String username = String.valueOf(editTextUsername.getText());
-        if (username.equals("")||username.length()<10||username.length()>20) {
-            inputLayoutUsername.setError(getString(R.string.error_empty_consumer_id));
-
-            b = false;
-        } else {
-            inputLayoutUsername.setError(null);
-        }
-
-        String password = String.valueOf(editTextPassword.getText());
-        if (TextUtils.isEmpty(password)) {
-            inputLayoutPassword.setError(getString(R.string.error_empty_password));
-            b = false;
-        } else {
-            inputLayoutPassword.setError(null);
-        }
+//        String username = String.valueOf(editTextUsername.getText());
+//        if (username.equals("")||username.length()<10||username.length()>20) {
+//            inputLayoutUsername.setError(getString(R.string.error_empty_consumer_id));
+//
+//            b = false;
+//        } else {
+//            inputLayoutUsername.setError(null);
+//        }
+//
+//        String password = String.valueOf(editTextPassword.getText());
+//        if (TextUtils.isEmpty(password)) {
+//            inputLayoutPassword.setError(getString(R.string.error_empty_password));
+//            b = false;
+//        } else {
+//            inputLayoutPassword.setError(null);
+//        }
         return b;
 
     }
 
     private boolean isValidPassword(final String password) {
 
+//
+//      String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+//        pattern = Pattern.compile(PASSWORD_PATTERN);
+//        boolean p = false;
+//
+//        final EditText Password = (EditText) inputLayoutPassword.findViewById(R.id.editPassword);
+//        matcher = pattern.matcher(password);
+//        return matcher.matches();
 
-      String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        boolean p = false;
-
-        final EditText Password = (EditText) inputLayoutPassword.findViewById(R.id.editPassword);
-        matcher = pattern.matcher(password);
-        return matcher.matches();
-
-
+    return true;
 
     }
 

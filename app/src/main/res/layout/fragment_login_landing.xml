@@ -142,7 +142,8 @@
                                 android:text="Complaints"
                                 android:gravity="center"
                                 android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/text_size_h5" />
+                                android:textSize="@dimen/text_size_h5"
+                                android:id="@+id/textView" />
 
                         </LinearLayout>
                     </TableRow>

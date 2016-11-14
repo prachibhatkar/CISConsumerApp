@@ -80,9 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height_small"
         android:background="@drawable/red_button_rounded"
-        android:paddingLeft="@dimen/margin_medium"
         android:layout_marginTop="20dp"
-
         android:text="Submit"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/colorTextWhite"
