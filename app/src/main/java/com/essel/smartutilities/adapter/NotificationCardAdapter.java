@@ -77,8 +77,8 @@ public class NotificationCardAdapter  extends RecyclerView.Adapter<NotificationC
         {
             super(itemView);
             rl_notification_card=(RelativeLayout)itemView.findViewById(R.id.rl_notification_card);
-            msg = (TextView) itemView.findViewById(R.id.tv_notifications);
-            date=(TextView)itemView.findViewById(R.id.tv_date);
+            msg = (TextView) itemView.findViewById(R.id.tv_address);
+            date=(TextView)itemView.findViewById(R.id.tv_name);
         }
     }
 }
