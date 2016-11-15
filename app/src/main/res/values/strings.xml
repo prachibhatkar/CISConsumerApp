@@ -62,6 +62,26 @@
 
     </string-array>
 
+
+    <string-array name="complaints">
+        <item>complaint 1</item>
+        <item>complaint 2</item>
+        <item>complaint 3</item>
+        <item>complaint 4</item>
+        <item>Other</item>
+
+    </string-array>
+
+    <string-array name="service">
+        <item>service 1</item>
+        <item>service 2</item>
+        <item>service 3</item>
+        <item>service 4</item>
+        <item>Other</item>
+
+    </string-array>
+
+
     <!--Strings related to new connection-->
     <string name="prompt_newcomnection_full_name">Enter Full Name</string>
     <string name="prompt_newcomnection_address_line_1">Address Line 1</string>

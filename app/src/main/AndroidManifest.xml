@@ -28,16 +28,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
         <activity android:name=".activity.LandingSkipLoginActivity" />
-
-        android:name=".activity.ForgotActivity"
-        android:theme="@style/Theme.DesignDemo" />
-
+        <activity
+            android:name=".activity.ForgotActivity"
+            android:theme="@style/Theme.DesignDemo" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ActivityLoginLanding" />
         <activity android:name=".activity.ComplaintActivity" />
@@ -63,8 +62,7 @@
         <activity android:name=".activity.RegisterActivity3" />
         <activity android:name=".activity.RegisterActivity4" />
         <activity android:name=".activity.PaymentHistoryActivity" />
-
-
+        <activity android:name=".activity.GetComplaintIdActivity"></activity>
     </application>
 
 </manifest>

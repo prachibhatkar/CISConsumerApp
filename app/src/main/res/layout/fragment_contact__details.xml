@@ -5,10 +5,23 @@
     android:orientation="vertical"
     tools:context="com.essel.smartutilities.fragments.Contact_Details_Fragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:weightSum="1"
+       android:orientation="vertical">
+
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_marginLeft="5dp"
+       android:layout_marginTop="5dp"
        android:orientation="vertical">
        <TextView
            android:layout_width="match_parent"
@@ -18,6 +31,7 @@
        <TextView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
+           android:id="@+id/tv_helplineno"
            android:text="124585214"/>
 
    </LinearLayout>
@@ -37,6 +51,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_antiberiberyno"
             android:text="124585214"/>
 
     </LinearLayout>
@@ -55,6 +70,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_onlineemail"
             android:text="online@email.com"/>
 
     </LinearLayout>
@@ -75,6 +91,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_igrcemailid"
             android:text="online@email.com"/>
 
     </LinearLayout>
@@ -89,11 +106,63 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_consumerportal"
             android:text="Consumer Portal"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="www.portal.com"/>
+            android:text="www.portal.com"
+            android:id="@+id/tv_portalsite" />
 
+    </LinearLayout>
+   </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_electricitythefthelp"
+                android:text="Electricity Theft Help"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_electricitytheftno"
+                android:text="124585214"/>
+
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="30dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_igrc"
+                    android:text="IGRC"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_igrcno"
+                    android:text="124585214"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
     </LinearLayout>
 

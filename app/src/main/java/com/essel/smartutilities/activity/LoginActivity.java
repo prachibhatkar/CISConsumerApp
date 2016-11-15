@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -148,5 +149,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     return true;
 
     }
+
+
+    public void onBackPressed() {
+         DialogCreator.showExitDialog(this,getString(R.string.exit),getString(R.string.exit_message));
+        }
 
 }

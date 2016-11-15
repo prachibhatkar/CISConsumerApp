@@ -14,7 +14,7 @@ import com.essel.smartutilities.R;
 public class FeedBackActivity extends AppCompatActivity implements View.OnClickListener {
     EditText edit_remark_feedback;
     Button  btn_submit_feedback;
-     static Boolean flag =true;
+     static Boolean flag=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

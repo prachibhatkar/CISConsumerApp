@@ -26,7 +26,7 @@ public class Contact_Details_Fragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
 
-    TextView tv_helpline,tv_antiberibery,tv_onlinecomplaint,tv_igrcemail,tv_consumerportal;
+    TextView tv_helpline,tv_antiberibery,tv_onlinecomplaint,tv_igrcemail,tv_consumerportal,tv_helplineno,tv_antiberiberyno,tv_onlinecomplaintno,tv_electricitythefthelp,tv_electricitytheftno,tv_igrc,tv_igrcno;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -80,9 +80,11 @@ public class Contact_Details_Fragment extends Fragment {
         tv_antiberibery=(TextView)rootView.findViewById(R.id.tv_antiberihelp);
         tv_onlinecomplaint=(TextView)rootView.findViewById(R.id.tv_onlinehelp);
         tv_igrcemail=(TextView)rootView.findViewById(R.id.tv_igrcemail);
-        tv_consumerportal=(TextView)rootView.findViewById(R.id.tv_consumerportal);
-
-
+        tv_electricitythefthelp=(TextView)rootView.findViewById(R.id.tv_electricitythefthelp);
+        tv_electricitytheftno=(TextView)rootView.findViewById(R.id.tv_electricitytheftno);
+        tv_helplineno=(TextView)rootView.findViewById(R.id.tv_helplineno);
+        tv_antiberiberyno=(TextView)rootView.findViewById(R.id.tv_antiberiberyno);
+        tv_onlinecomplaintno=(TextView)rootView.findViewById(R.id.tv_onlineemail);
 
     }
 

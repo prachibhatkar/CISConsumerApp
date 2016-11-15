@@ -19,27 +19,21 @@ tools:context="com.essel.smartutilities.fragments.Raise_Complaint_Fragment">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="5dp">
 
-
-            <EditText
-                android:id="@+id/complaint_type"
+            <Spinner
+                android:id="@+id/sp_complainttype"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Complaint Type"
-                android:layout_marginLeft="5dp"
-                android:inputType="text"
-                android:maxLines="2"
-                android:singleLine="true"
-                android:textSize="@dimen/edit_text_size_medium" />
+                android:layout_height="@dimen/button_height_small"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_city_spinner"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="@dimen/margin_medium"
+                />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="-60dp"
-                android:id="@+id/iv_dropdown"
-                android:src="@drawable/drop_downarrow"/>
+
+
 
 
         </LinearLayout>
@@ -102,7 +96,7 @@ tools:context="com.essel.smartutilities.fragments.Raise_Complaint_Fragment">
                 android:textSize="@dimen/edit_text_size_medium" />
                 </android.support.design.widget.TextInputLayout>
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_paynow"
+            android:id="@+id/btn_submitcomplaint"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
             android:background="@drawable/red_button_rounded"

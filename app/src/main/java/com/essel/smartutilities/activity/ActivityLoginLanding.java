@@ -48,7 +48,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
 
-       /* Boolean flag = FeedBackActivity.getflag();
+      /*  Boolean flag = FeedBackActivity.getflag();
         if(flag){
 
             Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Thanks for your valuable feedback", Snackbar.LENGTH_LONG);
@@ -64,6 +64,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
 
     }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -93,7 +94,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

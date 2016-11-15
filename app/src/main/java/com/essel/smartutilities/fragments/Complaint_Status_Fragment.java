@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.essel.smartutilities.R;
 
@@ -28,7 +29,10 @@ public class Complaint_Status_Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    TextView tv_consumerid,tv_complainttype,tv_complaintraised,tv_complaintstatus;
+
     private OnFragmentInteractionListener mListener;
+    private TextView tv_complaintmsg;
 
     public Complaint_Status_Fragment() {
         // Required empty public constructor
@@ -65,7 +69,27 @@ public class Complaint_Status_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_complaint__status, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_complaint__status, container, false);
+        initialize(rootView);
+        return rootView;
+
+
+
+
+    }
+
+    private void initialize(View rootView){
+        tv_consumerid=(TextView)rootView.findViewById(R.id.tv_consumerid);
+        tv_complainttype=(TextView)rootView.findViewById(R.id.tv_complainttype);
+        tv_complaintstatus=(TextView)rootView.findViewById(R.id.tv_complaintstatus);
+        tv_complaintraised=(TextView)rootView.findViewById(R.id.tv_complaintraised);
+        tv_complaintmsg=(TextView)rootView.findViewById(R.id.tv_complaintmsg);
+
+
+
+
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

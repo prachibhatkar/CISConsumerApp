@@ -11,11 +11,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.activity.GetComplaintIdActivity;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,12 +37,21 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     private static final int CAPTURE_IMAGE=1;
     private int count = 0;
     ImageView iv;
+    Spinner complainttype;
+    Button btn_submitcomplaint;
     @Override
     public void onClick(View v) { if(v==img){
 
         Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
+
     }
+
+        if(v==btn_submitcomplaint){
+
+            Intent in =new Intent(getActivity(),GetComplaintIdActivity.class);
+            startActivity(in);
+        }
     }
 
 
@@ -153,105 +167,20 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         img=(ImageView)rootView.findViewById(R.id.imgv_camera);
         iv = (ImageView)rootView.findViewById(R.id.iv_captured_image);
         img.setOnClickListener(this);
+        btn_submitcomplaint=(Button)rootView.findViewById(R.id.btn_submitcomplaint);
+        btn_submitcomplaint.setOnClickListener(this);
 
-      //  prepareListData();
+        complainttype = (Spinner)rootView.findViewById(R.id.sp_complainttype);
+        String[] type = mContext.getResources().getStringArray(R.array.complaints);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, Arrays.asList(type));
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        complainttype.setAdapter(dataAdapter);
 
-        //listAdapter = new ExpandablelistAdapter(getActivity(), listDataHeader, listDataChild);
-       // expListView.setAdapter(listAdapter);
-
-      //  Log.i("groups", listDataHeader.toString());
-       // Log.i("details", listDataChild.toString());
-
-       // linear_layout_imageview.setOnClickListener(this);
-
-        // Listview Group click listener
-       // expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-
-           /* public boolean onGroupClick(ExpandableListView parent, View v,int groupPosition, long id) {
-                // Toast.makeText(getApplicationContext(),
-                // "Group Clicked " + listDataHeader.get(groupPosition),
-                // Toast.LENGTH_SHORT).show();
-                return false;
-            }*/
-       // });
-
-        // Listview Group expanded listener
-       /* expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                //Toast.makeText(getActivity().getApplicationContext(),listDataHeader.get(groupPosition) + " Expanded",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Listview Group collasped listener
-        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                //Toast.makeText(getActivity().getApplicationContext(),listDataHeader.get(groupPosition) + " Collapsed",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Listview on child click listener
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                Toast.makeText(getActivity().getApplicationContext(),listDataHeader.get(groupPosition) + " : " + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });*/
         return rootView;
     }
 
 
-   /* private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
 
-        
-        listDataHeader.add("No Power Complaints");
-        listDataHeader.add("Meter Complaints");
-        listDataHeader.add("Bill Complaints");
-        listDataHeader.add("Reconnection/Disconnection");
-
-        // Adding child data
-        List<String> NoPowerComplaints = new ArrayList<String>();
-        NoPowerComplaints.add("Subtype one");
-        NoPowerComplaints.add("Subtype two");
-        NoPowerComplaints.add("Subtype three");
-        NoPowerComplaints.add("Subtype four");
-        List<String> MeterComplaints = new ArrayList<String>();
-        MeterComplaints.add("Subtype one");
-        MeterComplaints.add("Subtype two");
-        MeterComplaints.add("Subtype three");
-        MeterComplaints.add("Subtype four");
-
-        List<String> BillComplaints = new ArrayList<String>();
-        BillComplaints.add("Subtype one");
-        BillComplaints.add("Subtype two");
-        BillComplaints.add("Subtype three");
-        BillComplaints.add("Subtype four");
-
-
-        List<String> Reconnection = new ArrayList<String>();
-        Reconnection.add("Subtype one");
-        Reconnection.add("Subtype two");
-        Reconnection.add("Subtype three");
-        Reconnection.add("Subtype four");
-
-        listDataChild.put(listDataHeader.get(0), NoPowerComplaints); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), MeterComplaints);
-        listDataChild.put(listDataHeader.get(2), BillComplaints);
-        listDataChild.put(listDataHeader.get(3), Reconnection);
-
-    }*/
-
-    // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_raise__complaint, container, false);
 
 
     // TODO: Rename method, update argument and hook method into UI event

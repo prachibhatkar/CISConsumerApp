@@ -1,15 +1,47 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:orientation="vertical"
 tools:context="com.essel.smartutilities.fragments.Complaint_Status_Fragment">
 
-<!-- TODO: Update blank fragment layout -->
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="10dp"
+     android:orientation="horizontal">
+
+
+     <EditText
+         android:id="@+id/complaint_id"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:hint="Complaint id"
+         android:layout_marginLeft="5dp"
+         android:inputType="text"
+         android:maxLines="2"
+         android:singleLine="true"
+         android:textSize="@dimen/edit_text_size_medium" />
+
+     <ImageView
+         android:layout_width="20dp"
+         android:layout_height="20dp"
+         android:layout_marginLeft="-60dp"
+         android:id="@+id/iv_dropdown"
+         android:src="@drawable/drop_downarrow"/>
+
+ </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Consumer Id:100215 "
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="5dp"
     android:textColor="@color/colorPrimaryDarkText"
     android:layout_gravity="center_horizontal"
     android:id="@+id/tv_consumerid"/>
@@ -18,19 +50,39 @@ tools:context="com.essel.smartutilities.fragments.Complaint_Status_Fragment">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:id="@+id/tv_complainttype"
     android:text="Complaint Type: Meter Complaint"
     android:textColor="@color/colorPrimaryDarkText"
     android:layout_gravity="center_horizontal"
-    android:layout_marginTop="50dp" />
+     />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_complaintmsg"
+        android:text="I want to Change my Meter"
+        android:textColor="@color/colorPrimaryDarkText"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_complaintraised"
+        android:text="Raised On: 22 june 2016"
+        android:textColor="@color/colorPrimaryDarkText"
+        android:layout_gravity="center_horizontal"
+        />
 
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="70dp"
     android:layout_gravity="center_horizontal"
-    android:text="complaint Status: Pending"
+    android:id="@+id/tv_complaintstatus"
+    android:text=" Pending"
     android:textColor="@color/colorPrimaryDarkText"/>
 
 
-
-</FrameLayout>
+</LinearLayout>
+</LinearLayout>
