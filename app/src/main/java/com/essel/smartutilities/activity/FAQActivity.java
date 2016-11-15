@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -34,6 +36,35 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         initialize();
     }
 
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.top_right_faq, menu);
+        return true;
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_detail_view) {
+            expandableLayout_newserviceconnection.collapse();
+            expandableLayout_changeofownership.collapse();
+            expandableLayout_changeofconnectiontype.collapse();
+            expandableLayout_loadextensionreduction.collapse();
+            expandableLayout_permanantdisconnect.collapse();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initialize(){
         expandablebutton_newserviceconnection=(Button)findViewById(R.id.expandableButton_newconnection);
         expandablebutton_changeofownership=(Button)findViewById(R.id.expandableButton_changeofowner);
@@ -47,6 +78,12 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         expandablebutton_loadextensionreduction.setOnClickListener(this);
         expandablebutton_permanantdisconnec.setOnClickListener(this);
 
+        expandableLayout_newserviceconnection = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_newconnection);
+        expandableLayout_changeofownership = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofownership);
+        expandableLayout_loadextensionreduction = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_loadextensionreduction);
+        expandableLayout_permanantdisconnect = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout_permanantdisconnect);
+        expandableLayout_changeofconnectiontype = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofconnection);
+
     }
 
 
@@ -55,26 +92,26 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
 
            if(v==expandablebutton_newserviceconnection) {
-               expandableLayout_newserviceconnection = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_newconnection);
+
                expandableLayout_newserviceconnection.toggle();
            }
 
         if(v==expandablebutton_changeofownership) {
-            expandableLayout_changeofownership = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofownership);
+
             expandableLayout_changeofownership.toggle();
 
         }
         if(v==expandablebutton_changeofconnectiontype) {
-            expandableLayout_changeofconnectiontype = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofconnection);
+
             expandableLayout_changeofconnectiontype.toggle();
 
         }
         if(v==expandablebutton_loadextensionreduction) {
-            expandableLayout_loadextensionreduction = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_loadextensionreduction);
+
             expandableLayout_loadextensionreduction.toggle();
         }
         if(v==expandablebutton_permanantdisconnec) {
-                expandableLayout_permanantdisconnect = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout_permanantdisconnect);
+
                 expandableLayout_permanantdisconnect.toggle();
 
         }
