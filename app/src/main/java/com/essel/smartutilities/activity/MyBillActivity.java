@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 import com.jjoe64.graphview.GraphView;
@@ -28,6 +29,13 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         graph.setTitle("My Consumtion (Units):Last Six Months");
         btn_billhistory = (Button) findViewById(R.id.btn_history);
         btn_billhistory.setOnClickListener(this);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                 new DataPoint(0, 125),
                 new DataPoint(1, 220),
@@ -68,7 +76,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Bill");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         intialize();
     }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,8 +54,13 @@ protected void onCreate(Bundle savedInstanceState) {
         inputLayoutEmailId = (TextInputLayout)findViewById(R.id.inputLayoutEmailId);
         btnActionSubmit = (Button)findViewById(R.id.action_submit);
         btnActionSubmit.setOnClickListener(this);
-//        actionLogin = (TextView)findViewById(R.id.action_login);
-//        actionLogin.setOnClickListener(this);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
          connectiontype = (Spinner) findViewById(R.id.sp_connectiontype);

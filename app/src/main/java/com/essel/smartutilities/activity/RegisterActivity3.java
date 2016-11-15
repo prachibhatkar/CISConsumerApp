@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 
@@ -28,7 +29,13 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
     private void initialize(){
         buttonVerify = (AppCompatButton) findViewById(R.id.btn_verify);
         buttonVerify.setOnClickListener(this);
-
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

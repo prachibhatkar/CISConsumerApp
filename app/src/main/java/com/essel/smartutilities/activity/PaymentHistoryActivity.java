@@ -25,27 +25,26 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
-public class ManageAccountsActivity extends AppCompatActivity implements View.OnClickListener {
+public class PaymentHistoryActivity extends AppCompatActivity implements View.OnClickListener, PaymentHistoryAdapter.OnRecycleItemClickListener {
     RecyclerView rv_consumers;
-    ImageView add,imgBack;
+    ImageView add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_accounts);
+        setContentView(R.layout.activity_payment_history);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("Manage Accounts");
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        add = (ImageView) findViewById(R.id.add_new);
-        add.setOnClickListener(this);
-        rv_consumers = (RecyclerView) findViewById(R.id.recycler);
+
+        rv_consumers = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
-        ManageAccountAdapter adapter = new ManageAccountAdapter(this, consumers);
+        PaymentHistoryAdapter adapter = new PaymentHistoryAdapter(this, consumers, this);
         rv_consumers.setAdapter(adapter);
         rv_consumers.setLayoutManager(layoutManager);
-        imgBack = (ImageView) findViewById(R.id.img_back);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,12 +62,12 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add_new: {
-                Intent i = new Intent(this, RegisterActivity.class);
-                startActivity(i);
-                break;
-            }
-        }
+
+
+    }
+
+    @Override
+    public void onItemClick(Consumer consumer) {
+
     }
 }

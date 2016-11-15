@@ -31,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.my_profile);
         toolbar.setTitleTextColor(Color.WHITE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         setupUI();
         loadData();

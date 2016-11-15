@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 
@@ -22,6 +23,13 @@ public class NewConnectionActivity2 extends BaseActivity implements View.OnClick
         Button guest = (Button) findViewById(R.id.btn_continuasguest);
         login.setOnClickListener(this);
         guest.setOnClickListener(this);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

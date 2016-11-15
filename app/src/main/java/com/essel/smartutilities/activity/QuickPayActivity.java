@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 
@@ -30,6 +31,13 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         consumerno = (EditText) findViewById(R.id.consumer_id);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

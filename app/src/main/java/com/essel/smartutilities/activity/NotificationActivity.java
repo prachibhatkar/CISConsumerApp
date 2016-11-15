@@ -34,8 +34,8 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         mContext=this;
-//        imgBack = (ImageView) findViewById(R.id.img_back);
-//        imgBack.setOnClickListener(this);
+        imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(this);
         title=(TextView)findViewById(R.id.title_bar);
         title.setTypeface(regular);
 

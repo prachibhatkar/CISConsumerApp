@@ -18,6 +18,7 @@ import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.ComplaintActivity;
 import com.essel.smartutilities.activity.Contact_Us_Activity;
 import com.essel.smartutilities.activity.ManageAccountsActivity;
+import com.essel.smartutilities.activity.PaymentHistoryActivity;
 import com.essel.smartutilities.activity.ProfileActivity;
 import com.essel.smartutilities.activity.QuickPayActivity;
 import com.essel.smartutilities.activity.ServiceActivity;
@@ -160,8 +161,8 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
         }
 
         else if(view==actionpaymenthistory){
-//            Intent i = new Intent(getActivity(), ComplaintActivity.class);
-//            startActivity(i);
+            Intent i = new Intent(getActivity(), PaymentHistoryActivity.class);
+            startActivity(i);
         }
         else if(view==actioncontactus){
             Intent i = new Intent(getActivity(), Contact_Us_Activity.class);

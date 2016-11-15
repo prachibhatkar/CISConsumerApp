@@ -86,7 +86,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
 
         if (id == R.id.action_notifications) {
-
+            Intent i = new Intent(this, NotificationActivity.class);
+            startActivity(i);
             return true;
         }
 

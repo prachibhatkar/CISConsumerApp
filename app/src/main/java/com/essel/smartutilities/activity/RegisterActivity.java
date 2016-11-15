@@ -43,9 +43,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextConsumerId = (EditText) findViewById(R.id.editPassword);
         inputLayoutConsumerId = (TextInputLayout) findViewById(R.id.inputLayoutConsumerId);
         btnNext.setOnClickListener(this);
-//        btnLogin.setOnClickListener(this);
-//        fabNewConnection = (ImageView) findViewById(R.id.fab_new_connection);
-//        fabNewConnection.setOnClickListener(this);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         sp_city = (Spinner) findViewById(R.id.sp_city);
         String[] routes = mContext.getResources().getStringArray(R.array.City);

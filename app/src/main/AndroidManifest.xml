@@ -33,19 +33,11 @@
             android:value="@string/google_maps_key" />
 
 
-        <activity android:name=".activity.StartActivity"/>
-        <activity android:name=".activity.ActivityLandingMoreOptions" />
-        <activity android:name=".activity.SignupStepTwo" />
-        <activity android:name=".activity.ActivityLandingLogin" />
         <activity android:name=".activity.LandingSkipLoginActivity" />
-        <activity
-            android:name=".activity.ActivityMainSL"
-            android:theme="@style/Theme.DesignDemo"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.ForgotActivity"
-            android:theme="@style/Theme.DesignDemo" />
-        <activity android:name=".activity.ActivityMainLogin" />
+
+        android:name=".activity.ForgotActivity"
+        android:theme="@style/Theme.DesignDemo" />
+
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ActivityLoginLanding" />
         <activity android:name=".activity.ComplaintActivity" />
@@ -70,7 +62,7 @@
         <activity android:name=".activity.RegisterActivity2" />
         <activity android:name=".activity.RegisterActivity3" />
         <activity android:name=".activity.RegisterActivity4" />
-
+        <activity android:name=".activity.PaymentHistoryActivity" />
 
 
     </application>

@@ -6,4 +6,5 @@ package com.essel.smartutilities.models;
 public class NotificationCard {
     public String message;
     public String date;
+    public String title;
 }

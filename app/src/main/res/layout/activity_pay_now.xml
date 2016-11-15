@@ -8,8 +8,8 @@
         android:id="@+id/inputLayoutamtountpaying"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/view">
+        android:layout_below="@+id/view"
+        android:layout_marginTop="50dp">
 
         <EditText
             android:id="@+id/amt_paying"
@@ -19,7 +19,6 @@
             android:imeActionId="@+id/login"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
-            android:textSize="@dimen/edit_text_size_medium"
 
             />
 
@@ -30,10 +29,10 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height_small"
         android:layout_below="@+id/inputLayoutamtountpaying"
-        android:text="Pay Now"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimaryDark"
+        android:text="Pay Now"
         android:textColor="@color/colorTextWhite"
         android:textSize="@dimen/button_text_size_small" />
 
@@ -41,11 +40,51 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar"
         android:background="@color/colorPrimaryDark"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:id="@+id/rel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/consumer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="Barry Alen"
+                android:textColor="@color/colorTextWhite" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/consumer_name"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lbl_consumerno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="Consumer No: "
+                    android:textColor="@color/colorTextWhite" />
+
+                <TextView
+                    android:id="@+id/consumerno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="5463451431513"
+                    android:textColor="@color/colorTextWhite" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl1"
@@ -53,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="50dp">
 
             <TextView
                 android:id="@+id/rs"
@@ -87,8 +126,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/rl1"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -121,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -153,8 +192,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="80dp">
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="120dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -187,7 +226,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="80dp">
+            android:layout_marginTop="120dp">
 
             <TextView
                 android:id="@+id/duedate_month"
@@ -220,13 +259,13 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -235,11 +274,11 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!--<ImageView-->
-            <!--android:id="@+id/img_back"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_action_back" />-->
+            <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_name" />
 
             <TextView
                 android:id="@+id/title_bar"
