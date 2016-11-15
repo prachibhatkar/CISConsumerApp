@@ -25,10 +25,7 @@
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
             android:src="@drawable/top_bg"
-            app:layout_collapseMode="parallax"
-
-
-            />
+            app:layout_collapseMode="parallax" />
 
         <TextView
             android:layout_width="match_parent"

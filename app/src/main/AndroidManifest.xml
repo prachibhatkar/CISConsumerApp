@@ -62,7 +62,8 @@
         <activity android:name=".activity.RegisterActivity3" />
         <activity android:name=".activity.RegisterActivity4" />
         <activity android:name=".activity.PaymentHistoryActivity" />
-        <activity android:name=".activity.GetComplaintIdActivity"></activity>
+        <activity android:name=".activity.GetComplaintIdActivity" />
+        <activity android:name=".activity.ForgotActivity2"></activity>
     </application>
 
 </manifest>

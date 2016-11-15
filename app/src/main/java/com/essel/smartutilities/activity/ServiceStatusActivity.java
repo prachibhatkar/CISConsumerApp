@@ -44,15 +44,12 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         if(v==btn_service_status_continue){
 
+            Intent in = new Intent(this,ActivityLoginLanding.class);
+            startActivity(in);
+
 
         }
         else if(v==btn_locate_us){
-
-           /* Fragment fragment = new Locate_Us_Fragment();
-            FragmentManager fragmanager=this.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmanager.beginTransaction();
-            fragmentTransaction.replace(R.id.container,fragment);
-            fragmentTransaction.commit();*/
 
             Intent in = new Intent(this,Contact_Us_Activity.class);
             startActivity(in);

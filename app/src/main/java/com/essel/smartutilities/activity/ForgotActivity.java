@@ -1,6 +1,7 @@
 package com.essel.smartutilities.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -39,19 +40,22 @@ public class ForgotActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private void showSuccess(){
+    /*private void showSuccess(){
 
         dialogSucccess = new Dialog(this, R.style.verify_dialog);
         dialogSucccess.setContentView(R.layout.dialog_success);
         dialogSucccess.setCancelable(true);
         dialogSucccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogSucccess.show();
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
         if(v==actionSubmit) {
-            showSuccess();
+
+            Intent in = new Intent(this,ForgotActivity2.class);
+            startActivity(in);
+            //showSuccess();
         }
         else if(v==actionok){
             dialogSucccess.hide();

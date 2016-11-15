@@ -12,7 +12,6 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
         >
@@ -103,7 +102,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/background_toolbar_translucent"
+            android:background="?attr/colorPrimary"
             local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             />

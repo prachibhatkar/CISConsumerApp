@@ -58,8 +58,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             expandableLayout_changeofconnectiontype.collapse();
             expandableLayout_loadextensionreduction.collapse();
             expandableLayout_permanantdisconnect.collapse();
-
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -108,7 +108,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         }
         if(v==expandablebutton_loadextensionreduction) {
 
-            expandableLayout_loadextensionreduction.toggle();
+             expandableLayout_loadextensionreduction.toggle();
         }
         if(v==expandablebutton_permanantdisconnec) {
 

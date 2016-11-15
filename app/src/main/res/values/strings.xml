@@ -189,6 +189,9 @@
     <string name="prompt_total_amount">Enter Total Amount</string>
     <string name="prompt_proceed_to_pay">Proceed to Pay</string>
 
+    <string name="forgotpass_msg">Password Reset Link Sent on Registered Emailid</string>
+    <string name="forgotpass_msgtwo">If you dont receive mail,Check your Spam Folder or Contact to support team.</string>
+
 
     <string name="title_activity_forgot">ForgotActivity</string>
     <string name="want_to">Want to</string>
