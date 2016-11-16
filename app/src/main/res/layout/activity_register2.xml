@@ -1,210 +1,249 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_name" />
+
+            <TextView
+                android:id="@+id/title_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Register"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/cardview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/colorPrimaryDark"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:orientation="vertical"-->
+        <!--android:padding="@dimen/margin_large">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/textConsumerName"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Ashu Singh"-->
+            <!--android:textColor="@color/colorTextWhite"-->
+            <!--android:textSize="@dimen/button_text_size_medium"-->
+            <!--android:textStyle="bold" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/textConsumerAddress"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/margin_small"-->
+            <!--android:maxLines="3"-->
+            <!--android:text="15, Plot A, Mohan nagar, Industrial Area, Sahibabad, Gaziyabad, Uttar Pradesh - 201302"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="@color/colorTextWhite"-->
+            <!--android:textSize="@dimen/button_text_size_small" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/textConsumerConnectionType"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/margin_small"-->
+            <!--android:text="Connection - Residential"-->
+            <!--android:textColor="@color/colorTextWhite"-->
+            <!--android:textSize="@dimen/button_text_size_small" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/textConsumerMobileNo"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Mobile Number - 959XXXX117"-->
+            <!--android:textColor="@color/colorTextWhite"-->
+            <!--android:textSize="@dimen/button_text_size_small" />-->
+
+
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:orientation="vertical">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+
+        <TextView
+
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_gravity="center_horizontal"
+            android:text="@string/title_verify_number"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/button_text_size_large"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                android:id="@+id/img_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_name" />
-
-                <TextView
-                    android:id="@+id/title_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="Register"
-                    android:textColor="#ffffff"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-
+            />
 
         <LinearLayout
-            android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_large">
-
-            <TextView
-                android:id="@+id/textConsumerName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ashu Singh"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/button_text_size_medium"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textConsumerAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:maxLines="3"
-                android:text="15, Plot A, Mohan nagar, Industrial Area, Sahibabad, Gaziyabad, Uttar Pradesh - 201302"
-                android:textAlignment="center"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/button_text_size_small" />
-
-            <TextView
-                android:id="@+id/textConsumerConnectionType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:text="Connection - Residential"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/button_text_size_small" />
-
-            <TextView
-                android:id="@+id/textConsumerMobileNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mobile Number - 959XXXX117"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/button_text_size_small" />
-
-
-        </LinearLayout>
-
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cardview">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_large">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
+                <TextView
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/inputLayoutMobileNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="@string/title_verify_desc_line1"
+                    android:textAlignment="center"
+
+                    android:textSize="@dimen/button_text_size_small"
+
+                    />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:errorTextAppearance="@style/error_appearance"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-                    >
-
-                    <EditText
-                        android:id="@+id/editMobileNo"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_mobile_number"
-                        android:inputType="phone"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/edit_text_size_medium" />
+                        android:text="@string/title_verify_desc_line2"
+                        android:textAlignment="center"
 
-                </android.support.design.widget.TextInputLayout>
+                        android:textSize="@dimen/button_text_size_small"
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/inputLayoutEmailId"
+                        />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 959XXXX117"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimary"
+
+                        android:textSize="@dimen/button_text_size_small" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/inputLayoutOtp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:errorTextAppearance="@style/error_appearance"
+
+                >
+
+                <EditText
+                    android:id="@+id/edit_otp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:errorTextAppearance="@style/error_appearance"
-
-                    >
-
-                    <EditText
-                        android:id="@+id/editEmailId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_email_id"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/edit_text_size_medium" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/inputLayoutPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:errorTextAppearance="@style/error_appearance"
-
-                    >
-
-                    <EditText
-                        android:id="@+id/editPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_epassword"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/edit_text_size_medium" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/inputLayoutRetypePassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:errorTextAppearance="@style/error_appearance"
-
-                    >
-
-                    <EditText
-                        android:id="@+id/editRetypePassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_repassword"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textSize="@dimen/edit_text_size_medium" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_register"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/red_button_rounded"
-                    android:text="@string/action_register"
-                    android:textAllCaps="true"
-                    android:textAppearance="@style/AlertDialog.AppCompat.Light"
-                    android:textColor="@color/colorTextWhite"
-                    android:textSize="@dimen/button_text_size_medium" />
+                    android:gravity="center_horizontal"
+                    android:hint="@string/prompt_otp"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/margin_large"
+                    android:singleLine="true"
+                    android:textSize="@dimen/edit_text_size_medium" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_verify"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/red_button_rounded"
+                android:text="@string/action_verify"
+                android:textAllCaps="true"
+                android:textAppearance="@style/AlertDialog.AppCompat.Light"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="@dimen/button_text_size_medium" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/error_receive_otp" />
+
+                <TextView
+                    android:id="@+id/action_resend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Resend"
+                    android:textColor="@color/colorPrimaryDark" />
 
 
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+
+            <LinearLayout
+                android:id="@+id/action_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!--<ImageView-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:src="@drawable/ic_action_skip_gray" />-->
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Cancel"-->
+                <!--/>-->
+
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>

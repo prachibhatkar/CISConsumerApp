@@ -57,4 +57,6 @@ public class Consumer implements Serializable {
         }
         return contacts;
     }
+
+
 }

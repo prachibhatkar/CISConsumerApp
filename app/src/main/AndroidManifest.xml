@@ -3,12 +3,14 @@
     package="com.essel.smartutilities">
 
     <!-- permission -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <!-- Required to show current location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -58,8 +60,8 @@
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.ManageAccountsActivity" />
         <activity android:name=".activity.NewConnectionActivity2" />
-        <activity android:name=".activity.RegisterActivity2" />
         <activity android:name=".activity.RegisterActivity3" />
+        <activity android:name=".activity.RegisterActivity2" />
         <activity android:name=".activity.RegisterActivity4" />
         <activity android:name=".activity.PaymentHistoryActivity" />
         <activity android:name=".activity.GetComplaintIdActivity" />
