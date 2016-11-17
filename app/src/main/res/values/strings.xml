@@ -11,7 +11,7 @@
     <string name="title_activity_signup">SignupActivity</string>
 
     <!-- Strings related to login -->
-    <string name="promt_consumer_id">Consumer Id or Mobile No.</string>
+    <string name="promt_consumer_id">Consumer Number or Mobile No.</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Log In</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -210,10 +210,12 @@
     <string name="industrial">Industrial</string>
     <string name="other">Other</string>
 
-    <string name="documents">" Following Document Required "\n"1) Application Form"\n"2) Electric Bill"\n"3) ID Proof"</string>
+
     <string name="tipone"> Switch Off the lights when not in use.</string>
     <string name="tiptwo">AC Temperature should be set between 24-26. </string>
     <string name="tipthree">Use LEDs instead of regular Tubelights.</string>
+
+    <string name="complaintidmsg">Your Complaint Registered with us</string>
 
 
 </resources>

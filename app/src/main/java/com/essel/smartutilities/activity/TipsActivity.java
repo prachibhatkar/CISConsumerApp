@@ -3,6 +3,7 @@ package com.essel.smartutilities.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import com.essel.smartutilities.adapter.TipsAdapter;
 
 public class TipsActivity extends AppCompatActivity {
     private ViewPager vp_tips;
+    private TabLayout tabLayout;
     private TipsAdapter tipsAdapter;
     private Context mContext;
     @Override
@@ -29,6 +31,7 @@ public class TipsActivity extends AppCompatActivity {
 
     private void setupUI() {
         vp_tips = (ViewPager)findViewById(R.id.vp_tips_pager);
+        tabLayout=(TabLayout)findViewById(R.id.tablayout);
 
     }
 
@@ -36,6 +39,8 @@ public class TipsActivity extends AppCompatActivity {
         tipsAdapter = new TipsAdapter(this, getSupportFragmentManager());
         vp_tips.setAdapter(tipsAdapter);
         vp_tips.addOnPageChangeListener(onPageChangedListener);
+        tabLayout.setupWithViewPager(vp_tips);
+
 
 
     }
@@ -52,6 +57,7 @@ public class TipsActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrollStateChanged(int state) {
+
 
         }
     };

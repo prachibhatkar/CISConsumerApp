@@ -38,7 +38,7 @@ public class TipsAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
-    public CharSequence getPageTitle(int position) {
+   /* public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
                 return mContext.getString(R.string.tips);
@@ -50,7 +50,7 @@ public class TipsAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
-    }
+    }*/
 
     @Override
     public int getCount() {
