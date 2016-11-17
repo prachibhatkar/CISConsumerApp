@@ -45,7 +45,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         maintitle.setText("31513153515");
         TextView subtitle = (TextView) findViewById(R.id.subtitle_bar);
         subtitle.setText("Barry Alen");
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Button bill = (Button) findViewById(R.id.btn_mybill);
         bill.setOnClickListener(this);
         Button pay = (Button) findViewById(R.id.btn_paynow);

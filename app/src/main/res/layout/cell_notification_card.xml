@@ -13,7 +13,8 @@
         android:layout_marginTop="5dp"
         android:clickable="true"
         android:focusable="true"
-
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         card_view:cardCornerRadius="5dp"
@@ -27,43 +28,41 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_consumerid"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
                 android:layout_marginLeft="5dp"
-                android:text="Power cut  "
+                android:text="Power cut"
                 android:textColor="#424242"
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_below="@+id/tv_consumerid"
+                android:layout_below="@+id/tv_title"
                 android:layout_marginLeft="5dp"
-                android:gravity="center_horizontal|center_vertical"
                 android:text="Today"
                 android:textColor="#424242"
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/tv_address"
+                android:id="@+id/tv_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_name"
+                android:layout_below="@+id/tv_date"
                 android:layout_gravity="left"
                 android:layout_marginLeft="5dp"
                 android:text="asdfasdfasdfasdf asdf asdf asdf asdf asdf asdfmglkdjfj'vdsf'ddjsf"
                 android:textColor="#424242"
                 android:textSize="15dp" />
             <ImageView
+                android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginLeft="280dp"
-                android:layout_alignLeft="@+id/tv_consumerid"
+                android:layout_alignLeft="@+id/tv_title"
                 android:background="@android:drawable/ic_menu_delete"/>
         </RelativeLayout>
 

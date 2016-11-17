@@ -58,9 +58,10 @@ public class NotificationActivity extends Activity implements View.OnClickListen
 
         notification=new ArrayList<>();
             NotificationCard mNotificationCard = new NotificationCard();
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 5; i++) {
                 mNotificationCard.message="hfg dsfhojd sdfsdnj hvjhv ikgg bg dbvjbv fdnldsj sfnsld sfd ";
                 mNotificationCard.date="Aug 20";
+                mNotificationCard.title="Power Cut";
                 notification.add(mNotificationCard);
             }
         }
