@@ -32,7 +32,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("FAQ");
         toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initialize();
     }
 

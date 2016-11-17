@@ -136,7 +136,7 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
         if(view==actionmore) {
             Fragment fragment = new LoginLandingmoreFragment();
             addFragment(fragment, true);
-            getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+           getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
 
         else if(view==actionservices){

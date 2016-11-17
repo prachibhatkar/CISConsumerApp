@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_complaintid"
-            android:text="Complaint Id:5478124589 "/>
+            android:text="Complaint Number :5478124589 "/>
 
 </LinearLayout>
 
@@ -48,11 +48,5 @@
         android:layout_below="@+id/inputLayoutremark"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
-
-
-
-
-
-
 
 </LinearLayout>

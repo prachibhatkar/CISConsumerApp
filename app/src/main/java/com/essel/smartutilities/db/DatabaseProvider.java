@@ -35,7 +35,7 @@ import com.essel.smartutilities.db.tables.LoginTable;
 /**
  * This class provides Content Provider for application database
  *
- * @author Amol Chavan
+
  */
 public class DatabaseProvider extends ContentProvider {
 

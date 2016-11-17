@@ -61,9 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:weightSum="2"
-                        android:layout_marginBottom="@dimen/text_size_h8"
-
-                        >
+                        android:layout_marginBottom="@dimen/text_size_h8">
 
                         <TextView
                             android:id="@+id/consumption_slab1"
@@ -75,7 +73,7 @@
                             android:layout_marginRight="@dimen/text_size_h8"
                             android:gravity="center"/>
                         <TextView
-                            android:id="@+id/TextView2"
+                            android:id="@+id/tv_bplcatagory"
                             android:text="BPL Category"
                             android:layout_weight="1"
                             android:background="#ffffff"
@@ -90,9 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:weightSum="2"
-                        android:layout_marginBottom="@dimen/text_size_h9"
-
-                        >
+                        android:layout_marginBottom="@dimen/text_size_h9">
 
                         <TextView
                             android:text="0-100 Units"
@@ -117,14 +113,11 @@
                         android:id="@+id/tableRow3"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:weightSum="2"
-                        android:layout_marginBottom="15dp"
-
-                        >
+                        android:weightSum="2">
 
                         <TextView
                             android:id="@+id/R3C1"
-                            android:text="Energy change(Rs/KWH)"
+                            android:text="Energy change"
                             android:layout_weight="1"
                             android:background="#ffffff"
                             android:textColor="#666666"

@@ -40,7 +40,7 @@ tools:context="com.essel.smartutilities.fragments.Complaint_Status_Fragment">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Consumer Id:100215 "
+    android:text="Consumer Number:100215 "
     android:layout_marginTop="5dp"
     android:textColor="@color/colorPrimaryDarkText"
     android:layout_gravity="center_horizontal"

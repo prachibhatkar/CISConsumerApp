@@ -55,22 +55,11 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
             startActivity(in);
 
 
-
-
         }
 
     }
 
-    public void switchTab(int tab){
 
-        TabHost tabHost = getTabHost();
-        tabHost.setCurrentTab(tab);
-    }
-
-    private TabHost getTabHost() {
-       return (TabHost)getCurrentFocus();
-
-    }
 
 
 

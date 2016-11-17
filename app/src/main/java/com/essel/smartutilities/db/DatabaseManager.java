@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * This class acts as an interface between database and UI. It contains all the
  * methods to interact with device database.
  *
- * @author Amol Chavan
+
  */
 public class DatabaseManager {
 

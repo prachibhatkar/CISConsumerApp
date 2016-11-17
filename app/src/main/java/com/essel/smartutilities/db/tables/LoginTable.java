@@ -31,7 +31,7 @@ import com.essel.smartutilities.db.ContentDescriptor;
  * This class describes all necessary info
  * about the UserLogin Table of device database
  *
- * @author Amol Chavan
+
  */
 public class LoginTable {
 
@@ -43,7 +43,7 @@ public class LoginTable {
     /**
      * This class contains Constants to describe name of Columns of UserLoginTable
      *
-     * @author Amol Chavan
+
      */
     public static class Cols {
         public static final String ID = "_id";

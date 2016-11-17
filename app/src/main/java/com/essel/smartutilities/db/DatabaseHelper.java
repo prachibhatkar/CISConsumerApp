@@ -36,7 +36,7 @@ import java.text.MessageFormat;
 /**
  * SqliteOpenHeler class for application database
  *
- * @author Amol Chavan
+
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
