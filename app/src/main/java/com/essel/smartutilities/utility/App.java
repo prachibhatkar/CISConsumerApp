@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 
@@ -19,8 +20,9 @@ public class App extends MultiDexApplication {
     public static final String TAG = App.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private static App mInstance;
-    public ArrayList<String> permissions;
 
+    public ArrayList<String> permissions;
+    public static Boolean dropdown = true;
 
     @Override
     public void onCreate() {
@@ -32,6 +34,10 @@ public class App extends MultiDexApplication {
 
     public static synchronized App getInstance() {
         return mInstance;
+    }
+
+    public static boolean getdropdown() {
+    return dropdown;
     }
 
     public RequestQueue getRequestQueue() {

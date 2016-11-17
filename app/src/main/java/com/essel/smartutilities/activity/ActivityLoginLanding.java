@@ -16,40 +16,51 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
+import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.DialogCreator;
 
 public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener {
+    TextView maintitle;
+    LinearLayout img, button, table;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_landing);
-        boolean flag1 = true;
-        Context context;
+        img = (LinearLayout) findViewById(R.id.linear_img);
+        button = (LinearLayout) findViewById(R.id.linear_lay_button);
+        table = (LinearLayout) findViewById(R.id.container);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("10201458201");
-        getSupportActionBar().setSubtitle("Ashu Singh");
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setSubtitleTextColor(Color.WHITE);
+        boolean flag1 = true;
+        ImageView drop = (ImageView) findViewById(R.id.img_drowdown);
+        drop.setOnClickListener(this);
+        maintitle = (TextView) findViewById(R.id.title_bar);
+        maintitle.setText("31513153515");
+        TextView subtitle = (TextView) findViewById(R.id.subtitle_bar);
+        subtitle.setText("Barry Alen");
+
         Button bill = (Button) findViewById(R.id.btn_mybill);
         bill.setOnClickListener(this);
         Button pay = (Button) findViewById(R.id.btn_paynow);
         pay.setOnClickListener(this);
         // toolbar.setOnMenuItemClickListener(ActionBar.DISPLAY_SHOW_HOME);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         Fragment fragment = new LoginLandingFragment();
         FragmentManager fragmanager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
 
-       Boolean flag = FeedBackActivity.getflag();
-        if(flag){
+        Boolean flag = FeedBackActivity.getflag();
+        if (flag) {
 
             Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Thanks for your valuable feedback", Snackbar.LENGTH_LONG);
             View view = snack.getView();
@@ -58,10 +69,9 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             view.setLayoutParams(params);
             snack.show();
             snack.setActionTextColor(Color.WHITE);
-            FeedBackActivity.flag=false;
+            FeedBackActivity.flag = false;
 
         }
-
 
     }
 
@@ -94,6 +104,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -104,7 +115,32 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             case R.id.btn_paynow:
                 Intent in = new Intent(this, PayNowActivity.class);
                 startActivity(in);
-                        }
+                break;
+            case R.id.img_drowdown:
+
+                if (App.getdropdown()) {
+                    table.setVisibility(View.GONE);
+                    button.setVisibility(View.GONE);
+                    img.setVisibility(View.GONE);
+                    Fragment fragment = new LoginDropDownFragment();
+                    FragmentManager fragmanager = this.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
+                    fragmentTransaction.replace(R.id.big_container, fragment);
+                    fragmentTransaction.commit();
+                    App.dropdown = false;
+                } else {
+                    table.setVisibility(View.VISIBLE);
+                    button.setVisibility(View.VISIBLE);
+                    img.setVisibility(View.VISIBLE);
+                    if (getSupportFragmentManager().findFragmentById(R.id.big_container) != null) {
+                        getSupportFragmentManager()
+                                .beginTransaction().
+                                remove(getSupportFragmentManager().findFragmentById(R.id.big_container)).commit();
+                        App.dropdown = true;
+                    }
+                }
+                break;
+        }
     }
 
     /*public static boolean snackBarMethod() {
@@ -134,4 +170,20 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         fragmentTransaction.commit();
         return true;
     }*/
+
+    public void onBackPressed() {
+        if (App.dropdown == false) {
+            table.setVisibility(View.VISIBLE);
+            button.setVisibility(View.VISIBLE);
+            img.setVisibility(View.VISIBLE);
+            if (getSupportFragmentManager().findFragmentById(R.id.big_container) != null) {
+                getSupportFragmentManager()
+                        .beginTransaction().
+                        remove(getSupportFragmentManager().findFragmentById(R.id.big_container)).commit();
+            } else {
+                DialogCreator.showExitDialog(this, "Exit App?", "Do you want to exit?");
+            }
+            App.dropdown = true;
+        }
+    }
 }
