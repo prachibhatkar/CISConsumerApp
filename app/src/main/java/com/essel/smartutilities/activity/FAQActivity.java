@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.Faq;
 import com.essel.smartutilities.utility.DialogCreator;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
@@ -41,6 +43,15 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         });
 
         initialize();
+       Faq faq=new Faq();
+        savedata(faq);
+        DatabaseManager.saveFAQ(this, faq);
+    }
+
+    public void savedata(Faq faq){
+        faq.faq_question="consumer data";
+        faq.faq_answer="consumer data";
+
     }
 
 

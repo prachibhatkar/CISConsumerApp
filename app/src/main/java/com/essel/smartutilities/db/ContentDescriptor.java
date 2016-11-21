@@ -29,8 +29,10 @@ import android.content.UriMatcher;
 import android.net.Uri;
 
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.TipsTable;
 
 
 /**
@@ -53,6 +55,8 @@ public class ContentDescriptor {
         matcher.addURI(AUTHORITY, LoginTable.PATH, LoginTable.PATH_TOKEN);
         matcher.addURI(AUTHORITY, ManageAccountsTable.PATH, ManageAccountsTable.PATH_TOKEN);
         matcher.addURI(AUTHORITY, AboutUsTable.PATH, AboutUsTable.PATH_TOKEN);
+        matcher.addURI(AUTHORITY, FAQTable.PATH, FAQTable.PATH_TOKEN);
+        matcher.addURI(AUTHORITY, TipsTable.PATH, TipsTable.PATH_TOKEN);
 
 
         return matcher;

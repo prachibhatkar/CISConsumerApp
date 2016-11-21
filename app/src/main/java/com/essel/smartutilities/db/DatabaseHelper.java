@@ -29,8 +29,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.TipsTable;
 
 import java.text.MessageFormat;
 
@@ -62,6 +64,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createLoginTable(db);
         createAboutUsTable(db);
         createManageAccountsTable(db);
+        createFaqTable(db);
+        createTipsTable(db);
+
 
     }
 
@@ -99,6 +104,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String aboutusTableFields = AboutUsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 AboutUsTable.Cols.ABOUT_US_MSG + " VARCHAR ";
         createTable(db, AboutUsTable.TABLE_NAME, aboutusTableFields);
+    }
+    private void createFaqTable(SQLiteDatabase db) {
+        String faqTableFields = FAQTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+               FAQTable.Cols.FAQ_QUESTION + " VARCHAR ," +
+                 FAQTable.Cols.FAQ_ANSWER + " VARCHAR ";
+        createTable(db, FAQTable.TABLE_NAME, faqTableFields);
+    }
+    private void createTipsTable(SQLiteDatabase db) {
+        String tipsTableFields = TipsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TipsTable.Cols.TIPS_MESSAGE + " VARCHAR ,"+
+                TipsTable.Cols.TIPS_IMAGE + " VARCHAR ";
+        createTable(db, TipsTable.TABLE_NAME, tipsTableFields);
     }
 
 

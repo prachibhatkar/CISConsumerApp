@@ -30,6 +30,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 
@@ -77,6 +78,12 @@ public class DatabaseProvider extends ContentProvider {
                         selection, selectionArgs, sortOrder);
                 break;
             }
+
+            case FAQTable.PATH_TOKEN: {
+                result = doQuery(db, uri, FAQTable.TABLE_NAME, projection,
+                        selection, selectionArgs, sortOrder);
+                break;
+            }
         }
         return result;
     }
@@ -107,7 +114,12 @@ public class DatabaseProvider extends ContentProvider {
             }
             case ManageAccountsTable.PATH_TOKEN: {
                 result = doInsert(db, ManageAccountsTable.TABLE_NAME,
-                        AboutUsTable.CONTENT_URI, uri, values);
+                        ManageAccountsTable.CONTENT_URI, uri, values);
+                break;
+            }
+            case FAQTable.PATH_TOKEN: {
+                result = doInsert(db, FAQTable.TABLE_NAME,
+                        FAQTable.CONTENT_URI, uri, values);
                 break;
             }
 
@@ -136,6 +148,10 @@ public class DatabaseProvider extends ContentProvider {
             }
             case ManageAccountsTable.PATH_TOKEN: {
                 table = ManageAccountsTable.TABLE_NAME;
+                break;
+            }
+            case FAQTable.PATH_TOKEN: {
+                table = FAQTable.TABLE_NAME;
                 break;
             }
         }
@@ -178,6 +194,11 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
+            case FAQTable.PATH_TOKEN: {
+                result = doDelete(db, uri, FAQTable.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            }
         }
 
         return result;
@@ -203,7 +224,12 @@ public class DatabaseProvider extends ContentProvider {
                 break;
             }
             case ManageAccountsTable.PATH_TOKEN: {
-                    result = doUpdate(db, uri, ManageAccountsTable.TABLE_NAME, selection,
+                result = doUpdate(db, uri, ManageAccountsTable.TABLE_NAME, selection,
+                        selectionArgs, values);
+                break;
+            }
+            case FAQTable.PATH_TOKEN: {
+                result = doUpdate(db, uri, FAQTable.TABLE_NAME, selection,
                         selectionArgs, values);
                 break;
             }

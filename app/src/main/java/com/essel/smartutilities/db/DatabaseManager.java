@@ -33,10 +33,14 @@ import android.util.Log;
 
 import com.essel.smartutilities.activity.ManageAccountsActivity;
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.TipsTable;
 import com.essel.smartutilities.models.AboutUs;
 import com.essel.smartutilities.models.Consumer;
+import com.essel.smartutilities.models.Faq;
+import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.models.User;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
@@ -69,11 +73,28 @@ public class DatabaseManager {
         }
     }
 
+
     public static void saveAboutUs(Context context, AboutUs aboutUs) {
         if (aboutUs != null) {
             ContentValues values = getContentValuesAboutUsTable(context, aboutUs);
-            String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
-            saveValues(context, AboutUsTable.CONTENT_URI, values, condition);
+            //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
+            saveAboutUs(context,AboutUsTable.CONTENT_URI, values, null);
+        }
+    }
+
+    public static void saveFAQ(Context context, Faq faq) {
+        if (faq!= null) {
+            ContentValues values = getContentValuesFAQTable(context, faq);
+            //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
+            saveFAQ(context, FAQTable.CONTENT_URI, values, null);
+        }
+    }
+
+    public static void saveTips(Context context, Tips tips) {
+        if (tips!= null) {
+            ContentValues values = getContentValuesTipsTable(context, tips);
+            //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
+            saveTips(context,FAQTable.CONTENT_URI, values, null);
         }
     }
 
@@ -123,6 +144,69 @@ public class DatabaseManager {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
         Log.i("Tag", "saveValues:" + newRowId);
+    }
+
+    private static void saveAboutUs(Context context, Uri table, ContentValues values, String condition) {
+       /* ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(table, null,
+                condition, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            resolver.update(table, values, condition, null);
+        } else {
+            resolver.insert(table, values);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }*/
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
+        Log.i("Tag", "saveAboutUs:" + newRowId);
+    }
+
+
+    private static void saveFAQ(Context context, Uri table, ContentValues values, String condition) {
+       /* ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(table, null,
+                condition, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            resolver.update(table, values, condition, null);
+        } else {
+            resolver.insert(table, values);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }*/
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(FAQTable.TABLE_NAME, null, values);
+        Log.i("Tag", "savefaq:" + newRowId);
+    }
+
+    private static void saveTips(Context context, Uri table, ContentValues values, String condition) {
+       /* ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(table, null,
+                condition, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            resolver.update(table, values, condition, null);
+        } else {
+            resolver.insert(table, values);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }*/
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(TipsTable.TABLE_NAME, null, values);
+        Log.i("Tag", "savetips:" + newRowId);
     }
 
     public static User getCurrentLoggedInUser(Context context) {
@@ -219,6 +303,30 @@ public class DatabaseManager {
         ContentValues values = new ContentValues();
         try {
             values.put(AboutUsTable.Cols.ABOUT_US_MSG, aboutUs.about_us_msg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
+    private static ContentValues getContentValuesFAQTable(Context context, Faq faq) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(FAQTable.Cols.FAQ_QUESTION, faq.faq_question);
+            values.put(FAQTable.Cols.FAQ_ANSWER, faq.faq_answer);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
+    private static ContentValues getContentValuesTipsTable(Context context, Tips tips) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(TipsTable.Cols.TIPS_IMAGE, tips.tip_images);
+            values.put(TipsTable.Cols.TIPS_MESSAGE, tips.tip_message);
 
         } catch (Exception e) {
             e.printStackTrace();
