@@ -15,16 +15,21 @@ public class Consumer implements Serializable {
     public String netamt;
     public String duedate;
     public String month;
-    public String consumer_id;
+    public String consumer_no;
     public String acctype;
     public String consumer_name;
+    public String payment_date;
+    public String payment_time;
+    public String city;
+
+    public boolean is_primary;
 
     public Consumer() {
 
     }
 
     public Consumer(String transaction_id, String amount, String payment_mode, String acctype, String address, String duedate
-            , String month, String consumer_id, String consumer_name, String netamt) {
+            , String month, String consumer_no, String consumer_name, String netamt,String payment_time,String payment_date , String city) {
         this.transaction_id = transaction_id;
         this.paidamt = amount;
         this.payment_mode = payment_mode;
@@ -32,9 +37,12 @@ public class Consumer implements Serializable {
         this.netamt = netamt;
         this.duedate = duedate;
         this.month = month;
-        this.consumer_id = consumer_id;
+        this.consumer_no = consumer_no;
         this.acctype = acctype;
         this.consumer_name = consumer_name;
+        this.payment_time = payment_time;
+        this.payment_date=payment_date;
+        this.city=city;
 
 
     }
@@ -52,8 +60,8 @@ public class Consumer implements Serializable {
                 mode = "online";
             }
 
-            contacts.add(new Consumer("5454367" + i, "205" + i, mode, pr, "hoichiohiosdc sahsahcnslk", "Aug25,240" + i, "Aug201" + i
-                    , "12344352" + i, "consumer" + i, "3164" + i));
+            contacts.add(new Consumer("5454367" + i, "205" + i, mode, pr, "hoichiohiosdc sahsahcnslk", "Aug 25, 240" + i, "Aug 201" + i
+                    , "12344352" + i, "consumer" + i, "3164" + i,"02:3"+i+"am","Aug 2"+i,"city"+i));
         }
         return contacts;
     }

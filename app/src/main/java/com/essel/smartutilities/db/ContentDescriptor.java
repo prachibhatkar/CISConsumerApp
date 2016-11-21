@@ -29,6 +29,7 @@ import android.content.UriMatcher;
 import android.net.Uri;
 
 import com.essel.smartutilities.db.tables.LoginTable;
+import com.essel.smartutilities.db.tables.ManageAccountsTable;
 
 
 /**
@@ -39,7 +40,7 @@ import com.essel.smartutilities.db.tables.LoginTable;
  */
 public class ContentDescriptor {
 
-    public static final String AUTHORITY = "com.essel.mrbd";
+    public static final String AUTHORITY = "com.essel.smartutilities";
     public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
     public static final UriMatcher URI_MATCHER = buildUriMatcher();
 
@@ -51,6 +52,7 @@ public class ContentDescriptor {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         matcher.addURI(AUTHORITY, LoginTable.PATH, LoginTable.PATH_TOKEN);
+        matcher.addURI(AUTHORITY, ManageAccountsTable.PATH, ManageAccountsTable.PATH_TOKEN);
 
         return matcher;
     }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ManageAccountAdapter;
 import com.essel.smartutilities.adapter.PaymentHistoryAdapter;
+import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
@@ -45,6 +46,7 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
         ManageAccountAdapter adapter = new ManageAccountAdapter(this, consumers);
         rv_consumers.setAdapter(adapter);
         rv_consumers.setLayoutManager(layoutManager);
+        DatabaseManager.saveAccounts(this,consumers);
         imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

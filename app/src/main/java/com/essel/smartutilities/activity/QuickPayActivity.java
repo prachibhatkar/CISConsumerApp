@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 
@@ -28,7 +29,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initialize() {
-        consumerno = (EditText) findViewById(R.id.consumer_id);
+        consumerno = (EditText) findViewById(R.id.Consumerno);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -44,8 +45,12 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BTNSubmit:
-                Intent in = new Intent(this, PayNowActivity.class);
-                startActivity(in);
+                if (consumerno.getText().toString().trim().length() >= 10 &&
+                        consumerno.getText().toString().trim().length() <= 20) {
+                    Intent i = new Intent(this, PayNowActivity.class);
+                    startActivity(i);
+                } else
+                    Toast.makeText(this, "Enter valid Consumer No.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -1,80 +1,127 @@
 package com.essel.smartutilities.adapter;
 
+/**
+ * Created by hp on 9/14/2016.
+ */
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.activity.ActivityLoginLanding;
+import com.essel.smartutilities.activity.LoginActivity;
+import com.essel.smartutilities.activity.ManageAccountsActivity;
+import com.essel.smartutilities.activity.RegisterActivity2;
 import com.essel.smartutilities.models.Consumer;
-import com.essel.smartutilities.models.NotificationCard;
+import com.essel.smartutilities.utility.App;
+import com.essel.smartutilities.utility.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by hp on 10/10/2016.
- */
-public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.DropDownHolder> {
+import static android.support.v4.app.ActivityCompat.setEnterSharedElementCallback;
 
 
-    public Context mcontext;
-    private ArrayList<Consumer> mConsumer;
+public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHolder> {
 
-    public DropDownAdapter() {
+    private List<Consumer> mConsumers;
+    // Store the context for easy access
+    private Context mContext;
+    private OnRecycleItemClickListener mListener;
+
+
+    public DropDownAdapter(Context context, ArrayList<Consumer> consumers) {
+        mConsumers = consumers;
+        mContext = context;
     }
 
-    public DropDownAdapter(Context context, ArrayList<Consumer> consumerArrayList) {
-        this.mcontext = context;
-        this.mConsumer = consumerArrayList;
-
-    }
-
-    public DropDownAdapter(Context context) {
-        this.mcontext = context;
-    }
 
     @Override
-    public DropDownHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_dropdown_account, null);
-        DropDownHolder viewHolder = new DropDownHolder(view);
-
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View contactView = inflater.inflate(R.layout.cell_dropdown_account, parent, false);
+        ViewHolder viewHolder = new ViewHolder(contactView);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DropDownHolder holder, int position) {
-    }
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+        viewHolder.bind(mContext, mConsumers.get(position), mListener);
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                if (v.getId() == R.id.cv) {
+                    String temp="Account of  " + mConsumers.get(position).consumer_name+"\n"+
+                            "Consumer No. "+mConsumers.get(position).consumer_no +"  is  Selected ";
+                    Toast.makeText(mContext,temp , Toast.LENGTH_LONG).show();
+                    App.dropdown=true;
+                    CommonUtils.saveDetails(mContext,mConsumers.get(position).consumer_no,mConsumers.get(position).consumer_name,
+                            mConsumers.get(position).city);
+                    mContext.startActivity(new Intent(mContext,ActivityLoginLanding.class));
 
+                }
+            }
+        });
+
+    }
 
     @Override
     public int getItemCount() {
-        if (mConsumer != null && mConsumer.size() > 0)
-            return mConsumer.size();
-        else
-            return 0;
+        return mConsumers.size();
     }
 
-    public void setJobCard(ArrayList<Consumer> Consumer) {
-        mConsumer = Consumer;
-        notifyDataSetChanged();
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
-    public class DropDownHolder extends RecyclerView.ViewHolder {
-        public RelativeLayout rl_dropdown_card;
-        public TextView msg, date;
+        public TextView name, id, address;
+        private CardView cardView;
+        private ImageView ic_dete;
 
-        public DropDownHolder(View itemView) {
+
+        public ViewHolder(View itemView) {
             super(itemView);
-            rl_dropdown_card = (RelativeLayout) itemView.findViewById(R.id.rl_dropdown_card);
-            msg = (TextView) itemView.findViewById(R.id.tv_address);
-            date = (TextView) itemView.findViewById(R.id.tv_name);
+            cardView = (CardView) itemView.findViewById(R.id.cv);
+            name = (TextView) itemView.findViewById(R.id.tv_name);
+            id = (TextView) itemView.findViewById(R.id.tv_consumerid);
+            address = (TextView) itemView.findViewById(R.id.tv_address);
+            ic_dete = (ImageView) itemView.findViewById(R.id.iv_pry);
+        }
+
+        public void bind(final Context context, final Consumer consumer, final OnRecycleItemClickListener listener) {
+
+            name.setText(consumer.consumer_name);
+            id.setText(consumer.consumer_no);
+            address.setText(consumer.address);
+
+            if (consumer.acctype.equals("primary"))
+                ic_dete.setVisibility(View.VISIBLE);
+            else
+                ic_dete.setVisibility(View.INVISIBLE);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(context, "Consumer No."+ consumer.consumer_name, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
+
+    public interface OnRecycleItemClickListener {
+        void onItemClick(Consumer consumer);
+    }
 }
-
-
 

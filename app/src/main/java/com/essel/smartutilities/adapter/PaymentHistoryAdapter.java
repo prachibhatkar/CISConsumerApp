@@ -57,7 +57,7 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView month, tv_transactionid, transactionid, tv_amount, date, paymode;
+        public TextView month, tv_transactionid,paytime, transactionid, tv_amount, date, paymode;
         private final CardView cardView;
         private ImageView icpaymode;
 
@@ -71,17 +71,19 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
             month = (TextView) itemView.findViewById(R.id.tv_month);
             tv_amount = (TextView) itemView.findViewById(R.id.amountpaid);
             date = (TextView) itemView.findViewById(R.id.tv_paymentdate);
+            paytime = (TextView) itemView.findViewById(R.id.tv_paymenttime);
             paymode = (TextView) itemView.findViewById(R.id.lbl_paymentmode);
             icpaymode = (ImageView) itemView.findViewById(R.id.iv_paymentmode);
 
         }
 
         public void bind(final Consumer consumer, final OnRecycleItemClickListener listener) {
-            transactionid.setText(consumer.consumer_id);
+            transactionid.setText(consumer.consumer_no);
             month.setText(consumer.month);
             tv_amount.setText(consumer.paidamt);
-            date.setText(consumer.duedate);
+            date.setText(consumer.payment_date);
             paymode.setText(consumer.payment_mode);
+            paytime.setText(consumer.payment_time);
 //            if (consumer.payment_mode.equals("cash"))
 //                icpaymode.setBackgroundResource(R.drawable.camera);
 //            else

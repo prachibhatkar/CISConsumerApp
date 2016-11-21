@@ -87,7 +87,6 @@
                     android:layout_height="@dimen/button_height_small"
                     android:layout_weight="0.9"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/selector_city_spinner"
                     android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="@dimen/margin_medium"
@@ -100,11 +99,11 @@
                     android:layout_marginBottom="@dimen/margin_medium">
 
                     <EditText
-                        android:id="@+id/editPassword"
+                        android:id="@+id/consumerno"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/promt_sconsumer_id"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:paddingBottom="@dimen/margin_large"

@@ -4,9 +4,11 @@ package com.essel.smartutilities.adapter;
  * Created by hp on 9/14/2016.
  */
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,12 +17,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.activity.ActivityLoginLanding;
+import com.essel.smartutilities.activity.LoginActivity;
+import com.essel.smartutilities.activity.ManageAccountsActivity;
+import com.essel.smartutilities.activity.RegisterActivity2;
 import com.essel.smartutilities.models.Consumer;
+import com.essel.smartutilities.utility.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v4.app.ActivityCompat.setEnterSharedElementCallback;
+
 
 public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdapter.ViewHolder> {
 
@@ -53,8 +64,8 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             public void onClick(final View v) {
                 if (v.getId() == R.id.ic_delete) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                    builder1.setMessage("Are you sure you want to delete account"+mConsumers.get(position).consumer_id+"-"+
-                    mConsumers.get(position).consumer_name);
+                    builder1.setMessage("Are you sure you want to delete account" + mConsumers.get(position).consumer_no + "-" +
+                            mConsumers.get(position).consumer_name);
                     builder1.setCancelable(true);
 
                     builder1.setPositiveButton(
@@ -81,6 +92,19 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                     alert11.show();
                     notifyDataSetChanged();
 
+                }
+            }
+        });
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                if (v.getId() == R.id.cv) {
+                    String temp="Account of  " + mConsumers.get(position).consumer_name+"\n"+
+                            "Consumer No. "+mConsumers.get(position).consumer_no +" is  Selected ";
+                    Toast.makeText(mContext,temp , Toast.LENGTH_LONG).show();
+                    CommonUtils.saveDetails(mContext,mConsumers.get(position).consumer_no,mConsumers.get(position).consumer_name,
+                            mConsumers.get(position).city);
+                    mContext.startActivity(new Intent(mContext,ActivityLoginLanding.class));
                 }
             }
         });
@@ -115,7 +139,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
         public void bind(final Context context, final Consumer consumer, final OnRecycleItemClickListener listener) {
 
             name.setText(consumer.consumer_name);
-            id.setText(consumer.consumer_id);
+            id.setText(consumer.consumer_no);
             address.setText(consumer.address);
             acctype.setText(consumer.acctype);
             netamt.setText(consumer.netamt);
@@ -128,7 +152,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+//                    Toast.makeText(context, "Consumer No."+ consumer.consumer_name, Toast.LENGTH_SHORT).show();
                 }
             });
         }

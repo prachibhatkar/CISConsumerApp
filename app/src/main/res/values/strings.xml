@@ -11,7 +11,7 @@
     <string name="title_activity_signup">SignupActivity</string>
 
     <!-- Strings related to login -->
-    <string name="promt_consumer_id">Consumer No or Mobile No.</string>
+    <string name="promt_consumer_id">Consumer No. or Mobile No.</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -20,7 +20,7 @@
     <string name="exit_message">Do you want to close this application?</string>
 
     <!-- Strings related to signup -->
-    <string name="promt_sconsumer_id">Consumer No</string>
+    <string name="promt_sconsumer_id">Consumer No.</string>
     <string name="action_register">Register</string>
     <string name="action_next">Next</string>
     <string name="prompt_email_id">Enter Alternate Email</string>
@@ -143,7 +143,7 @@
 
     <string name="raise_complaint">Raise Complaint</string>
     <string name="complaint_status">Complaint Status</string>
-    <string name="transactionid">Transaction Id</string>
+    <string name="transactionid">Transaction No:</string>
     <string name="paymentamount">Payment Amount</string>
     <string name="transactiontype">Transaction Type</string>
 

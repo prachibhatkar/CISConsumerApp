@@ -23,11 +23,11 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!--<ImageView-->
-            <!--android:id="@+id/img_back"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_action_back" />-->
+            <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_name" />
 
             <TextView
                 android:id="@+id/title_bar"
@@ -62,14 +62,14 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:id="@+id/Consumerno"
+                android:id="@+id/consumer_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Consumer No"
+                android:hint="Consumer No."
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="@dimen/edit_text_size_medium"
 
                 />

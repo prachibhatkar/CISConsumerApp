@@ -25,6 +25,7 @@ import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.DialogCreator;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener {
     TextView maintitle;
@@ -42,9 +43,13 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         ImageView drop = (ImageView) findViewById(R.id.img_drowdown);
         drop.setOnClickListener(this);
         maintitle = (TextView) findViewById(R.id.title_bar);
-        maintitle.setText("31513153515");
+        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
+        maintitle.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        maintitle.setOnClickListener(this);
         TextView subtitle = (TextView) findViewById(R.id.subtitle_bar);
-        subtitle.setText("Barry Alen");
+        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME).isEmpty())
+        subtitle.setText( SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        subtitle.setOnClickListener(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Button bill = (Button) findViewById(R.id.btn_mybill);
@@ -118,29 +123,38 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 startActivity(in);
                 break;
             case R.id.img_drowdown:
-
-                if (App.getdropdown()) {
-                    table.setVisibility(View.GONE);
-                    button.setVisibility(View.GONE);
-                    img.setVisibility(View.GONE);
-                    Fragment fragment = new LoginDropDownFragment();
-                    FragmentManager fragmanager = this.getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
-                    fragmentTransaction.replace(R.id.big_container, fragment);
-                    fragmentTransaction.commit();
-                    App.dropdown = false;
-                } else {
-                    table.setVisibility(View.VISIBLE);
-                    button.setVisibility(View.VISIBLE);
-                    img.setVisibility(View.VISIBLE);
-                    if (getSupportFragmentManager().findFragmentById(R.id.big_container) != null) {
-                        getSupportFragmentManager()
-                                .beginTransaction().
-                                remove(getSupportFragmentManager().findFragmentById(R.id.big_container)).commit();
-                        App.dropdown = true;
-                    }
-                }
+                callDropDown();
                 break;
+            case R.id.subtitle_bar:
+                callDropDown();
+                break;
+            case R.id.title_bar:
+                callDropDown();
+                break;
+        }
+    }
+
+    void callDropDown() {
+        if (App.getdropdown()) {
+            table.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
+            img.setVisibility(View.GONE);
+            Fragment fragment = new LoginDropDownFragment();
+            FragmentManager fragmanager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
+            fragmentTransaction.replace(R.id.big_container, fragment);
+            fragmentTransaction.commit();
+            App.dropdown = false;
+        } else {
+            table.setVisibility(View.VISIBLE);
+            button.setVisibility(View.VISIBLE);
+            img.setVisibility(View.VISIBLE);
+            if (getSupportFragmentManager().findFragmentById(R.id.big_container) != null) {
+                getSupportFragmentManager()
+                        .beginTransaction().
+                        remove(getSupportFragmentManager().findFragmentById(R.id.big_container)).commit();
+                App.dropdown = true;
+            }
         }
     }
 

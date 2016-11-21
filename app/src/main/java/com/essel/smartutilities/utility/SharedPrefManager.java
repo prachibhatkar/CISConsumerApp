@@ -25,13 +25,14 @@ package com.essel.smartutilities.utility;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by Amol on 6/21/2015.
- */
 public class SharedPrefManager {
 
     public static final String MY_PREFERENCES = "MyPrefs";
+    public static String CONSUMER_NAME = "consumer_name";
+    public static String CONSUMER_NO = "consumer_no";
+    public static String CONSUMER_CITY = "consumer_city";
 
+    public static  String AUTH_TOKEN = "auth_token";
     public static String USER_NAME = "user_name";
     public static String USER_ID = "user_id";
     public static String PASSWORD = "pasword";

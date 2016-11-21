@@ -13,15 +13,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.fragments.LoginLandingFragment;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class RegisterActivity4 extends BaseActivity implements View.OnClickListener {
 
     EditText editTextEmailId, editTextMobileNo, editTextPassword, editTextRetypePassword, editTextOTPCode;
     TextInputLayout inputLayoutEmailId, inputLayoutMobileNo, inputLayoutPassword, inputLayoutRetypePassword;
     AppCompatButton buttonRegister, buttonVerify;
-    TextView textViewConsumerName, textViewConsumerAddress, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
+    TextView textViewConsumerName,consumerno, textViewConsumerAddress, maintitle, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
     LinearLayout linearActionCancel;
     Context mContext;
     Dialog dialogVerify, dialogSucccess;
@@ -32,9 +35,11 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register4);
         mContext = this;
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Register:9595903117");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        maintitle = (TextView) findViewById(R.id.title_bar);
+        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
+            maintitle.setText("Register : "+SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialize();
@@ -46,6 +51,9 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
         inputLayoutEmailId = (TextInputLayout) findViewById(R.id.inputLayoutEmailId);
         inputLayoutMobileNo = (TextInputLayout) findViewById(R.id.inputLayoutMobileNumber);
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
+        consumerno = (TextView) findViewById(R.id.consumerno);
+        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
+            consumerno.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
         textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
         textViewConsumerConnectionType = (TextView) findViewById(R.id.textConsumerConnectionType);
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
@@ -79,7 +87,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
             i = new Intent(this, RegisterActivity.class);
             startActivity(i);
         } else if (v.getId() == R.id.btn_continue) {
-            i = new Intent(this, LoginActivity.class);
+            i = new Intent(this, ActivityLoginLanding.class);
             startActivity(i);
         }
     }

@@ -17,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
@@ -25,7 +27,9 @@ import com.essel.smartutilities.utility.DialogCreator;
 
 public class LandingSkipLoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button Submit;
-    LinearLayout  action_about_us, action_tips, action_my_traiff, action_faq, action_contactus, action_share;
+    ImageView imgBack;
+    LinearLayout action_about_us, action_tips, action_my_traiff, action_faq, action_contactus, action_share;
+    EditText consumerno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     }
 
     private void initialize() {
-        EditText consumerno = (EditText) findViewById(R.id.consumer_id);
+        consumerno = (EditText) findViewById(R.id.consumer_id);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
         action_about_us = (LinearLayout) findViewById(R.id.action_about_us);
@@ -51,6 +55,13 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         action_faq.setOnClickListener(this);
         action_contactus.setOnClickListener(this);
         action_share.setOnClickListener(this);
+        imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,13 +81,26 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         return super.onOptionsItemSelected(item);
     }
 
+    public boolean validate() {
+        Boolean flag=false;
+
+        if (consumerno.getText().toString().trim().length()!=0 && (consumerno.getText().toString().trim().length() >= 10
+                && consumerno.getText().toString().trim().length() <= 20)) {
+                        flag=true;
+        } else
+            Toast.makeText(this, "Enter valid Consumer Number", Toast.LENGTH_LONG).show();
+        return flag;
+    }
+
     @Override
     public void onClick(View v) {
         Intent in;
         switch (v.getId()) {
             case R.id.BTNSubmit:
-                 in = new Intent(this, PayNowActivity.class);
-                startActivity(in);
+                if (validate()) {
+                    in = new Intent(this, PayNowActivity.class);
+                    startActivity(in);
+                }
                 break;
             case R.id.action_about_us:
                 in = new Intent(this, AboutUsActivity.class);
@@ -103,6 +127,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
                 break;
         }
     }
+
     private void shareTextUrl() {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");

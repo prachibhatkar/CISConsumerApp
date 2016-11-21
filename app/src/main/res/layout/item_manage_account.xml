@@ -39,8 +39,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:padding="3dp"
-                    android:paddingLeft="10dp"
-                    android:paddingStart="10dp"
                     android:text="Barry Alen"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -62,8 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="60dp"
                     android:padding="3dp"
-                    android:paddingLeft="10dp"
-                    android:paddingStart="10dp"
+
                     android:text="xvkjnvj nkdnn jndskjf njs sds dscnn knkk" />
 
                 <TextView
@@ -72,9 +69,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:padding="3dp"
-                    android:paddingLeft="10dp"
-                    android:paddingStart="10dp"
-                    android:text="Consumer ID" />
+
+                    android:text="Consumer No :" />
 
                 <TextView
                     android:id="@+id/consumerid"
@@ -115,7 +111,7 @@
                         android:id="@+id/duedate_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="25,2050"
+                        android:text="25, 2050"
                         android:textSize="15dp" />
 
                     <TextView

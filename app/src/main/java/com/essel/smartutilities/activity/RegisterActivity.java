@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 import java.util.Arrays;
 
@@ -38,9 +40,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
         mContext = this;
         rl = (RelativeLayout) findViewById(R.id.relative);
-//        btnLogin = (TextView) findViewById(R.id.txt_login);
         btnNext = (Button) findViewById(R.id.BTNNext);
-        editTextConsumerId = (EditText) findViewById(R.id.editPassword);
+        editTextConsumerId = (EditText) findViewById(R.id.consumerno);
         inputLayoutConsumerId = (TextInputLayout) findViewById(R.id.inputLayoutConsumerId);
         btnNext.setOnClickListener(this);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -80,14 +81,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void validate() {
-        if (sp_city.getSelectedItemPosition() == 0) {
+        if (sp_city.getSelectedItemPosition() != 0) {
+            if (editTextConsumerId.getText().toString().trim().length() >= 10 &&
+                    editTextConsumerId.getText().toString().trim().length() <= 20) {
+                CommonUtils.saveDetails(this,editTextConsumerId.getText().toString().trim(),"", String.valueOf(sp_city.getSelectedItem()));
+                Intent i = new Intent(mContext, RegisterActivity2.class);
+                startActivity(i);
+            } else
+                Toast.makeText(this, "Enter valid Consumer No.", Toast.LENGTH_SHORT).show();
+        } else
             Toast.makeText(this, "Select valid city", Toast.LENGTH_SHORT).show();
-            if (editTextConsumerId.getText().toString().length() == 0)
-            { Toast.makeText(this, "Enter valid Consumer ID", Toast.LENGTH_SHORT).show();}
 
-            Intent i = new Intent(mContext, RegisterActivity2.class);
-            startActivity(i);
-
-        }
     }
+
+
 }

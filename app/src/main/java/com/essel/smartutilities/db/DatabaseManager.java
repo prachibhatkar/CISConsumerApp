@@ -26,10 +26,14 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.essel.smartutilities.db.tables.LoginTable;
+import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.User;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
@@ -39,8 +43,6 @@ import java.util.ArrayList;
 /**
  * This class acts as an interface between database and UI. It contains all the
  * methods to interact with device database.
- *
-
  */
 public class DatabaseManager {
 
@@ -52,41 +54,81 @@ public class DatabaseManager {
      * @param user    User
      */
     public static void saveUser(Context context, User user) {
-        if (user!=null) {
+        if (user != null) {
             ContentValues values = getContentValuesUserLoginTable(context, user);
             String condition = LoginTable.Cols.USER_ID + "='" + user.id + "'";
             saveValues(context, LoginTable.CONTENT_URI, values, condition);
         }
     }
 
-    private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
-        ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = resolver.query(table, null,
-                condition, null, null);
+//    private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
+//        ContentResolver resolver = context.getContentResolver();
+//        Cursor cursor = resolver.query(table, null,
+//                condition, null, null);
+//
+//        if (cursor != null && cursor.getCount() > 0) {
+//            resolver.update(table, values, condition, null);
+//        } else {
+//            resolver.insert(table, values);
+//        }
+//
+//        if (cursor != null) {
+//            cursor.close();
+//        }
+//    }
 
-        if (cursor != null && cursor.getCount() > 0) {
-            resolver.update(table, values, condition, null);
-        } else {
-            resolver.insert(table, values);
-        }
-
-        if (cursor != null) {
-            cursor.close();
+    public static void saveAccounts(Context context, ArrayList<Consumer> userProfiles) {
+        if (userProfiles != null && userProfiles.size() > 0) {
+            for (Consumer userProfile : userProfiles) {
+                ContentValues values = getContentValuesManageAccountTable(context, userProfile);
+                saveValues(context, ManageAccountsTable.CONTENT_URI, values, null);
+            }
         }
     }
 
+    private static ContentValues getContentValuesManageAccountTable(Context context, Consumer userProfile) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(ManageAccountsTable.Cols.CONSUMER_ID, userProfile.consumer_no);
+            values.put(ManageAccountsTable.Cols.CONSUMER_NAME, userProfile.consumer_no);
+            values.put(ManageAccountsTable.Cols.ADDRESS, userProfile.consumer_no);
+            values.put(ManageAccountsTable.Cols.IS_PRIMARY, userProfile.is_primary);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
+
+    private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
+//        ContentResolver resolver = context.getContentResolver();
+//        Cursor cursor = resolver.query(table, null, condition, null, null);
+//        if (cursor != null && cursor.getCount() > 0) {
+//            resolver.update(table, values, condition, null);
+//        } else {
+//            resolver.insert(table, values);
+//        }
+//        if (cursor != null) {
+//            cursor.close();
+//        }
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
+        Log.i("Tag", "saveValues:"+newRowId);
+    }
+
     public static User getCurrentLoggedInUser(Context context) {
-        String condition = LoginTable.Cols.USER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context,SharedPrefManager.USER_NAME) + "' and "+LoginTable.Cols.USER_ID+"='"+SharedPrefManager.getStringValue(context,SharedPrefManager.USER_ID)+"'";
+        String condition = LoginTable.Cols.USER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_NAME) + "' and " + LoginTable.Cols.USER_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_ID) + "'";
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(LoginTable.CONTENT_URI, null,
                 condition, null, null);
-       // ArrayList<User> userList = getUserListFromCurser(cursor);
-        User user=null;
-        if(cursor!=null&&cursor.getCount()>0)
-        {
+        // ArrayList<User> userList = getUserListFromCurser(cursor);
+        User user = null;
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-           // userList = new ArrayList<User>();
+            // userList = new ArrayList<User>();
             while (!cursor.isAfterLast()) {
                 user = getUserFromCursor(cursor);
 
@@ -102,7 +144,6 @@ public class DatabaseManager {
     /**
      * @param context
      * @param uname
-
      */
     public static ArrayList<User> getUser(Context context,
                                           String uname) {
@@ -141,7 +182,7 @@ public class DatabaseManager {
 
         user.emailId = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.USER_EMAIL_ID));
         user.activeFlag = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.ACTIVE_FLAG));
-            // user.password = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.PASSWORD));
+        // user.password = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.PASSWORD));
         user.lastsyncedon = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.LAST_SYNCED_ON));
         return user;
     }
