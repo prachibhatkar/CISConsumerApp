@@ -68,19 +68,25 @@ public class DatabaseProvider extends ContentProvider {
                         selection, selectionArgs, sortOrder);
                 break;
             }
+            case AboutUsTable.PATH_TOKEN: {
+                result = doQuery(db, uri, AboutUsTable.TABLE_NAME, projection,
+                        selection, selectionArgs, sortOrder);
+                break;
+
+
+            }
 
 
         }
-
         return result;
     }
 
-    @Override
+
     public String getType(Uri uri) {
         return null;
     }
 
-    @Override
+
     public Uri insert(Uri uri, ContentValues values) {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -92,6 +98,11 @@ public class DatabaseProvider extends ContentProvider {
             case LoginTable.PATH_TOKEN: {
                 result = doInsert(db, LoginTable.TABLE_NAME,
                         LoginTable.CONTENT_URI, uri, values);
+                break;
+            }
+            case AboutUsTable.PATH_TOKEN: {
+                result = doInsert(db, AboutUsTable.TABLE_NAME,
+                        AboutUsTable.CONTENT_URI, uri, values);
                 break;
             }
 
@@ -112,6 +123,10 @@ public class DatabaseProvider extends ContentProvider {
         switch (token) {
             case LoginTable.PATH_TOKEN: {
                 table = LoginTable.TABLE_NAME;
+                break;
+            }
+            case AboutUsTable.PATH_TOKEN: {
+                table = AboutUsTable.TABLE_NAME;
                 break;
             }
 
@@ -145,6 +160,11 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
+            case AboutUsTable.PATH_TOKEN: {
+                result = doDelete(db, uri, AboutUsTable.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            }
 
         }
 
@@ -162,6 +182,11 @@ public class DatabaseProvider extends ContentProvider {
         switch (token) {
             case LoginTable.PATH_TOKEN: {
                 result = doUpdate(db, uri, LoginTable.TABLE_NAME, selection,
+                        selectionArgs, values);
+                break;
+            }
+            case AboutUsTable.PATH_TOKEN: {
+                result = doUpdate(db, uri, AboutUsTable.TABLE_NAME, selection,
                         selectionArgs, values);
                 break;
             }

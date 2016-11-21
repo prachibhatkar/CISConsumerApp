@@ -62,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createLoginTable(db);
+        createAboutUsTable(db);
 
     }
 
@@ -77,25 +78,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     private void createLoginTable(SQLiteDatabase db) {
         String loginTableFields = LoginTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                LoginTable.Cols.USER_ID + " VARCHAR, " +
-                LoginTable.Cols.USER_NAME + " VARCHAR, " +
-                LoginTable.Cols.USER_EMAIL_ID + " VARCHAR, " +
+                LoginTable.Cols.CONSUMER_ID + " VARCHAR, " +
+                LoginTable.Cols.CONSUMER_NAME + " VARCHAR, " +
+                LoginTable.Cols.CONSUMER_EMAIL_ID + " VARCHAR, " +
                 LoginTable.Cols.ACTIVE_FLAG + " VARCHAR, " +
                 LoginTable.Cols.LAST_SYNCED_ON + " LONG, " +
                 LoginTable.Cols.LOGIN_ATTEMPTS + " INTEGER";
         createTable(db, LoginTable.TABLE_NAME, loginTableFields);
+    }
+    private void createAboutUsTable(SQLiteDatabase db) {
+        String aboutusTableFields = AboutUsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                AboutUsTable.Cols.ABOUT_US_MSG + " VARCHAR, ";
+        createTable(db, AboutUsTable.TABLE_NAME, aboutusTableFields);
     }
 
 
 
 
 
-    /**
-     * Drops Table from device database
-     *
-     * @param db   SqliteDatabase instance
-     * @param name TableName
-     */
+        /**
+         * Drops Table from device database
+         *
+         * @param db   SqliteDatabase instance
+         * @param name TableName
+         */
     public void dropTable(SQLiteDatabase db, String name) {
         String query = MessageFormat.format(DatabaseHelper.KEY_DROP_TABLE, name);
         db.execSQL(query);

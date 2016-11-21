@@ -70,18 +70,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v == btnLogin) {
             if (isBlankInput()) {
                 String password=editTextPassword.getText().toString();
-                if (isValidPassword(password)) {
-                    String consumer_id=editTextUsername.getText().toString();
+                //if (isValidPassword(password)) {
+                String consumer_id=editTextUsername.getText().toString();
                     CommonUtils.hideKeyBoard(this);
 //                    CommonUtils.saveCredentials(this,consumer_id,password);
                     Intent i = new Intent(this, ActivityLoginLanding.class);
                     startActivity(i);
-                String password = editTextPassword.getText().toString();
-                String consumer_id = editTextUsername.getText().toString();
-                CommonUtils.hideKeyBoard(this);
-                CommonUtils.saveCredentials(this, consumer_id, password);
-                Intent i = new Intent(this, ActivityLoginLanding.class);
-                startActivity(i);
+
 
             }
                 else{

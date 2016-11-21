@@ -34,6 +34,7 @@ import android.util.Log;
 import com.essel.smartutilities.db.tables.AboutUsTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.models.AboutUs;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.User;
 import com.essel.smartutilities.utility.SharedPrefManager;
@@ -66,6 +67,14 @@ public class DatabaseManager {
         }
     }
 
+    public static void saveAboutUs(Context context, AboutUs aboutUs) {
+        if (aboutUs != null) {
+            ContentValues values = getContentValuesAboutUsTable(context, aboutUs);
+            String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
+            saveValues(context,AboutUsTable.CONTENT_URI, values, condition);
+        }
+    }
+
     private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
        /* ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(table, null,
@@ -83,12 +92,12 @@ public class DatabaseManager {
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-      long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
+       long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
        Log.i("Tag", "saveValues:"+newRowId);
     }
 
     public static User getCurrentLoggedInUser(Context context) {
-        String condition = LoginTable.Cols.USER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context,SharedPrefManager.USER_NAME) + "' and "+LoginTable.Cols.USER_ID+"='"+SharedPrefManager.getStringValue(context,SharedPrefManager.USER_ID)+"'";
+        String condition = LoginTable.Cols.CONSUMER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context,SharedPrefManager.USER_NAME) + "' and "+LoginTable.Cols.CONSUMER_ID+"='"+SharedPrefManager.getStringValue(context,SharedPrefManager.USER_ID)+"'";
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(LoginTable.CONTENT_URI, null,
                 condition, null, null);

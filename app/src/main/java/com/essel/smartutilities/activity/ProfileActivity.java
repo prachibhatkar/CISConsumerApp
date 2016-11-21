@@ -27,9 +27,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     ExpandableRelativeLayout expandableLayout_editProfile, expandableLayout_changepass;
     Button expandableButton_editprofile,expandableButton_changepass,save_detail,save_password;
     CircleImageView circleimage;
-
-
-
     private TabLayout profile_tabs;
 
     @Override

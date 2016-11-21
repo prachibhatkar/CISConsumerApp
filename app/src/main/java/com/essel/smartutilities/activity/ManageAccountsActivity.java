@@ -46,7 +46,7 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
         ManageAccountAdapter adapter = new ManageAccountAdapter(this, consumers);
         rv_consumers.setAdapter(adapter);
         rv_consumers.setLayoutManager(layoutManager);
-        DatabaseManager.saveAccounts(this,consumers);
+       // DatabaseManager.saveAccounts(this,consumers);
         imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
