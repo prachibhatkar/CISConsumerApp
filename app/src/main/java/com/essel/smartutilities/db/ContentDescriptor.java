@@ -36,8 +36,6 @@ import com.essel.smartutilities.db.tables.ManageAccountsTable;
 /**
  * This class contains description about
  * application database content providers
- *
-
  */
 public class ContentDescriptor {
 
@@ -55,6 +53,7 @@ public class ContentDescriptor {
         matcher.addURI(AUTHORITY, LoginTable.PATH, LoginTable.PATH_TOKEN);
         matcher.addURI(AUTHORITY, ManageAccountsTable.PATH, ManageAccountsTable.PATH_TOKEN);
         matcher.addURI(AUTHORITY, AboutUsTable.PATH, AboutUsTable.PATH_TOKEN);
+
 
         return matcher;
     }

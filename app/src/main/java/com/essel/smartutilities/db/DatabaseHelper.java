@@ -37,8 +37,6 @@ import java.text.MessageFormat;
 
 /**
  * SqliteOpenHeler class for application database
- *
-
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -46,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_DROP_TABLE = "DROP TABLE IF EXISTS {0}";
 
     public final static String SQL = "SELECT COUNT(*) FROM sqlite_master WHERE name=?";
-    public static final String TAG="DatabaseHelper";
+    public static final String TAG = "DatabaseHelper";
     private static final int CURRENT_DB_VERSION = 1;
     private static final String DB_NAME = "MRBD.db";
 
@@ -63,12 +61,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         createLoginTable(db);
         createAboutUsTable(db);
+        createManageAccountsTable(db);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-     dropTable(sqLiteDatabase, LoginTable.TABLE_NAME);
+        dropTable(sqLiteDatabase, LoginTable.TABLE_NAME);
     }
 
     /**
@@ -86,22 +85,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 LoginTable.Cols.LOGIN_ATTEMPTS + " INTEGER";
         createTable(db, LoginTable.TABLE_NAME, loginTableFields);
     }
+
+
+    private void createManageAccountsTable(SQLiteDatabase db) {
+        String ManageAccountsTableFields = ManageAccountsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ManageAccountsTable.Cols.CONSUMER_ID + " VARCHAR, " +
+                ManageAccountsTable.Cols.CONSUMER_NAME + " VARCHAR, " +
+                ManageAccountsTable.Cols.ADDRESS + " VARCHAR";
+        createTable(db, ManageAccountsTable.TABLE_NAME, ManageAccountsTableFields);
+    }
+
     private void createAboutUsTable(SQLiteDatabase db) {
         String aboutusTableFields = AboutUsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                AboutUsTable.Cols.ABOUT_US_MSG + " VARCHAR, ";
+                AboutUsTable.Cols.ABOUT_US_MSG + " VARCHAR ";
         createTable(db, AboutUsTable.TABLE_NAME, aboutusTableFields);
     }
 
 
-
-
-
-        /**
-         * Drops Table from device database
-         *
-         * @param db   SqliteDatabase instance
-         * @param name TableName
-         */
+    /**
+     * Drops Table from device database
+     *
+     * @param db   SqliteDatabase instance
+     * @param name TableName
+     */
     public void dropTable(SQLiteDatabase db, String name) {
         String query = MessageFormat.format(DatabaseHelper.KEY_DROP_TABLE, name);
         db.execSQL(query);
@@ -109,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static boolean exists(SQLiteDatabase db, String name) {
         Log.d(TAG, "Checking tables:" + name);
-        Cursor cur = db.rawQuery(SQL, new String[] { name });
+        Cursor cur = db.rawQuery(SQL, new String[]{name});
         cur.moveToFirst();
         int tables = cur.getInt(0);
         if (tables > 0) {

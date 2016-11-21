@@ -36,8 +36,6 @@ import com.essel.smartutilities.db.tables.ManageAccountsTable;
 
 /**
  * This class provides Content Provider for application database
- *
-
  */
 public class DatabaseProvider extends ContentProvider {
 
@@ -72,11 +70,13 @@ public class DatabaseProvider extends ContentProvider {
                 result = doQuery(db, uri, AboutUsTable.TABLE_NAME, projection,
                         selection, selectionArgs, sortOrder);
                 break;
-
-
             }
 
-
+            case ManageAccountsTable.PATH_TOKEN: {
+                result = doQuery(db, uri, ManageAccountsTable.TABLE_NAME, projection,
+                        selection, selectionArgs, sortOrder);
+                break;
+            }
         }
         return result;
     }
@@ -105,6 +105,11 @@ public class DatabaseProvider extends ContentProvider {
                         AboutUsTable.CONTENT_URI, uri, values);
                 break;
             }
+            case ManageAccountsTable.PATH_TOKEN: {
+                result = doInsert(db, ManageAccountsTable.TABLE_NAME,
+                        AboutUsTable.CONTENT_URI, uri, values);
+                break;
+            }
 
         }
 
@@ -129,7 +134,10 @@ public class DatabaseProvider extends ContentProvider {
                 table = AboutUsTable.TABLE_NAME;
                 break;
             }
-
+            case ManageAccountsTable.PATH_TOKEN: {
+                table = ManageAccountsTable.TABLE_NAME;
+                break;
+            }
         }
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -165,7 +173,11 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
-
+            case ManageAccountsTable.PATH_TOKEN: {
+                result = doDelete(db, uri, ManageAccountsTable.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            }
         }
 
         return result;
@@ -190,7 +202,11 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs, values);
                 break;
             }
-
+            case ManageAccountsTable.PATH_TOKEN: {
+                    result = doUpdate(db, uri, ManageAccountsTable.TABLE_NAME, selection,
+                        selectionArgs, values);
+                break;
+            }
         }
 
         return result;

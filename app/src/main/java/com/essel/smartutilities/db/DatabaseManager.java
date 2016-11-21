@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.essel.smartutilities.activity.ManageAccountsActivity;
 import com.essel.smartutilities.db.tables.AboutUsTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
@@ -39,14 +40,14 @@ import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.User;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
  * This class acts as an interface between database and UI. It contains all the
  * methods to interact with device database.
- *
-
  */
 public class DatabaseManager {
 
@@ -59,6 +60,7 @@ public class DatabaseManager {
      */
 
     private static Context context;
+
     public static void saveUser(Context context, User user) {
         if (user != null) {
             ContentValues values = getContentValuesUserLoginTable(context, user);
@@ -71,8 +73,35 @@ public class DatabaseManager {
         if (aboutUs != null) {
             ContentValues values = getContentValuesAboutUsTable(context, aboutUs);
             String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
-            saveValues(context,AboutUsTable.CONTENT_URI, values, condition);
+            saveValues(context, AboutUsTable.CONTENT_URI, values, condition);
         }
+    }
+
+    public static void saveManageAccounts(Context context, ArrayList<Consumer> consumer) {
+        if (consumer != null && consumer.size() > 0) {
+            for (Consumer consumer1 : consumer) {
+
+                ContentValues values = getContentValuesManageAccountsTable(context, consumer1);
+
+                saveValues(context, ManageAccountsTable.CONTENT_URI, values, null);
+
+            }
+        }
+    }
+
+    private static ContentValues getContentValuesManageAccountsTable(Context context, Consumer consumers) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(ManageAccountsTable.Cols.CONSUMER_ID, consumers.consumer_no);
+            values.put(ManageAccountsTable.Cols.CONSUMER_NAME, consumers.consumer_name);
+            values.put(ManageAccountsTable.Cols.ADDRESS, consumers.address);
+//            values.put(ManageAccountsTable.Cols.IS_PRIMARY,consumers.is_primary);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
     }
 
     private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
@@ -92,12 +121,12 @@ public class DatabaseManager {
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-       long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
-       Log.i("Tag", "saveValues:"+newRowId);
+        long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
+        Log.i("Tag", "saveValues:" + newRowId);
     }
 
     public static User getCurrentLoggedInUser(Context context) {
-        String condition = LoginTable.Cols.CONSUMER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context,SharedPrefManager.USER_NAME) + "' and "+LoginTable.Cols.CONSUMER_ID+"='"+SharedPrefManager.getStringValue(context,SharedPrefManager.USER_ID)+"'";
+        String condition = LoginTable.Cols.CONSUMER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_NAME) + "' and " + LoginTable.Cols.CONSUMER_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_ID) + "'";
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(LoginTable.CONTENT_URI, null,
                 condition, null, null);
@@ -106,7 +135,7 @@ public class DatabaseManager {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-           // userList = new ArrayList<User>();
+            // userList = new ArrayList<User>();
             while (!cursor.isAfterLast()) {
                 user = getUserFromCursor(cursor);
 
@@ -122,7 +151,6 @@ public class DatabaseManager {
     /**
      * @param context
      * @param uname
-
      */
     public static ArrayList<User> getUser(Context context,
                                           String uname) {
@@ -160,7 +188,7 @@ public class DatabaseManager {
         user.userName = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.CONSUMER_NAME));
         user.emailId = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.CONSUMER_EMAIL_ID));
         user.activeFlag = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.ACTIVE_FLAG));
-            // user.password = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.PASSWORD));
+        // user.password = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.PASSWORD));
         user.lastsyncedon = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.LAST_SYNCED_ON));
         return user;
     }
@@ -220,6 +248,7 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+
 
    /* private static void saveSegement(Context context, String project_id, Segement segement) {
         ContentValues values=getContentValuesUserSegement(context,project_id, segement);
