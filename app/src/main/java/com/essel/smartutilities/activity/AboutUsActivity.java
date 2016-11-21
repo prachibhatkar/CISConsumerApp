@@ -34,7 +34,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
         AboutUs aboutUs=new AboutUs();
         savedata(aboutUs);
-        //DatabaseManager.saveAboutUs(context, aboutUs);
+        DatabaseManager.saveAboutUs(context, aboutUs);
     }
 
     public void savedata(AboutUs aboutUs){
