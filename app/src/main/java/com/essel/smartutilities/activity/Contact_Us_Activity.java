@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ContactUsAdapter;
@@ -28,9 +30,13 @@ public class Contact_Us_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_contact__us_);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Contact Us");
-        toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         setupUI();
         loadData();
     }
@@ -93,6 +99,14 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
         }
     };
+
+    public void onBackPressed() {
+
+        Intent in =new Intent(this,ActivityLoginLanding.class);
+        startActivity(in);
+
+
+    }
 
 
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -25,9 +26,14 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Service Request Status");
-        toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
         tv_message=(TextView)findViewById(R.id.tv_message);
         tv_service_id=(TextView)findViewById(R.id.tv_service_id);
@@ -60,6 +66,13 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
     }
 
 
+    public void onBackPressed() {
+
+        Intent in =new Intent(this,ServiceActivity.class);
+        startActivity(in);
+
+
+    }
 
 
 

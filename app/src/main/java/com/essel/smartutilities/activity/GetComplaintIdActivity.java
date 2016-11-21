@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
@@ -20,9 +21,14 @@ TextView tv_complaintid,tv_complaintmsg;
         setContentView(R.layout.activity_get_complaint_id);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.complaint);
-        toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
 
         tv_complaintid=(TextView)findViewById(R.id.tv_complaintid);
@@ -42,6 +48,14 @@ TextView tv_complaintid,tv_complaintmsg;
 
 
         }
+
+    }
+
+    public void onBackPressed() {
+
+        Intent in =new Intent(this,ComplaintActivity.class);
+        startActivity(in);
+
 
     }
 }

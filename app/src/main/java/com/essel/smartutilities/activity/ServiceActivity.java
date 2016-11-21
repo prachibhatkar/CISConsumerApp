@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,9 +40,14 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_service);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Service Request");
-        toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
         btn_submit_service = (Button) findViewById(R.id.btn_submit_service);
         btn_submit_service.setOnClickListener(this);
@@ -68,4 +74,12 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
             }
 
         }
+
+    public void onBackPressed() {
+
+        Intent in =new Intent(this,ActivityLoginLanding.class);
+        startActivity(in);
+
+
+    }
     }

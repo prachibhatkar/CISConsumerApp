@@ -76,15 +76,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                    CommonUtils.saveCredentials(this,consumer_id,password);
                     Intent i = new Intent(this, ActivityLoginLanding.class);
                     startActivity(i);
+                String password = editTextPassword.getText().toString();
+                String consumer_id = editTextUsername.getText().toString();
+                CommonUtils.hideKeyBoard(this);
+                CommonUtils.saveCredentials(this, consumer_id, password);
+                Intent i = new Intent(this, ActivityLoginLanding.class);
+                startActivity(i);
 
-                }
-                else{
-                       Toast.makeText(this.getApplicationContext(), "Enter correct password", Toast.LENGTH_SHORT).show();
-
-
-
-                }
             }
+                else{
+                 //Toast.makeText(this.getApplicationContext(), "Enter correct password", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
         } else if (v == actionRegister) {
             Intent i = new Intent(this, RegisterActivity.class);
             startActivity(i);
@@ -115,40 +121,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private boolean isBlankInput() {
         boolean b = true;
-//        String username = String.valueOf(editTextUsername.getText());
-//        if (username.equals("")||username.length()<10||username.length()>20) {
-//            inputLayoutUsername.setError(getString(R.string.error_empty_consumer_id));
-//
-//            b = false;
-//        } else {
-//            inputLayoutUsername.setError(null);
-//        }
-//
-//        String password = String.valueOf(editTextPassword.getText());
-//        if (TextUtils.isEmpty(password)) {
-//            inputLayoutPassword.setError(getString(R.string.error_empty_password));
-//            b = false;
-//        } else {
-//            inputLayoutPassword.setError(null);
-//        }
+       String username = String.valueOf(editTextUsername.getText());
+       if (username.equals("")||username.length()<10||username.length()>20){
+
+           inputLayoutUsername.setError(getString(R.string.error_empty_consumer_id));
+            b = false;
+       }
+
+
+       else {
+            inputLayoutUsername.setError(null);
+       }
+
+        String password = String.valueOf(editTextPassword.getText());
+        if (password.equals("")||password.length()<6||password.length()>20) {
+           inputLayoutPassword.setError(getString(R.string.error_empty_password));
+            b = false;
+        } else {
+            inputLayoutPassword.setError(null);
+        }
         return b;
 
     }
 
-    private boolean isValidPassword(final String password) {
+   /* private boolean isValidPassword(final String password) {
 
-//
-//      String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-//        pattern = Pattern.compile(PASSWORD_PATTERN);
-//        boolean p = false;
-//
-//        final EditText Password = (EditText) inputLayoutPassword.findViewById(R.id.editPassword);
-//        matcher = pattern.matcher(password);
-//        return matcher.matches();
 
-    return true;
+      String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        boolean p = false;
 
-    }
+       final EditText Password = (EditText) inputLayoutPassword.findViewById(R.id.editPassword);
+        matcher = pattern.matcher(password);
+       return matcher.matches();
+
+
+    }*/
 
 
     public void onBackPressed() {

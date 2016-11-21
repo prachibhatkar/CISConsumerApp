@@ -26,62 +26,19 @@ tools:context="com.essel.smartutilities.fragments.Raise_Complaint_Fragment">
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height_small"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/selector_city_spinner"
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="@dimen/margin_medium"
                 />
 
 
-
-
-
         </LinearLayout>
 
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginTop="15dp"
-    android:id="@+id/linear_layout_uploadphoto">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:id="@+id/tv_uploadphoto"
-        android:text="Upload Photo"
-        android:layout_marginLeft="5dp"
-        android:layout_gravity="left|bottom" />
-
-<ImageView
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:src="@drawable/camera"
-    android:layout_marginLeft="-60dp"
-    android:id="@+id/imgv_camera"/>
-
-</LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/iv_captured_image"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_horizontal"
-                android:visibility="gone"/>
-        </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/inputLayoutremark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linear_layout_uploadphoto"
                 app:errorTextAppearance="@style/error_appearance">
 
             <EditText
@@ -95,11 +52,43 @@ tools:context="com.essel.smartutilities.fragments.Raise_Complaint_Fragment">
                 android:singleLine="true"
                 android:textSize="@dimen/edit_text_size_medium" />
                 </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:id="@+id/linear_layout_uploadphoto">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:id="@+id/tv_uploadphoto"
+                android:text="Upload Photo"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="left|bottom" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           >
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="60dp"
+                android:background="@color/black_overlay"
+                android:id="@+id/iv_captured_image"
+                android:layout_gravity="center" />
+        </LinearLayout>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_submitcomplaint"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_small"
-            android:background="@drawable/red_button_rounded"
+            android:background="@color/colorPrimary"
             android:layout_marginLeft="@dimen/margin_medium"
             android:text="Submit"
             android:textAllCaps="false"

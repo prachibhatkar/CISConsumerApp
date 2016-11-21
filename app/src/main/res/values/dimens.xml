@@ -16,7 +16,7 @@
     <dimen name="text_size_h2">20sp</dimen>
     <dimen name="text_size_h3">19sp</dimen>
     <dimen name="text_size_h4">16sp</dimen>
-    <dimen name="text_size_h5">14sp</dimen>
+    <dimen name="text_size_h5">12sp</dimen>
     <dimen name="text_size_h6">11sp</dimen>
     <dimen name="text_size_h7">09sp</dimen>
     <dimen name="text_size_h8">02sp</dimen>

@@ -7,12 +7,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.essel.smartutilities.activity.ProfileActivity">
-    <android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_name" />
+
+            <TextView
+                android:id="@+id/title_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="My Profile"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -33,14 +62,23 @@
             android:orientation="vertical"
             android:padding="@dimen/margin_large">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
+                android:layout_gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/myprofile"
                 app:civ_border_width="1dp"
                 app:civ_border_color="#FF000000"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textConsumerName"
@@ -51,33 +89,42 @@
                 android:textSize="@dimen/button_text_size_medium"
                 android:textStyle="bold" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textConsumerConnectionType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Consumer Number"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="@dimen/button_text_size_small" />
+
+                <TextView
+                    android:id="@+id/textConsumerMobileNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1012451241"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="@dimen/button_text_size_small" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/textConsumerAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
                 android:layout_marginTop="@dimen/margin_small"
-                android:text="15, Plot A, Mohan nagar, Industrial Area, Sahibabad, Gaziyabad, Uttar Pradesh - 201302"
+                android:text="15, Plot A, Mohan nagar, Industrial Area, Sahibabad, Gaziyabad"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="@dimen/button_text_size_small" />
 
-            <TextView
-                android:id="@+id/textConsumerConnectionType"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Connection - Residential"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/button_text_size_small" />
 
-            <TextView
-                android:id="@+id/textConsumerMobileNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mobile Number - 959XXXX117"
-                android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/button_text_size_small" />
 
 
         </LinearLayout>
@@ -94,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/black_overlay"
                 android:paddingRight="10dp"
-                android:text="Edit Profile"
+                android:text="@string/edit_contact_detail"
                 android:textColor="@color/colorPrimaryDarkText"/>
 
             <com.github.aakira.expandablelayout.ExpandableRelativeLayout
@@ -109,29 +156,50 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/consumer_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_consumer_id"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:paddingTop="20dp"
-                        android:singleLine="true"
-                        android:textSize="14dp"
-                        />
-                    <EditText
-                        android:id="@+id/cosumer_email_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_consumer_email_id"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:paddingTop="@dimen/margin_large"
-                        android:singleLine="true"
-                        android:textSize="@dimen/edit_text_size_medium"
-                        />
 
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/inputLayoutcontactno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:errorTextAppearance="@style/error_appearance">
+
+                        <EditText
+                            android:id="@+id/editcontactno"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Contact Number"
+                            android:imeActionId="@+id/login"
+                            android:imeActionLabel="@string/action_sign_in_short"
+                            android:imeOptions="actionUnspecified"
+                            android:inputType="number"
+                            android:text="4578421569"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textSize="@dimen/edit_text_size_medium" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/inputLayoutconsumeremailid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:errorTextAppearance="@style/error_appearance">
+
+                        <EditText
+                            android:id="@+id/editconsumeremailid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Email Id"
+                            android:imeActionId="@+id/login"
+                            android:imeActionLabel="@string/action_sign_in_short"
+                            android:imeOptions="actionUnspecified"
+                            android:inputType="number"
+                            android:text="abc@gmail.com"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textSize="@dimen/edit_text_size_medium" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
                     <Button

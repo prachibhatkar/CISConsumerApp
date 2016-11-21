@@ -59,7 +59,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/promt_consumer_id"
-                            android:inputType="text"
+                            android:inputType="number"
                             android:maxLines="1"
                             android:singleLine="true"
                             android:paddingBottom="@dimen/margin_large"
@@ -98,17 +98,14 @@
     </RelativeLayout>
 
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            />
-
-
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
 
 
 </android.support.design.widget.CoordinatorLayout>

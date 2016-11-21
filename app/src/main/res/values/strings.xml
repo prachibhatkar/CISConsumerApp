@@ -43,6 +43,9 @@
     <string name="title_success_primary_ca_number">Primary CA Number - </string>
     <string name="title_success_registered_mobile">Registered Mobile Number - </string>
     <string name="title_success_add">Add additional CA number</string>
+    <string name="error_empty_consumer_id">  Enter Consumer Number   </string>
+
+
 
     <string-array name="City">
         <item>Select City</item>
@@ -63,19 +66,30 @@
 
 
     <string-array name="complaints">
+        <item>Complaint Type</item>
         <item>complaint 1</item>
         <item>complaint 2</item>
         <item>complaint 3</item>
-        <item>complaint 4</item>
         <item>Other</item>
 
     </string-array>
 
+
+
+    <string-array name="complaintid">
+        <item>101245789</item>
+        <item>21457854</item>
+        <item>514258478</item>
+        <item>321457896</item>
+
+    </string-array>
+
+
     <string-array name="service">
+        <item>Service Type</item>
         <item>service 1</item>
         <item>service 2</item>
         <item>service 3</item>
-        <item>service 4</item>
         <item>Other</item>
 
     </string-array>
@@ -93,6 +107,10 @@
     <string name="prompt_newcomnection_type_residential">Residential</string>
     <string name="prompt_newcomnection_type_commercial">Commercial</string>
     <string name="prompt_newcomnection_type_industrial">Industrial</string>
+
+
+    <string name="edit_contact_detail">Edit Contact Details</string>
+
     <string name="prompt_newcomnection_type_other">Other</string>
 
     <string name="prompt_newcomnection_action_submit">Submit</string>
@@ -127,7 +145,7 @@
     <string name="my_tariffs">My Tariffs</string>
     <string name="tips">Tips</string>
     <string name="about_us">About Us</string>
-    <string name="contact_us">Contact Us</string>
+    <string name="contact_detail">Contact Details</string>
     <string name="my_profile">My Profile</string>
     <string name="my_tariff">My Tariff</string>
     <string name="locate_us">Locate Us</string>
@@ -188,7 +206,7 @@
     <string name="prompt_total_amount">Enter Total Amount</string>
     <string name="prompt_proceed_to_pay">Proceed to Pay</string>
 
-    <string name="forgotpass_msg">Password Reset Link Sent on Registered Emailid</string>
+    <string name="forgotpass_msg">Password Reset Link Sent on Registered Email</string>
     <string name="forgotpass_msgtwo">If you dont receive mail,Check your Spam Folder or Contact to support team.</string>
 
 

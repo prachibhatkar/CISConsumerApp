@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.essel.smartutilities.db.tables.AboutUsTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 import com.essel.smartutilities.models.Consumer;
@@ -43,6 +44,8 @@ import java.util.ArrayList;
 /**
  * This class acts as an interface between database and UI. It contains all the
  * methods to interact with device database.
+ *
+
  */
 public class DatabaseManager {
 
@@ -53,73 +56,39 @@ public class DatabaseManager {
      * @param context Context
      * @param user    User
      */
+
+    private static Context context;
     public static void saveUser(Context context, User user) {
         if (user != null) {
             ContentValues values = getContentValuesUserLoginTable(context, user);
-            String condition = LoginTable.Cols.USER_ID + "='" + user.id + "'";
+            String condition = LoginTable.Cols.ID + "='" + user.id + "'";
             saveValues(context, LoginTable.CONTENT_URI, values, condition);
         }
     }
 
-//    private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
-//        ContentResolver resolver = context.getContentResolver();
-//        Cursor cursor = resolver.query(table, null,
-//                condition, null, null);
-//
-//        if (cursor != null && cursor.getCount() > 0) {
-//            resolver.update(table, values, condition, null);
-//        } else {
-//            resolver.insert(table, values);
-//        }
-//
-//        if (cursor != null) {
-//            cursor.close();
-//        }
-//    }
-
-    public static void saveAccounts(Context context, ArrayList<Consumer> userProfiles) {
-        if (userProfiles != null && userProfiles.size() > 0) {
-            for (Consumer userProfile : userProfiles) {
-                ContentValues values = getContentValuesManageAccountTable(context, userProfile);
-                saveValues(context, ManageAccountsTable.CONTENT_URI, values, null);
-            }
-        }
-    }
-
-    private static ContentValues getContentValuesManageAccountTable(Context context, Consumer userProfile) {
-        ContentValues values = new ContentValues();
-        try {
-            values.put(ManageAccountsTable.Cols.CONSUMER_ID, userProfile.consumer_no);
-            values.put(ManageAccountsTable.Cols.CONSUMER_NAME, userProfile.consumer_no);
-            values.put(ManageAccountsTable.Cols.ADDRESS, userProfile.consumer_no);
-            values.put(ManageAccountsTable.Cols.IS_PRIMARY, userProfile.is_primary);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return values;
-    }
-
-
     private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
-//        ContentResolver resolver = context.getContentResolver();
-//        Cursor cursor = resolver.query(table, null, condition, null, null);
-//        if (cursor != null && cursor.getCount() > 0) {
-//            resolver.update(table, values, condition, null);
-//        } else {
-//            resolver.insert(table, values);
-//        }
-//        if (cursor != null) {
-//            cursor.close();
-//        }
+       /* ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(table, null,
+                condition, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            resolver.update(table, values, condition, null);
+        } else {
+            resolver.insert(table, values);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }*/
+
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
-        Log.i("Tag", "saveValues:"+newRowId);
+      long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
+       Log.i("Tag", "saveValues:"+newRowId);
     }
 
     public static User getCurrentLoggedInUser(Context context) {
-        String condition = LoginTable.Cols.USER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_NAME) + "' and " + LoginTable.Cols.USER_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_ID) + "'";
+        String condition = LoginTable.Cols.USER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context,SharedPrefManager.USER_NAME) + "' and "+LoginTable.Cols.USER_ID+"='"+SharedPrefManager.getStringValue(context,SharedPrefManager.USER_ID)+"'";
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(LoginTable.CONTENT_URI, null,
                 condition, null, null);
@@ -128,7 +97,7 @@ public class DatabaseManager {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-            // userList = new ArrayList<User>();
+           // userList = new ArrayList<User>();
             while (!cursor.isAfterLast()) {
                 user = getUserFromCursor(cursor);
 
@@ -144,10 +113,11 @@ public class DatabaseManager {
     /**
      * @param context
      * @param uname
+
      */
     public static ArrayList<User> getUser(Context context,
                                           String uname) {
-        String condition = LoginTable.Cols.USER_EMAIL_ID + "='" + uname + "'";
+        String condition = LoginTable.Cols.CONSUMER_EMAIL_ID + "='" + uname + "'";
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(LoginTable.CONTENT_URI, null,
                 condition, null, null);
@@ -177,12 +147,11 @@ public class DatabaseManager {
     private static User getUserFromCursor(Cursor cursor) {
         User user;
         user = new User();
-        user.id = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.USER_ID));
-        user.userName = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.USER_NAME));
-
-        user.emailId = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.USER_EMAIL_ID));
+        user.id = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.CONSUMER_ID));
+        user.userName = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.CONSUMER_NAME));
+        user.emailId = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.CONSUMER_EMAIL_ID));
         user.activeFlag = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.ACTIVE_FLAG));
-        // user.password = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.PASSWORD));
+            // user.password = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.PASSWORD));
         user.lastsyncedon = cursor.getString(cursor.getColumnIndex(LoginTable.Cols.LAST_SYNCED_ON));
         return user;
     }
@@ -196,12 +165,23 @@ public class DatabaseManager {
     private static ContentValues getContentValuesUserLoginTable(Context context, User user) {
         ContentValues values = new ContentValues();
         try {
-            values.put(LoginTable.Cols.USER_ID, user.id);
-            values.put(LoginTable.Cols.USER_NAME, user.userName);
-            values.put(LoginTable.Cols.USER_EMAIL_ID, user.emailId);
+            values.put(LoginTable.Cols.CONSUMER_ID, user.id);
+            values.put(LoginTable.Cols.CONSUMER_NAME, user.userName);
+            values.put(LoginTable.Cols.CONSUMER_EMAIL_ID, user.emailId);
             values.put(LoginTable.Cols.ACTIVE_FLAG, user.activeFlag);
             values.put(LoginTable.Cols.LAST_SYNCED_ON, user.lastsyncedon);
             values.put(LoginTable.Cols.LOGIN_ATTEMPTS, "0");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
+    private static ContentValues getContentValuesAboutUsTable(Context context, AboutUs aboutUs) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(AboutUsTable.Cols.ABOUT_US_MSG, aboutUs.about_us_msg);
 
         } catch (Exception e) {
             e.printStackTrace();

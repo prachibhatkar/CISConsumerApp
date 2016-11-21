@@ -7,9 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
+
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,9 +35,12 @@ public class Complaint_Status_Fragment extends Fragment {
     private String mParam2;
 
     TextView tv_consumerid,tv_complainttype,tv_complaintraised,tv_complaintstatus;
+    Spinner complaintid;
 
     private OnFragmentInteractionListener mListener;
     private TextView tv_complaintmsg;
+    private Context mContext;
+
 
     public Complaint_Status_Fragment() {
         // Required empty public constructor
@@ -72,10 +80,6 @@ public class Complaint_Status_Fragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_complaint__status, container, false);
         initialize(rootView);
         return rootView;
-
-
-
-
     }
 
     private void initialize(View rootView){
@@ -87,10 +91,9 @@ public class Complaint_Status_Fragment extends Fragment {
 
 
 
-
-
-
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

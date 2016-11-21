@@ -55,6 +55,14 @@
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -86,7 +94,7 @@
                 android:layout_width="100dp"
                 android:layout_height="45dp"
                 android:id="@+id/btn_paynow"
-                android:background="@drawable/red_button_rounded"
+                android:background="@color/colorPrimary"
                 android:text="Pay Now"
                 android:textColor="#ffffff"
                 android:textAlignment="center"
@@ -96,7 +104,7 @@
                 android:layout_width="100dp"
                 android:layout_height="45dp"
                 android:id="@+id/btn_mybill"
-                android:background="@drawable/red_button_rounded"
+                android:background="@color/colorPrimary"
                 android:text="My Bill"
                 android:textColor="#ffffff"
                 android:textAlignment="center"
@@ -109,6 +117,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/container"
             android:orientation="vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:scaleType="center"
+                android:src="@drawable/paytm"/>
+
+        </LinearLayout>
     </LinearLayout>
+
+    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

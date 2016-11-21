@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 
@@ -38,6 +39,10 @@ public class ForgotActivity extends BaseActivity implements View.OnClickListener
         actionSubmit = (AppCompatButton)findViewById(R.id.BTNSubmit);
         actionSubmit.setOnClickListener(this);
 
+
+
+
+
     }
 
     /*private void showSuccess(){
@@ -52,13 +57,27 @@ public class ForgotActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v==actionSubmit) {
+            if (consumerIdEditText.equals("") || consumerIdEditText.length() < 10 || consumerIdEditText.length() > 20) {
 
-            Intent in = new Intent(this,ForgotActivity2.class);
-            startActivity(in);
-            //showSuccess();
+                Toast.makeText(this.getApplicationContext(), "Enter correct consumer id", Toast.LENGTH_SHORT).show();
+
+
+            } else {
+                Intent in = new Intent(this, ForgotActivity2.class);
+                startActivity(in);
+                //showSuccess();
+            }
         }
-        else if(v==actionok){
+        if(v==actionok){
             dialogSucccess.hide();
         }
+    }
+
+    public void onBackPressed() {
+
+        Intent in =new Intent(this,ActivityLoginLanding.class);
+        startActivity(in);
+
+
     }
 }

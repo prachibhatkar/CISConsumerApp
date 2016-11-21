@@ -28,7 +28,7 @@ public class ContactUsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return Contact_Details_Fragment.newInstance(0, mContext.getString(R.string.contact_us));
+                return Contact_Details_Fragment.newInstance(0, mContext.getString(R.string.contact_detail));
             case 1:
                 return Locate_Us_Fragment.newInstance(1, mContext.getString(R.string.locate_us));
 
@@ -57,7 +57,7 @@ public class ContactUsAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return mContext.getString(R.string.contact_us);
+                return mContext.getString(R.string.contact_detail);
             case 1:
                 return mContext.getString(R.string.locate_us);
 

@@ -40,7 +40,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     Spinner complainttype;
     Button btn_submitcomplaint;
     @Override
-    public void onClick(View v) { if(v==img){
+    public void onClick(View v) { if(v==iv){
 
         Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
@@ -164,9 +164,11 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
        // expListView = (ExpandableListView) rootView.findViewById(R.id.expListView);
        // linear_layout_imageview=(LinearLayout)rootView.findViewById(R.id.linear_layout_imageview);
-        img=(ImageView)rootView.findViewById(R.id.imgv_camera);
+        //img=(ImageView)rootView.findViewById(R.id.imgv_camera);
         iv = (ImageView)rootView.findViewById(R.id.iv_captured_image);
-        img.setOnClickListener(this);
+        iv.setOnClickListener(this);
+
+        //img.setOnClickListener(this);
         btn_submitcomplaint=(Button)rootView.findViewById(R.id.btn_submitcomplaint);
         btn_submitcomplaint.setOnClickListener(this);
 

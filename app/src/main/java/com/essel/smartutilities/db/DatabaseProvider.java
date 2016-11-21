@@ -29,6 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import com.essel.smartutilities.db.tables.AboutUsTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 
@@ -67,11 +68,7 @@ public class DatabaseProvider extends ContentProvider {
                         selection, selectionArgs, sortOrder);
                 break;
             }
-            case ManageAccountsTable.PATH_TOKEN: {
-                result = doQuery(db, uri, ManageAccountsTable.TABLE_NAME, projection,
-                        selection, selectionArgs, sortOrder);
-                break;
-            }
+
 
         }
 
@@ -97,11 +94,7 @@ public class DatabaseProvider extends ContentProvider {
                         LoginTable.CONTENT_URI, uri, values);
                 break;
             }
-            case ManageAccountsTable.PATH_TOKEN: {
-                result = doInsert(db, ManageAccountsTable.TABLE_NAME,
-                        ManageAccountsTable.CONTENT_URI, uri, values);
-                break;
-            }
+
         }
 
         if (result == null) {
@@ -121,10 +114,7 @@ public class DatabaseProvider extends ContentProvider {
                 table = LoginTable.TABLE_NAME;
                 break;
             }
-            case ManageAccountsTable.PATH_TOKEN: {
-                table = ManageAccountsTable.TABLE_NAME;
-                break;
-            }
+
         }
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -155,11 +145,7 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
-            case ManageAccountsTable.PATH_TOKEN: {
-                result = doDelete(db, uri, ManageAccountsTable.TABLE_NAME, selection,
-                        selectionArgs);
-                break;
-            }
+
         }
 
         return result;
@@ -179,11 +165,7 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs, values);
                 break;
             }
-            case ManageAccountsTable.PATH_TOKEN: {
-                result = doUpdate(db, uri, ManageAccountsTable.TABLE_NAME, selection,
-                        selectionArgs,values);
-                break;
-            }
+
         }
 
         return result;

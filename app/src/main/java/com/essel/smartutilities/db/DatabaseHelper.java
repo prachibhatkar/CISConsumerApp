@@ -28,6 +28,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.essel.smartutilities.db.tables.AboutUsTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 
@@ -61,7 +62,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createLoginTable(db);
-        createManageAccountsTable(db);
 
     }
 
@@ -89,16 +89,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    private void createManageAccountsTable(SQLiteDatabase db) {
-        String manageAccountsFields = ManageAccountsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ManageAccountsTable.Cols.CONSUMER_ID + " VARCHAR, " +
-                ManageAccountsTable.Cols.CONSUMER_NAME + " VARCHAR, " +
-                ManageAccountsTable.Cols.ADDRESS + " VARCHAR, " +
-                ManageAccountsTable.Cols.IS_PRIMARY + " VARCHAR ";
-
-
-        createTable(db, ManageAccountsTable.TABLE_NAME, manageAccountsFields);
-    }
 
     /**
      * Drops Table from device database
@@ -135,7 +125,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void createTable(SQLiteDatabase db, String name, String fields) {
         String query = MessageFormat.format(DatabaseHelper.KEY_CREATE_TABLE,
                 name, fields);
-        Log.i("create sql",""+query);
         db.execSQL(query);
     }
 

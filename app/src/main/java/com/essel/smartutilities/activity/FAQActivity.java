@@ -2,6 +2,7 @@ package com.essel.smartutilities.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
@@ -30,9 +32,14 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_faq);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("FAQ");
-        toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         initialize();
     }
 
@@ -61,6 +68,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             return true;
 
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -115,6 +124,14 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                 expandableLayout_permanantdisconnect.toggle();
 
         }
+
+    }
+
+    public void onBackPressed() {
+
+        Intent in =new Intent(this,ActivityLoginLanding.class);
+        startActivity(in);
+
 
     }
 }

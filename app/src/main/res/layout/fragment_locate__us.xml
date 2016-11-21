@@ -13,11 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-        <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <LinearLayout
+                 android:layout_width="match_parent"
+               android:layout_height="400dp"
+                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 <com.google.android.gms.maps.MapView
     android:id="@+id/mapView"
@@ -50,7 +49,6 @@
             android:layout_height="38dp"
             android:layout_weight="0.9"
             android:layout_marginTop="5dp"
-            android:background="@drawable/selector_csd_location_spinner"
             android:layout_marginRight="8dp"
             android:layout_marginEnd="8dp"
             />
@@ -65,21 +63,21 @@
             android:orientation="vertical">
 
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/tv_address"
-    android:text="building no. 1,area no 1"/>
+      <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/tv_address1"
+      android:text="building no. 1,area no 1"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_contactno"
+            android:id="@+id/tv_address2"
             android:text="21458741"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_time"
+            android:id="@+id/tv_address3"
             android:text="8 to 9pm"/>
 
         <TextView
@@ -91,6 +89,9 @@
 
 
     </LinearLayout>
+
+
+
         </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -47,9 +47,12 @@ public class LoginTable {
      */
     public static class Cols {
         public static final String ID = "_id";
-        public static final String USER_ID = "userid";
-        public static final String USER_NAME = "username";
-        public static final String USER_EMAIL_ID = "emailId";
+        public static final String CONSUMER_ID = "consumerid";
+        public static final String CONSUMER_NAME = "consumername";
+        public static final String CONSUMER_EMAIL_ID = "consumeremailId";
+        public static final String CONSUMER_ADDRESS = "consumeraddress";
+        public static final String CONSUMER_CONTACT_NO = "consumercontactno";
+        public static final String CONSUMER_CONNECTION_TYPE = "consumerconnectiontype";
         public static final String ACTIVE_FLAG = "activeFlag";
         public static final String LAST_SYNCED_ON = "last_synced_on";
         public static final String LOGIN_ATTEMPTS = "login_attempts";

@@ -39,7 +39,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     }
 
     private void initialize() {
-        consumerno = (EditText) findViewById(R.id.consumer_id);
+       // EditText consumerno = (EditText) findViewById(R.id.consumer_id);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
         action_about_us = (LinearLayout) findViewById(R.id.action_about_us);

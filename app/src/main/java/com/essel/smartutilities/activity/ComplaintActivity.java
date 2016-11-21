@@ -1,6 +1,7 @@
 package com.essel.smartutilities.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ComplaintAdapter;
@@ -26,9 +29,13 @@ public class ComplaintActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.complaint);
-        toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         setupUI();
         loadData();
 
@@ -93,5 +100,13 @@ public class ComplaintActivity extends AppCompatActivity {
 
         }
     };
+
+    public void onBackPressed() {
+
+        Intent in =new Intent(this,ActivityLoginLanding.class);
+        startActivity(in);
+
+
+    }
 
 }

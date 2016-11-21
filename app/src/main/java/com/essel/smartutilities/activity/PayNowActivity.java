@@ -34,7 +34,7 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initialize() {
-        consumerno = (EditText) findViewById(R.id.consumer_id);
+       // consumerno = (EditText) findViewById(R.id.consumer_id);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
     }
