@@ -78,7 +78,15 @@ public class Complaint_Status_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_complaint__status, container, false);
+        mContext=getActivity();
         initialize(rootView);
+
+        complaintid = (Spinner)rootView.findViewById(R.id.sp_complaintid);
+        String[] type = mContext.getResources().getStringArray(R.array.complaintid);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, Arrays.asList(type));
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        complaintid.setAdapter(dataAdapter);
+
         return rootView;
     }
 
@@ -88,7 +96,6 @@ public class Complaint_Status_Fragment extends Fragment {
         tv_complaintstatus=(TextView)rootView.findViewById(R.id.tv_complaintstatus);
         tv_complaintraised=(TextView)rootView.findViewById(R.id.tv_complaintraised);
         tv_complaintmsg=(TextView)rootView.findViewById(R.id.tv_complaintmsg);
-
 
 
     }

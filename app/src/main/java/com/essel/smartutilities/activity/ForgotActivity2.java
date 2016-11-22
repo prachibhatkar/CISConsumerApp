@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 
@@ -19,11 +20,15 @@ public class ForgotActivity2 extends AppCompatActivity implements View.OnClickLi
         btn_goto_login=(Button)findViewById(R.id.btn_goto_login);
         btn_goto_login.setOnClickListener(this);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Forgot Password");
-        toolbar.setTitleTextColor(Color.WHITE);
+        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
     }

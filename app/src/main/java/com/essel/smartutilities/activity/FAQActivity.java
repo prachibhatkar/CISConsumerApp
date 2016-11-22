@@ -55,17 +55,12 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-        initialize();
-       Faq faq=new Faq();
-        savedata(faq);
+          initialize();
+          Faq faq=new Faq();
         DatabaseManager.saveFAQ(this, faq);
     }
 
-    public void savedata(Faq faq){
-//        faq.faq_question="consumer data";
-//        faq.faq_answer="consumer data";
 
-    }
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,8 +125,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
         if (v == expandablebutton_newserviceconnection) {
 
-            expandableLayout_newserviceconnection.toggle();
-        }
+               expandableLayout_newserviceconnection.toggle();
+           }
 
         if (v == expandablebutton_changeofownership) {
 

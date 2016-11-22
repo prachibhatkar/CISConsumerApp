@@ -13,6 +13,9 @@ public class AppConstants {
     public static final String REQEST_FAQ = "get-faq/";
     public static final String URL_GET_FAQ=BASE_URL+REQEST_FAQ;
 
+    public static final String REQEST_ABOUT_US = "get-about-us/";
+    public static final String URL_GET_ABOUT_US=BASE_URL+REQEST_ABOUT_US;
+
     public static final String SHARED_PREF = "SmartUtilities";
     public static final String SCREEN_ID = "screen_id";
     String REQEST_LOGIN ="login_call";

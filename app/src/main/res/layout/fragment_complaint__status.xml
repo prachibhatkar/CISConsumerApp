@@ -7,7 +7,8 @@
     tools:context="com.essel.smartutilities.fragments.Complaint_Status_Fragment">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
     <Spinner
         android:id="@+id/sp_complaintid"
         android:layout_width="match_parent"

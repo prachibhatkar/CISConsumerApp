@@ -313,8 +313,8 @@ public class DatabaseManager {
     private static ContentValues getContentValuesFAQTable(Context context, Faq faq) {
         ContentValues values = new ContentValues();
         try {
-//            values.put(FAQTable.Cols.FAQ_QUESTION, faq.faq_question);
-//            values.put(FAQTable.Cols.FAQ_ANSWER, faq.faq_answer);
+           values.put(FAQTable.Cols.FAQ_QUESTION, faq.question);
+            values.put(FAQTable.Cols.FAQ_ANSWER, faq.answer);
 
         } catch (Exception e) {
             e.printStackTrace();
