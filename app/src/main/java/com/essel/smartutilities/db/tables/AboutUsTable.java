@@ -47,7 +47,7 @@ public class AboutUsTable {
      */
     public static class Cols {
         public static final String ID = "_id";
-        public static final String ABOUT_US_MSG = "consumerid";
+        public static final String ABOUT_US_MSG = "about_us_msg";
 
     }
 }

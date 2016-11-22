@@ -74,7 +74,7 @@ public class DatabaseManager {
     }
 
 
-    public static void saveAboutUs(Context context, AboutUs aboutUs) {
+    public static void saveAboutUs(Context context, String aboutUs) {
         if (aboutUs != null) {
             ContentValues values = getContentValuesAboutUsTable(context, aboutUs);
             //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
@@ -299,10 +299,10 @@ public class DatabaseManager {
         return values;
     }
 
-    private static ContentValues getContentValuesAboutUsTable(Context context, AboutUs aboutUs) {
+    private static ContentValues getContentValuesAboutUsTable(Context context, String about_us_msg) {
         ContentValues values = new ContentValues();
         try {
-            values.put(AboutUsTable.Cols.ABOUT_US_MSG, aboutUs.about_us_msg);
+            values.put(AboutUsTable.Cols.ABOUT_US_MSG, about_us_msg);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -355,6 +355,22 @@ public class DatabaseManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public  static AboutUs getAboutUs(Context context){
+
+        AboutUs aboutUs= new AboutUs();
+        SQLiteDatabase db  = DatabaseHelper.dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM datatable"+"from"+AboutUsTable.TABLE_NAME, null);
+        if(cursor!=null){
+
+            aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return aboutUs;
+
+
     }
 
 

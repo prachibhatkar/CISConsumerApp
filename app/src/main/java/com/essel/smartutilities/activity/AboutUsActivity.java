@@ -3,6 +3,8 @@ package com.essel.smartutilities.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +32,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
     TextView tv_aboutus_message;
     private Context mContext;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +49,34 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
         });
 
         tv_aboutus_message=(TextView)findViewById(R.id.textview_about_us);
-
-        JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US,
-                 this,"Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
-        App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
-
-
         AboutUs aboutUs=new AboutUs();
 
-        DatabaseManager.saveAboutUs(this, aboutUs);
+
+
+        if( isNetworkAvailable()) {
+
+            JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US,
+                    this, "Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
+            App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
+        }
+
+        else{
+
+            Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
+            DatabaseManager.getAboutUs(this);
+            tv_aboutus_message.setText(aboutUs.about_us_msg);
+
+
+        }
+
+
+
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 
@@ -69,8 +91,8 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
                         Log.i(label, "hyif " + jsonResponse.aboutus);
                         if(jsonResponse.aboutus!= null) {
 
-                            tv_aboutus_message.setText(jsonResponse.aboutus.toString().trim());
-
+                             tv_aboutus_message.setText(jsonResponse.aboutus.toString().trim());
+                             DatabaseManager.saveAboutUs(this,jsonResponse.aboutus);
 
                         }
 

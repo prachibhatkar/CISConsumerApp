@@ -49,6 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
     private static final int CURRENT_DB_VERSION = 1;
     private static final String DB_NAME = "MRBD.db";
+    public static DatabaseHelper dbHelper;
 
     /**
      * Constructor using context for the class

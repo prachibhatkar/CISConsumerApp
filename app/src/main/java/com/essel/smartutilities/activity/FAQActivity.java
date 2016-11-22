@@ -55,7 +55,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-          initialize();
+         initialize();
           Faq faq=new Faq();
         DatabaseManager.saveFAQ(this, faq);
     }
