@@ -97,9 +97,13 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
         tv_helplineno = (TextView) rootView.findViewById(R.id.tv_helplineno);
         tv_antiberiberyno = (TextView) rootView.findViewById(R.id.tv_antiberiberyno);
         tv_onlinecomplaintno = (TextView) rootView.findViewById(R.id.tv_onlineemail);
-        JsonObjectRequest request = WebRequests.getContactDetails(getActivity(), Request.Method.GET, AppConstants.URL_GET_CONTACT_DETAILS, AppConstants.REQUEST_GET_CONTACT_DETAILS,
-                this, SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
-        App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_CONTACT_DETAILS);
+        if (CommonUtils.checkConnectivity(getActivity())) {
+            JsonObjectRequest request = WebRequests.getContactDetails(getActivity(), Request.Method.GET, AppConstants.URL_GET_CONTACT_DETAILS, AppConstants.REQUEST_GET_CONTACT_DETAILS,
+                    this, SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_CONTACT_DETAILS);
+        } else
+            Toast.makeText(getActivity(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+
 
     }
 
