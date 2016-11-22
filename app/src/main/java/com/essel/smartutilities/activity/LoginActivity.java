@@ -116,25 +116,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private boolean isBlankInput() {
         boolean b = true;
-       String username = String.valueOf(editTextUsername.getText());
-       if (username.equals("")||username.length()<10||username.length()>20){
-
-           inputLayoutUsername.setError(getString(R.string.error_empty_consumer_id));
-            b = false;
-       }
-
-
-       else {
-            inputLayoutUsername.setError(null);
-       }
-
-        String password = String.valueOf(editTextPassword.getText());
-        if (password.equals("")||password.length()<6||password.length()>20) {
-           inputLayoutPassword.setError(getString(R.string.error_empty_password));
-            b = false;
-        } else {
-            inputLayoutPassword.setError(null);
-        }
+//       String username = String.valueOf(editTextUsername.getText());
+//       if (username.equals("")||username.length()<10||username.length()>20){
+//
+//           inputLayoutUsername.setError(getString(R.string.error_empty_consumer_id));
+//            b = false;
+//       }
+//
+//
+//       else {
+//            inputLayoutUsername.setError(null);
+//       }
+//
+//        String password = String.valueOf(editTextPassword.getText());
+//        if (password.equals("")||password.length()<6||password.length()>20) {
+//           inputLayoutPassword.setError(getString(R.string.error_empty_password));
+//            b = false;
+//        } else {
+//            inputLayoutPassword.setError(null);
+//        }
         return b;
 
     }

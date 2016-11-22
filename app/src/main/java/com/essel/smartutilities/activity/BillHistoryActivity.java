@@ -25,7 +25,7 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 //        getSupportActionBar().setTitle("My Bill");
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         intialize();
-        image_uri = Uri.parse("http://www.androidtutorialpoint.com/wp-content/uploads/2016/09/Beauty.jpg");
+        image_uri = Uri.parse("http://192.168.10.114:8000/sitemedia/Tips-Images/4.png");
         music_uri = Uri.parse("http://www.androidtutorialpoint.com/wp-content/uploads/2016/09/AndroidDownloadManager.mp3");
 
     }

@@ -126,7 +126,7 @@ public class DatabaseManager {
     }
 
     private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
-       /* ContentResolver resolver = context.getContentResolver();
+       /* ContentResolver resolver = context.getContentValuesTipsTableontentResolver();
         Cursor cursor = resolver.query(table, null,
                 condition, null, null);
 
@@ -313,8 +313,8 @@ public class DatabaseManager {
     private static ContentValues getContentValuesFAQTable(Context context, Faq faq) {
         ContentValues values = new ContentValues();
         try {
-            values.put(FAQTable.Cols.FAQ_QUESTION, faq.faq_question);
-            values.put(FAQTable.Cols.FAQ_ANSWER, faq.faq_answer);
+//            values.put(FAQTable.Cols.FAQ_QUESTION, faq.faq_question);
+//            values.put(FAQTable.Cols.FAQ_ANSWER, faq.faq_answer);
 
         } catch (Exception e) {
             e.printStackTrace();

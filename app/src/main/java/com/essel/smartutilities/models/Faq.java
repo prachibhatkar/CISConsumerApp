@@ -1,13 +1,14 @@
 package com.essel.smartutilities.models;
 
+import java.io.Serializable;
 
-import java.util.ArrayList;
+/**
+ * Created by hp on 11/21/2016.
+ */
 
-public class Faq {
-    public String id;
-    public String faq_question;
-    public String faq_answer;
+public class Faq implements Serializable  {
+    public String answer;
+    public String question;
+
 
 }
-
-
