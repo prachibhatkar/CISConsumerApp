@@ -67,7 +67,7 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_new: {
-                Intent i = new Intent(this, RegisterActivity.class);
+                Intent i = new Intent(this, AddAccountActivity.class);
                 startActivity(i);
                 break;
             }

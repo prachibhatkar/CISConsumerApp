@@ -112,10 +112,9 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         expandableLayout_loadextensionreduction = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_loadextensionreduction);
         expandableLayout_permanantdisconnect = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_permanantdisconnect);
         expandableLayout_changeofconnectiontype = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofconnection);
-//        CommonUtils.saveAuthToken(this, "Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
-        JsonObjectRequest request = WebRequests.getFaq(this, Request.Method.GET, AppConstants.URL_GET_FAQ, AppConstants.REQEST_FAQ,
-                this,"Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
-        App.getInstance().addToRequestQueue(request, AppConstants.REQEST_FAQ);
+        JsonObjectRequest request = WebRequests.getFaq(this, Request.Method.GET, AppConstants.URL_GET_FAQ, AppConstants.REQUEST_FAQ,
+                this,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+        App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FAQ);
     }
 
 
@@ -161,13 +160,13 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
-            case AppConstants.REQEST_FAQ: {
+            case AppConstants.REQUEST_FAQ: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 //                            DatabaseManager.saveJobCards(mContext, jsonResponse.responsedata.jobcards);
 //                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
-                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
-                        Log.i(label, "Faqqqqqqqqqqqqqqqqq:" + jsonResponse.faqs);
+//                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
+//                        Log.i(label, "Faqqqqqqqqqqqqqqqqq:" + jsonResponse.faqs);
                         if(jsonResponse.faqs.size()!=0)
                         {
                             tv_1.setText(jsonResponse.faqs.get(0).answer.toString().trim());
@@ -175,9 +174,10 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                             tv_2.setText(jsonResponse.faqs.get(0).answer.toString().trim());
                             expandablebutton_changeofownership  .setText(jsonResponse.faqs.get(1).question);
                         }
-//                        if (jsonResponse.authorization != null) {
-//                            CommonUtils.saveAuthToken(mContext, jsonResponse.authorization);
-//                        }
+                        if (jsonResponse.authorization != null) {
+                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 
@@ -192,11 +192,11 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onAsyncFail(String message, String label, NetworkResponse response) {
         switch (label) {
-            case AppConstants.REQEST_FAQ: {
+            case AppConstants.REQUEST_FAQ: {
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
-                Log.i(label, "Faq:" + message);
-                Log.i(label, "Faq:" + response);
+//                Log.i(label, "Faq:" + message);
+//                Log.i(label, "Faq:" + response);
             }
             break;
         }

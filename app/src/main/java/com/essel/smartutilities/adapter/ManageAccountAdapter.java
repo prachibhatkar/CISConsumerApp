@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.essel.smartutilities.activity.ActivityLoginLanding;
 import com.essel.smartutilities.activity.LoginActivity;
 import com.essel.smartutilities.activity.ManageAccountsActivity;
 import com.essel.smartutilities.activity.RegisterActivity2;
+import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.utility.CommonUtils;
 
@@ -75,6 +77,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                     mConsumers.remove(viewHolder.getAdapterPosition());
                                     notifyDataSetChanged();
                                     dialog.cancel();
+//                                    DatabaseManager.deleteAccount(mContext,mConsumers.get(position).consumer_no);
                                     Snackbar snack = Snackbar.make(v, "Account Deleted", Snackbar.LENGTH_LONG);
                                     snack.show();
                                 }

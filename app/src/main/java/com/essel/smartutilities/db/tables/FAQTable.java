@@ -48,7 +48,7 @@ public class FAQTable {
     public static class Cols {
         public static final String ID = "_id";
         public static final String FAQ_QUESTION = "faq_question";
-        public static final String FAQ_ANSWER = "faq_question";
+        public static final String FAQ_ANSWER = "faq_answer";
 
     }
 }

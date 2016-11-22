@@ -10,8 +10,11 @@ public class AppConstants {
     // All static app constants are here except String , array of strings, color, dimentions etc
 
 
-    public static final String REQEST_FAQ = "get-faq/";
-    public static final String URL_GET_FAQ=BASE_URL+REQEST_FAQ;
+    public static final String REQUEST_FAQ = "get-faq/";
+    public static final String URL_GET_FAQ=BASE_URL+REQUEST_FAQ;
+
+    public static final String REQUEST_GET_CONTACT_DETAILS = "get-contactus-details/";
+    public static final String URL_GET_CONTACT_DETAILS=BASE_URL+REQUEST_GET_CONTACT_DETAILS;
 
     public static final String REQEST_ABOUT_US = "get-about-us/";
     public static final String URL_GET_ABOUT_US=BASE_URL+REQEST_ABOUT_US;

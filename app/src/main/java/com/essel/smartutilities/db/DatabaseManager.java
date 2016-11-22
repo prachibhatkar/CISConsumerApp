@@ -167,7 +167,67 @@ public class DatabaseManager {
         Log.i("Tag", "saveAboutUs:" + newRowId);
     }
 
+//    public static ArrayList<Consumer> getAccounts(Context context, String reader_id) {
+//        ContentResolver resolver = context.getContentResolver();
+//        Cursor cursor = resolver.query(ManageAccountsTable.CONTENT_URI, null,
+//                null, null, null);
+//        ArrayList<Consumer> consumers = getAccountsFromCursor(cursor);
+//        if (cursor != null) {
+//            cursor.close();
+//        }
+//        return consumers;
+//    }
+//
+//    private static ArrayList<Consumer> getAccountsFromCursor(Cursor cursor) {
+//        ArrayList<Consumer> consumers = null;
+//        if (cursor != null && cursor.getCount() > 0) {
+//            cursor.moveToFirst();
+//            Consumer user;
+//            consumers = new ArrayList<Consumer>();
+//            while (!cursor.isAfterLast()) {
+//                user = getConsumerFromCursor(cursor);
+//                consumers.add(user);
+//                cursor.moveToNext();
+//            }
+//        }
+//        if (cursor != null) {
+//            cursor.close();
+//        }
+//        return consumers;
+//    }
 
+//    private static Consumer getConsumerFromCursor(Cursor cursor) {
+//        Consumer jobCard = new Consumer();
+//        jobCard.consumer_name = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.CONSUMER_NAME));
+//
+//        jobCard.consumer_no = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.CONSUMER_ID));
+//        jobCard.acctype = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.A));
+//        jobCard.payment_mode = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.DT_CODE));
+//        jobCard.duedate = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.BILL_CYCLE_CODE));
+//        jobCard.is_primary = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_MONTH));
+//        jobCard.month = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_START_DATE));
+//        jobCard.netamt = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_END_DATE));
+//        jobCard.payment_date = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_ACCOUNTING_DATE));
+//
+//        jobCard.paidamt = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.ROUTE_ID));
+//        jobCard.transaction_id = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.POL_NO));
+//        jobCard.payment_time = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.PHONE_NO));
+//        jobCard.address = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.ADDRESS));
+//
+//        return jobCard;
+//    }
+
+
+    public static void deleteAccount(Context context,  String Consumer_id) {
+        try {
+            String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id +  "'";
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.delete("ManageAccountsTable",condition,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private static void saveFAQ(Context context, Uri table, ContentValues values, String condition) {
        /* ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(table, null,

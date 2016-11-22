@@ -19,11 +19,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.utility.App;
+import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
@@ -58,7 +60,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         pay.setOnClickListener(this);
         // toolbar.setOnMenuItemClickListener(ActionBar.DISPLAY_SHOW_HOME);
 
-
+        CommonUtils.saveAuthToken(this, "Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
+//        Toast.makeText(this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN), Toast.LENGTH_SHORT).show();
         Fragment fragment = new LoginLandingFragment();
         FragmentManager fragmanager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
