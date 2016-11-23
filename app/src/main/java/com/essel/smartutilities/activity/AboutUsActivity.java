@@ -57,7 +57,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
         if( isNetworkAvailable()) {
 
             JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US,
-                    this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+                    this, "Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
         }
 
@@ -69,6 +69,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
 
         }
+
 
 
     }

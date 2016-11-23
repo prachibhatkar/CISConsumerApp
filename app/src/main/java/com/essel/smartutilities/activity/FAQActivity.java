@@ -115,6 +115,12 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         JsonObjectRequest request = WebRequests.getFaq(this, Request.Method.GET, AppConstants.URL_GET_FAQ, AppConstants.REQUEST_FAQ,
                 this,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
           App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FAQ);
+        if( CommonUtils.checkConnectivity(this)) {
+            JsonObjectRequest request = WebRequests.getFaq(this, Request.Method.GET, AppConstants.URL_GET_FAQ, AppConstants.REQUEST_FAQ,
+                    this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FAQ);
+        }else
+            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
     }
 
 
