@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.GetComplaintIdActivity;
+import com.essel.smartutilities.activity.ServiceStatusActivity;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,20 +42,47 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     ImageView iv;
     Spinner complainttype;
     Button btn_submitcomplaint;
+    EditText complaint_remark;
     @Override
-    public void onClick(View v) { if(v==iv){
+    public void onClick(View v) {
+
+        if(v==iv){
 
         Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
 
     }
 
-        if(v==btn_submitcomplaint){
+        if(v==btn_submitcomplaint) {
+            if (isBlankInput()) {
 
-            Intent in =new Intent(getActivity(),GetComplaintIdActivity.class);
-            startActivity(in);
+                Intent i = new Intent(getActivity(),GetComplaintIdActivity.class);
+                startActivity(i);
+
+
+            }
+
         }
     }
+
+    private boolean isBlankInput() {
+        boolean b = true;
+        String complaintremark = String.valueOf(complaint_remark.getText());
+        if (complaintremark.equals("")){
+            Toast.makeText(getContext(), "Enter Remark", Toast.LENGTH_LONG).show();
+
+            b = false;
+        }
+
+
+        if (complainttype.getSelectedItemPosition()== 0) {
+            Toast.makeText(getContext(), "Select complaint type", Toast.LENGTH_LONG).show();
+            b = false;
+        }
+        return b;
+
+    }
+
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -171,6 +201,8 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         //img.setOnClickListener(this);
         btn_submitcomplaint=(Button)rootView.findViewById(R.id.btn_submitcomplaint);
         btn_submitcomplaint.setOnClickListener(this);
+
+        complaint_remark=(EditText)rootView.findViewById(R.id.editremark);
 
         complainttype = (Spinner)rootView.findViewById(R.id.sp_complainttype);
         String[] type = mContext.getResources().getStringArray(R.array.complaints);

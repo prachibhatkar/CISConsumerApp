@@ -75,6 +75,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         connectiontype.setAdapter(dataAdapter);
     }
 
+
     public boolean validate() {
         Boolean flag = false;
         String fullname = editTextFullName.getText().toString().trim();
@@ -104,7 +105,6 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         return flag;
 
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

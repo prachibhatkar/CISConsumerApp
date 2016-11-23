@@ -3,6 +3,8 @@ package com.essel.smartutilities.fragments;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -15,8 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.CommonUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -60,7 +64,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     private String mParam2;
     private Spinner sp_location;
     Context mContext;
-    private android.content.Context context;
+
 
 
     public Locate_Us_Fragment() {
@@ -210,147 +214,195 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        switch(position){
-
-            case 0:
-                LatLng all_csd = new LatLng(26.1114, 85.3897);
-                googleMap.addMarker(new MarkerOptions().position(all_csd));
+        switch(position) {
 
 
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(all_csd).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                LatLng all_csd0 = new LatLng(26.1221, 85.3659);
-                googleMap.addMarker(new MarkerOptions().position(all_csd0));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition0 = new CameraPosition.Builder().target(all_csd0).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition0));
-
-                LatLng all_csd1 = new LatLng(26.1175964, 85.3977566);
-                googleMap.addMarker(new MarkerOptions().position(all_csd1));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition1 = new CameraPosition.Builder().target(all_csd1).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition1));
-
-                LatLng all_csd2 = new LatLng(26.1247527, 85.3994252);
-                googleMap.addMarker(new MarkerOptions().position(all_csd1));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition2 = new CameraPosition.Builder().target(all_csd2).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition2));
-
-                break;
-
-            case 1:
-                LatLng amgola_road = new LatLng(26.1114, 85.3897);
-                googleMap.addMarker(new MarkerOptions().position(amgola_road).title("Amgola Road").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition3 = new CameraPosition.Builder().target(amgola_road).zoom(15).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition3));
-
-                Geocoder geocoder4 = new Geocoder(getContext(),Locale.getDefault());
+                case 0:
+                    if (CommonUtils.checkConnectivity(getContext())) {
+                        LatLng all_csd = new LatLng(26.1114, 85.3897);
+                        googleMap.addMarker(new MarkerOptions().position(all_csd));
 
 
-                try {
-                    addresses = geocoder4.getFromLocation(26.1114, 85.3897, 1);
-                    // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        // For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(all_csd).zoom(12).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                        LatLng all_csd0 = new LatLng(26.1221, 85.3659);
+                        googleMap.addMarker(new MarkerOptions().position(all_csd0));
+
+                        // For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition0 = new CameraPosition.Builder().target(all_csd0).zoom(12).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition0));
+
+                        LatLng all_csd1 = new LatLng(26.1175964, 85.3977566);
+                        googleMap.addMarker(new MarkerOptions().position(all_csd1));
+
+                        // For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition1 = new CameraPosition.Builder().target(all_csd1).zoom(12).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition1));
+
+                        LatLng all_csd2 = new LatLng(26.1247527, 85.3994252);
+                        googleMap.addMarker(new MarkerOptions().position(all_csd1));
+
+                        // For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition2 = new CameraPosition.Builder().target(all_csd2).zoom(12).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition2));
+
+                        tv_address.setText("");
+                    }
+                    else{
+                        Toast.makeText(getContext(), "Please check Internet Connection", Toast.LENGTH_LONG).show();
+
+
+                    }
+                    break;
+
+                case 1:
+                    if (CommonUtils.checkConnectivity(getContext())) {
+                        LatLng amgola_road = new LatLng(26.1114, 85.3897);
+                        googleMap.addMarker(new MarkerOptions().position(amgola_road).title("Amgola Road").snippet("Marker Description"));
+
+                        // For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition3 = new CameraPosition.Builder().target(amgola_road).zoom(15).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition3));
+
+                        Geocoder geocoder4 = new Geocoder(getContext(), Locale.getDefault());
+
+
+                        try {
+                            addresses = geocoder4.getFromLocation(26.1114, 85.3897, 1);
+                            // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                        String city = addresses.get(0).getLocality();
+                        String state = addresses.get(0).getAdminArea();
+                        String country = addresses.get(0).getCountryName();
+                        String postalCode = addresses.get(0).getPostalCode();
+                        String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+                        tv_address.setText(address + " \n" + city + " \n" + state + "\n " + country + "\n " + postalCode);
+                    }
+                    else {
+
+                        Toast.makeText(getContext(), "Please check Internet Connection", Toast.LENGTH_LONG).show();
+
+                    }
+
+
+
+
+                    break;
+
+                case 2:
+                    if (CommonUtils.checkConnectivity(getContext())) {
+                        LatLng saraiganj = new LatLng(26.1221, 85.3659);
+                        googleMap.addMarker(new MarkerOptions().position(saraiganj).title("Saraiganj").snippet("Marker Description"));
+
+                        // For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition4 = new CameraPosition.Builder().target(saraiganj).zoom(15).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition4));
+
+                        Geocoder geocoder1 = new Geocoder(getContext(), Locale.getDefault());
+
+                        try {
+                            addresses = geocoder1.getFromLocation(26.1221, 85.3659, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        String address1 = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                        String city1 = addresses.get(0).getLocality();
+                        String state1 = addresses.get(0).getAdminArea();
+                        String country1 = addresses.get(0).getCountryName();
+                        String postalCode1 = addresses.get(0).getPostalCode();
+                        String knownName1 = addresses.get(0).getFeatureName(); // Only if available else return NULL
+                        tv_address.setText(address1 + " \n" + city1 + "\n " + state1 + "\n " + country1 + " \n" + postalCode1);
+
+                    }
+                    else{
+                        Toast.makeText(getContext(), "Please check Internet Connection", Toast.LENGTH_LONG).show();
+
+                    }
+
+
+                    break;
+
+                case 3:
+                    if (CommonUtils.checkConnectivity(mContext)) {
+                        LatLng kachhi_sarai = new LatLng(26.1175964, 85.3977566);
+                        googleMap.addMarker(new MarkerOptions().position(kachhi_sarai).title("Kachhi Sarai").snippet("Marker Description"));
+
+                        // For zooming automatically to the location of the marker
+                        CameraPosition cameraPosition5 = new CameraPosition.Builder().target(kachhi_sarai).zoom(15).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition5));
+
+                        Geocoder geocoder2 = new Geocoder(getContext(), Locale.getDefault());
+
+                        try {
+                            addresses = geocoder2.getFromLocation(26.1175964, 85.3977566, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        String address2 = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                        String city2 = addresses.get(0).getLocality();
+                        String state2 = addresses.get(0).getAdminArea();
+                        String country2 = addresses.get(0).getCountryName();
+                        String postalCode2 = addresses.get(0).getPostalCode();
+                        String knownName2 = addresses.get(0).getFeatureName(); // Only if available else return NULL
+                        tv_address.setText(address2 + " \n" + city2 + "\n " + state2 + "\n " + country2 + "\n " + postalCode2);
+
+                    }
+                    else {
+
+                        Toast.makeText(getContext(), "Please check Internet Connection", Toast.LENGTH_LONG).show();
+
+                    }
+
+                    break;
+
+                case 4: if (CommonUtils.checkConnectivity(mContext)) {
+                    LatLng pakki_sarai = new LatLng(26.1247527, 85.3994252);
+                    googleMap.addMarker(new MarkerOptions().position(pakki_sarai).title("Pakki Sarai").snippet("Marker Description"));
+
+                    // For zooming automatically to the location of the marker
+                    CameraPosition cameraPosition6 = new CameraPosition.Builder().target(pakki_sarai).zoom(15).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition6));
+                    Geocoder geocoder3 = new Geocoder(getContext(), Locale.getDefault());
+
+                    try {
+                        addresses = geocoder3.getFromLocation(26.1247527, 85.3994252, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    String address3 = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    String city3 = addresses.get(0).getLocality();
+                    String state3 = addresses.get(0).getAdminArea();
+                    String country3 = addresses.get(0).getCountryName();
+                    String postalCode3 = addresses.get(0).getPostalCode();
+                    String knownName3 = addresses.get(0).getFeatureName(); // Only if available else return NULL
+                    tv_address.setText(address3 + " \n" + city3 + "\n" + state3 + " \n" + country3 + " \n" + postalCode3);
                 }
 
-                String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-                tv_address.setText(address +" \n"+city +" \n"+state+"\n "+country+"\n "+postalCode);
-                break;
+                  else {
+                    Toast.makeText(getContext(), "Please check Internet Connection", Toast.LENGTH_LONG).show();
 
-            case 2:
-                LatLng saraiganj = new LatLng(26.1221, 85.3659);
-                googleMap.addMarker(new MarkerOptions().position(saraiganj).title("Saraiganj").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition4 = new CameraPosition.Builder().target(saraiganj).zoom(15).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition4));
-
-                Geocoder geocoder1 = new Geocoder(getContext(),Locale.getDefault());
-
-                try {
-                    addresses = geocoder1.getFromLocation(26.1221, 85.3659, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
 
-                String address1 = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                String city1 = addresses.get(0).getLocality();
-                String state1 = addresses.get(0).getAdminArea();
-                String country1 = addresses.get(0).getCountryName();
-                String postalCode1 = addresses.get(0).getPostalCode();
-                String knownName1 = addresses.get(0).getFeatureName(); // Only if available else return NULL
-                tv_address.setText(address1 +" \n"+city1 +"\n "+state1+"\n "+country1+" \n"+postalCode1);
+                    break;
 
-                break;
-
-            case 3:
-                LatLng kachhi_sarai = new LatLng(26.1175964, 85.3977566);
-                googleMap.addMarker(new MarkerOptions().position(kachhi_sarai).title("Kachhi Sarai").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition5 = new CameraPosition.Builder().target(kachhi_sarai).zoom(15).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition5));
-
-                Geocoder geocoder2 = new Geocoder(getContext(),Locale.getDefault());
-
-                try {
-                    addresses = geocoder2.getFromLocation(26.1175964, 85.3977566, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                String address2 = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                String city2 = addresses.get(0).getLocality();
-                String state2 = addresses.get(0).getAdminArea();
-                String country2 = addresses.get(0).getCountryName();
-                String postalCode2 = addresses.get(0).getPostalCode();
-                String knownName2 = addresses.get(0).getFeatureName(); // Only if available else return NULL
-                tv_address.setText(address2 +" \n"+city2 +"\n "+state2+"\n "+country2+"\n "+postalCode2);
-
-                break;
-
-            case 4:
-                LatLng pakki_sarai = new LatLng(26.1247527, 85.3994252);
-                googleMap.addMarker(new MarkerOptions().position(pakki_sarai).title("Pakki Sarai").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition6 = new CameraPosition.Builder().target(pakki_sarai).zoom(15).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition6));
-                Geocoder geocoder3 = new Geocoder(getContext(),Locale.getDefault());
-
-                try {
-                    addresses = geocoder3.getFromLocation(26.1247527, 85.3994252, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                String address3 = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                String city3 = addresses.get(0).getLocality();
-                String state3 = addresses.get(0).getAdminArea();
-                String country3 = addresses.get(0).getCountryName();
-                String postalCode3 = addresses.get(0).getPostalCode();
-                String knownName3 = addresses.get(0).getFeatureName(); // Only if available else return NULL
-                tv_address.setText(address3 +" \n"+city3 +"\n"+state3+" \n"+country3+" \n"+postalCode3);
-                break;
+            }
 
         }
 
 
-    }
+
+
+
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {

@@ -107,7 +107,7 @@ public class CommonUtils {
      * @param pContext
      * @return
      */
-    public boolean checkConnectivity(Context pContext) {
+    public static boolean checkConnectivity(Context pContext) {
         ConnectivityManager lConnectivityManager = (ConnectivityManager)
                 pContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo lNetInfo = lConnectivityManager.getActiveNetworkInfo();

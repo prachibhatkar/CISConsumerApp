@@ -143,7 +143,7 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
-        Log.i("Tag", "saveValues:" + newRowId);
+       // Log.i("Tag", "saveValues:" + newRowId);
     }
 
     private static void saveAboutUs(Context context, Uri table, ContentValues values, String condition) {
@@ -164,7 +164,7 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
-        Log.i("Tag", "saveAboutUs:" + newRowId);
+       // Log.i("Tag", "saveAboutUs:" + newRowId);
     }
 
 //    public static ArrayList<Consumer> getAccounts(Context context, String reader_id) {
@@ -246,7 +246,7 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(FAQTable.TABLE_NAME, null, values);
-        Log.i("Tag", "savefaq:" + newRowId);
+       // Log.i("Tag", "savefaq:" + newRowId);
     }
 
     private static void saveTips(Context context, Uri table, ContentValues values, String condition) {
@@ -266,7 +266,7 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(TipsTable.TABLE_NAME, null, values);
-        Log.i("Tag", "savetips:" + newRowId);
+       // Log.i("Tag", "savetips:" + newRowId);
     }
 
     public static User getCurrentLoggedInUser(Context context) {
@@ -418,7 +418,7 @@ public class DatabaseManager {
     }
 
 
-    public  static AboutUs getAboutUs(Context context){
+   /* public  static AboutUs getAboutUs(Context context){
 
         AboutUs aboutUs= new AboutUs();
         SQLiteDatabase db  = DatabaseHelper.dbHelper.getReadableDatabase();
@@ -431,7 +431,7 @@ public class DatabaseManager {
         return aboutUs;
 
 
-    }
+    }*/
 
 
    /* private static void saveSegement(Context context, String project_id, Segement segement) {

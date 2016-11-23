@@ -25,6 +25,7 @@ import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
 public class AboutUsActivity extends AppCompatActivity implements ServiceCaller {
@@ -56,19 +57,18 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
         if( isNetworkAvailable()) {
 
             JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US,
-                    this, "Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
+                    this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
         }
 
         else{
 
             Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
-            DatabaseManager.getAboutUs(this);
+//            DatabaseManager.getAboutUs(this);
             tv_aboutus_message.setText(aboutUs.about_us_msg);
 
 
         }
-
 
 
     }

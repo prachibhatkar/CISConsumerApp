@@ -67,24 +67,24 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:id="@+id/tv_address1"
-      android:text="building no. 1,area no 1"/>
+      android:text=""/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_address2"
-            android:text="21458741"/>
+            android:text=""/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_address3"
-            android:text="8 to 9pm"/>
+            android:text=""/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_closedday"
-            android:text="Sunday Closed"/>
+            android:text=""/>
 
 
 

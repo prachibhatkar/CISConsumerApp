@@ -12,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
@@ -28,6 +30,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     Button expandableButton_editprofile,expandableButton_changepass,save_detail,save_password;
     CircleImageView circleimage;
     private TabLayout profile_tabs;
+    EditText contactno,emailid,old_pass,new_pass,confirm_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
             }
         });
+
 
         setupUI();
         loadData();
@@ -64,44 +68,69 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         save_detail=(Button)findViewById(R.id.BTN_save_details);
         save_password=(Button)findViewById(R.id.BTN_save_password);
 
+        expandableLayout_changepass = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changepass);
+        expandableLayout_editProfile = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout_editprofile);
+
+        contactno=(EditText)findViewById(R.id.editcontactno);
+        emailid=(EditText)findViewById(R.id.editEmailId);
+        old_pass=(EditText)findViewById(R.id.editOldPassword);
+        new_pass=(EditText)findViewById(R.id.editNewPassword);
+        confirm_pass=(EditText)findViewById(R.id.editConfirmPassword);
+
+
+
+       // String contactno = String.valueOf(conta.getText());
+
+
         save_detail.setOnClickListener(this);
         save_password.setOnClickListener(this);
     }
 
 
     public void onClick(View view) {
-        if(view==expandableButton_editprofile){
-            expandableLayout_editProfile = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout_editprofile);
-            expandableLayout_editProfile.toggle(); // toggle expand and collapse
+        if (view == expandableButton_editprofile) {
+
+            expandableLayout_editProfile.toggle();
+            expandableLayout_changepass.collapse();
+
+            // toggle expand and collapse
 
 
         }
-        if(view==expandableButton_changepass){
+        if (view == expandableButton_changepass) {
 
-
-            expandableLayout_changepass = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changepass);
-            expandableLayout_changepass.toggle(); // toggle expand and collapse
+            expandableLayout_changepass.toggle();
+            expandableLayout_editProfile.collapse();// toggle expand and collapse
         }
 
-        if(view==circleimage){
+        if (view == circleimage) {
 
 
             Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
         }
-        if(view==save_detail){
+        if (view == save_detail) {
+            String editemailid = String.valueOf(emailid.getText());
+            if (( editemailid.equals(""))) {
+                Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
+            }
+                expandableLayout_editProfile.collapse();
+                expandableLayout_changepass.collapse();
 
-
-            expandableLayout_editProfile.collapse();
-            expandableLayout_changepass.collapse();
         }
-        if(view==save_password){
+        if (view == save_password) {
+            String oldpass = String.valueOf(old_pass.getText());
+            String newpass = String.valueOf(new_pass.getText());
+            String confirmpass = String.valueOf(confirm_pass.getText());
+
+            if ((oldpass.equals(" ")) || (newpass.equals("")) || (confirmpass.equals(""))) {
+                Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
+            }
+                expandableLayout_editProfile.collapse();
+                expandableLayout_changepass.collapse();
 
 
-            expandableLayout_editProfile.collapse();
-            expandableLayout_changepass.collapse();
         }
-
     }
 
     private void loadData() {

@@ -12,7 +12,9 @@ public class JsonResponse {
     public Response responsedata;
     public ArrayList<Faq> faqs;
     public  AboutUs aboutus1;
+
     public  String aboutus;
+    public  String feedbackmessage;
     //public ArrayList<AboutUs> about_us;
     public ContactUs contactus;
     public String result;//success/failure
