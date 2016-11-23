@@ -22,6 +22,7 @@ public class Consumer implements Serializable {
     public String payment_time;
     public String city;
     public boolean is_primary;
+    public String emailid;
 
 
     public Consumer() {

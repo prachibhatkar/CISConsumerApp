@@ -39,7 +39,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     }
 
     private void initialize() {
-       // EditText consumerno = (EditText) findViewById(R.id.consumer_id);
+        consumerno = (EditText) findViewById(R.id.consumer_id);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
         action_about_us = (LinearLayout) findViewById(R.id.action_about_us);
@@ -82,11 +82,11 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     }
 
     public boolean validate() {
-        Boolean flag=false;
+        Boolean flag = false;
 
-        if (consumerno.getText().toString().trim().length()!=0 && (consumerno.getText().toString().trim().length() >= 10
+        if (consumerno.getText().toString().trim().length() != 0 && (consumerno.getText().toString().trim().length() >= 10
                 && consumerno.getText().toString().trim().length() <= 20)) {
-                        flag=true;
+            flag = true;
         } else
             Toast.makeText(this, "Enter valid Consumer Number", Toast.LENGTH_LONG).show();
         return flag;
@@ -136,7 +136,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         // Add data to the intent, the receiving app will decide
         // what to do with it.
         share.putExtra(Intent.EXTRA_SUBJECT, "Title Of The Post");
-        share.putExtra(Intent.EXTRA_TEXT, "http://www.codeofaninja.com");
+        share.putExtra(Intent.EXTRA_TEXT, "http://www.EsselSmartUtilities.com");
 
         startActivity(Intent.createChooser(share, "Share link!"));
     }

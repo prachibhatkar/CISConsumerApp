@@ -45,12 +45,12 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         ImageView drop = (ImageView) findViewById(R.id.img_drowdown);
         drop.setOnClickListener(this);
         maintitle = (TextView) findViewById(R.id.title_bar);
-        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
-        maintitle.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
+            maintitle.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
         maintitle.setOnClickListener(this);
         TextView subtitle = (TextView) findViewById(R.id.subtitle_bar);
-        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME).isEmpty())
-        subtitle.setText( SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME).isEmpty())
+            subtitle.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
         subtitle.setOnClickListener(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,9 +59,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         Button pay = (Button) findViewById(R.id.btn_paynow);
         pay.setOnClickListener(this);
         // toolbar.setOnMenuItemClickListener(ActionBar.DISPLAY_SHOW_HOME);
-
-        CommonUtils.saveAuthToken(this, "Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
-//        Toast.makeText(this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN), Toast.LENGTH_SHORT).show();
         Fragment fragment = new LoginLandingFragment();
         FragmentManager fragmanager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();

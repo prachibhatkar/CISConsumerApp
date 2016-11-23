@@ -101,23 +101,23 @@ public class CommonUtils {
         return "";
     }
 
-    /**
-     * Check for network connectivity.Ping host server if it is reachable
-     *
-     * @param pContext
-     * @return
-     */
-    public static boolean checkConnectivity(Context pContext) {
-        ConnectivityManager lConnectivityManager = (ConnectivityManager)
-                pContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo lNetInfo = lConnectivityManager.getActiveNetworkInfo();
-        if (lNetInfo != null && lNetInfo.isConnected()) {
-            return true;
+
+
+
+    public static boolean isNetworkAvaliable(Context context) {
+        final ConnectivityManager conn_manager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo network_info = conn_manager.getActiveNetworkInfo();
+
+        if (network_info != null && network_info.isConnected()) {
+            if (network_info.getType() == ConnectivityManager.TYPE_WIFI)
+                return true;
+            else if (network_info.getType() == ConnectivityManager.TYPE_MOBILE)
+                return true;
         }
+
         return false;
     }
-
-
     public static int getColor(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= 23) {
@@ -250,21 +250,14 @@ public class CommonUtils {
     public static boolean isLoggedIn(Context context) {
         String logged_in_date = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE);
         if (!logged_in_date.equals("")) {
-            String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            if (logged_in_date.equals(current_date)) {
-                String consumer_id = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_ID);
-                String password = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_PASSWORD);
-                return !(consumer_id.equals("") && password.equals(""));
-            }
+            String consumer_id = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_ID);
+            String password = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_PASSWORD);
+            return !(consumer_id.equals("") && password.equals(""));
         }
         return false;
     }
 
-    /**
-     * Just a check to see if we have marshmallows (version 23)
-     *
-     * @return
-     */
+
     private static boolean canMakeSmores() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
@@ -273,7 +266,6 @@ public class CommonUtils {
         SharedPrefManager.saveValue(context, AppConstants.CONSUMER_ID, "");
         SharedPrefManager.saveValue(context, AppConstants.CONSUMER_PASSWORD, "");
         SharedPrefManager.saveValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE, "");
-
     }
 
 }

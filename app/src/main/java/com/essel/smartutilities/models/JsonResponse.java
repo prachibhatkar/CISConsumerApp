@@ -15,6 +15,7 @@ public class JsonResponse {
 
     public  String aboutus;
     public  String feedbackmessage;
+    public Consumer user_info;
     //public ArrayList<AboutUs> about_us;
     public ContactUs contactus;
     public String result;//success/failure

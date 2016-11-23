@@ -219,7 +219,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
 
                 case 0:
-                    if (CommonUtils.checkConnectivity(getContext())) {
+                    if (CommonUtils.isNetworkAvaliable(getContext())) {
                         LatLng all_csd = new LatLng(26.1114, 85.3897);
                         googleMap.addMarker(new MarkerOptions().position(all_csd));
 
@@ -259,7 +259,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                     break;
 
                 case 1:
-                    if (CommonUtils.checkConnectivity(getContext())) {
+                    if (CommonUtils.isNetworkAvaliable(getContext())) {
                         LatLng amgola_road = new LatLng(26.1114, 85.3897);
                         googleMap.addMarker(new MarkerOptions().position(amgola_road).title("Amgola Road").snippet("Marker Description"));
 
@@ -297,7 +297,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                     break;
 
                 case 2:
-                    if (CommonUtils.checkConnectivity(getContext())) {
+                    if (CommonUtils.isNetworkAvaliable(getContext())) {
                         LatLng saraiganj = new LatLng(26.1221, 85.3659);
                         googleMap.addMarker(new MarkerOptions().position(saraiganj).title("Saraiganj").snippet("Marker Description"));
 
@@ -331,7 +331,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                     break;
 
                 case 3:
-                    if (CommonUtils.checkConnectivity(mContext)) {
+                    if (CommonUtils.isNetworkAvaliable(mContext)) {
                         LatLng kachhi_sarai = new LatLng(26.1175964, 85.3977566);
                         googleMap.addMarker(new MarkerOptions().position(kachhi_sarai).title("Kachhi Sarai").snippet("Marker Description"));
 
@@ -364,7 +364,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
                     break;
 
-                case 4: if (CommonUtils.checkConnectivity(mContext)) {
+                case 4: if (CommonUtils.isNetworkAvaliable(mContext)) {
                     LatLng pakki_sarai = new LatLng(26.1247527, 85.3994252);
                     googleMap.addMarker(new MarkerOptions().position(pakki_sarai).title("Pakki Sarai").snippet("Marker Description"));
 

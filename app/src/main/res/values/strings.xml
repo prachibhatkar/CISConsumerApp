@@ -101,7 +101,7 @@
     <string name="prompt_newcomnection_address_line_2">Address Line 2</string>
     <string name="prompt_newcomnection_address_line_3">Address Line 3</string>
     <string name="prompt_newcomnection_mobile_number">Enter Your Mobile Number</string>
-    <string name="prompt_newcomnection_nearest_consumer_id">Enter Nearest Consumer Id/Pole no</string>
+    <string name="prompt_newcomnection_nearest_consumer_id">Enter Nearest Consumer no/Pole no</string>
     <string name="prompt_newcomnection_email_id">Enter Email Id</string>
     <string name="prompt_newcomnection_type_of_connection">Type of connection</string>
     <string name="prompt_newcomnection_type_residential">Residential</string>
@@ -233,6 +233,11 @@
     <string name="tipthree">Use LEDs instead of regular Tubelights.</string>
 
     <string name="complaintidmsg">Your Complaint Registered with us</string>
+    <string name="login_error_102">Loged in by other user</string>
+    <string name="login_error_101">Consumer No. and Password Not Matched</string>
+    <string name="login_error_null">Please Contact To Server Admin</string>
+    <string name="er_data_not_avaliable">Data Not Avaliable</string>
+    <string name="error_internet_not_connected">Please Check Internet Connection</string>
 
 
 </resources>

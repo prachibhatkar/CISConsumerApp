@@ -25,7 +25,7 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 //        getSupportActionBar().setTitle("My Bill");
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         intialize();
-        image_uri = Uri.parse("http://192.168.10.114:8000/sitemedia/Tips-Images/4.png");
+        image_uri = Uri.parse("http://www.androidtutorialpoint.com/wp-content/uploads/2016/09/Beauty.jpg");
         music_uri = Uri.parse("http://www.androidtutorialpoint.com/wp-content/uploads/2016/09/AndroidDownloadManager.mp3");
 
     }
@@ -97,13 +97,13 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
         request.setTitle("Data Download");
 
         //Setting description of request
-        request.setDescription("Android Data download using DownloadManager.");
+        request.setDescription(" Data download From Essel.");
 
         //Set the local destination for the downloaded file to a path within the application's external files directory
         if (v.getId() == R.id.download1)
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "AndroidTutorialPoint.mp3");
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.mp3");
         else if (v.getId() == R.id.download2)
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "AndroidTutorialPoint.jpg");
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.jpg");
 
         //Enqueue download and save into referenceId
         downloadReference = downloadManager.enqueue(request);

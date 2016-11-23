@@ -62,7 +62,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == buttonVerify) {
-            if (otp.getText().toString().trim().length() == 4) {
+            if (otp.getText().toString().trim().length() == 6) {
                 Intent i = new Intent(this, RegisterActivity3.class);
                 startActivity(i);
             } else

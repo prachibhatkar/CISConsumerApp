@@ -23,26 +23,32 @@ public class NewConnectionActivity2 extends BaseActivity implements View.OnClick
         Button guest = (Button) findViewById(R.id.btn_continuasguest);
         login.setOnClickListener(this);
         guest.setOnClickListener(this);
-        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+//        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+//        imgBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_gotologin:
-                 i=new Intent(this,LoginActivity.class);
+                i = new Intent(this, LoginActivity.class);
                 startActivity(i);
                 break;
             case R.id.btn_continuasguest:
-                 i = new Intent(this, LandingSkipLoginActivity.class);
+                i = new Intent(this, LandingSkipLoginActivity.class);
                 startActivity(i);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 }
