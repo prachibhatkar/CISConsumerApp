@@ -6,7 +6,7 @@ package com.essel.smartutilities.utility;
 public class AppConstants {
 
 
-    public static final String BASE_URL=  "http://192.168.10.120:9999/mobileapi/";
+    public static final String BASE_URL=  "http://192.168.10.101:9999/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
 
     public static final String REQUEST_LOGIN="login/";
@@ -20,6 +20,9 @@ public class AppConstants {
 
     public static final String REQEST_ABOUT_US = "get-about-us/";
     public static final String URL_GET_ABOUT_US=BASE_URL+REQEST_ABOUT_US;
+
+    public static final String REQUEST_SERVICE_TYPE = "get-service-type/";
+    public static final String URL_GET_SERVICE_TYPE=BASE_URL+REQUEST_SERVICE_TYPE;
 
     public static final String REQEST_TIPS = "get-tips/";
     public static final String URL_GET_TIPS=BASE_URL+REQEST_TIPS;

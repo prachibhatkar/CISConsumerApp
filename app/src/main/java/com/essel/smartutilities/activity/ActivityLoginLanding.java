@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +42,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         button = (LinearLayout) findViewById(R.id.linear_lay_button);
         table = (LinearLayout) findViewById(R.id.container);
 
-        boolean flag1 = true;
+
         ImageView drop = (ImageView) findViewById(R.id.img_drowdown);
         drop.setOnClickListener(this);
         maintitle = (TextView) findViewById(R.id.title_bar);
@@ -66,7 +67,9 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         fragmentTransaction.commit();
 
         Boolean flag = FeedBackActivity.getflag();
+        Log.i("Tag","valuelogin"+flag);
         if (flag) {
+            Log.i("Tag","valueinif"+flag);
 
             Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Thanks for your valuable feedback", Snackbar.LENGTH_LONG);
             View view = snack.getView();

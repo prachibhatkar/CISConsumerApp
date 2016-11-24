@@ -79,6 +79,7 @@ public class DatabaseManager {
             ContentValues values = getContentValuesAboutUsTable(context, aboutUs);
             //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
             saveAboutUs(context,AboutUsTable.CONTENT_URI, values, null);
+
         }
     }
 
@@ -126,19 +127,7 @@ public class DatabaseManager {
     }
 
     private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
-       /* ContentResolver resolver = context.getContentValuesTipsTableontentResolver();
-        Cursor cursor = resolver.query(table, null,
-                condition, null, null);
 
-        if (cursor != null && cursor.getCount() > 0) {
-            resolver.update(table, values, condition, null);
-        } else {
-            resolver.insert(table, values);
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }*/
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -147,24 +136,12 @@ public class DatabaseManager {
     }
 
     private static void saveAboutUs(Context context, Uri table, ContentValues values, String condition) {
-       /* ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = resolver.query(table, null,
-                condition, null, null);
 
-        if (cursor != null && cursor.getCount() > 0) {
-            resolver.update(table, values, condition, null);
-        } else {
-            resolver.insert(table, values);
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }*/
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
-       // Log.i("Tag", "saveAboutUs:" + newRowId);
+        Log.i("Tag", "saveAboutUs:" + newRowId);
     }
 
 //    public static ArrayList<Consumer> getAccounts(Context context, String reader_id) {
@@ -229,19 +206,7 @@ public class DatabaseManager {
         }
     }
     private static void saveFAQ(Context context, Uri table, ContentValues values, String condition) {
-       /* ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = resolver.query(table, null,
-                condition, null, null);
 
-        if (cursor != null && cursor.getCount() > 0) {
-            resolver.update(table, values, condition, null);
-        } else {
-            resolver.insert(table, values);
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }*/
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -250,19 +215,7 @@ public class DatabaseManager {
     }
 
     private static void saveTips(Context context, Uri table, ContentValues values, String condition) {
-       /* ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = resolver.query(table, null,
-                condition, null, null);
 
-        if (cursor != null && cursor.getCount() > 0) {
-            resolver.update(table, values, condition, null);
-        } else {
-            resolver.insert(table, values);
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }*/
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(TipsTable.TABLE_NAME, null, values);
@@ -418,20 +371,23 @@ public class DatabaseManager {
     }
 
 
-   /* public  static AboutUs getAboutUs(Context context){
+ public  static AboutUs getAboutUs(Context context){
 
         AboutUs aboutUs= new AboutUs();
-        SQLiteDatabase db  = DatabaseHelper.dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM datatable"+"from"+AboutUsTable.TABLE_NAME, null);
-        if(cursor!=null){
+        DatabaseHelper dbHelper=new DatabaseHelper(context);
+        SQLiteDatabase db  = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while(cursor.moveToNext()){
 
-            aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+          cursor.getString(cursor.getColumnIndex(AboutUsTable.Cols.ABOUT_US_MSG));
+
+           // aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
 
         return aboutUs;
 
 
-    }*/
+    }
 
 
    /* private static void saveSegement(Context context, String project_id, Segement segement) {

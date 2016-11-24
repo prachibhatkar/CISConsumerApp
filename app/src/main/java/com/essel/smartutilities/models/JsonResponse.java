@@ -11,6 +11,7 @@ public class JsonResponse {
     public static String FAILURE="failure";
     public Response responsedata;
     public ArrayList<Faq> faqs;
+    public ArrayList<Services> type;
     public  AboutUs aboutus1;
 
     public  String aboutus;

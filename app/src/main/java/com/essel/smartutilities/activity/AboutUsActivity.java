@@ -51,21 +51,24 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
         tv_aboutus_message=(TextView)findViewById(R.id.textview_about_us);
         AboutUs aboutUs=new AboutUs();
+       // String aboutus="ghjjkhkjhkl";
+
+      // DatabaseManager.saveAboutUs(this,aboutus);
 
 
 
         if( isNetworkAvailable()) {
 
             JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US,
-                    this, "Token d6eb728258547aa5aa54f0f8fb3334a2f36bfda9");
+                    this, "Token c686681877b60f7189965137e2d57857c0a07099");
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
         }
 
         else{
 
             Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
-//            DatabaseManager.getAboutUs(this);
-            tv_aboutus_message.setText(aboutUs.about_us_msg);
+              DatabaseManager.getAboutUs(this);
+              tv_aboutus_message.setText(aboutUs.about_us_msg);
 
 
         }

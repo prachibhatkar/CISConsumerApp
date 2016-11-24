@@ -51,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "MRBD.db";
     public static DatabaseHelper dbHelper;
 
+
     /**
      * Constructor using context for the class
      *
@@ -67,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createManageAccountsTable(db);
         createFaqTable(db);
         createTipsTable(db);
+
 
 
     }

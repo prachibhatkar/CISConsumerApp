@@ -71,11 +71,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         expandableLayout_changepass = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changepass);
         expandableLayout_editProfile = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout_editprofile);
 
-        contactno=(EditText)findViewById(R.id.editcontactno);
-        emailid=(EditText)findViewById(R.id.editEmailId);
-        old_pass=(EditText)findViewById(R.id.editOldPassword);
-        new_pass=(EditText)findViewById(R.id.editNewPassword);
-        confirm_pass=(EditText)findViewById(R.id.editConfirmPassword);
+            contactno=(EditText)findViewById(R.id.editcontactno);
+            emailid=(EditText)findViewById(R.id.editEmailId);
+            old_pass=(EditText)findViewById(R.id.editOldPassword);
+            new_pass=(EditText)findViewById(R.id.editNewPassword);
+            confirm_pass=(EditText)findViewById(R.id.editConfirmPassword);
 
 
 
@@ -110,10 +110,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
         }
         if (view == save_detail) {
-            String editemailid = String.valueOf(emailid.getText());
-            if (( editemailid.equals(""))) {
-                Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
-            }
+
                 expandableLayout_editProfile.collapse();
                 expandableLayout_changepass.collapse();
 
@@ -125,6 +122,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             if ((oldpass.equals(" ")) || (newpass.equals("")) || (confirmpass.equals(""))) {
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
+                expandableLayout_changepass.expand();
             }
                 expandableLayout_editProfile.collapse();
                 expandableLayout_changepass.collapse();

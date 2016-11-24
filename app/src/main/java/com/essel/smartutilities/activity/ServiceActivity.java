@@ -17,8 +17,18 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.utility.App;
+import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
+import com.essel.smartutilities.webservice.WebRequests;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,13 +37,14 @@ import java.util.List;
 
 import static com.essel.smartutilities.activity.FeedBackActivity.flag;
 
-public class ServiceActivity extends AppCompatActivity implements View.OnClickListener {
+public class ServiceActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
     private Context Context;
     private Button btn_submit_service;
     private EditText edit_remark;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
+    List<String> services;
     String editremark;
     static Boolean flag=false;
     HashMap<String, List<String>> listDataChild;
@@ -59,7 +70,9 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         btn_submit_service.setOnClickListener(this);
 
         edit_remark = (EditText) findViewById(R.id.edit_remark);
-      //  editremark = edit_remark.toString().trim();
+       //  editremark = edit_remark.toString().trim();
+
+
 
 
         servicetype = (Spinner) findViewById(R.id.sp_sevicetype);
@@ -68,10 +81,23 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servicetype.setAdapter(dataAdapter);
 
+
+
         // expListView = (ExpandableListView)findViewById(R.id.expListView);
 
-        return;
+
+        if( CommonUtils.isNetworkAvaliable(this)) {
+            JsonObjectRequest request = WebRequests.getServiceType(this, Request.Method.GET, AppConstants.URL_GET_SERVICE_TYPE, AppConstants.REQUEST_SERVICE_TYPE,
+                    this, "Token c686681877b60f7189965137e2d57857c0a07099");
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_SERVICE_TYPE);
+        }else
+            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
     }
+
+
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -145,4 +171,54 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
+    @Override
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+
+
+        switch (label) {
+            case AppConstants.REQUEST_SERVICE_TYPE: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+//
+                        Log.i(label, "hygt " + jsonResponse);
+                        Log.i(label, "hyif " + jsonResponse.type);
+                        if(jsonResponse.type.size()!=0)
+                            Log.i(label, "servicetype" +jsonResponse.type );
+                        {
+                     //       services.add(jsonResponse.type.get(0).type.toString().trim());
+
+
+
+                        }
+                        if (jsonResponse.authorization != null) {
+                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+
+                    }
+                    break;
+                }
+            }
+
+        }
+
     }
+
+    @Override
+    public void onAsyncFail(String message, String label, NetworkResponse response) {
+
+        switch (label) {
+            case AppConstants.REQUEST_FAQ: {
+//
+               Log.i(label, "servicetype" + message);
+               Log.i(label, "servicetype" + response);
+            }
+            break;
+        }
+
+
+    }
+}
