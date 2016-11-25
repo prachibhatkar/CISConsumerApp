@@ -27,6 +27,9 @@ public class AppConstants {
     public static final String REQEST_TIPS = "get-tips/";
     public static final String URL_GET_TIPS=BASE_URL+REQEST_TIPS;
 
+    public static final String REQUEST_GET_CONNECTION_TYPE = "get-service-subtype/";
+    public static final String URL_GET_CONNECTION_TYPE =BASE_URL+REQUEST_GET_CONNECTION_TYPE;
+
 
     public static final String REQUEST_NEW_CONNECTION = "new-consumer/";
     public static final String URL_NEW_CONNECTION =BASE_URL+REQUEST_NEW_CONNECTION;
