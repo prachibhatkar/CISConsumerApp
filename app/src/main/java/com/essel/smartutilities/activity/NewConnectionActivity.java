@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +49,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     private Button btnActionSubmit;
     private TextView actionLogin;
     Spinner connectiontype;
+    private ArrayList<String> mytype;
     Intent i;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,13 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initialize() {
+        mytype = new ArrayList<>(12);
+        mytype.add(0,"Select Connection Type");
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            JsonObjectRequest request = WebRequests.getConnectionType(this, Request.Method.GET, AppConstants.URL_GET_CONNECTION_TYPE, AppConstants.REQUEST_GET_CONNECTION_TYPE, this);
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_CONNECTION_TYPE);
+        } else
+            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
 
         editTextFullName = (EditText) findViewById(R.id.editFullName);
         editTextAddress1 = (EditText) findViewById(R.id.editAddressLine1);
@@ -84,8 +93,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
 
         connectiontype = (Spinner) findViewById(R.id.sp_connectiontype);
-        String[] type = mContext.getResources().getStringArray(R.array.type);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, Arrays.asList(type));
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, mytype);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         connectiontype.setAdapter(dataAdapter);
     }
@@ -124,6 +132,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         return flag;
 
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -154,9 +163,12 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        JsonObjectRequest request = WebRequests.addNewConnectionRequest(this, Request.Method.POST, AppConstants.URL_NEW_CONNECTION, AppConstants.REQUEST_NEW_CONNECTION, this, obj);
-        App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_NEW_CONNECTION);
 
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            JsonObjectRequest request = WebRequests.addNewConnectionRequest(this, Request.Method.POST, AppConstants.URL_NEW_CONNECTION, AppConstants.REQUEST_NEW_CONNECTION, this, obj);
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_NEW_CONNECTION);
+        } else
+            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -189,6 +201,27 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                     Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
             }
             break;
+            case AppConstants.REQUEST_GET_CONNECTION_TYPE: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
+                        if (jsonResponse.connectiontype.size() != 0) {
+                            for (int i = 1; i <= jsonResponse.connectiontype.size(); i++) {
+                                mytype.add(i, jsonResponse.connectiontype.get(i-1).type);
+                            }
+                            Log.i(label, "connectionTyperequestttttttttttttttttttttpass: " + jsonResponse.connectiontype.get(0).id);
+                            Log.i(label, "connectionTyperequestttttttttttttttttttttpass:  " + jsonResponse.connectiontype.get(0).type.toString());
+
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+
+                        DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
+                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
+                    }
+                } else
+                    Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
+            }
+            break;
 
         }
     }
@@ -201,6 +234,13 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                 Log.i(label, "newconnectionrequestttttttttttttttttttttfail:" + message);
 
             }
+            break;
+            case AppConstants.REQUEST_GET_CONNECTION_TYPE: {
+                Log.i(label, "responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:" + response);
+                Log.i(label, "connectiontyperequestttttttttttttttttttttfail:" + message);
+
+            }
+            break;
         }
     }
 

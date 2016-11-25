@@ -1,5 +1,6 @@
 package com.essel.smartutilities.models;
 
+import java.security.Provider;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +14,7 @@ public class JsonResponse {
     public ArrayList<Faq> faqs;
     public ArrayList<Services> type;
     public  AboutUs aboutus1;
-
+    public  ArrayList<Services> connectiontype;
     public  String aboutus;
     public  String feedbackmessage;
     public Consumer user_info;

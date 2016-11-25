@@ -234,7 +234,7 @@
     <string name="tipthree">Use LEDs instead of regular Tubelights.</string>
 
     <string name="complaintidmsg">Your Complaint Registered with us</string>
-    <string name="login_error_102">Loged in by other user</string>
+    <string name="login_error_102">Logged in by other user</string>
     <string name="login_error_101">Consumer No. and Password Not Matched</string>
     <string name="login_error_null">Please Contact To Server Admin</string>
     <string name="er_data_not_avaliable">Data Not Avaliable</string>
