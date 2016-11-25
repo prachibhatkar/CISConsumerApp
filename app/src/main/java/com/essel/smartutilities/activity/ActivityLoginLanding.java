@@ -1,6 +1,5 @@
 package com.essel.smartutilities.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,29 +20,41 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.adapter.DepthPageTransform;
+import com.essel.smartutilities.adapter.SlidingImageAdapter;
 import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.utility.App;
-import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
+import com.viewpagerindicator.CirclePageIndicator;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener {
     TextView maintitle;
     LinearLayout img, button, table;
+    private static ViewPager mPager;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
+    private static final Integer[] IMAGES = {R.drawable.esselgroup, R.drawable.logo,
+            R.drawable.infrastruc};
+    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_landing);
+        init();
         img = (LinearLayout) findViewById(R.id.linear_img);
         button = (LinearLayout) findViewById(R.id.linear_lay_button);
         table = (LinearLayout) findViewById(R.id.container);
-
-
         ImageView drop = (ImageView) findViewById(R.id.img_drowdown);
         drop.setOnClickListener(this);
         maintitle = (TextView) findViewById(R.id.title_bar);
@@ -67,9 +79,9 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         fragmentTransaction.commit();
 
         Boolean flag = FeedBackActivity.getflag();
-        Log.i("Tag","valuelogin"+flag);
+        Log.i("Tag", "valuelogin" + flag);
         if (flag) {
-            Log.i("Tag","valueinif"+flag);
+            Log.i("Tag", "valueinif" + flag);
 
             Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Thanks for your valuable feedback", Snackbar.LENGTH_LONG);
             View view = snack.getView();
@@ -83,7 +95,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
 
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -204,4 +215,84 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             App.dropdown = true;
         }
     }
+
+
+    private void init() {
+        for (int i = 0; i < IMAGES.length; i++)
+            ImagesArray.add(IMAGES[i]);
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+
+
+        mPager.setAdapter(new SlidingImageAdapter(ActivityLoginLanding.this, ImagesArray));
+
+        mPager.setPageTransformer(true, new DepthPageTransform());
+        CirclePageIndicator indicator = (CirclePageIndicator)
+                findViewById(R.id.indicator);
+
+        indicator.setViewPager(mPager);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+        indicator.setRadius(5 * density);
+
+        NUM_PAGES = IMAGES.length;
+
+        // Auto start of viewpager
+        final Handler handler = new Handler() {
+            @Override
+            public void close() {
+
+            }
+
+            @Override
+            public void flush() {
+
+            }
+
+            @Override
+            public void publish(LogRecord logRecord) {
+
+            }
+        };
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+//                handler.post(Update);
+            }
+        }, 1000, 1000);
+
+        // Pager listener over indicator
+        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
+
+    }
+
+
 }
