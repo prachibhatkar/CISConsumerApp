@@ -51,6 +51,8 @@ public class LoginTable {
         public static final String CONSUMER_NAME = "consumername";
         public static final String CONSUMER_EMAIL_ID = "consumeremailId";
         public static final String CONSUMER_ADDRESS = "consumeraddress";
+        public static final String CITY = "city";
+        public static final String IMAGE = "image";
         public static final String CONSUMER_CONTACT_NO = "consumercontactno";
         public static final String CONSUMER_CONNECTION_TYPE = "consumerconnectiontype";
         public static final String ACTIVE_FLAG = "activeFlag";

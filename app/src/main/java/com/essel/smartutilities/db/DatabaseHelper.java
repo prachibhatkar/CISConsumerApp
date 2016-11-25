@@ -88,7 +88,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 LoginTable.Cols.CONSUMER_ID + " VARCHAR, " +
                 LoginTable.Cols.CONSUMER_NAME + " VARCHAR, " +
                 LoginTable.Cols.CONSUMER_EMAIL_ID + " VARCHAR, " +
-                LoginTable.Cols.ACTIVE_FLAG + " VARCHAR, " +
+                LoginTable.Cols.CITY + " VARCHAR, " +
+                LoginTable.Cols.IMAGE + " VARCHAR, " +
+                LoginTable.Cols.CONSUMER_ADDRESS + " VARCHAR, " +
+                LoginTable.Cols.CONSUMER_CONTACT_NO + " VARCHAR, " +
+                LoginTable.Cols.CONSUMER_CONNECTION_TYPE + " VARCHAR, " +
                 LoginTable.Cols.LAST_SYNCED_ON + " LONG, " +
                 LoginTable.Cols.LOGIN_ATTEMPTS + " INTEGER";
         createTable(db, LoginTable.TABLE_NAME, loginTableFields);

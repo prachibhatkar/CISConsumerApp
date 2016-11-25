@@ -23,6 +23,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -31,6 +33,7 @@ import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         actioncontinueasguest.setOnClickListener(this);
         actionnewconnection.setOnClickListener(this);
         actionForgot.setOnClickListener(this);
+
     }
 
     private void initProgressDialog() {
@@ -96,9 +100,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         if (v == btnLogin) {
-           // performLogin();
-                    Intent i = new Intent(this, ActivityLoginLanding.class);
-                    startActivity(i);
+//            performLogin();
+            Intent i = new Intent(this, ActivityLoginLanding.class);
+            startActivity(i);
+//            ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
+//            DatabaseManager.saveLoginDetails(this,consumers.get(3));
 
         } else if (v == actionRegister) {
             Intent i = new Intent(this, RegisterActivity.class);
@@ -168,8 +174,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                             Intent i = new Intent(this, ActivityLoginLanding.class);
                             startActivity(i);
-//                            DatabaseManager.saveLoginDetails(this, user_email, jsonResponse.responsedata.user_info);
-
+                            DatabaseManager.saveLoginDetails(this,jsonResponse.user_info);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
@@ -185,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         dismissDialog();
     }
 
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
+    public void onAsyncFail(String messages, String label, NetworkResponse response) {
         switch (label) {
             case AppConstants.REQUEST_LOGIN: {
                 try {
@@ -193,11 +198,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (res != null) {
                         Gson gson = new Gson();
                         JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
-                        Log.i(label, "loginnnnnnnnnnnnnnnfail:" + jsonResponse.responsedata.error_code);
-                        if (jsonResponse.responsedata.error_code.equals("101")) {
+//                        DialogCreator.showMessageDialog(this,jsonResponse.message);
+                        if (jsonResponse.error_code.equals("101")) {
                             DialogCreator.showMessageDialog(this, getString(R.string.login_error_101));
-                        } else if (jsonResponse.responsedata.error_code.equals("102")) {
+                        } else if (jsonResponse.error_code.equals("102")) {
                             DialogCreator.showMessageDialog(this, getString(R.string.login_error_102));
                         }
                     }
@@ -205,7 +209,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     DialogCreator.showMessageDialog(this, getString(R.string.login_error_null));
                     e.printStackTrace();
                 }
-                dismissDialog();
+                pDialog.dismiss();
             }
         }
     }
@@ -218,6 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (CommonUtils.isNetworkAvaliable(this) == true) {
             if (isBlankInput()) {
                 if (isValidPassword()) {
+                    initProgressDialog();
                     if (pDialog != null && !pDialog.isShowing()) {
                         pDialog.setMessage("Logging in, please wait..");
                         pDialog.show();

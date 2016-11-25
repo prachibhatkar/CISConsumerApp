@@ -102,33 +102,33 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
         return flag;
     }
 
-    private void showVerifyDialog() {
-        dialogVerify = new Dialog(this, R.style.verify_dialog);
-        dialogVerify.setContentView(R.layout.dialog_verify_number);
-        dialogVerify.setCancelable(true);
-        dialogVerify.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        editTextOTPCode = (EditText) dialogVerify.findViewById(R.id.edit_otp);
-
-        textViewActionResend = (TextView) dialogVerify.findViewById(R.id.action_resend);
-        linearActionCancel = (LinearLayout) dialogVerify.findViewById(R.id.action_cancel);
-        buttonVerify = (AppCompatButton) dialogVerify.findViewById(R.id.btn_verify);
-
-        textViewActionResend.setOnClickListener(this);
-        linearActionCancel.setOnClickListener(this);
-        buttonRegister.setOnClickListener(this);
-        buttonVerify.setOnClickListener(this);
-        dialogVerify.show();
-
-    }
-
-    private void showSuccess() {
-        dialogVerify.hide();
-        dialogSucccess = new Dialog(this, R.style.verify_dialog);
-        dialogSucccess.setContentView(R.layout.dialog_registration_success);
-        dialogSucccess.setCancelable(true);
-        dialogSucccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialogSucccess.show();
-    }
+//    private void showVerifyDialog() {
+//        dialogVerify = new Dialog(this, R.style.verify_dialog);
+//        dialogVerify.setContentView(R.layout.dialog_verify_number);
+//        dialogVerify.setCancelable(true);
+//        dialogVerify.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        editTextOTPCode = (EditText) dialogVerify.findViewById(R.id.edit_otp);
+//
+//        textViewActionResend = (TextView) dialogVerify.findViewById(R.id.action_resend);
+//        linearActionCancel = (LinearLayout) dialogVerify.findViewById(R.id.action_cancel);
+//        buttonVerify = (AppCompatButton) dialogVerify.findViewById(R.id.btn_verify);
+//
+//        textViewActionResend.setOnClickListener(this);
+//        linearActionCancel.setOnClickListener(this);
+//        buttonRegister.setOnClickListener(this);
+//        buttonVerify.setOnClickListener(this);
+//        dialogVerify.show();
+//
+//    }
+//
+//    private void showSuccess() {
+//        dialogVerify.hide();
+//        dialogSucccess = new Dialog(this, R.style.verify_dialog);
+//        dialogSucccess.setContentView(R.layout.dialog_registration_success);
+//        dialogSucccess.setCancelable(true);
+//        dialogSucccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialogSucccess.show();
+//    }
 
     @Override
     public void onBackPressed() {

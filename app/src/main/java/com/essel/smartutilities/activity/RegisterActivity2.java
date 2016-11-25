@@ -19,7 +19,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
     Toolbar toolbar;
     AppCompatButton buttonRegister, buttonVerify;
     EditText otp;
-    TextView maintitle;
+    TextView maintitle, msg,resend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +28,16 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         maintitle = (TextView) findViewById(R.id.title_bar);
-        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
-            maintitle.setText("Register : "+SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
+            maintitle.setText("Register : " + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
         initialize();
     }
 
     private void initialize() {
         buttonVerify = (AppCompatButton) findViewById(R.id.btn_verify);
+        msg = (TextView) findViewById(R.id.msg);
+        resend = (TextView) findViewById(R.id.action_resend);
+        resend.setOnClickListener(this);
         buttonVerify.setOnClickListener(this);
         otp = (EditText) findViewById(R.id.edit_otp);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -51,7 +54,6 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 this.finish();
                 return true;
             default:
@@ -61,15 +63,19 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v == buttonVerify) {
-            if (otp.getText().toString().trim().length() == 6) {
-                Intent i = new Intent(this, RegisterActivity3.class);
-                startActivity(i);
-            } else
-                Toast.makeText(this, "Enter valid OTP", Toast.LENGTH_SHORT).show();
-
+        switch (v.getId()) {
+            case R.id.btn_verify: {
+                if (otp.getText().toString().trim().length() == 6) {
+                    Intent i = new Intent(this, RegisterActivity3.class);
+                    startActivity(i);
+                } else
+                    Toast.makeText(this, "Enter valid OTP", Toast.LENGTH_SHORT).show();
+            }
+            break;
+            case R.id.action_resend:
+                msg.setText(R.string.title_verify_resend);
+                break;
         }
-
     }
 
     @Override

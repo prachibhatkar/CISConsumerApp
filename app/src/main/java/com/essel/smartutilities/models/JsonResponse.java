@@ -24,4 +24,5 @@ public class JsonResponse {
     public String authorization;
 
 
+    public String error_code;
 }

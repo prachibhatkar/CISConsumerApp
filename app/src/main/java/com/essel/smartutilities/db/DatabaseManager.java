@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.essel.smartutilities.activity.LoginActivity;
 import com.essel.smartutilities.activity.ManageAccountsActivity;
 import com.essel.smartutilities.db.tables.AboutUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
@@ -47,6 +48,9 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import static com.essel.smartutilities.db.DatabaseHelper.dbHelper;
 
 
 /**
@@ -54,25 +58,6 @@ import java.util.Date;
  * methods to interact with device database.
  */
 public class DatabaseManager {
-
-
-    /**
-     * Save User to UserLogin table
-     *
-     * @param context Context
-     * @param user    User
-     */
-
-    private static Context context;
-
-    public static void saveUser(Context context, User user) {
-        if (user != null) {
-            ContentValues values = getContentValuesUserLoginTable(context, user);
-            String condition = LoginTable.Cols.ID + "='" + user.id + "'";
-            saveValues(context, LoginTable.CONTENT_URI, values, condition);
-        }
-    }
-
 
     public static void saveAboutUs(Context context, String aboutUs) {
         if (aboutUs != null) {
@@ -84,7 +69,7 @@ public class DatabaseManager {
     }
 
     public static void saveFAQ(Context context, Faq faq) {
-        if (faq!= null) {
+        if (faq != null) {
             ContentValues values = getContentValuesFAQTable(context, faq);
             //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
             saveFAQ(context, FAQTable.CONTENT_URI, values, null);
@@ -92,21 +77,18 @@ public class DatabaseManager {
     }
 
     public static void saveTips(Context context, Tips tips) {
-        if (tips!= null) {
+        if (tips != null) {
             ContentValues values = getContentValuesTipsTable(context, tips);
             //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
-            saveTips(context,FAQTable.CONTENT_URI, values, null);
+            saveTips(context, FAQTable.CONTENT_URI, values, null);
         }
     }
 
     public static void saveManageAccounts(Context context, ArrayList<Consumer> consumer) {
         if (consumer != null && consumer.size() > 0) {
             for (Consumer consumer1 : consumer) {
-
                 ContentValues values = getContentValuesManageAccountsTable(context, consumer1);
-
-                saveValues(context, ManageAccountsTable.CONTENT_URI, values, null);
-
+                savemanageaccountsvalues(context, values);
             }
         }
     }
@@ -119,21 +101,51 @@ public class DatabaseManager {
             values.put(ManageAccountsTable.Cols.ADDRESS, consumers.address);
 //            values.put(ManageAccountsTable.Cols.IS_PRIMARY,consumers.is_primary);
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return values;
     }
 
-    private static void saveValues(Context context, Uri table, ContentValues values, String condition) {
-
-
+    private static void savemanageaccountsvalues(Context context, ContentValues values) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
-       // Log.i("Tag", "saveValues:" + newRowId);
+         Log.i("Tag", "saveValues:" + newRowId);
     }
+
+    public static ArrayList<Consumer> getAllManageAccounts(Context context) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + ManageAccountsTable.TABLE_NAME ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        ArrayList<Consumer> consumers = new ArrayList<Consumer>();
+
+        while (c.moveToNext()) {
+
+            String consumername = c.getString(c.getColumnIndex("consumer_name"));
+            String address = c.getString(c.getColumnIndex("consumer_id"));
+            String consumerno = c.getString(c.getColumnIndex("address"));
+            //String userProfilePic = c.getString(c.getColumnIndex(USER_PROFILE_PIC));
+
+            Consumer con = new Consumer(consumername,consumerno,address);
+
+            consumers.add(con);
+        }
+        db.close();
+        return consumers;
+    }
+    public static void deleteAccount(Context context, String Consumer_id) {
+        try {
+            String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.delete("ManageAccountsTable", condition, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private static void saveAboutUs(Context context, Uri table, ContentValues values, String condition) {
 
@@ -141,77 +153,20 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
+        // Log.i("Tag", "saveAboutUs:" + newRowId);
         Log.i("Tag", "saveAboutUs:" + newRowId);
     }
 
-//    public static ArrayList<Consumer> getAccounts(Context context, String reader_id) {
-//        ContentResolver resolver = context.getContentResolver();
-//        Cursor cursor = resolver.query(ManageAccountsTable.CONTENT_URI, null,
-//                null, null, null);
-//        ArrayList<Consumer> consumers = getAccountsFromCursor(cursor);
-//        if (cursor != null) {
-//            cursor.close();
-//        }
-//        return consumers;
-//    }
 //
-//    private static ArrayList<Consumer> getAccountsFromCursor(Cursor cursor) {
-//        ArrayList<Consumer> consumers = null;
-//        if (cursor != null && cursor.getCount() > 0) {
-//            cursor.moveToFirst();
-//            Consumer user;
-//            consumers = new ArrayList<Consumer>();
-//            while (!cursor.isAfterLast()) {
-//                user = getConsumerFromCursor(cursor);
-//                consumers.add(user);
-//                cursor.moveToNext();
-//            }
-//        }
-//        if (cursor != null) {
-//            cursor.close();
-//        }
-//        return consumers;
-//    }
-
-//    private static Consumer getConsumerFromCursor(Cursor cursor) {
-//        Consumer jobCard = new Consumer();
-//        jobCard.consumer_name = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.CONSUMER_NAME));
-//
-//        jobCard.consumer_no = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.CONSUMER_ID));
-//        jobCard.acctype = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.A));
-//        jobCard.payment_mode = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.DT_CODE));
-//        jobCard.duedate = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.BILL_CYCLE_CODE));
-//        jobCard.is_primary = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_MONTH));
-//        jobCard.month = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_START_DATE));
-//        jobCard.netamt = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_END_DATE));
-//        jobCard.payment_date = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.SCHEDULE_ACCOUNTING_DATE));
-//
-//        jobCard.paidamt = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.ROUTE_ID));
-//        jobCard.transaction_id = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.POL_NO));
-//        jobCard.payment_time = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.PHONE_NO));
-//        jobCard.address = cursor.getString(cursor.getColumnIndex(ManageAccountsTable.Cols.ADDRESS));
-//
-//        return jobCard;
-//    }
 
 
-    public static void deleteAccount(Context context,  String Consumer_id) {
-        try {
-            String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id +  "'";
-            DatabaseHelper dbHelper = new DatabaseHelper(context);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.delete("ManageAccountsTable",condition,null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     private static void saveFAQ(Context context, Uri table, ContentValues values, String condition) {
 
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(FAQTable.TABLE_NAME, null, values);
-       // Log.i("Tag", "savefaq:" + newRowId);
+        // Log.i("Tag", "savefaq:" + newRowId);
     }
 
     private static void saveTips(Context context, Uri table, ContentValues values, String condition) {
@@ -219,63 +174,9 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(TipsTable.TABLE_NAME, null, values);
-       // Log.i("Tag", "savetips:" + newRowId);
+        // Log.i("Tag", "savetips:" + newRowId);
     }
 
-    public static User getCurrentLoggedInUser(Context context) {
-        String condition = LoginTable.Cols.CONSUMER_EMAIL_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_NAME) + "' and " + LoginTable.Cols.CONSUMER_ID + "='" + SharedPrefManager.getStringValue(context, SharedPrefManager.USER_ID) + "'";
-        ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = resolver.query(LoginTable.CONTENT_URI, null,
-                condition, null, null);
-        // ArrayList<User> userList = getUserListFromCurser(cursor);
-        User user = null;
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-
-            // userList = new ArrayList<User>();
-            while (!cursor.isAfterLast()) {
-                user = getUserFromCursor(cursor);
-
-                cursor.moveToNext();
-            }
-        }
-        if (cursor != null) {
-            cursor.close();
-        }
-        return user;
-    }
-
-    /**
-     * @param context
-     * @param uname
-     */
-    public static ArrayList<User> getUser(Context context,
-                                          String uname) {
-        String condition = LoginTable.Cols.CONSUMER_EMAIL_ID + "='" + uname + "'";
-        ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = resolver.query(LoginTable.CONTENT_URI, null,
-                condition, null, null);
-        ArrayList<User> userList = getUserListFromCurser(cursor);
-        if (cursor != null) {
-            cursor.close();
-        }
-        return userList;
-    }
-
-    private static ArrayList<User> getUserListFromCurser(Cursor cursor) {
-        ArrayList<User> userList = null;
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            User user;
-            userList = new ArrayList<User>();
-            while (!cursor.isAfterLast()) {
-                user = getUserFromCursor(cursor);
-                userList.add(user);
-                cursor.moveToNext();
-            }
-        }
-        return userList;
-    }
 
     @NonNull
     private static User getUserFromCursor(Cursor cursor) {
@@ -290,27 +191,6 @@ public class DatabaseManager {
         return user;
     }
 
-    /**
-     * Get ContentValues from the Contact to insert it into UserLogin Table
-     *
-     * @param context Context
-     * @param user    User
-     */
-    private static ContentValues getContentValuesUserLoginTable(Context context, User user) {
-        ContentValues values = new ContentValues();
-        try {
-            values.put(LoginTable.Cols.CONSUMER_ID, user.id);
-            values.put(LoginTable.Cols.CONSUMER_NAME, user.userName);
-            values.put(LoginTable.Cols.CONSUMER_EMAIL_ID, user.emailId);
-            values.put(LoginTable.Cols.ACTIVE_FLAG, user.activeFlag);
-            values.put(LoginTable.Cols.LAST_SYNCED_ON, user.lastsyncedon);
-            values.put(LoginTable.Cols.LOGIN_ATTEMPTS, "0");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return values;
-    }
 
     private static ContentValues getContentValuesAboutUsTable(Context context, String about_us_msg) {
         ContentValues values = new ContentValues();
@@ -326,7 +206,7 @@ public class DatabaseManager {
     private static ContentValues getContentValuesFAQTable(Context context, Faq faq) {
         ContentValues values = new ContentValues();
         try {
-           values.put(FAQTable.Cols.FAQ_QUESTION, faq.question);
+            values.put(FAQTable.Cols.FAQ_QUESTION, faq.question);
             values.put(FAQTable.Cols.FAQ_ANSWER, faq.answer);
 
         } catch (Exception e) {
@@ -347,27 +227,28 @@ public class DatabaseManager {
         return values;
     }
 
-    /**
-     * Clear all the table contents
-     *
-     * @param context Context
-     */
-    public static void clearAllCache(Context context) {
-        deleteAllUserLoginDetails(context);
-    }
 
-    /**
-     * Clear contents from UserLogin Table
-     *
-     * @param context
-     */
-    public static void deleteAllUserLoginDetails(Context context) {
-        try {
-            context.getContentResolver().delete(LoginTable.CONTENT_URI, null,
-                    null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void saveLoginDetails(Context context, Consumer user_info) {
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(LoginTable.Cols.CONSUMER_NAME, user_info.consumer_name);
+        values.put(LoginTable.Cols.CONSUMER_ADDRESS, user_info.address);
+        values.put(LoginTable.Cols.CONSUMER_CONTACT_NO, user_info.contact_no);
+        values.put(LoginTable.Cols.CONSUMER_ID, user_info.consumer_no);
+        values.put(LoginTable.Cols.CONSUMER_CONNECTION_TYPE, user_info.acctype);
+        values.put(LoginTable.Cols.CONSUMER_EMAIL_ID, user_info.emailid);
+        values.put(LoginTable.Cols.CITY, user_info.city);
+        values.put(LoginTable.Cols.IMAGE, user_info.image);
+
+        long v = db.insert(LoginTable.TABLE_NAME, null, values);
+
+        Log.i("Dataaaddedddddddddddddd", String.valueOf(v));
+        db.close(); // Closing database connection
+
     }
 
 
@@ -390,9 +271,4 @@ public class DatabaseManager {
     }
 
 
-   /* private static void saveSegement(Context context, String project_id, Segement segement) {
-        ContentValues values=getContentValuesUserSegement(context,project_id, segement);
-        String condition = SegementTable.Cols.SEGEMENT_ID + "='" + segement.segmentId + "'";
-        saveValues(context, SegementTable.CONTENT_URI, values, condition);
-    }*/
 }

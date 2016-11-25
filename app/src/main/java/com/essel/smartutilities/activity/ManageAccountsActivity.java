@@ -28,16 +28,12 @@ import java.util.ArrayList;
 
 public class ManageAccountsActivity extends AppCompatActivity implements View.OnClickListener {
     RecyclerView rv_consumers;
-    ImageView add,imgBack;
+    ImageView add, imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_accounts);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Manage Accounts");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         add = (ImageView) findViewById(R.id.add_new);
         add.setOnClickListener(this);
         rv_consumers = (RecyclerView) findViewById(R.id.recycler);
@@ -46,7 +42,7 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
         ManageAccountAdapter adapter = new ManageAccountAdapter(this, consumers);
         rv_consumers.setAdapter(adapter);
         rv_consumers.setLayoutManager(layoutManager);
-        DatabaseManager.saveManageAccounts(this,consumers);
+        DatabaseManager.saveManageAccounts(this, consumers);
         imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

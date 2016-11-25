@@ -21,16 +21,20 @@ public class Consumer implements Serializable {
     public String payment_date;
     public String payment_time;
     public String city;
+    public String image;
+    public String contact_no;
     public boolean is_primary;
     public String emailid;
 
 
-    public Consumer() {
-
+    public Consumer(String consumer_name, String consumer_no, String address) {
+        this.consumer_name = consumer_name;
+        this.address = address;
+        this.contact_no = consumer_no;
     }
 
     public Consumer(String transaction_id, String amount, String payment_mode, String acctype, String address, String duedate
-            , String month, String consumer_no, String consumer_name, String netamt,String payment_time,String payment_date , String city) {
+            , String month, String consumer_no, String consumer_name, String netamt, String payment_time, String payment_date, String emailid, String city, String image, String contact_no) {
         this.transaction_id = transaction_id;
         this.paidamt = amount;
         this.payment_mode = payment_mode;
@@ -42,8 +46,11 @@ public class Consumer implements Serializable {
         this.acctype = acctype;
         this.consumer_name = consumer_name;
         this.payment_time = payment_time;
-        this.payment_date=payment_date;
-        this.city=city;
+        this.payment_date = payment_date;
+        this.city = city;
+        this.emailid = emailid;
+        this.image = image;
+        this.contact_no = contact_no;
 
 
     }
@@ -53,7 +60,7 @@ public class Consumer implements Serializable {
         ArrayList<Consumer> contacts = new ArrayList<Consumer>();
 
         for (int i = 1; i <= numContacts; i++) {
-            if (i==1) {
+            if (i == 1) {
                 pr = "primary";
                 mode = "cash";
             } else {
@@ -62,7 +69,7 @@ public class Consumer implements Serializable {
             }
 
             contacts.add(new Consumer("5454367" + i, "205" + i, mode, pr, "hoichiohiosdc sahsahcnslk", "Aug 25, 240" + i, "Aug 201" + i
-                    , "12344352" + i, "consumer" + i, "3164" + i,"02:3"+i+"am","Aug 2"+i,"city"+i));
+                    , "12344352" + i, "consumer" + i, "3164" + i, "02:3" + i + "am", "Aug 2" + i, "city" + i, "email" + i, "image" + i, "41567891" + i));
         }
         return contacts;
     }

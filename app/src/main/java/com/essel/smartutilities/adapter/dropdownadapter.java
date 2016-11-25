@@ -106,10 +106,10 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
             id.setText(consumer.consumer_no);
             address.setText(consumer.address);
 
-            if (consumer.acctype.equals("primary"))
-                ic_dete.setVisibility(View.VISIBLE);
-            else
-                ic_dete.setVisibility(View.INVISIBLE);
+//            if (consumer.acctype.equals("primary"))
+//                ic_dete.setVisibility(View.VISIBLE);
+//            else
+//                ic_dete.setVisibility(View.INVISIBLE);
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override

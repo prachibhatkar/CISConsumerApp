@@ -32,6 +32,7 @@
     <string name="error_retype_password">Password missmatch</string>
     <string name="prompt_otp">Enter Code</string>
     <string name="title_verify_number">Verify Number</string>
+    <string name="title_verify_resend">We have resent a verification code on your</string>
     <string name="title_verify_desc_line1">We have sent a verification code on your</string>
     <string name="title_verify_desc_line2">registered mobile number </string>
     <string name="action_verify">Verify</string>

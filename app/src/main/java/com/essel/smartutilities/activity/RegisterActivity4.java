@@ -24,7 +24,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
     EditText editTextEmailId, editTextMobileNo, editTextPassword, editTextRetypePassword, editTextOTPCode;
     TextInputLayout inputLayoutEmailId, inputLayoutMobileNo, inputLayoutPassword, inputLayoutRetypePassword;
     AppCompatButton buttonRegister, buttonVerify;
-    TextView textViewConsumerName,consumerno, textViewConsumerAddress, maintitle, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
+    TextView textViewConsumerName, consumerno, textViewConsumerAddress, maintitle, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
     LinearLayout linearActionCancel;
     Context mContext;
     Dialog dialogVerify, dialogSucccess;
@@ -38,8 +38,8 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         maintitle = (TextView) findViewById(R.id.title_bar);
-        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
-            maintitle.setText("Register : "+SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
+            maintitle.setText("Register : " + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialize();
@@ -52,7 +52,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
         inputLayoutMobileNo = (TextInputLayout) findViewById(R.id.inputLayoutMobileNumber);
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
         consumerno = (TextView) findViewById(R.id.consumerno);
-        if(!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
+        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
             consumerno.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
         textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
         textViewConsumerConnectionType = (TextView) findViewById(R.id.textConsumerConnectionType);
@@ -94,6 +94,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 }
