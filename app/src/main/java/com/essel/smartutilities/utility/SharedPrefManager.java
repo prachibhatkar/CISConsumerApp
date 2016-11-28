@@ -44,12 +44,12 @@ public class SharedPrefManager {
 
 
 
-    public static void saveUserCredentials(Context context, String userKey, String userName, String password, String userid) {
-        SharedPreferences sharedPref = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(USER_KEY, userKey).putString(USER_NAME, userName).putString(PASSWORD, password).putString(USER_ID,userid);
-        editor.commit();
-    }
+//    public static void saveUserCredentials(Context context, String userKey, String userName, String password, String userid) {
+//        SharedPreferences sharedPref = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putString(USER_KEY, userKey).putString(USER_NAME, userName).putString(PASSWORD, password).putString(USER_ID,userid);
+//        editor.commit();
+//    }
 
     public static void saveValue(Context context, String key, Object value) {
         SharedPreferences sharedPref = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
