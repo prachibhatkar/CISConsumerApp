@@ -1,5 +1,6 @@
 package com.essel.smartutilities.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     private TextView actionLogin;
     Spinner connectiontype;
     private ArrayList<String> mytype;
+    private ProgressDialog pDialog;
     Intent i;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
     private void initialize() {
         mytype = new ArrayList<>(12);
-        mytype.add(0,"Select Connection Type");
+        mytype.add(0, "Select Connection Type");
         if (CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getConnectionType(this, Request.Method.GET, AppConstants.URL_GET_CONNECTION_TYPE, AppConstants.REQUEST_GET_CONNECTION_TYPE, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_CONNECTION_TYPE);
@@ -133,6 +135,20 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -148,6 +164,11 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     }
 
     private void submitData() {
+        initProgressDialog();
+        if (pDialog != null && !pDialog.isShowing()) {
+            pDialog.setMessage("Requesting, please wait..");
+            pDialog.show();
+        }
         JSONObject obj = new JSONObject();
         try {
             obj.put("consumer_name", editTextFullName.getText().toString());
@@ -158,7 +179,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             obj.put("mobile_no", editTextPhone.getText().toString());
             obj.put("nearest_consumer_no", editTextConsumerId.getText().toString());
             obj.put("nearest_pole_no", editTextConsumerId.getText().toString());
-            obj.put("connection_type", "2");
+            obj.put("connection_type", connectiontype.getSelectedItemPosition() - 1);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -189,16 +210,19 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newconnectionrequestttttttttttttttttttttpass:" + jsonResponse.message);
+                        dismissDialog();
                         i = new Intent(this, NewConnectionActivity2.class);
                         startActivity(i);
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
-
+                        dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
                         // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
+                dismissDialog();
+
             }
             break;
             case AppConstants.REQUEST_GET_CONNECTION_TYPE: {
@@ -207,19 +231,24 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         if (jsonResponse.connectiontype.size() != 0) {
                             for (int i = 1; i <= jsonResponse.connectiontype.size(); i++) {
-                                mytype.add(i, jsonResponse.connectiontype.get(i-1).type);
+                                mytype.add(i, jsonResponse.connectiontype.get(i - 1).type);
                             }
+                            dismissDialog();
+
                             Log.i(label, "connectionTyperequestttttttttttttttttttttpass: " + jsonResponse.connectiontype.get(0).id);
                             Log.i(label, "connectionTyperequestttttttttttttttttttttpass:  " + jsonResponse.connectiontype.get(0).type.toString());
 
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
 
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
+                        dismissDialog();
                     }
                 } else
                     Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
+                dismissDialog();
+
             }
             break;
 
@@ -232,12 +261,14 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             case AppConstants.REQUEST_NEW_CONNECTION: {
                 Log.i(label, "responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:" + response);
                 Log.i(label, "newconnectionrequestttttttttttttttttttttfail:" + message);
+                dismissDialog();
 
             }
             break;
             case AppConstants.REQUEST_GET_CONNECTION_TYPE: {
                 Log.i(label, "responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:" + response);
                 Log.i(label, "connectiontyperequestttttttttttttttttttttfail:" + message);
+                dismissDialog();
 
             }
             break;
@@ -246,5 +277,3 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
 
 }
-
-

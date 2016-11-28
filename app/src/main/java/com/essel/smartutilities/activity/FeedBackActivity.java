@@ -29,7 +29,7 @@ import com.essel.smartutilities.webservice.WebRequests;
 public class FeedBackActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
      EditText edit_remark_feedback;
      Button  btn_submit_feedback;
-     static Boolean flag=false;
+     public static Boolean flag=false;
      String remark;
      TextView tv_rate;
      String count;
