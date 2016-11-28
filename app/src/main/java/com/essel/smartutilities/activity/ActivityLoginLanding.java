@@ -21,11 +21,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.NetworkResponse;
+import com.eftimoff.viewpagertransformers.AccordionTransformer;
+import com.eftimoff.viewpagertransformers.CubeInTransformer;
+import com.eftimoff.viewpagertransformers.CubeOutTransformer;
+import com.eftimoff.viewpagertransformers.DrawFromBackTransformer;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.DepthPageTransform;
 import com.essel.smartutilities.adapter.SlidingImageAdapter;
+import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
+import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
@@ -37,7 +44,7 @@ import java.util.TimerTask;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener {
+public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
     TextView maintitle;
     LinearLayout img, button, table;
     private static ViewPager mPager;
@@ -186,8 +193,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         FeedBackActivity.flag = false;
 
     }
-
-
     }*/
 
         /*Fragment fragment = new LoginLandingFragment();
@@ -226,7 +231,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         mPager.setAdapter(new SlidingImageAdapter(ActivityLoginLanding.this, ImagesArray));
 
-        mPager.setPageTransformer(true, new DepthPageTransform());
+        mPager.setPageTransformer(true, new DrawFromBackTransformer());
         CirclePageIndicator indicator = (CirclePageIndicator)
                 findViewById(R.id.indicator);
 
@@ -295,4 +300,13 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     }
 
 
+    @Override
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+
+    }
+
+    @Override
+    public void onAsyncFail(String message, String label, NetworkResponse response) {
+
+    }
 }
