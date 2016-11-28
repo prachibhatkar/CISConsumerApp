@@ -218,8 +218,8 @@ public class DatabaseManager {
     private static ContentValues getContentValuesTipsTable(Context context, Tips tips) {
         ContentValues values = new ContentValues();
         try {
-            values.put(TipsTable.Cols.TIPS_IMAGE, tips.tip_images);
-            values.put(TipsTable.Cols.TIPS_MESSAGE, tips.tip_message);
+            values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
+            values.put(TipsTable.Cols.TIPS_MESSAGE, tips.message);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -257,12 +257,15 @@ public class DatabaseManager {
         AboutUs aboutUs= new AboutUs();
         DatabaseHelper dbHelper=new DatabaseHelper(context);
         SQLiteDatabase db  = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
-        while(cursor.moveToNext()){
+        String selectQuery = "SELECT * FROM " + AboutUsTable.TABLE_NAME ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+       // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+         while(cursor.moveToNext()){
 
-          cursor.getString(cursor.getColumnIndex(AboutUsTable.Cols.ABOUT_US_MSG));
+         aboutUs.about_us_msg= cursor.getString(cursor.getColumnIndex("about_us_msg"));
+             Log.i("Tag","valueselectdb"+cursor);
 
-           // aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+           //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
 
         return aboutUs;

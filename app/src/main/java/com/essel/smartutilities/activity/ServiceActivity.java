@@ -24,11 +24,15 @@ import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.ServiceType;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,10 +48,12 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
-    List<String> services;
+ private ArrayList<String> services;
     String editremark;
+    String service_type,consumer_remark;
     static Boolean flag=false;
     HashMap<String, List<String>> listDataChild;
+   // ServiceType service1=new ServiceType();
 
     Spinner servicetype;
 
@@ -70,58 +76,60 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         btn_submit_service.setOnClickListener(this);
 
         edit_remark = (EditText) findViewById(R.id.edit_remark);
-       //  editremark = edit_remark.toString().trim();
+        editremark = edit_remark.toString().trim();
 
-
-
-
-        servicetype = (Spinner) findViewById(R.id.sp_sevicetype);
-        String[] type = this.getResources().getStringArray(R.array.service);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Arrays.asList(type));
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        servicetype.setAdapter(dataAdapter);
-
-
+        services = new ArrayList<>(12);
+        services.add(0,"Select Service Type");
 
         // expListView = (ExpandableListView)findViewById(R.id.expListView);
-
-
         if( CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getServiceType(this, Request.Method.GET, AppConstants.URL_GET_SERVICE_TYPE, AppConstants.REQUEST_SERVICE_TYPE,
-                    this, "Token c686681877b60f7189965137e2d57857c0a07099");
+                    this, "Token 7ca827ebd83cfe97d63deb67d99d6aa7d439dba2");
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_SERVICE_TYPE);
         }else
-            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+
+
+          servicetype = (Spinner) findViewById(R.id.sp_sevicetype);
+        // String[] type = this.getResources().getStringArray(R.array.service);
+          ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, services);
+          dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+          servicetype.setAdapter(dataAdapter);
+
+
+
+
     }
 
 
 
 
-
-
-    @Override
+        @Override
     public void onClick(View v) {
         if(v==btn_submit_service){
-           if (isBlankInput()) {
+          if (isBlankInput()) {
+              JSONObject obj = new JSONObject();
+              try {
+                  obj.put("service_type", servicetype.getSelectedItemPosition());
+              } catch (JSONException e) {
+                  e.printStackTrace();
+              }
 
-                Intent i = new Intent(this, ServiceStatusActivity.class);
-                startActivity(i);
-            //   flag=true;
-           //  Intent i = new Intent(this, ActivityLoginLanding.class);
-          //  startActivity(i);
+              if( CommonUtils.isNetworkAvaliable(this)) {
+                   JsonObjectRequest request = WebRequests.serviceRequest(this, Request.Method.POST, AppConstants.URL_POST_SERVICE_REQUEST, AppConstants.REQUEST_POST_SERVICE_REQUEST,
+                           this,obj,editremark, "Token 7ca827ebd83cfe97d63deb67d99d6aa7d439dba2");
+                   App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_SERVICE_REQUEST);
+               }else
+                   Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
 
 
-            }
+
+
+           }
         }
     }
 
-    public static Boolean getflag(){
-
-        return flag;
-
-
-    }
 
 
    /* public boolean validate() {
@@ -184,10 +192,28 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "hygt " + jsonResponse);
                         Log.i(label, "hyif " + jsonResponse.type);
                         if(jsonResponse.type.size()!=0)
-                            Log.i(label, "servicetype" +jsonResponse.type );
-                        {
-                     //       services.add(jsonResponse.type.get(0).type.toString().trim());
 
+                        {
+
+                            for(int i = 1 ; i <= jsonResponse.type.size(); i++) {
+
+                             //   services.add(i, jsonResponse.type.get(i-1).type);
+
+                               ServiceType service1=new ServiceType();
+
+                               // services.set(0,jsonResponse.type.get(0).type.toString().trim());
+                                Log.i(label, "servicetype" + jsonResponse.type);
+
+                                service1.setType(jsonResponse.type.get(i-1).type);
+                                service1.setId(jsonResponse.type.get(i-1).id.toString().trim());
+                                services.add(i,service1.getType());
+                                Log.i(label, "servicetype22" + jsonResponse.type);
+
+
+
+                               // services.add(jsonResponse.type.get(0).type.toString().trim());
+
+                            }
 
 
                         }
@@ -203,18 +229,54 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
 
+            case AppConstants.REQUEST_POST_SERVICE_REQUEST: {
+                if (jsonResponse != null) {
+                    Log.i(label, "hyif " + jsonResponse);
+
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+
+                        Log.i(label, "hyif " + jsonResponse.result);
+                        Intent i = new Intent(this, ServiceStatusActivity.class);
+                        startActivity(i);
+
+                    }
+                     if(jsonResponse.servicerequestmessage!= null) {
+
+
+                    }
+                        if (jsonResponse.authorization != null) {
+                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+
+                    }
+                    break;
+                }
+            }
+
         }
 
-    }
+
 
     @Override
     public void onAsyncFail(String message, String label, NetworkResponse response) {
 
         switch (label) {
-            case AppConstants.REQUEST_FAQ: {
+            case AppConstants.REQUEST_SERVICE_TYPE: {
 //
                Log.i(label, "servicetype" + message);
                Log.i(label, "servicetype" + response);
+            }
+            break;
+        }
+
+        switch (label) {
+            case AppConstants.REQUEST_POST_SERVICE_REQUEST: {
+//
+                Log.i(label, "servicerequest" + message);
+                Log.i(label, "servicerequest" + response);
             }
             break;
         }

@@ -86,8 +86,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark, "Token c686681877b60f7189965137e2d57857c0a07099");
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FEEDBACK);
                // flag=true;
-                Intent in = new Intent(this, ActivityLoginLanding.class);
-                startActivity(in);
+
 
             }
 
@@ -130,8 +129,6 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
             tv_rate.setText("loved it");
             //Toast.makeText(this.getApplicationContext(), "you have rated 1", Toast.LENGTH_SHORT).show();
 
-
-
         }
 
 
@@ -146,11 +143,11 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         switch (label) {
             case AppConstants.REQUEST_FEEDBACK: {
                 if (jsonResponse != null) {
-                    FeedBackActivity.flag=true;
                     Log.i("Tag","valueresponse"+flag);
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
-
-
+                        flag=true;
+                        Intent in = new Intent(this, ActivityLoginLanding.class);
+                        startActivity(in);
                         Log.i(label, "hygt " + jsonResponse);
                         Log.i(label, "hyif " + jsonResponse.feedbackmessage);
                         if(jsonResponse.feedbackmessage!= null) {
@@ -165,6 +162,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
                     }
+
                     break;
                 }
             }
@@ -191,9 +189,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     }
     public static Boolean getflag(){
 
-
         Log.i("Tag","valuegetflg" +flag);
-       return FeedBackActivity.flag;
+        return flag;
 
 
 

@@ -130,6 +130,7 @@
 
                     <TextView
                         android:text="Fixed/Demand Change"
+                        android:id="@+id/tv_fixeddemandcharge"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -139,6 +140,7 @@
 
                     <TextView
                         android:text="Rs 10/Month"
+                        android:id="@+id/tv_bplcatagory1"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -154,7 +156,7 @@
                     android:weightSum="2">
 
                     <TextView
-                        android:id="@+id/R3C1"
+                        android:id="@+id/tv_energycharge"
                         android:text="Energy change"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -164,7 +166,7 @@
                         android:gravity="center"/>
 
                     <TextView
-                        android:id="@+id/R3C2"
+                        android:id="@+id/tv_bplcatagory2"
                         android:text="0.87"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -244,6 +246,7 @@
 
                     <TextView
                         android:text="0-100 Units"
+                        android:id="@+id/tv_100units"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -272,6 +275,7 @@
 
                     <TextView
                         android:text="101-300 Units"
+                        android:id="@+id/tv_300units"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -300,6 +304,7 @@
 
                     <TextView
                         android:text="301-500 Units"
+                        android:id="@+id/tv_500units"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -328,6 +333,7 @@
 
                     <TextView
                         android:text="501-1000 Units"
+                        android:id="@+id/tv_1000units"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"

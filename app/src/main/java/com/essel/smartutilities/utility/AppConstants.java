@@ -6,7 +6,7 @@ package com.essel.smartutilities.utility;
 public class AppConstants {
 
 
-    public static final String BASE_URL = "http://192.168.10.111:9999/mobileapi/";
+    public static final String BASE_URL=  "http://192.168.10.111:9999/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
 
     public static final String REQUEST_LOGIN = "login/";
@@ -24,8 +24,16 @@ public class AppConstants {
     public static final String REQUEST_SERVICE_TYPE = "get-service-type/";
     public static final String URL_GET_SERVICE_TYPE = BASE_URL + REQUEST_SERVICE_TYPE;
 
+    public static final String REQUEST_TARIFF = "get-tarif/";
+    public static final String URL_GET_TARIFF = BASE_URL + REQUEST_TARIFF;
+
+
     public static final String REQEST_TIPS = "get-tips/";
     public static final String URL_GET_TIPS = BASE_URL + REQEST_TIPS;
+
+    public static final String REQUEST_GET_COMPLAINT_TYPE = "get-complaint-type/";
+    public static final String URL_GET_COMPLAINT_TYPE = BASE_URL + REQUEST_GET_COMPLAINT_TYPE;
+
 
     public static final String REQUEST_GET_CONNECTION_TYPE = "get-service-subtype/";
     public static final String URL_GET_CONNECTION_TYPE = BASE_URL + REQUEST_GET_CONNECTION_TYPE;
@@ -47,6 +55,10 @@ public class AppConstants {
 
     public static final String REQUEST_FEEDBACK = "add-feedback/";
     public static final String URL_POST_FEEDBACK = BASE_URL + REQUEST_FEEDBACK;
+
+    public static final String REQUEST_POST_SERVICE_REQUEST = "service-request/";
+    public static final String URL_POST_SERVICE_REQUEST = BASE_URL + REQUEST_POST_SERVICE_REQUEST;
+
 
     public static final String SHARED_PREF = "SmartUtilities";
     public static final String SCREEN_ID = "screen_id";

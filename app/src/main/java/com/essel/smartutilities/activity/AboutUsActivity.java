@@ -1,5 +1,6 @@
 package com.essel.smartutilities.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
     TextView tv_aboutus_message;
     private Context mContext;
+    ProgressDialog pDialog;
 
 
     @Override
@@ -58,19 +60,25 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
 
         if( isNetworkAvailable()) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
 
             JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US,
                     this, "Token c686681877b60f7189965137e2d57857c0a07099");
-            App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
+             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
+
         }
 
         else{
 
             Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
+              AboutUs aboutUs2 =new AboutUs();
               DatabaseManager.getAboutUs(this);
-              tv_aboutus_message.setText(aboutUs.about_us_msg);
-
-
+             tv_aboutus_message.setText(aboutUs2.about_us_msg);
+             Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
         }
 
 
@@ -81,6 +89,20 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
     }
 
 
@@ -94,7 +116,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
                         Log.i(label, "hygt " + jsonResponse);
                         Log.i(label, "hyif " + jsonResponse.aboutus);
                         if(jsonResponse.aboutus!= null) {
-
+                            dismissDialog();
                              tv_aboutus_message.setText(jsonResponse.aboutus.toString().trim());
                              DatabaseManager.saveAboutUs(this,jsonResponse.aboutus);
 
@@ -102,6 +124,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
                      if (jsonResponse.authorization != null) {
                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+                         dismissDialog();
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
@@ -109,6 +132,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
                     }
                     break;
                 }
+                dismissDialog();
             }
 
         }
@@ -126,6 +150,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
                 Log.i(label, " " + message);
                 Log.i(label, " " + response);
             }
+            pDialog.dismiss();
             break;
         }
 

@@ -5,8 +5,8 @@ import java.io.Serializable;
 
 public class Tips implements Serializable {
     public String id;
-    public String tip_images;
-    public String tip_message;
+    public String image;
+    public String message;
 
 
 }

@@ -17,34 +17,53 @@ import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.adapter.SlidingImageAdapter;
+import com.essel.smartutilities.adapter.SlidingTipsAdapter;
 import com.essel.smartutilities.adapter.TipsAdapter;
 
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
+import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import java.net.URL;
+import java.util.ArrayList;
 
 //import static com.essel.smartutilities.R.id.indicator;
 
-public class TipsActivity extends AppCompatActivity {
+public class TipsActivity extends AppCompatActivity implements ServiceCaller{
     private ViewPager vp_tips;
     private TabLayout tabLayout;
     CirclePageIndicator circlePageIndicator;
+    ImageView img1;
+
+    private static final String[] IMAGES = {};
+    private static final String[] TipText = {"tujhjhhioi","fghhhjgjjk","fghjjhjkjkjh"};
+    private ArrayList<String> ImagesArray = new ArrayList<String>();
+    private ArrayList<String>TipTextArray=new ArrayList<>(12);
 
 
     private TipsAdapter tipsAdapter;
     private Context mContext;
+    private int NUM_PAGES=10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tips);
+        img1=(ImageView)findViewById(R.id.img1);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -54,14 +73,102 @@ public class TipsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        setupUI();
-        loadData();
+
+        init();
+        intext();
+
+        if( CommonUtils.isNetworkAvaliable(this)) {
+            JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS,
+                    this, "Token 7233624f38f5ee057ee39595c01383b4037a3412");
+            App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
+        }else
+            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+
+        //setupUI();
+       // loadData();
+
+
+
+
+
+
 
 
     }
 
+    private void init() {
+        for (int i = 0; i < IMAGES.length; i++)
+           // ImagesArray.add(IMAGES[i]);
 
-    private void setupUI() {
+        vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
+
+
+        vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray,TipTextArray));
+
+        //  mPager.setPageTransformer(true, new DepthPageTransform());
+        CirclePageIndicator indicator = (CirclePageIndicator)
+                findViewById(R.id.indicator);
+
+        indicator.setViewPager(vp_tips);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+        indicator.setRadius(5 * density);
+
+        NUM_PAGES = IMAGES.length;
+
+
+
+
+    }
+
+    private void intext() {
+        for (int i = 0; i < TipText.length; i++)
+            TipTextArray.add(TipText[i]);
+
+        vp_tips = (ViewPager) findViewById(R.id.pager);
+
+
+        vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray,TipTextArray));
+
+        //  mPager.setPageTransformer(true, new DepthPageTransform());
+        CirclePageIndicator indicator = (CirclePageIndicator)
+                findViewById(R.id.indicator);
+
+        indicator.setViewPager(vp_tips);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+        indicator.setRadius(5 * density);
+
+        NUM_PAGES = TipText.length;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* private void setupUI() {
         vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
 
@@ -94,7 +201,7 @@ public class TipsActivity extends AppCompatActivity {
 
 
     // circlePageIndicator.OnScrollChangeListener(new ViewPager.OnPageChangeListener() {
-    ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
+   /* ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -113,7 +220,7 @@ public class TipsActivity extends AppCompatActivity {
 
 
         }
-    };
+    };*/
 
     public void onBackPressed() {
 
@@ -122,7 +229,59 @@ public class TipsActivity extends AppCompatActivity {
 
 
     }
-}
+
+    @Override
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+
+        switch (label) {
+            case AppConstants.REQEST_TIPS: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+//
+                        if(jsonResponse.tips.size()!=0)
+                        {
+                            String imagesurl = jsonResponse.tips.get(0).image;
+                            Picasso.with(this)
+                                    .load(imagesurl)
+                                    .resize(100, 100)
+                                    .into(img1);
+
+                            Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
+
+                        }
+                        if (jsonResponse.authorization != null) {
+                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+
+                    }
+                    break;
+                }
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onAsyncFail(String message, String label, NetworkResponse response) {
+
+        switch (label) {
+            case AppConstants.REQEST_TIPS: {
+//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+//                Log.i(label, "Faq:" + message);
+               Log.i(label, "tipppppppppp" + response);
+            }
+            break;
+        }
+
+    }
+
+    }
+
 
 
 

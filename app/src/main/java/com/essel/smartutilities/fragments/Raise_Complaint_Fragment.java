@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,22 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.GetComplaintIdActivity;
 import com.essel.smartutilities.activity.ServiceStatusActivity;
+import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.ServiceType;
+import com.essel.smartutilities.utility.App;
+import com.essel.smartutilities.utility.AppConstants;
+import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
+import com.essel.smartutilities.webservice.WebRequests;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +48,7 @@ import java.util.List;
  * Use the {@link Raise_Complaint_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Raise_Complaint_Fragment extends Fragment implements View.OnClickListener {
+public class Raise_Complaint_Fragment extends Fragment implements View.OnClickListener,ServiceCaller {
 
     private static final int CAPTURE_IMAGE=1;
     private int count = 0;
@@ -43,6 +56,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     Spinner complainttype;
     Button btn_submitcomplaint;
     EditText complaint_remark;
+    private ArrayList<String> complaints;
     @Override
     public void onClick(View v) {
 
@@ -204,9 +218,22 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
         complaint_remark=(EditText)rootView.findViewById(R.id.editremark);
 
+        complaints = new ArrayList<>(12);
+        complaints.add(0,"Select Complaint Type");
+
+        if (CommonUtils.isNetworkAvaliable(getActivity())) {
+            JsonObjectRequest request = WebRequests.getComplaintType(getActivity(), Request.Method.GET, AppConstants.URL_GET_COMPLAINT_TYPE, AppConstants.REQUEST_GET_COMPLAINT_TYPE,
+                    this, "Token 7233624f38f5ee057ee39595c01383b4037a3412");
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_COMPLAINT_TYPE);
+        } else
+            Toast.makeText(getActivity(), " Please Check  Internet Connection ", Toast.LENGTH_SHORT).show();
+
+
+
+
         complainttype = (Spinner)rootView.findViewById(R.id.sp_complainttype);
-        String[] type = mContext.getResources().getStringArray(R.array.complaints);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, Arrays.asList(type));
+       // String[] type = mContext.getResources().getStringArray(R.array.complaints);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, complaints);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         complainttype.setAdapter(dataAdapter);
 
@@ -236,16 +263,79 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+
+
+        switch (label) {
+            case AppConstants.REQUEST_GET_COMPLAINT_TYPE: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+//
+                        Log.i(label, "hygt " + jsonResponse);
+                       // Log.i(label, "hyif " + jsonResponse.complaint_type);
+                        if(jsonResponse.complaint_type.size()!=0)
+
+                        {
+                               /* for (int i = 1; i <= jsonResponse.complaint_type.size(); i++) {
+                                    complaints.add(i, jsonResponse.complaint_type.get(i - 1).type);
+                                }*/
+
+                            for(int i = 1 ; i <= jsonResponse.complaint_type.size(); i++) {
+
+                                //   services.add(i, jsonResponse.type.get(i-1).type);
+
+                                ServiceType complaint1=new ServiceType();
+
+                                // services.set(0,jsonResponse.type.get(0).type.toString().trim());
+                                Log.i(label, "complainttype" + jsonResponse.complaint_type);
+
+                                complaint1.setType(jsonResponse.complaint_type.get(i-1).type);
+                                complaint1.setId(jsonResponse.complaint_type.get(i-1).id.toString().trim());
+                                complaints.add(i,complaint1.getType());
+                                Log.i(label, "complainttype" + jsonResponse.complaint_type);
+
+
+
+                            }
+
+
+                        }
+                        if (jsonResponse.authorization != null) {
+                            CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
+//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(getContext(), jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+
+                    }
+                    break;
+                }
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onAsyncFail(String message, String label, NetworkResponse response) {
+        switch (label) {
+            case AppConstants.REQUEST_GET_COMPLAINT_TYPE: {
+//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+               Log.i(label, "Complainttype" + message);
+                Log.i(label, "Complainttype" + response);
+            }
+            break;
+        }
+    }
+
+
+
+
+
+
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
