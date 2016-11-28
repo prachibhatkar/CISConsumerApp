@@ -31,10 +31,14 @@ public class SharedPrefManager {
     public static String CONSUMER_NAME = "consumer_name";
     public static String CONSUMER_NO = "consumer_no";
     public static String CONSUMER_CITY = "consumer_city";
-
+    public static String ID = "id";
     public static  String AUTH_TOKEN = "auth_token";
+    public static  String ADDRESS = "address";
     public static String USER_NAME = "user_name";
-    public static String USER_ID = "user_id";
+    public static String USER_ID = "id";
+    public static  String CONNECTION_TYPE = "connection_type";
+    public static  String MOBILE = "mobile";
+
     public static String PASSWORD = "pasword";
     public static String USER_KEY = "user_key";
 

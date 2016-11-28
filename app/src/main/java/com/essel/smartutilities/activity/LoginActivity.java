@@ -54,9 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         initialize();
         return;
-
     }
-
 
     private void initialize() {
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
@@ -174,7 +172,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                             Intent i = new Intent(this, ActivityLoginLanding.class);
                             startActivity(i);
-                            DatabaseManager.saveLoginDetails(this,jsonResponse.user_info);
+                            DatabaseManager.saveLoginDetails(this, jsonResponse.user_info);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
