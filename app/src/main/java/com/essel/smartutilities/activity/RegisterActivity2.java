@@ -105,6 +105,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
             break;
             case R.id.action_resend:
                 msg.setText(R.string.title_verify_resend);
+                callResend();
 
                 break;
         }
@@ -139,6 +140,28 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
     }
 
+    void callResend() {
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage("Requesting, please wait..");
+                pDialog.show();
+            }
+            JSONObject obj = new JSONObject();
+            try {
+                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+                obj.put("id", SharedPrefManager.getStringValue(this, SharedPrefManager.ID));
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            JsonObjectRequest request = WebRequests.getRequestOtp(this, Request.Method.POST, AppConstants.URL_GET_RESEND_OTP, AppConstants.REQUEST_RESEND_OTP, this, obj);
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_RESEND_OTP);
+
+        } else
+            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
@@ -146,7 +169,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
-                        Log.i(label, "newconnectionrequestttttttttttttttttttttpass:" + jsonResponse.message);
+                        Log.i(label, "OPTsendrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
@@ -167,6 +190,25 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
                 dismissDialog();
             }
             break;
+            case AppConstants.REQUEST_RESEND_OTP: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
+                        Log.i(label, "OTPrequestttttttttttttttttttttpass:" + jsonResponse.message);
+                        if (jsonResponse.message != null)
+                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
+
+                        dismissDialog();
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
+                        DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
+                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
+                    }
+                } else
+                    Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
+                dismissDialog();
+            }
+            break;
         }
     }
 
@@ -176,7 +218,14 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
             case AppConstants.REQUEST_OTP: {
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
-                Log.i(label, "newconnectionrequestttttttttttttttttttttpass:" + message);
+                Log.i(label, "OTPsendquestttttttttttttttttttttfail:" + message);
+                dismissDialog();
+                break;
+            }
+            case AppConstants.REQUEST_RESEND_OTP: {
+
+                Log.i(label, "responseeeeeeeeeeee:" + response);
+                Log.i(label, "OTPrequestttttttttttttttttttttfail:" + message);
                 dismissDialog();
                 break;
             }

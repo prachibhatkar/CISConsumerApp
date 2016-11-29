@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 
 public class NewConnectionActivity extends BaseActivity implements View.OnClickListener, ServiceCaller {
     private Context mContext;
-    private EditText editTextFullName, editTextAddress1, editTextAddress2, editTextAddress3, editTextPhone, editTextConsumerId, editTextEmailId;
+    private EditText editTextFullName,editTextpoleno, editTextAddress1, editTextAddress2, editTextAddress3, editTextPhone, editTextConsumerId, editTextEmailId;
     private TextInputLayout inputLayoutFullName, inputLayoutAddress1, inputLayoutAddress2, inputLayoutAddress3, inputLayoutPhone, inputLayoutConsumerId, inputLayoutEmailId;
     private Button btnActionSubmit;
     private TextView actionLogin;
@@ -77,6 +77,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         editTextAddress3 = (EditText) findViewById(R.id.editAddressLine3);
         editTextPhone = (EditText) findViewById(R.id.editPhone);
         editTextConsumerId = (EditText) findViewById(R.id.editConsumerId);
+        editTextpoleno = (EditText) findViewById(R.id.editpoleno);
         editTextEmailId = (EditText) findViewById(R.id.editEmailId);
         inputLayoutFullName = (TextInputLayout) findViewById(R.id.inputLayoutFullName);
         inputLayoutAddress1 = (TextInputLayout) findViewById(R.id.inputLayoutAddressLine1);
@@ -178,7 +179,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             obj.put("address_line3", editTextAddress2.getText().toString());
             obj.put("mobile_no", editTextPhone.getText().toString());
             obj.put("nearest_consumer_no", editTextConsumerId.getText().toString());
-            obj.put("nearest_pole_no", editTextConsumerId.getText().toString());
+            obj.put("nearest_pole_no", editTextpoleno.getText().toString());
             obj.put("connection_type", connectiontype.getSelectedItemPosition() - 1);
         } catch (JSONException e) {
             // TODO Auto-generated catch block

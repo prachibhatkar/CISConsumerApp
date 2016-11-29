@@ -41,6 +41,12 @@ public class AppConstants {
     public static final String REQUEST_OTP = "otp-verification/";
     public static final String URL_GET_OTP = BASE_URL + REQUEST_OTP;
 
+    public static final String REQUEST_ADD_ACCOUNT = "add-account/";
+    public static final String URL_ADD_ACCOUNT= BASE_URL + REQUEST_ADD_ACCOUNT;
+
+    public static final String REQUEST_RESEND_OTP = "resend-otp/";
+    public static final String URL_GET_RESEND_OTP = BASE_URL + REQUEST_RESEND_OTP;
+
     public static final String REQUEST_NEW_CONNECTION = "new-consumer/";
     public static final String URL_NEW_CONNECTION = BASE_URL + REQUEST_NEW_CONNECTION;
 

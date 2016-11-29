@@ -104,8 +104,8 @@ public class AddAccountActivity3 extends AppCompatActivity implements View.OnCli
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            JsonObjectRequest request = WebRequests.getRequestOtp(this, Request.Method.POST, AppConstants.URL_GET_OTP, AppConstants.REQUEST_OTP, this, obj);
-            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_OTP);
+//            JsonObjectRequest request = WebRequests.getRequestAddAccount(this, Request.Method.POST, AppConstants.URL_ADD_ACCOUNT, AppConstants.REQUEST_ADD_ACCOUNT, this, obj);
+//            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_ADD_ACCOUNT);
 
         } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();

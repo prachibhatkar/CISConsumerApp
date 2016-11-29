@@ -193,6 +193,7 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
                         dismissDialog();
                         Intent i = new Intent(this, RegisterActivity4.class);
                         startActivity(i);
+                        CommonUtils.saveAuthToken(this, jsonResponse.authorization);
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
