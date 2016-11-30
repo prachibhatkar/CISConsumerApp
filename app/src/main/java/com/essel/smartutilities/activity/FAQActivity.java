@@ -1,6 +1,7 @@
 package com.essel.smartutilities.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -40,6 +41,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     TextView tv_1,tv_2;
     Context mContext;
     Dialog dialog_faq;
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,12 +115,34 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         expandableLayout_permanantdisconnect = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_permanantdisconnect);
         expandableLayout_changeofconnectiontype = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofconnection);
         if( CommonUtils.isNetworkAvaliable(this)) {
-            JsonObjectRequest request = WebRequests.getFaq(this, Request.Method.GET, AppConstants.URL_GET_FAQ, AppConstants.REQUEST_FAQ,
-                    this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
+            JsonObjectRequest request = WebRequests.getFaq(this, Request.Method.GET, AppConstants.URL_GET_FAQ, AppConstants.REQUEST_FAQ, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FAQ);
         }else
             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
     }
+
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
 
 
     @Override
@@ -154,8 +178,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
     public void onBackPressed() {
 
-        Intent in = new Intent(this, ActivityLoginLanding.class);
-        startActivity(in);
+       super.onBackPressed();
 
 
     }
@@ -166,18 +189,21 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             case AppConstants.REQUEST_FAQ: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+
+
 //                            DatabaseManager.saveJobCards(mContext, jsonResponse.responsedata.jobcards);
 //                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 //                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
 //                        Log.i(label, "Faqqqqqqqqqqqqqqqqq:" + jsonResponse.faqs);
                         if(jsonResponse.faqs.size()!=0)
-                        {
+                        {    dismissDialog();
                             tv_1.setText(jsonResponse.faqs.get(0).answer.toString().trim());
                             expandablebutton_newserviceconnection .setText(jsonResponse.faqs.get(0).question);
                             tv_2.setText(jsonResponse.faqs.get(0).answer.toString().trim());
                             expandablebutton_changeofownership  .setText(jsonResponse.faqs.get(1).question);
                         }
                         if (jsonResponse.authorization != null) {
+                            dismissDialog();
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
@@ -187,6 +213,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                     }
                     break;
                 }
+
+                dismissDialog();
             }
 
         }

@@ -80,23 +80,16 @@ public class CommonUtils {
         SharedPrefManager.saveValue(context, SharedPrefManager.CONSUMER_NO, consumer_no);
     }
 
-    public static String getBitmapEncodedString(ImageView iv_dialog_image) {
-        Bitmap bitmap = ((BitmapDrawable) iv_dialog_image.getDrawable()).getBitmap();
-        if (bitmap != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream);
-            byte[] byteArray = stream.toByteArray();
-            return Base64.encodeToString(byteArray, Base64.DEFAULT);
-        }
-        return "";
-    }
+
 
     public static String getBitmapEncodedString(Bitmap pBitmap) {
         if (pBitmap != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            pBitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+            pBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            return Base64.encodeToString(byteArray, Base64.DEFAULT);
+            String image=Base64.encodeToString(byteArray, Base64.DEFAULT);
+           // return Base64.encodeToString(byteArray, Base64.DEFAULT);
+            return image;
         }
         return "";
     }

@@ -21,6 +21,7 @@ public class JsonResponse {
     public  String aboutus;
     public  String feedbackmessage;
     public  String servicerequestmessage;
+    public  String addcomplaintmessage;
     public Consumer user_info;
     public String consumer_no;
     public String id;

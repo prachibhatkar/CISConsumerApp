@@ -19,6 +19,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.SlidingImageAdapter;
 import com.essel.smartutilities.adapter.SlidingTipsAdapter;
@@ -45,7 +46,9 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
     private ViewPager vp_tips;
     private TabLayout tabLayout;
     CirclePageIndicator circlePageIndicator;
-    ImageView img1;
+    NetworkImageView nv;
+    String imagesurl;
+   // ImageView img1;
 
     private static final String[] IMAGES = {};
     private static final String[] TipText = {"tujhjhhioi","fghhhjgjjk","fghjjhjkjkjh"};
@@ -61,7 +64,8 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tips);
-        img1=(ImageView)findViewById(R.id.img1);
+        nv = (NetworkImageView) findViewById(R.id.img1);
+        //img1=(ImageView)findViewById(R.id.img1);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,8 +82,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
         intext();
 
         if( CommonUtils.isNetworkAvaliable(this)) {
-            JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS,
-                    this, "Token 7233624f38f5ee057ee39595c01383b4037a3412");
+            JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
         }else
             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
@@ -117,9 +120,6 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
         indicator.setRadius(5 * density);
 
         NUM_PAGES = IMAGES.length;
-
-
-
 
     }
 
@@ -224,9 +224,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
 
     public void onBackPressed() {
 
-        Intent in = new Intent(this, ActivityLoginLanding.class);
-        startActivity(in);
-
+       super.onBackPressed();
 
     }
 
@@ -237,21 +235,23 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
             case AppConstants.REQEST_TIPS: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
-//
+
                         if(jsonResponse.tips.size()!=0)
                         {
-                            String imagesurl = jsonResponse.tips.get(0).image;
-                            Picasso.with(this)
+                            imagesurl = jsonResponse.tips.get(0).image;
+
+                        //   nv.setImageUrl(imagesurl,this.getLoaderManager() );
+                           /* Picasso.with(this)
                                     .load(imagesurl)
                                     .resize(100, 100)
-                                    .into(img1);
+                                    .into(img1);*/
 
                             Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
 
                         }
                         if (jsonResponse.authorization != null) {
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
-//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();

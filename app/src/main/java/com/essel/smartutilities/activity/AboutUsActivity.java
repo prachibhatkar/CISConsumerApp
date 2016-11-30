@@ -66,8 +66,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
                 pDialog.show();
             }
 
-            JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US,
-                    this, "Token c686681877b60f7189965137e2d57857c0a07099");
+            JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US, this);
              App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
 
         }

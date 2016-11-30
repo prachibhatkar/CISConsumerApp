@@ -84,7 +84,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         // expListView = (ExpandableListView)findViewById(R.id.expListView);
         if( CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getServiceType(this, Request.Method.GET, AppConstants.URL_GET_SERVICE_TYPE, AppConstants.REQUEST_SERVICE_TYPE,
-                    this, "Token 7ca827ebd83cfe97d63deb67d99d6aa7d439dba2");
+                    this,"Token 671479b1d46494660d509886ac10a482b54782e6");
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_SERVICE_TYPE);
         }else
             Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
@@ -111,13 +111,14 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
               JSONObject obj = new JSONObject();
               try {
                   obj.put("service_type", servicetype.getSelectedItemPosition());
+                  obj.put("consumer_remark", editremark);
               } catch (JSONException e) {
                   e.printStackTrace();
               }
 
               if( CommonUtils.isNetworkAvaliable(this)) {
                    JsonObjectRequest request = WebRequests.serviceRequest(this, Request.Method.POST, AppConstants.URL_POST_SERVICE_REQUEST, AppConstants.REQUEST_POST_SERVICE_REQUEST,
-                           this,obj,editremark, "Token 7ca827ebd83cfe97d63deb67d99d6aa7d439dba2");
+                           this,obj,"Token 671479b1d46494660d509886ac10a482b54782e6");
                    App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_SERVICE_REQUEST);
                }else
                    Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();

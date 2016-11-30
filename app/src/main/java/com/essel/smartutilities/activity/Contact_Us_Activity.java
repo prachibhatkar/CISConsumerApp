@@ -102,13 +102,10 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
     public void onBackPressed() {
 
-        Intent in =new Intent(this,ActivityLoginLanding.class);
-        startActivity(in);
+        super.onBackPressed();
 
 
     }
-
-
 
 
 }

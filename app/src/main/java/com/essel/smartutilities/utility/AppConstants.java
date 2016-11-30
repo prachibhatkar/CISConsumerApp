@@ -6,7 +6,7 @@ package com.essel.smartutilities.utility;
 public class AppConstants {
 
 
-    public static final String BASE_URL=  "http://192.168.10.111:9999/mobileapi/";
+    public static final String BASE_URL=  "http://192.168.0.5:8080/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
 
     public static final String REQUEST_LOGIN = "login/";
@@ -62,9 +62,11 @@ public class AppConstants {
     public static final String REQUEST_FEEDBACK = "add-feedback/";
     public static final String URL_POST_FEEDBACK = BASE_URL + REQUEST_FEEDBACK;
 
+    public static final String REQUEST_POST_ADD_COMPLAINT = "add-complaint/";
+    public static final String URL_POST_ADD_COMPLAINT = BASE_URL + REQUEST_POST_ADD_COMPLAINT;
+
     public static final String REQUEST_POST_SERVICE_REQUEST = "service-request/";
     public static final String URL_POST_SERVICE_REQUEST = BASE_URL + REQUEST_POST_SERVICE_REQUEST;
-
 
     public static final String SHARED_PREF = "SmartUtilities";
     public static final String SCREEN_ID = "screen_id";

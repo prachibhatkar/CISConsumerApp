@@ -1,5 +1,6 @@
 package com.essel.smartutilities.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    ProgressDialog pDialog;
 
 
     TextView tv_portalsite, tv_antiberibery, tv_onlinecomplaint, tv_igrcemail, tv_consumerportal, tv_helplineno, tv_antiberiberyno, tv_onlinecomplaintno, tv_electricitytheftno, tv_igrc, tv_igrcno;
@@ -98,14 +101,34 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
         tv_antiberiberyno = (TextView) rootView.findViewById(R.id.tv_antiberiberyno);
         tv_onlinecomplaintno = (TextView) rootView.findViewById(R.id.tv_onlineemail);
         if (CommonUtils.isNetworkAvaliable(getActivity())) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
             JsonObjectRequest request = WebRequests.getContactDetails(getActivity(), Request.Method.GET, AppConstants.URL_GET_CONTACT_DETAILS, AppConstants.REQUEST_GET_CONTACT_DETAILS,
-                    this, SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
+                    this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_CONTACT_DETAILS);
         } else
             Toast.makeText(getActivity(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
 
     }
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
 
 
     @Override
@@ -132,6 +155,7 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
 //                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
 //                        Log.i(label, "Contactus:" + jsonResponse.contactus);
                         if (jsonResponse.contactus != null) {
+                            dismissDialog();
                             tv_helplineno.setText(jsonResponse.contactus.helpline_number);
                             tv_antiberiberyno.setText(jsonResponse.contactus.anti_bribery_help);
                             tv_portalsite.setText(jsonResponse.contactus.customer_portal);
@@ -141,6 +165,7 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
                             tv_onlinecomplaintno.setText(jsonResponse.contactus.online_complaint);
                         }
                         if (jsonResponse.authorization != null) {
+                            dismissDialog();
                             CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
@@ -149,6 +174,7 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
                     }
                     break;
                 }
+                dismissDialog();
             }
 
         }
@@ -166,4 +192,6 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
             break;
         }
     }
+
+
 }

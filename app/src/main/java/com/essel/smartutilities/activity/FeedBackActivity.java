@@ -1,5 +1,6 @@
 package com.essel.smartutilities.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
      TextView tv_rate;
      String count;
      ImageView image1,image2,image3,image4,image5;
+    ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,20 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         image5.setOnClickListener(this);
     }
 
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
     @Override
     public void onClick(View v) {
         if(v==btn_submit_feedback){
@@ -83,7 +99,12 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
            // ActivityLoginLanding.snackBarMethod();
            // flag=true;
         else {
-                JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark, "Token c686681877b60f7189965137e2d57857c0a07099");
+                initProgressDialog();
+                if (pDialog != null && !pDialog.isShowing()) {
+                    pDialog.setMessage(" please wait..");
+                    pDialog.show();
+                }
+                JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FEEDBACK);
                // flag=true;
 
@@ -145,6 +166,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 if (jsonResponse != null) {
                     Log.i("Tag","valueresponse"+flag);
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        dismissDialog();
                         flag=true;
                         Intent in = new Intent(this, ActivityLoginLanding.class);
                         startActivity(in);
@@ -156,6 +178,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
                         if (jsonResponse.authorization != null) {
+                            dismissDialog();
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
@@ -165,6 +188,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
                     break;
                 }
+                dismissDialog();
             }
 
         }

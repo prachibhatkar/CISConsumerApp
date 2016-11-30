@@ -1,5 +1,6 @@
 package com.essel.smartutilities.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import com.essel.smartutilities.models.Tariff;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
     public ArrayList<String>tariffEnergyCharge;
     TextView tv_bplcatagory1,tv_bplcatagory2,tv_fixedcharge,tv_energycharge;
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,13 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
 
         if( CommonUtils.isNetworkAvaliable(this)) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
             JsonObjectRequest request = WebRequests.getTariff(this, Request.Method.GET, AppConstants.URL_GET_TARIFF, AppConstants.REQUEST_TARIFF,
-                    this, "Token 7ca827ebd83cfe97d63deb67d99d6aa7d439dba2");
+                    this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_TARIFF);
         }else
             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
@@ -66,12 +74,24 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
     }
 
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
 
     public void onBackPressed() {
 
-        Intent in =new Intent(this,ActivityLoginLanding.class);
-        startActivity(in);
-
+       super.onBackPressed();
 
     }
 
@@ -81,20 +101,25 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
             case AppConstants.REQUEST_TARIFF: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        dismissDialog();
 //
-                        if(jsonResponse.tariff!=null)
-                        {    Log.i(label, "Tariffsucccccc:" + jsonResponse.tariff);
-                             Tariff gettariff=new Tariff();
+                        if(jsonResponse.tariff!=null) {
+                            Log.i(label, "Tariffsucccccc:" + jsonResponse.tariff);
+                            Tariff gettariff = new Tariff();
 
-                          /*  tv_bplcatagory1.setText(jsonResponse.tariffCategory.get(0).charge.toString().trim());
-                            tv_fixedcharge.setText(jsonResponse.tariffCategory.get(0).slab.toString().trim());
+                            for (int i = 1; i <=jsonResponse.tariff.tariffCategory.size(); i++) {
 
-                            tv_bplcatagory2.setText(jsonResponse.tariffCategory.get(1).charge.toString().trim());
-                            tv_energycharge.setText(jsonResponse.tariffCategory.get(1).slab.toString().trim());
-                            Log.i(label, "Tariffsucccccc:" + jsonResponse.tariffCategory);*/
+                                tv_bplcatagory1.setText(jsonResponse.tariff.tariffCategory.get(i).charge.toString().trim());
+                                tv_fixedcharge.setText(jsonResponse.tariff.tariffCategory.get(i).slab.toString().trim());
 
+                                tv_bplcatagory2.setText(jsonResponse.tariff.tariffCategory.get(i).charge.toString().trim());
+                                tv_energycharge.setText(jsonResponse.tariff.tariffCategory.get(i).slab.toString().trim());
+                                Log.i(label, "Tariffsucccccc:" + jsonResponse.tariffCategory);
+
+                            }
                         }
                         if (jsonResponse.authorization != null) {
+                            dismissDialog();
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
@@ -105,6 +130,7 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                     }
                     break;
                 }
+                dismissDialog();
             }
 
         }

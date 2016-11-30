@@ -68,7 +68,7 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
 
     public void onBackPressed() {
 
-        Intent in =new Intent(this,ServiceActivity.class);
+        Intent in =new Intent(this,ActivityLoginLanding.class);
         startActivity(in);
 
 
