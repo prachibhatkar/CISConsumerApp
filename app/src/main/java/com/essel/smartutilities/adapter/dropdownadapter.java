@@ -65,7 +65,7 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
             public void onClick(final View v) {
                 if (v.getId() == R.id.cv) {
                     String temp="Account of  " + mConsumers.get(position).consumer_name+"\n"+
-                            "Consumer No. "+mConsumers.get(position).consumer_no +"  is  Selected ";
+                            "Consumer No. "+mConsumers.get(position).consumer_no + "  is  Selected ";
                     Toast.makeText(mContext,temp , Toast.LENGTH_LONG).show();
                     App.dropdown=true;
                     CommonUtils.saveDetails(mContext,mConsumers.get(position).consumer_no,mConsumers.get(position).consumer_name,
@@ -106,10 +106,10 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
             id.setText(consumer.consumer_no);
             address.setText(consumer.address);
 
-//            if (consumer.acctype.equals("primary"))
-//                ic_dete.setVisibility(View.VISIBLE);
-//            else
-//                ic_dete.setVisibility(View.INVISIBLE);
+            if (consumer.is_primary.equals("true"))
+                ic_dete.setVisibility(View.VISIBLE);
+            else
+                ic_dete.setVisibility(View.INVISIBLE);
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override

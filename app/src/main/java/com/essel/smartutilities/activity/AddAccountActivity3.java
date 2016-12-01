@@ -39,7 +39,7 @@ import java.util.Arrays;
  * Created by hp on 11/4/2016.
  */
 
-public class AddAccountActivity3 extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
+public class AddAccountActivity3 extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
 
     Button btnNo, btnyes;
     ProgressDialog pDialog;
@@ -61,6 +61,7 @@ public class AddAccountActivity3 extends AppCompatActivity implements View.OnCli
         });
 
     }
+
     private void initProgressDialog() {
 
         if (pDialog == null) {
@@ -74,15 +75,15 @@ public class AddAccountActivity3 extends AppCompatActivity implements View.OnCli
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_no:
-              callYes();
+                callYes();
                 break;
             case R.id.btn_yes:
-                Intent in = new Intent(this, AddAccountActivity4.class);
-                startActivity(in);
+                callYes();
                 break;
         }
 
@@ -104,8 +105,8 @@ public class AddAccountActivity3 extends AppCompatActivity implements View.OnCli
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-//            JsonObjectRequest request = WebRequests.getRequestAddAccount(this, Request.Method.POST, AppConstants.URL_ADD_ACCOUNT, AppConstants.REQUEST_ADD_ACCOUNT, this, obj);
-//            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_ADD_ACCOUNT);
+            JsonObjectRequest request = WebRequests.getRequestADD(this, Request.Method.POST, AppConstants.URL_ADD_ACCOUNT, AppConstants.REQUEST_ADD_ACCOUNT, this, obj,SharedPrefManager.getStringValue(this,SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_ADD_ACCOUNT);
 
         } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
@@ -113,19 +114,14 @@ public class AddAccountActivity3 extends AppCompatActivity implements View.OnCli
 
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
-            case AppConstants.REQUEST_OTP: {
+            case AppConstants.REQUEST_ADD_ACCOUNT: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "addaccountrequesttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME, jsonResponse.name);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS, jsonResponse.address);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, jsonResponse.connection_type);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.mobile_no);
-                        Intent i = new Intent(this, RegisterActivity3.class);
+                        Intent i = new Intent(this, AddAccountActivity4.class);
                         startActivity(i);
                         dismissDialog();
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
@@ -144,7 +140,7 @@ public class AddAccountActivity3 extends AppCompatActivity implements View.OnCli
     @Override
     public void onAsyncFail(String message, String label, NetworkResponse response) {
         switch (label) {
-            case AppConstants.REQUEST_OTP: {
+            case AppConstants.REQUEST_ADD_ACCOUNT: {
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "addaccountrequestttttttttttttttttttttfail:" + message);

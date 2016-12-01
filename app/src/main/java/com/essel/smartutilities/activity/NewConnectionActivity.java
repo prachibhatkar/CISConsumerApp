@@ -45,12 +45,12 @@ import java.util.regex.Pattern;
 
 public class NewConnectionActivity extends BaseActivity implements View.OnClickListener, ServiceCaller {
     private Context mContext;
-    private EditText editTextFullName,editTextpoleno, editTextAddress1, editTextAddress2, editTextAddress3, editTextPhone, editTextConsumerId, editTextEmailId;
+    private EditText editTextFullName, editTextpoleno, editTextAddress1, editTextAddress2, editTextAddress3, editTextPhone, editTextConsumerId, editTextEmailId;
     private TextInputLayout inputLayoutFullName, inputLayoutAddress1, inputLayoutAddress2, inputLayoutAddress3, inputLayoutPhone, inputLayoutConsumerId, inputLayoutEmailId;
     private Button btnActionSubmit;
     private TextView actionLogin;
     Spinner connectiontype;
-    private ArrayList<String> mytype;
+    private ArrayList<String> mytype,myid;
     private ProgressDialog pDialog;
     Intent i;
 
@@ -64,6 +64,8 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
     private void initialize() {
         mytype = new ArrayList<>(12);
+        myid = new ArrayList<>(12);
+        myid.add(0, "0");
         mytype.add(0, "Select Connection Type");
         if (CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getConnectionType(this, Request.Method.GET, AppConstants.URL_GET_CONNECTION_TYPE, AppConstants.REQUEST_GET_CONNECTION_TYPE, this);
@@ -156,8 +158,6 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             case R.id.action_submit:
                 if (validate()) {
                     submitData();
-//                    i = new Intent(this, NewConnectionActivity2.class);
-//                    startActivity(i);
                 }
                 break;
 
@@ -165,6 +165,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     }
 
     private void submitData() {
+        String m=myid.get(connectiontype.getSelectedItemPosition());
         initProgressDialog();
         if (pDialog != null && !pDialog.isShowing()) {
             pDialog.setMessage("Requesting, please wait..");
@@ -180,7 +181,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             obj.put("mobile_no", editTextPhone.getText().toString());
             obj.put("nearest_consumer_no", editTextConsumerId.getText().toString());
             obj.put("nearest_pole_no", editTextpoleno.getText().toString());
-            obj.put("connection_type", connectiontype.getSelectedItemPosition() - 1);
+            obj.put("connection_type", m);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -231,8 +232,10 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         if (jsonResponse.connectiontype.size() != 0) {
+
                             for (int i = 1; i <= jsonResponse.connectiontype.size(); i++) {
                                 mytype.add(i, jsonResponse.connectiontype.get(i - 1).type);
+                                myid.add(i,jsonResponse.connectiontype.get(i-1).id);
                             }
                             dismissDialog();
 

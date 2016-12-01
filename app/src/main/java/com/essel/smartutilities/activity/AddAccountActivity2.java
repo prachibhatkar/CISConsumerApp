@@ -29,12 +29,12 @@ import com.essel.smartutilities.webservice.WebRequests;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AddAccountActivity2 extends BaseActivity implements View.OnClickListener,ServiceCaller {
+public class AddAccountActivity2 extends BaseActivity implements View.OnClickListener, ServiceCaller {
 
     Toolbar toolbar;
     AppCompatButton buttonRegister, buttonVerify;
     EditText otp;
-    TextView maintitle,action_resend;
+    TextView maintitle, action_resend, msg;
     ProgressDialog pDialog;
 
     @Override
@@ -47,6 +47,7 @@ public class AddAccountActivity2 extends BaseActivity implements View.OnClickLis
         maintitle.setText("Add Account");
         initialize();
     }
+
     private void initProgressDialog() {
 
         if (pDialog == null) {
@@ -60,11 +61,15 @@ public class AddAccountActivity2 extends BaseActivity implements View.OnClickLis
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
+
     private void initialize() {
         buttonVerify = (AppCompatButton) findViewById(R.id.btn_verify);
         buttonVerify.setOnClickListener(this);
         otp = (EditText) findViewById(R.id.edit_otp);
+        msg = (TextView) findViewById(R.id.msg);
+
         action_resend = (TextView) findViewById(R.id.action_resend);
+        action_resend.setOnClickListener(this);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,19 +80,20 @@ public class AddAccountActivity2 extends BaseActivity implements View.OnClickLis
     }
 
 
-
     @Override
     public void onClick(View v) {
         if (v == buttonVerify) {
             if (otp.getText().toString().trim().length() == 4) {
-               callAdd();
+                callAdd();
             } else
                 Toast.makeText(this, "Enter valid OTP", Toast.LENGTH_SHORT).show();
 
         }
-        if (v == action_resend)
-            callResend();
+        if (v.getId() == R.id.action_resend)
+            msg.setText(R.string.title_verify_resend);
+        callResend();
     }
+
     void callAdd() {
         if (CommonUtils.isNetworkAvaliable(this)) {
             initProgressDialog();
@@ -110,6 +116,7 @@ public class AddAccountActivity2 extends BaseActivity implements View.OnClickLis
         } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
     }
+
     void callResend() {
         if (CommonUtils.isNetworkAvaliable(this)) {
             initProgressDialog();
@@ -131,10 +138,12 @@ public class AddAccountActivity2 extends BaseActivity implements View.OnClickLis
         } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
+
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
@@ -144,13 +153,13 @@ public class AddAccountActivity2 extends BaseActivity implements View.OnClickLis
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "addaccountrequesttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
-                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME, jsonResponse.name);
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS, jsonResponse.address);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, jsonResponse.connection_type);
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.mobile_no);
-                        Intent i = new Intent(this, RegisterActivity3.class);
+                        Intent i = new Intent(this, AddAccountActivity3.class);
                         startActivity(i);
                         dismissDialog();
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {

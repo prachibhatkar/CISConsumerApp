@@ -1,17 +1,15 @@
 package com.essel.smartutilities.utility;
 
-/**
- * Created by Sandeep on 11/22/15.
- */
+
 public class AppConstants {
 
+    public static final String BASE_URL = "http://192.168.0.5:8080/mobileapi/";
 
-    public static final String BASE_URL=  "http://192.168.0.5:8080/mobileapi/";
+    //  public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
 
     public static final String REQUEST_LOGIN = "login/";
     public static final String URL_LOGIN = BASE_URL + REQUEST_LOGIN;
-
 
     public static final String REQUEST_LOGOUT = "log-out/";
     public static final String URL_LOGOUT = BASE_URL + REQUEST_LOGOUT;
@@ -46,7 +44,7 @@ public class AppConstants {
     public static final String URL_GET_OTP = BASE_URL + REQUEST_OTP;
 
     public static final String REQUEST_ADD_ACCOUNT = "add-account/";
-    public static final String URL_ADD_ACCOUNT= BASE_URL + REQUEST_ADD_ACCOUNT;
+    public static final String URL_ADD_ACCOUNT = BASE_URL + REQUEST_ADD_ACCOUNT;
 
     public static final String REQUEST_RESEND_OTP = "resend-otp/";
     public static final String URL_GET_RESEND_OTP = BASE_URL + REQUEST_RESEND_OTP;

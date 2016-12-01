@@ -103,6 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String ManageAccountsTableFields = ManageAccountsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ManageAccountsTable.Cols.CONSUMER_ID + " VARCHAR, " +
                 ManageAccountsTable.Cols.CONSUMER_NAME + " VARCHAR, " +
+                ManageAccountsTable.Cols.IS_PRIMARY + " VARCHAR, " +
                 ManageAccountsTable.Cols.ADDRESS + " VARCHAR";
         createTable(db, ManageAccountsTable.TABLE_NAME, ManageAccountsTableFields);
     }
