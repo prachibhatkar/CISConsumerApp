@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
     public ArrayList<String>tariffEnergyCharge;
-    TextView tv_bplcatagory1,tv_bplcatagory2,tv_fixedcharge,tv_energycharge;
+    TextView tv_bplcatagory1,tv_bplcatagory2,tv_fixedcharge,tv_energycharge,tv_100units,tv_300unoits,tv_500units,tv_1000units,tv_singlephase,tv_threephase,tv_energycharge1,tv_energycharge2,tv_energycharge3,tv_energycharge4;
     ProgressDialog pDialog;
 
     @Override
@@ -53,6 +53,17 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
         tv_bplcatagory2=(TextView)findViewById(R.id.tv_bplcatagory2);
         tv_fixedcharge=(TextView)findViewById(R.id.tv_fixeddemandcharge);
         tv_energycharge=(TextView)findViewById(R.id.tv_energycharge);
+        tv_100units=(TextView)findViewById(R.id.tv_100units);
+        tv_300unoits=(TextView)findViewById(R.id.tv_300units);
+        tv_500units=(TextView)findViewById(R.id.tv_500units);
+        tv_1000units=(TextView)findViewById(R.id.tv_1000units);
+        tv_singlephase=(TextView)findViewById(R.id.single_phase);
+        tv_threephase=(TextView)findViewById(R.id.three_phase);
+        tv_energycharge1=(TextView)findViewById(R.id.tv_energycharge1);
+        tv_energycharge2=(TextView)findViewById(R.id.tv_energycharge2);
+        tv_energycharge3=(TextView)findViewById(R.id.tv_energycharge3);
+        tv_energycharge4=(TextView)findViewById(R.id.tv_energycharge4);
+
 
 
 
@@ -109,12 +120,42 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
                             for (int i = 1; i <=jsonResponse.tariff.tariffCategory.size(); i++) {
 
-                                tv_bplcatagory1.setText(jsonResponse.tariff.tariffCategory.get(i).charge.toString().trim());
-                                tv_fixedcharge.setText(jsonResponse.tariff.tariffCategory.get(i).slab.toString().trim());
+                                tv_bplcatagory1.setText(jsonResponse.tariff.tariffCategory.get(0).charge.toString().trim());
+                                tv_fixedcharge.setText(jsonResponse.tariff.tariffCategory.get(0).slab.toString().trim());
 
-                                tv_bplcatagory2.setText(jsonResponse.tariff.tariffCategory.get(i).charge.toString().trim());
-                                tv_energycharge.setText(jsonResponse.tariff.tariffCategory.get(i).slab.toString().trim());
+                                tv_bplcatagory2.setText(jsonResponse.tariff.tariffCategory.get(1).charge.toString().trim());
+                                tv_energycharge.setText(jsonResponse.tariff.tariffCategory.get(1).slab.toString().trim());
                                 Log.i(label, "Tariffsucccccc:" + jsonResponse.tariffCategory);
+
+                            }
+                           for (int i = 1; i <=jsonResponse.tariff.tariffEnergyCharge.size(); i++) {
+
+                                tv_energycharge1.setText(jsonResponse.tariff.tariffEnergyCharge.get(0).charge.toString().trim());
+                                tv_100units.setText(jsonResponse.tariff.tariffEnergyCharge.get(0).slab.toString().trim());
+
+                                tv_energycharge2.setText(jsonResponse.tariff.tariffEnergyCharge.get(1).charge.toString().trim());
+                                tv_300unoits.setText(jsonResponse.tariff.tariffEnergyCharge.get(1).slab.toString().trim());
+
+
+                                tv_energycharge3.setText(jsonResponse.tariff.tariffEnergyCharge.get(2).charge.toString().trim());
+                                tv_500units.setText(jsonResponse.tariff.tariffEnergyCharge.get(2).slab.toString().trim());
+
+
+                                tv_energycharge4.setText(jsonResponse.tariff.tariffEnergyCharge.get(3).charge.toString().trim());
+                                tv_1000units.setText(jsonResponse.tariff.tariffEnergyCharge.get(3).slab.toString().trim());
+                                Log.i(label, "Tariffsucccccc:" + jsonResponse.tariffEnergyCharge);
+
+                            }
+
+                            for (int i = 1; i <=jsonResponse.tariff.fixedEnergyCharge.size(); i++) {
+
+                                tv_singlephase.setText(jsonResponse.tariff.tariffEnergyCharge.get(0).slab.toString().trim());
+                               // tv_100units.setText(jsonResponse.tariff.tariffEnergyCharge.get(i).slab.toString().trim());
+
+                                tv_threephase.setText(jsonResponse.tariff.tariffEnergyCharge.get(1).slab.toString().trim());
+                              //  tv_300unoits.setText(jsonResponse.tariff.tariffEnergyCharge.get(i).slab.toString().trim());
+
+                                Log.i(label, "Tariffsucccccc:" + jsonResponse.fixedEnergyCharge);
 
                             }
                         }
@@ -124,6 +165,7 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
 
                         Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 
@@ -149,6 +191,7 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
 //                Log.i(label, "Faq:" + message);
                 Log.i(label, "tarifffffffff" + response);
+                dismissDialog();
             }
             break;
         }

@@ -55,7 +55,6 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
         AboutUs aboutUs=new AboutUs();
        // String aboutus="ghjjkhkjhkl";
 
-      // DatabaseManager.saveAboutUs(this,aboutus);
 
 
 
@@ -77,7 +76,8 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
               AboutUs aboutUs2 =new AboutUs();
               DatabaseManager.getAboutUs(this);
              tv_aboutus_message.setText(aboutUs2.about_us_msg);
-             Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
+
+            Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
         }
 
 

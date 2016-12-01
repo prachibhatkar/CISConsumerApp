@@ -76,7 +76,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     }
 
         if(v==btn_submitcomplaint) {
-           // if (isBlankInput()) {
+           if (isBlankInput()) {
 
                 JSONObject obj = new JSONObject();
                 try {
@@ -86,11 +86,12 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-              //  }
+               }
 
                 if( CommonUtils.isNetworkAvaliable(getActivity())) {
                     JsonObjectRequest request = WebRequests.addComplaint(getActivity(), Request.Method.POST, AppConstants.URL_POST_ADD_COMPLAINT, AppConstants.REQUEST_POST_ADD_COMPLAINT,
-                            this,obj,"Token 671479b1d46494660d509886ac10a482b54782e6");
+                            this,obj,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
+
                     App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_ADD_COMPLAINT);
                 }else
                     Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
@@ -324,7 +325,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                         startActivity(i);
 
                     }
-                    if(jsonResponse.addcomplaintmessage!= null) {
+                    if(jsonResponse.message!= null) {
 
 
                     }

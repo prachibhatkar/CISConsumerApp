@@ -12,6 +12,10 @@ public class AppConstants {
     public static final String REQUEST_LOGIN = "login/";
     public static final String URL_LOGIN = BASE_URL + REQUEST_LOGIN;
 
+
+    public static final String REQUEST_LOGOUT = "log-out/";
+    public static final String URL_LOGOUT = BASE_URL + REQUEST_LOGOUT;
+
     public static final String REQUEST_FAQ = "get-faq/";
     public static final String URL_GET_FAQ = BASE_URL + REQUEST_FAQ;
 

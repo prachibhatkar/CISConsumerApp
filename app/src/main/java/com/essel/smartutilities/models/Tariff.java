@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 
 public class Tariff {
-    public ArrayList<String>tariffEnergyCharge;
+    public ArrayList<TariffEnergyCharge>tariffEnergyCharge;
     public ArrayList<TarifCatagory>tariffCategory;
-    public ArrayList<String>fixedEnergyCharge;
+    public ArrayList<FixedEnergyCharge>fixedEnergyCharge;
 
 }

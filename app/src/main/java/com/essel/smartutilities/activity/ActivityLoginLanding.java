@@ -1,5 +1,7 @@
 package com.essel.smartutilities.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,8 +22,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
 import com.eftimoff.viewpagertransformers.CubeInTransformer;
 import com.eftimoff.viewpagertransformers.CubeOutTransformer;
@@ -34,8 +39,11 @@ import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
+import com.essel.smartutilities.utility.AppConstants;
+import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
+import com.essel.smartutilities.webservice.WebRequests;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -46,6 +54,7 @@ import java.util.logging.LogRecord;
 
 public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
     TextView maintitle;
+    ProgressDialog pDialog;
     LinearLayout img, button, table;
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -53,6 +62,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     private static final Integer[] IMAGES = {R.drawable.esselgroup, R.drawable.logo,
             R.drawable.infrastruc};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +129,25 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
-            return true;
+
+            if (CommonUtils.isNetworkAvaliable(this)) {
+
+                /*initProgressDialog();
+                if (pDialog != null && !pDialog.isShowing()) {
+                    pDialog.setMessage(" please wait..");
+                    pDialog.show();
+                }*/
+                JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+                App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
+            }
+            else {
+                Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+                return true;
+            }
         }
+
+        //  DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
+           // return true;
 
         if (id == R.id.action_notifications) {
             Intent i = new Intent(this, NotificationActivity.class);
@@ -130,6 +156,20 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
     }
 
     @Override
@@ -302,11 +342,54 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+        switch (label) {
+            case AppConstants.REQUEST_LOGOUT: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        if(jsonResponse.message!=null)
+                        {
+                             Intent in =new Intent(this, LoginActivity.class);
+                             startActivity(in);
+                             Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
+                             dismissDialog();
+
+                        }
+                        if (jsonResponse.authorization != null) {
+                            dismissDialog();
+                          //  CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+                        dismissDialog();
+                    }
+                    break;
+                }
+
+                 dismissDialog();
+            }
+
+        }
+
+
+
 
     }
 
     @Override
     public void onAsyncFail(String message, String label, NetworkResponse response) {
+
+        switch (label) {
+            case AppConstants.REQUEST_LOGOUT: {
+//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+//                Log.i(label, "Faq:" + message);
+//                Log.i(label, "Faq:" + response);
+            }
+            break;
+        }
+
+
 
     }
 }

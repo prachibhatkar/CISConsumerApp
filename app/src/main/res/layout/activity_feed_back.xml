@@ -74,14 +74,14 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/image1"
-                android:src="@drawable/happyimage"
+                android:src="@drawable/sadimage"
                 android:layout_marginLeft="10dp"/>
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/image2"
-                android:src="@drawable/happyimage"
+                android:src="@drawable/sadimage"
                 android:layout_marginLeft="10dp"/>
             <ImageView
                 android:layout_width="40dp"
@@ -93,13 +93,13 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/image4"
-                android:src="@drawable/sadimage"
+                android:src="@drawable/happyimage"
                 android:layout_marginLeft="10dp"/>
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/image5"
-                android:src="@drawable/sadimage"
+                android:src="@drawable/happyimage"
                 android:layout_marginLeft="10dp"/>
 
 
@@ -108,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryDarkText"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:id="@+id/tv_rate"/>

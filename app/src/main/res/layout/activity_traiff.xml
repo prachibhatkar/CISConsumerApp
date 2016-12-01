@@ -219,7 +219,7 @@
 
                     <TextView
                         android:id="@+id/energy_charge"
-                        android:text="Energy change(Rs/KWH)"
+                        android:text="Energy change(Rs/kWh)"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#000000"
@@ -256,6 +256,7 @@
 
                     <TextView
                         android:text="3.76"
+                        android:id="@+id/tv_energycharge1"
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -290,7 +291,8 @@
                         android:textColor="#666666"
                         android:padding="20dip"
                         android:layout_marginRight="@dimen/text_size_h8"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:id="@+id/tv_energycharge2" />
 
                 </TableRow>
 
@@ -318,6 +320,7 @@
                         android:background="#ffffff"
                         android:textColor="#666666"
                         android:padding="20dip"
+                        android:id="@+id/tv_energycharge3"
                         android:layout_marginRight="@dimen/text_size_h8"
                         android:gravity="center"/>
 
@@ -347,6 +350,7 @@
                         android:background="#ffffff"
                         android:textColor="#666666"
                         android:padding="20dip"
+                        android:id="@+id/tv_energycharge4"
                         android:layout_marginRight="@dimen/text_size_h8"
                         android:gravity="center"/>
 
@@ -435,4 +439,4 @@
         </LinearLayout>
     </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-    </LinearLayout>
+</LinearLayout>

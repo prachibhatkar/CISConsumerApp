@@ -104,7 +104,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                     pDialog.setMessage(" please wait..");
                     pDialog.show();
                 }
-                JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+                JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark,"Token 92686e5d7fdb5437b9677a817fac62374715cf93" );
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FEEDBACK);
                // flag=true;
 
@@ -123,7 +123,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         }
         else if(v==image2){
             count="4";
-            tv_rate.setText("okk");
+            tv_rate.setText("ok");
            // Toast.makeText(this.getApplicationContext(), " you have rated 4", Toast.LENGTH_SHORT).show();
 
 
@@ -173,6 +173,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                         Log.i(label, "hygt " + jsonResponse);
                         Log.i(label, "hyif " + jsonResponse.feedbackmessage);
                         if(jsonResponse.feedbackmessage!= null) {
+                            dismissDialog();
 
                         }
 
@@ -182,6 +183,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
 
 
                     }
@@ -203,6 +205,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
                 Log.i(label, "gjjkfhdkh " + message);
                 Log.i(label, "jhjkghfkh " + response);
+                dismissDialog();
             }
             break;
         }

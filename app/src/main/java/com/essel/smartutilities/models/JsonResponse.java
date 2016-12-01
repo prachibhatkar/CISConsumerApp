@@ -18,7 +18,10 @@ public class JsonResponse {
     public  AboutUs aboutus1;
     public  ArrayList<Services> connectiontype;
     public  ArrayList<TarifCatagory> tariffCategory;
+    public  ArrayList<TariffEnergyCharge> tariffEnergyCharge;
+    public  ArrayList<FixedEnergyCharge> fixedEnergyCharge;
     public  String aboutus;
+    public  String logout;
     public  String feedbackmessage;
     public  String servicerequestmessage;
     public  String addcomplaintmessage;
