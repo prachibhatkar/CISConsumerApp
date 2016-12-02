@@ -27,12 +27,8 @@ import android.widget.Toast;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.eftimoff.viewpagertransformers.AccordionTransformer;
-import com.eftimoff.viewpagertransformers.CubeInTransformer;
-import com.eftimoff.viewpagertransformers.CubeOutTransformer;
 import com.eftimoff.viewpagertransformers.DrawFromBackTransformer;
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.adapter.DepthPageTransform;
 import com.essel.smartutilities.adapter.SlidingImageAdapter;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
@@ -100,7 +96,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         Log.i("Tag", "valuelogin" + flag);
         if (flag) {
             Log.i("Tag", "valueinif" + flag);
-
             Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Thanks for your valuable feedback", Snackbar.LENGTH_LONG);
             View view = snack.getView();
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
@@ -109,7 +104,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             snack.show();
             snack.setActionTextColor(Color.WHITE);
             FeedBackActivity.flag = false;
-
         }
 
         if (CommonUtils.isNetworkAvaliable(this)) {
@@ -377,7 +371,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
                         if (jsonResponse.consumers != null && jsonResponse.consumers.size() > 0) {
-                            DatabaseManager.saveManageAccounts(this,jsonResponse.consumers);
+                            DatabaseManager.saveManageAccounts(this, jsonResponse.consumers);
 
                             dismissDialog();
                         }
