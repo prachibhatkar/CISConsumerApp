@@ -34,7 +34,7 @@ import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
-import com.squareup.picasso.Picasso;
+
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.net.URL;
@@ -42,23 +42,23 @@ import java.util.ArrayList;
 
 //import static com.essel.smartutilities.R.id.indicator;
 
-public class TipsActivity extends AppCompatActivity implements ServiceCaller{
+public class TipsActivity extends AppCompatActivity implements ServiceCaller {
     private ViewPager vp_tips;
     private TabLayout tabLayout;
     CirclePageIndicator circlePageIndicator;
     NetworkImageView nv;
     String imagesurl;
-   // ImageView img1;
+    // ImageView img1;
 
     private static final String[] IMAGES = {};
-    private static final String[] TipText = {"tujhjhhioi","fghhhjgjjk","fghjjhjkjkjh"};
+    private static final String[] TipText = {"tujhjhhioi", "fghhhjgjjk", "fghjjhjkjkjh"};
     private ArrayList<String> ImagesArray = new ArrayList<String>();
-    private ArrayList<String>TipTextArray=new ArrayList<>(12);
+    private ArrayList<String> TipTextArray = new ArrayList<>(12);
 
 
     private TipsAdapter tipsAdapter;
     private Context mContext;
-    private int NUM_PAGES=10;
+    private int NUM_PAGES = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +81,14 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
         init();
         intext();
 
-        if( CommonUtils.isNetworkAvaliable(this)) {
+        if (CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
-        }
-        else
+        } else
             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
         //setupUI();
-       // loadData();
+        // loadData();
 
 
 
@@ -102,12 +101,12 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
 
     private void init() {
         for (int i = 0; i < IMAGES.length; i++)
-           // ImagesArray.add(IMAGES[i]);
+            // ImagesArray.add(IMAGES[i]);
 
-        vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
+            vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
 
 
-        vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray,TipTextArray));
+        vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray, TipTextArray));
 
         //  mPager.setPageTransformer(true, new DepthPageTransform());
         CirclePageIndicator indicator = (CirclePageIndicator)
@@ -122,6 +121,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
 
         NUM_PAGES = IMAGES.length;
 
+
     }
 
     private void intext() {
@@ -131,7 +131,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
         vp_tips = (ViewPager) findViewById(R.id.pager);
 
 
-        vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray,TipTextArray));
+        vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray, TipTextArray));
 
         //  mPager.setPageTransformer(true, new DepthPageTransform());
         CirclePageIndicator indicator = (CirclePageIndicator)
@@ -205,7 +205,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
 
     public void onBackPressed() {
 
-       super.onBackPressed();
+        super.onBackPressed();
 
     }
 
@@ -227,7 +227,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
                                         .resize(100, 100)
                                         .into(img1));*/
 
-                                Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
+                            Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
 
 
                         }
@@ -255,14 +255,14 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
 //                Log.i(label, "Faq:" + message);
-               Log.i(label, "tipppppppppp" + response);
+                Log.i(label, "tipppppppppp" + response);
             }
             break;
         }
 
     }
 
-    }
+}
 
 
 

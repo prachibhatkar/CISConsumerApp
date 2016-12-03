@@ -116,12 +116,7 @@
     <string name="prompt_newcomnection_type_other">Other</string>
 
     <string name="prompt_newcomnection_action_submit">Submit</string>
-    <array name="connection_types">
-        <item>Residential</item>
-        <item>Commercial</item>
-        <item>Industrial</item>
-        <item>Other</item>
-    </array>
+
 
     <string name="title_activity_landing_skip_login">LandingSkipLogin</string>
     <string name="dummy_button">Dummy Button</string>

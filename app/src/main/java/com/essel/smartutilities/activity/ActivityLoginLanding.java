@@ -38,6 +38,7 @@ import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.DepthPageTransform;
 import com.essel.smartutilities.adapter.SlidingImageAdapter;
 import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.models.JsonResponse;
@@ -115,6 +116,11 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         }
 
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            JsonObjectRequest request = WebRequests.getAccounts(this, Request.Method.GET, AppConstants.URL_GET_ACCOUNTS, AppConstants.REQUEST_GET_ACCOUNTS, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_ACCOUNTS);
+        } else
+            Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,51 +139,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-
-            alertDialogBuilder.setTitle("You Want to Logout");
-
-            alertDialogBuilder.setMessage("Click yes to continue!").setCancelable(false)
-                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-
-                            onClickDialog();
-
-                           // ActivityLoginLanding.this.finish();
-                        }
-                    })
-                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-
-                            dialog.cancel();
-                        }
-                    });
-
-            // create alert dialog
-              AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // show it
-             alertDialog.show();
-
-            return true;
-
-
-        }
-
-
-
-        if (id == R.id.action_notifications) {
-            Intent i = new Intent(this, NotificationActivity.class);
-            startActivity(i);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    private void onClickDialog(){
 
         if (CommonUtils.isNetworkAvaliable(this)) {
 
@@ -196,7 +157,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
              }
 
-            // DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
+        //  DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
+           // return true;
 
 
 
@@ -307,7 +269,9 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
     }
 
+
     private void init() {
+
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);
 
@@ -392,13 +356,11 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         if(jsonResponse.message!=null)
-
                         {
-                            dismissDialog();
-
-                            Intent in =new Intent(this, LoginActivity.class);
+                             Intent in =new Intent(this, LoginActivity.class);
                              startActivity(in);
                              Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
+                             dismissDialog();
 
                         }
                         if (jsonResponse.authorization != null) {
@@ -413,11 +375,32 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                     break;
                 }
 
-                 dismissDialog();
+                dismissDialog();
             }
 
-        }
+            case AppConstants.REQUEST_GET_ACCOUNTS: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
+                        if (jsonResponse.consumers != null && jsonResponse.consumers.size() > 0) {
+                            DatabaseManager.saveManageAccounts(this, jsonResponse.consumers);
+
+                            dismissDialog();
+                        }
+                        if (jsonResponse.authorization != null) {
+                            dismissDialog();
+                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+                        dismissDialog();
+                    }
+                    break;
+                }
+
+                dismissDialog();
+            }
 
 
 
@@ -432,6 +415,13 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
 //                Log.i(label, "Faq:" + message);
 //                Log.i(label, "Faq:" + response);
+            }
+            break;
+            case AppConstants.REQUEST_GET_ACCOUNTS: {
+//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+                Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + message);
+                Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + response);
             }
             break;
         }

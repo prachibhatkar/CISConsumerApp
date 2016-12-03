@@ -4,12 +4,8 @@ package com.essel.smartutilities.adapter;
  * Created by hp on 9/14/2016.
  */
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,17 +17,12 @@ import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.ActivityLoginLanding;
-import com.essel.smartutilities.activity.LoginActivity;
-import com.essel.smartutilities.activity.ManageAccountsActivity;
-import com.essel.smartutilities.activity.RegisterActivity2;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.setEnterSharedElementCallback;
 
 
 public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHolder> {
@@ -65,7 +56,7 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
             public void onClick(final View v) {
                 if (v.getId() == R.id.cv) {
                     String temp="Account of  " + mConsumers.get(position).consumer_name+"\n"+
-                            "Consumer No. "+mConsumers.get(position).consumer_no +"  is  Selected ";
+                            "Consumer No. "+mConsumers.get(position).consumer_no + "  is  Selected ";
                     Toast.makeText(mContext,temp , Toast.LENGTH_LONG).show();
                     App.dropdown=true;
                     CommonUtils.saveDetails(mContext,mConsumers.get(position).consumer_no,mConsumers.get(position).consumer_name,
@@ -106,10 +97,10 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
             id.setText(consumer.consumer_no);
             address.setText(consumer.address);
 
-//            if (consumer.acctype.equals("primary"))
-//                ic_dete.setVisibility(View.VISIBLE);
-//            else
-//                ic_dete.setVisibility(View.INVISIBLE);
+            if (consumer.is_primary.equals("true"))
+                ic_dete.setVisibility(View.VISIBLE);
+            else
+                ic_dete.setVisibility(View.INVISIBLE);
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override

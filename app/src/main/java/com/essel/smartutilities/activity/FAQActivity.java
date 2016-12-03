@@ -1,6 +1,7 @@
 package com.essel.smartutilities.activity;
 
 import android.app.Dialog;
+import android.app.ExpandableListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +14,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +38,20 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class FAQActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
     LinearLayout linearlayout_newconnection, linearlayout_changeownership, linearlayout_changeconnectiontype, linearlayout_loadextensionreduction, linearlayout_permanantdisconnection;
     ExpandableRelativeLayout expandableLayout_newserviceconnection, expandableLayout_changeofownership, expandableLayout_changeofconnectiontype, expandableLayout_loadextensionreduction, expandableLayout_permanantdisconnect;
     Button expandablebutton_newserviceconnection, expandablebutton_changeofownership, expandablebutton_changeofconnectiontype, expandablebutton_loadextensionreduction, expandablebutton_permanantdisconnec;
-    TextView tv_1,tv_2;
+    TextView tv_1, tv_2;
     Context mContext;
     Dialog dialog_faq;
     ProgressDialog pDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +68,9 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         });
 
          initialize();
-          Faq faq=new Faq();
-        DatabaseManager.saveFAQ(this, faq);
+//          Faq faq=new Faq();
+//        DatabaseManager.saveFAQ(this, faq);
     }
-
-
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,15 +152,14 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-
     @Override
     public void onClick(View v) {
 
 
         if (v == expandablebutton_newserviceconnection) {
 
-               expandableLayout_newserviceconnection.toggle();
-           }
+            expandableLayout_newserviceconnection.toggle();
+        }
 
         if (v == expandablebutton_changeofownership) {
 
@@ -178,7 +185,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
     public void onBackPressed() {
 
-       super.onBackPressed();
+        super.onBackPressed();
 
 
     }
@@ -195,18 +202,15 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 //                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 //                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
 //                        Log.i(label, "Faqqqqqqqqqqqqqqqqq:" + jsonResponse.faqs);
-                        if(jsonResponse.faqs.size()!=0)
-                        {    dismissDialog();
-                            tv_1.setText(jsonResponse.faqs.get(0).answer.toString().trim());
-                            expandablebutton_newserviceconnection .setText(jsonResponse.faqs.get(0).question);
-                            tv_2.setText(jsonResponse.faqs.get(0).answer.toString().trim());
-                            expandablebutton_changeofownership  .setText(jsonResponse.faqs.get(1).question);
-                        }
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.faqs.size() != 0) {
                             dismissDialog();
-                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
-//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+
+                            tv_1.setText(jsonResponse.faqs.get(0).answer.toString().trim());
+                            expandablebutton_newserviceconnection.setText(jsonResponse.faqs.get(0).question);
+                            tv_2.setText(jsonResponse.faqs.get(1).answer.toString().trim());
+                            expandablebutton_changeofownership.setText(jsonResponse.faqs.get(1).question);
                         }
+
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 
@@ -226,8 +230,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             case AppConstants.REQUEST_FAQ: {
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
-//                Log.i(label, "Faq:" + message);
-//                Log.i(label, "Faq:" + response);
+                Log.i(label, "Faq:" + message);
+                Log.i(label, "Faq:" + response);
             }
             break;
         }

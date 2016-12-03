@@ -37,7 +37,7 @@ public class JsonResponse {
     public String alternate_mobile;
     public String connection_type;
     public String mobile_no;
-    //public ArrayList<AboutUs> about_us;
+    public ArrayList<Consumer> consumers;
     public ContactUs contactus;
     public Tariff tariff;
     public String result;//success/failure

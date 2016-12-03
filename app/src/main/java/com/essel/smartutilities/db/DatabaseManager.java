@@ -65,7 +65,7 @@ public class DatabaseManager {
         if (aboutUs != null) {
             ContentValues values = getContentValuesAboutUsTable(context, aboutUs);
             //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
-            saveAboutUs(context,AboutUsTable.CONTENT_URI, values, null);
+            saveAboutUs(context, AboutUsTable.CONTENT_URI, values, null);
 
         }
     }
@@ -109,7 +109,7 @@ public class DatabaseManager {
             values.put(ManageAccountsTable.Cols.CONSUMER_ID, consumers.consumer_no);
             values.put(ManageAccountsTable.Cols.CONSUMER_NAME, consumers.consumer_name);
             values.put(ManageAccountsTable.Cols.ADDRESS, consumers.address);
-//            values.put(ManageAccountsTable.Cols.IS_PRIMARY,consumers.is_primary);
+            values.put(ManageAccountsTable.Cols.IS_PRIMARY, consumers.is_primary);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,30 +121,31 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
-         Log.i("Tag", "saveValues:" + newRowId);
+        Log.i("Tag", "saveValues:" + newRowId);
     }
 
     public static ArrayList<Consumer> getAllManageAccounts(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
-         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + ManageAccountsTable.TABLE_NAME ;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + ManageAccountsTable.TABLE_NAME;
         Cursor c = db.rawQuery(selectQuery, null);
         ArrayList<Consumer> consumers = new ArrayList<Consumer>();
 
         while (c.moveToNext()) {
 
             String consumername = c.getString(c.getColumnIndex("consumer_name"));
-            String address = c.getString(c.getColumnIndex("consumer_id"));
-            String consumerno = c.getString(c.getColumnIndex("address"));
-            //String userProfilePic = c.getString(c.getColumnIndex(USER_PROFILE_PIC));
+            String address = c.getString(c.getColumnIndex("address"));
+            String consumerno = c.getString(c.getColumnIndex("consumer_id"));
+            String is = c.getString(c.getColumnIndex("is_primary"));
 
-            Consumer con = new Consumer(consumername,consumerno,address);
+            Consumer con = new Consumer(consumername, consumerno, address, is);
 
             consumers.add(con);
         }
         db.close();
         return consumers;
     }
+
     public static void deleteAccount(Context context, String Consumer_id) {
         try {
             String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
@@ -289,20 +290,20 @@ public class DatabaseManager {
     }
 
 
- public  static AboutUs getAboutUs(Context context){
+    public static AboutUs getAboutUs(Context context) {
 
-        AboutUs aboutUs= new AboutUs();
-        DatabaseHelper dbHelper=new DatabaseHelper(context);
-        SQLiteDatabase db  = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + AboutUsTable.TABLE_NAME ;
+        AboutUs aboutUs = new AboutUs();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + AboutUsTable.TABLE_NAME;
         Cursor cursor = db.rawQuery(selectQuery, null);
-       // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
-         while(cursor.moveToNext()){
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
 
-         aboutUs.about_us_msg= cursor.getString(cursor.getColumnIndex("about_us_msg"));
-             Log.i("Tag","valueselectdb"+cursor);
+            aboutUs.about_us_msg = cursor.getString(cursor.getColumnIndex("about_us_msg"));
+            Log.i("Tag", "valueselectdb" + cursor);
 
-           //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
 
         return aboutUs;
