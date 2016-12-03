@@ -140,30 +140,63 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
 
-        if (CommonUtils.isNetworkAvaliable(this)) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-                initProgressDialog();
-                if (pDialog != null && !pDialog.isShowing()) {
-                    pDialog.setMessage(" please wait..");
-                    pDialog.show();
-                }
-            JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
-            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
-              }
-              else {
-                Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+            // set title
+            alertDialogBuilder.setTitle("You Want to Logout");
 
-             }
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Click yes to continue!")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
 
-             }
+                             onClickDialog();
+
+                        }
+                    })
+                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+
+            // create alert dialog
+             AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+
+    }
+    return true;
+}
 
         //  DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
            // return true;
 
 
+     private void onClickDialog(){
+
+         if (CommonUtils.isNetworkAvaliable(this)) {
+
+             initProgressDialog();
+             if (pDialog != null && !pDialog.isShowing()) {
+                 pDialog.setMessage(" please wait..");
+                 pDialog.show();
+             }
+             JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
+         } else {
+             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+
+         }
 
 
 
+     }
 
 
     private void initProgressDialog() {
@@ -355,17 +388,16 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             case AppConstants.REQUEST_LOGOUT: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
-                        if(jsonResponse.message!=null)
-                        {
-                             Intent in =new Intent(this, LoginActivity.class);
-                             startActivity(in);
-                             Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
-                             dismissDialog();
+                        if (jsonResponse.message != null) {
+                            Intent in = new Intent(this, LoginActivity.class);
+                            startActivity(in);
+                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
+                            dismissDialog();
 
                         }
                         if (jsonResponse.authorization != null) {
                             dismissDialog();
-                          //  CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+                            //  CommonUtils.saveAuthToken(this, jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
@@ -403,10 +435,10 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             }
 
 
-
+        }
     }
 
-    @Override
+
     public void onAsyncFail(String message, String label, NetworkResponse response) {
 
         switch (label) {
