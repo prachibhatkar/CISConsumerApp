@@ -23,6 +23,7 @@ public class JsonResponse {
     public  String aboutus;
     public  String logout;
     public  String feedbackmessage;
+    public String forgotpasswordmessage;
     public  String servicerequestmessage;
     public  String addcomplaintmessage;
     public Consumer user_info;

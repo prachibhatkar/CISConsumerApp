@@ -17,6 +17,9 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.AboutUs;
+import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -109,10 +112,21 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
             JsonObjectRequest request = WebRequests.getContactDetails(getActivity(), Request.Method.GET, AppConstants.URL_GET_CONTACT_DETAILS, AppConstants.REQUEST_GET_CONTACT_DETAILS,
                     this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_CONTACT_DETAILS);
-        } else
+        } else {
             Toast.makeText(getActivity(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
+          /*  ContactUs contactus2 = new ContactUs();
+            contactus2 = DatabaseManager.getContactDetail(getActivity());
+            tv_helplineno.setText(contactus2.helpline_number.toString().trim());
+            tv_antiberiberyno.setText(contactus2.anti_bribery_help.toString().trim());
+            tv_onlinecomplaint.setText(contactus2.online_complaint.toString().trim());
+            tv_igrcemail.setText(contactus2.igrc_email.toString().trim());
+            tv_consumerportal.setText(contactus2.customer_portal.toString().trim());
+            tv_electricitytheftno.setText(contactus2.electricity_theft_help_no.toString().trim());
+            tv_igrcno.setText(contactus2.igrc_no.toString().trim());*/
 
+
+        }
     }
 
     private void initProgressDialog() {
@@ -163,6 +177,7 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
                             tv_igrcno.setText(jsonResponse.contactus.igrc_no);
                             tv_igrcemail.setText(jsonResponse.contactus.igrc_email);
                             tv_onlinecomplaintno.setText(jsonResponse.contactus.online_complaint);
+                            DatabaseManager.saveContactDetail(getActivity(),jsonResponse.contactus);
                         }
                         if (jsonResponse.authorization != null) {
                             dismissDialog();

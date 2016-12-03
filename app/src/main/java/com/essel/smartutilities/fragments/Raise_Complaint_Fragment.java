@@ -76,7 +76,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     }
 
         if(v==btn_submitcomplaint) {
-           if (isBlankInput()) {
+         //  if (isBlankInput()) {
 
                 JSONObject obj = new JSONObject();
                 try {
@@ -103,7 +103,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                // startActivity(i);
 
 
-            }
+           // }
 
         }
     }

@@ -84,7 +84,8 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
         if( CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
-        }else
+        }
+        else
             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
         //setupUI();
@@ -146,26 +147,6 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
         NUM_PAGES = TipText.length;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
    /* private void setupUI() {
@@ -236,17 +217,18 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller{
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
-                        if(jsonResponse.tips.size()!=0)
-                        {
-                            imagesurl = jsonResponse.tips.get(0).image;
+                        if(jsonResponse.tips.size()!=0) {
 
-                        //   nv.setImageUrl(imagesurl,this.getLoaderManager() );
-                           /* Picasso.with(this)
-                                    .load(imagesurl)
-                                    .resize(100, 100)
-                                    .into(img1);*/
+                                imagesurl = jsonResponse.tips.get(0).image;
 
-                            Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
+                               // nv.setImageUrl(imagesurl, this.getLoaderManager());
+                                /*Picasso.with(this)
+                                        .load(imagesurl)
+                                        .resize(100, 100)
+                                        .into(img1));*/
+
+                                Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
+
 
                         }
                         if (jsonResponse.authorization != null) {

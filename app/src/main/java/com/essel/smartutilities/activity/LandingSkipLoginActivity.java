@@ -72,7 +72,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
-            DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
+           // DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
             return true;
         }
         if (id == R.id.action_notifications) {

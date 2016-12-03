@@ -149,10 +149,10 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
                             for (int i = 1; i <=jsonResponse.tariff.fixedEnergyCharge.size(); i++) {
 
-                                tv_singlephase.setText(jsonResponse.tariff.tariffEnergyCharge.get(0).slab.toString().trim());
+                                tv_singlephase.setText(jsonResponse.tariff.fixedEnergyCharge.get(0).slab.toString().trim());
                                // tv_100units.setText(jsonResponse.tariff.tariffEnergyCharge.get(i).slab.toString().trim());
 
-                                tv_threephase.setText(jsonResponse.tariff.tariffEnergyCharge.get(1).slab.toString().trim());
+                                tv_threephase.setText(jsonResponse.tariff.fixedEnergyCharge.get(1).slab.toString().trim());
                               //  tv_300unoits.setText(jsonResponse.tariff.tariffEnergyCharge.get(i).slab.toString().trim());
 
                                 Log.i(label, "Tariffsucccccc:" + jsonResponse.fixedEnergyCharge);

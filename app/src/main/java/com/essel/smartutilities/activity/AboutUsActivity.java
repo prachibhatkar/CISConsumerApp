@@ -73,11 +73,10 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
         else{
 
             Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
-              AboutUs aboutUs2 =new AboutUs();
-              DatabaseManager.getAboutUs(this);
-             tv_aboutus_message.setText(aboutUs2.about_us_msg);
-
-            Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
+             AboutUs aboutUs2 =new AboutUs();
+            aboutUs2= DatabaseManager.getAboutUs(this);
+            tv_aboutus_message.setText(aboutUs2.about_us_msg.toString().trim());
+           Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
         }
 
 

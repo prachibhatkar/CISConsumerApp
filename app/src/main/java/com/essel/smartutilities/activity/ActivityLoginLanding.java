@@ -1,7 +1,9 @@
 package com.essel.smartutilities.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -63,6 +66,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             R.drawable.infrastruc};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     private Context mContext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,25 +133,39 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-            if (CommonUtils.isNetworkAvaliable(this)) {
 
-                /*initProgressDialog();
-                if (pDialog != null && !pDialog.isShowing()) {
-                    pDialog.setMessage(" please wait..");
-                    pDialog.show();
-                }*/
-                JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
-                App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
-            }
-            else {
-                Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
-                return true;
-            }
+            alertDialogBuilder.setTitle("You Want to Logout");
+
+            alertDialogBuilder.setMessage("Click yes to continue!").setCancelable(false)
+                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+
+                            onClickDialog();
+
+                           // ActivityLoginLanding.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+
+                            dialog.cancel();
+                        }
+                    });
+
+            // create alert dialog
+              AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+             alertDialog.show();
+
+            return true;
+
+
         }
 
-        //  DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
-           // return true;
+
 
         if (id == R.id.action_notifications) {
             Intent i = new Intent(this, NotificationActivity.class);
@@ -157,6 +175,34 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void onClickDialog(){
+
+        if (CommonUtils.isNetworkAvaliable(this)) {
+
+                initProgressDialog();
+                if (pDialog != null && !pDialog.isShowing()) {
+                    pDialog.setMessage(" please wait..");
+                    pDialog.show();
+                }
+            JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
+              }
+              else {
+                Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+
+             }
+
+             }
+
+            // DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
+
+
+
+
+
+
 
     private void initProgressDialog() {
 
@@ -261,7 +307,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
     }
 
-
     private void init() {
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);
@@ -347,11 +392,13 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         if(jsonResponse.message!=null)
+
                         {
-                             Intent in =new Intent(this, LoginActivity.class);
+                            dismissDialog();
+
+                            Intent in =new Intent(this, LoginActivity.class);
                              startActivity(in);
                              Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
-                             dismissDialog();
 
                         }
                         if (jsonResponse.authorization != null) {

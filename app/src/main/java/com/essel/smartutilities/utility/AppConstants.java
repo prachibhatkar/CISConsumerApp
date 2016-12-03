@@ -66,6 +66,10 @@ public class AppConstants {
     public static final String REQUEST_FEEDBACK = "add-feedback/";
     public static final String URL_POST_FEEDBACK = BASE_URL + REQUEST_FEEDBACK;
 
+    public static final String REQUEST_FORGOT_PASSWORD = "forgot-password/";
+    public static final String URL_POST_FORGOT_PASSWORD = BASE_URL + REQUEST_FORGOT_PASSWORD;
+
+
     public static final String REQUEST_POST_ADD_COMPLAINT = "add-complaint/";
     public static final String URL_POST_ADD_COMPLAINT = BASE_URL + REQUEST_POST_ADD_COMPLAINT;
 

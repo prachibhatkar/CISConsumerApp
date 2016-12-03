@@ -34,12 +34,14 @@ import android.util.Log;
 import com.essel.smartutilities.activity.LoginActivity;
 import com.essel.smartutilities.activity.ManageAccountsActivity;
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 import com.essel.smartutilities.db.tables.TipsTable;
 import com.essel.smartutilities.models.AboutUs;
 import com.essel.smartutilities.models.Consumer;
+import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.Faq;
 import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.models.User;
@@ -64,6 +66,14 @@ public class DatabaseManager {
             ContentValues values = getContentValuesAboutUsTable(context, aboutUs);
             //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
             saveAboutUs(context,AboutUsTable.CONTENT_URI, values, null);
+
+        }
+    }
+
+    public static void saveContactDetail(Context context, ContactUs contactus) {
+        if (contactus != null) {
+            ContentValues values = getContentValuesContactUsTable(context, contactus);
+            savecontactdetail(context, ContactUsTable.CONTENT_URI, values, null);
 
         }
     }
@@ -157,6 +167,17 @@ public class DatabaseManager {
         Log.i("Tag", "saveAboutUs:" + newRowId);
     }
 
+
+    private static void savecontactdetail(Context context, Uri table, ContentValues values, String condition) {
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(ContactUsTable.TABLE_NAME, null, values);
+        // Log.i("Tag", "saveAboutUs:" + newRowId);
+        Log.i("Tag", "savecontactdetail:" + newRowId);
+    }
+
 //
 
 
@@ -166,7 +187,7 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(FAQTable.TABLE_NAME, null, values);
-        // Log.i("Tag", "savefaq:" + newRowId);
+        Log.i("Tag", "savefaq:" + newRowId);
     }
 
     private static void saveTips(Context context, Uri table, ContentValues values, String condition) {
@@ -196,6 +217,22 @@ public class DatabaseManager {
         ContentValues values = new ContentValues();
         try {
             values.put(AboutUsTable.Cols.ABOUT_US_MSG, about_us_msg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+    private static ContentValues getContentValuesContactUsTable(Context context, ContactUs contactus) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(ContactUsTable.Cols.HELPLINE_NUMBER, contactus.helpline_number);
+            values.put(ContactUsTable.Cols.ANTI_BERIBERY_HELP, contactus.anti_bribery_help);
+            values.put(ContactUsTable.Cols.ONLINE_COMPLAINTS, contactus.online_complaint);
+            values.put(ContactUsTable.Cols.IGRC_EMAIL, contactus.igrc_email);
+            values.put(ContactUsTable.Cols.CONSUMER_PORTAL, contactus.customer_portal);
+            values.put(ContactUsTable.Cols.ELECTRICITY_THEFT_HELP, contactus.electricity_theft_help_no);
+            values.put(ContactUsTable.Cols.IGRC_NUMBER, contactus.igrc_no);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -272,6 +309,34 @@ public class DatabaseManager {
 
 
     }
+
+    public  static ContactUs getContactDetail(Context context){
+
+        ContactUs contactus= new ContactUs();
+        DatabaseHelper dbHelper=new DatabaseHelper(context);
+        SQLiteDatabase db  = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + ContactUsTable.TABLE_NAME ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        while(cursor.moveToNext()){
+
+            contactus.helpline_number= cursor.getString(cursor.getColumnIndex("helpline_number"));
+            contactus.anti_bribery_help= cursor.getString(cursor.getColumnIndex("anti_beribery_help"));
+            contactus.online_complaint= cursor.getString(cursor.getColumnIndex("online_complaint"));
+            contactus.igrc_email= cursor.getString(cursor.getColumnIndex("igrc_email"));
+            contactus.igrc_no= cursor.getString(cursor.getColumnIndex("igrc_number"));
+            contactus.customer_portal= cursor.getString(cursor.getColumnIndex("consumer_portal"));
+            contactus.electricity_theft_help_no= cursor.getString(cursor.getColumnIndex("electricity_theft_help"));
+            Log.i("Tag","valueselectdb"+cursor);
+
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return contactus;
+
+
+    }
+
 
 
 }
