@@ -74,6 +74,10 @@ public class AppConstants {
     public static final String REQUEST_POST_SERVICE_REQUEST = "service-request/";
     public static final String URL_POST_SERVICE_REQUEST = BASE_URL + REQUEST_POST_SERVICE_REQUEST;
 
+
+    public static final String REQUEST_BRANDING_IMAGES = "get-branding-images/";
+    public static final String URL_BRANDING_IMAGES = BASE_URL + REQUEST_BRANDING_IMAGES;
+
     public static final String SHARED_PREF = "SmartUtilities";
     public static final String SCREEN_ID = "screen_id";
 
@@ -81,7 +85,7 @@ public class AppConstants {
 
     public static String CONSUMER_ID = "consumer_id";
     public static String CONSUMER_PASSWORD = "password";
-    public static String CONSUMER_LOGGED_IN_DATE = "user_logged_in_date";
+//    public static String CONSUMER_LOGGED ="false" ;
     public static final int ALL_PERMISSIONS_RESULT = 107;
 
     public static String CONSUMER_NAME = "consumer_name";

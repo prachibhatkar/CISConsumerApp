@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
@@ -28,14 +25,13 @@ import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.DialogCreator;
+import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +46,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     private Button btnActionSubmit;
     private TextView actionLogin;
     Spinner connectiontype;
-    private ArrayList<String> mytype,myid;
+    private ArrayList<String> mytype, myid;
     private ProgressDialog pDialog;
     Intent i;
 
@@ -165,7 +161,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     }
 
     private void submitData() {
-        String m=myid.get(connectiontype.getSelectedItemPosition());
+        String m = myid.get(connectiontype.getSelectedItemPosition());
         initProgressDialog();
         if (pDialog != null && !pDialog.isShowing()) {
             pDialog.setMessage("Requesting, please wait..");
@@ -213,8 +209,14 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newconnectionrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         dismissDialog();
+                        SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_NAME,editTextEmailId.getText().toString());
+                        SharedPrefManager.saveValue(this,SharedPrefManager.EMAIL_ID,editTextEmailId.getText().toString());
+                        SharedPrefManager.saveValue(this,SharedPrefManager.MOBILE,editTextPhone.getText().toString());
+                        SharedPrefManager.saveValue(this,SharedPrefManager.CONNECTION_TYPE,connectiontype.getSelectedItem().toString());
+
                         i = new Intent(this, NewConnectionActivity2.class);
                         startActivity(i);
+
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
@@ -235,7 +237,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
                             for (int i = 1; i <= jsonResponse.connectiontype.size(); i++) {
                                 mytype.add(i, jsonResponse.connectiontype.get(i - 1).type);
-                                myid.add(i,jsonResponse.connectiontype.get(i-1).id);
+                                myid.add(i, jsonResponse.connectiontype.get(i - 1).id);
                             }
                             dismissDialog();
 

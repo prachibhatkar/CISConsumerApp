@@ -151,7 +151,7 @@
                         android:text="Net Amount" />
                 </RelativeLayout>
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/BTNSubmit"
+                    android:id="@+id/btn_paynow"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height_small"

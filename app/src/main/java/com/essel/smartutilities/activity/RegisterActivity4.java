@@ -1,21 +1,19 @@
 package com.essel.smartutilities.activity;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -25,7 +23,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
-import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -41,7 +38,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
     TextInputLayout inputLayoutEmailId, inputLayoutMobileNo, inputLayoutPassword, inputLayoutRetypePassword;
     AppCompatButton buttonRegister, buttonVerify;
     TextView textViewConsumerName, consumerno, textViewConsumerAddress, maintitle, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
-    LinearLayout linearActionCancel;
+
     Context mContext;
     ProgressDialog pDialog;
     Intent i;

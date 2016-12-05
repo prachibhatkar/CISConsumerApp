@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -15,15 +14,12 @@ import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.essel.smartutilities.R;
 
 import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class CommonUtils {
@@ -81,20 +77,17 @@ public class CommonUtils {
     }
 
 
-
     public static String getBitmapEncodedString(Bitmap pBitmap) {
         if (pBitmap != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             pBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            String image=Base64.encodeToString(byteArray, Base64.DEFAULT);
-           // return Base64.encodeToString(byteArray, Base64.DEFAULT);
+            String image = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            // return Base64.encodeToString(byteArray, Base64.DEFAULT);
             return image;
         }
         return "";
     }
-
-
 
 
     public static boolean isNetworkAvaliable(Context context) {
@@ -111,6 +104,7 @@ public class CommonUtils {
 
         return false;
     }
+
     public static int getColor(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= 23) {
@@ -241,13 +235,10 @@ public class CommonUtils {
     }
 
     public static boolean isLoggedIn(Context context) {
-        String logged_in_date = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE);
-        if (!logged_in_date.equals("")) {
-            String consumer_id = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_ID);
-            String password = SharedPrefManager.getStringValue(context, AppConstants.CONSUMER_PASSWORD);
-            return !(consumer_id.equals("") && password.equals(""));
-        }
-        return false;
+        if (SharedPrefManager.getStringValue(context, SharedPrefManager.CONSUMER_LOGGED).equals("false"))
+            return true;
+        else
+            return false;
     }
 
 
@@ -256,9 +247,9 @@ public class CommonUtils {
     }
 
     public static void logout(Context context) {
-        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_ID, "");
-        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_PASSWORD, "");
-        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE, "");
+        SharedPrefManager.saveValue(context, SharedPrefManager.CONSUMER_NO, "");
+        SharedPrefManager.saveValue(context, SharedPrefManager.PASSWORD, "");
+        SharedPrefManager.saveValue(context, SharedPrefManager.CONSUMER_LOGGED, "false");
     }
 
 }

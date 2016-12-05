@@ -1,6 +1,9 @@
 package com.essel.smartutilities.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.activity.NotificationActivity;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.NotificationCard;
 
@@ -25,6 +27,7 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
     public Context mcontext;
     private ArrayList<NotificationCard> mNotificationCard;
     private ManageAccountAdapter.OnRecycleItemClickListener listener;
+
     public NotificationCardAdapter() {
     }
 
@@ -38,7 +41,7 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
     @Override
     public NotificationCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_notification_card, null);
-        NotificationCardHolder viewHolder = new NotificationCardHolder(view);
+        final NotificationCardHolder viewHolder = new NotificationCardHolder(view);
 
         return viewHolder;
     }
@@ -48,9 +51,33 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
         holder.bind(mcontext, mNotificationCard.get(position));
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                if (v.getId() == R.id.delete) {
-                    mNotificationCard.remove(holder.getAdapterPosition());
+            public void onClick(final View view) {
+                if (view.getId() == R.id.delete) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(mcontext);
+                    dialog.setMessage("Are you sure want to remove this notification ?");
+                    dialog.setCancelable(true);
+                    dialog.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mNotificationCard.remove(holder.getAdapterPosition());
+                                    notifyDataSetChanged();
+                                    dialog.cancel();
+//                                    DatabaseManager.deleteAccount(mContext,mConsumers.get(position).consumer_no);
+                                    Snackbar snack = Snackbar.make(view, "Notification Deleted", Snackbar.LENGTH_LONG);
+                                    snack.show();
+                                }
+                            });
+
+                    dialog.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = dialog.create();
+                    alert.show();
                     notifyDataSetChanged();
                 }
             }
@@ -64,8 +91,6 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
         else
             return 0;
     }
-
-
 
 
     public class NotificationCardHolder extends RecyclerView.ViewHolder {

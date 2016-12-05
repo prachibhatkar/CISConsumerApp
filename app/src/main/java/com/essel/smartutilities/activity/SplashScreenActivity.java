@@ -31,6 +31,6 @@ public class SplashScreenActivity extends BaseActivity  {
             intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
         SplashScreenActivity.this.startActivity(intent);
         SplashScreenActivity.this.finish();
-        overridePendingTransition(R.anim.slide_no_change, R.anim.slide_up);
+//        overridePendingTransition(R.anim.slide_no_change, R.anim.slide_up);
     }
 }

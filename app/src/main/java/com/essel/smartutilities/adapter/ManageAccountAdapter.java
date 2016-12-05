@@ -4,35 +4,30 @@ package com.essel.smartutilities.adapter;
  * Created by hp on 9/14/2016.
  */
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.ActivityLoginLanding;
-import com.essel.smartutilities.activity.LoginActivity;
-import com.essel.smartutilities.activity.ManageAccountsActivity;
-import com.essel.smartutilities.activity.RegisterActivity2;
-import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.activity.PayNowActivity;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.setEnterSharedElementCallback;
 
 
 public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdapter.ViewHolder> {
@@ -102,16 +97,26 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             @Override
             public void onClick(final View v) {
                 if (v.getId() == R.id.cv) {
-                    String temp="Account of  " + mConsumers.get(position).consumer_name+"\n"+
-                            "Consumer No. "+mConsumers.get(position).consumer_no +" is  Selected ";
-                    Toast.makeText(mContext,temp , Toast.LENGTH_LONG).show();
-                    CommonUtils.saveDetails(mContext,mConsumers.get(position).consumer_no,mConsumers.get(position).consumer_name,
+                    String temp = "Account of  " + mConsumers.get(position).consumer_name + "\n" +
+                            "Consumer No. " + mConsumers.get(position).consumer_no + " is  Selected ";
+                    Toast.makeText(mContext, temp, Toast.LENGTH_LONG).show();
+                    CommonUtils.saveDetails(mContext, mConsumers.get(position).consumer_no, mConsumers.get(position).consumer_name,
                             mConsumers.get(position).city);
-                    mContext.startActivity(new Intent(mContext,ActivityLoginLanding.class));
+                    mContext.startActivity(new Intent(mContext, ActivityLoginLanding.class));
                 }
             }
         });
-
+        viewHolder.pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                if (v.getId() == R.id.btn_paynow) {
+                    SharedPrefManager.saveValue(mContext,SharedPrefManager.CONSUMER_NAME,mConsumers.get(position).consumer_name);
+                    SharedPrefManager.saveValue(mContext,SharedPrefManager.CONSUMER_NO,mConsumers.get(position).consumer_no);
+                    Intent i =new Intent(mContext, PayNowActivity.class);
+                    mContext.startActivity(i);
+                }
+            }
+        });
     }
 
     @Override
@@ -125,6 +130,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
         public TextView name, id, address, acctype, netamt, date;
         private CardView cardView;
         private ImageView ic_dete;
+        private Button pay;
 
 
         public ViewHolder(View itemView) {
@@ -137,6 +143,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             netamt = (TextView) itemView.findViewById(R.id.netamt);
             date = (TextView) itemView.findViewById(R.id.duedate_date);
             ic_dete = (ImageView) itemView.findViewById(R.id.ic_delete);
+            pay = (Button) itemView.findViewById(R.id.btn_paynow);
         }
 
         public void bind(final Context context, final Consumer consumer, final OnRecycleItemClickListener listener) {

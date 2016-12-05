@@ -1,12 +1,12 @@
 package com.essel.smartutilities.models;
 
-import java.security.Provider;
 import java.util.ArrayList;
 
 /**
  * Created by Admin on 22-08-2016.
  */
-public class JsonResponse {
+public class
+JsonResponse {
 
     public static String SUCCESS="success";
     public static String FAILURE="failure";
@@ -21,6 +21,7 @@ public class JsonResponse {
     public  ArrayList<TariffEnergyCharge> tariffEnergyCharge;
     public  ArrayList<FixedEnergyCharge> fixedEnergyCharge;
     public  String aboutus;
+    public  ArrayList<String> images;
     public  String logout;
     public  String feedbackmessage;
     public String forgotpasswordmessage;

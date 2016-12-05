@@ -1,10 +1,7 @@
 package com.essel.smartutilities.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
@@ -139,17 +136,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
-        if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            circleimage.setImageBitmap(photo);
-            //storeCameraPhotoInSDCard(photo);
-            //saveImageToStorage();
-            circleimage.setVisibility(View.VISIBLE);
-        }
-    }
 
   /*  ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
         @Override

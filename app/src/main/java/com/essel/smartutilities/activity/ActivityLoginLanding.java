@@ -1,6 +1,5 @@
 package com.essel.smartutilities.activity;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,12 +29,8 @@ import android.widget.Toast;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.eftimoff.viewpagertransformers.AccordionTransformer;
-import com.eftimoff.viewpagertransformers.CubeInTransformer;
 import com.eftimoff.viewpagertransformers.CubeOutTransformer;
-import com.eftimoff.viewpagertransformers.DrawFromBackTransformer;
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.adapter.DepthPageTransform;
 import com.essel.smartutilities.adapter.SlidingImageAdapter;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
@@ -53,8 +48,6 @@ import com.viewpagerindicator.CirclePageIndicator;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class ActivityLoginLanding extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
     TextView maintitle;
@@ -62,7 +55,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     LinearLayout img, button, table;
     private static ViewPager mPager;
     private static int currentPage = 0;
-    private static int NUM_PAGES = 0;
+    private int NUM_PAGES = 0;
     private static final Integer[] IMAGES = {R.drawable.esselgroup, R.drawable.logo,
             R.drawable.infrastruc};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
@@ -119,6 +112,10 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         if (CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getAccounts(this, Request.Method.GET, AppConstants.URL_GET_ACCOUNTS, AppConstants.REQUEST_GET_ACCOUNTS, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_ACCOUNTS);
+
+            JsonObjectRequest request2 = WebRequests.getBrandingImages(this, Request.Method.GET, AppConstants.URL_BRANDING_IMAGES, AppConstants.REQUEST_BRANDING_IMAGES, this);
+            App.getInstance().addToRequestQueue(request2, AppConstants.REQUEST_BRANDING_IMAGES);
+
         } else
             Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
     }
@@ -149,15 +146,15 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             alertDialogBuilder
                     .setMessage("Click yes to continue!")
                     .setCancelable(false)
-                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                             onClickDialog();
+                            onClickDialog();
 
                         }
                     })
-                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             // if this button is clicked, just close
                             // the dialog box and do nothing
                             dialog.cancel();
@@ -165,39 +162,37 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                     });
 
             // create alert dialog
-             AlertDialog alertDialog = alertDialogBuilder.create();
+            AlertDialog alertDialog = alertDialogBuilder.create();
 
             // show it
             alertDialog.show();
 
+
+        } else if (id == R.id.action_notifications) {
+            Intent in = new Intent(this, NotificationActivity.class);
+            startActivity(in);
+        }
+        return true;
     }
-    return true;
-}
-
-        //  DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
-           // return true;
 
 
-     private void onClickDialog(){
+    private void onClickDialog() {
 
-         if (CommonUtils.isNetworkAvaliable(this)) {
+        if (CommonUtils.isNetworkAvaliable(this)) {
 
-             initProgressDialog();
-             if (pDialog != null && !pDialog.isShowing()) {
-                 pDialog.setMessage(" please wait..");
-                 pDialog.show();
-             }
-             JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
-             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
-         } else {
-             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
+            JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
+        } else {
+            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
-         }
+        }
 
-
-
-     }
-
+    }
 
     private void initProgressDialog() {
 
@@ -304,7 +299,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
 
     private void init() {
-
+        NUM_PAGES = IMAGES.length;
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);
 
@@ -313,40 +308,33 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         mPager.setAdapter(new SlidingImageAdapter(ActivityLoginLanding.this, ImagesArray));
 
-        mPager.setPageTransformer(true, new DrawFromBackTransformer());
+        mPager.setPageTransformer(true, new CubeOutTransformer());
         CirclePageIndicator indicator = (CirclePageIndicator)
                 findViewById(R.id.indicator);
 
         indicator.setViewPager(mPager);
 
+//        try {
+//            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
+//            mScroller.setAccessible(true);
+//            Interpolator sInterpolator = new AccelerateInterpolator();
+//            FixedSpeedScroller scroller = new FixedSpeedScroller(mPager.getContext(), sInterpolator);
+//            mScroller.set(mPager, scroller);
+//        } catch (NoSuchFieldException e) {
+//        } catch (IllegalArgumentException e) {
+//        } catch (IllegalAccessException e) {
+//        }
         final float density = getResources().getDisplayMetrics().density;
 
 //Set circle indicator radius
-        indicator.setRadius(5 * density);
+        indicator.setRadius(4 * density);
 
-        NUM_PAGES = IMAGES.length;
-
-        // Auto start of viewpager
-        final Handler handler = new Handler() {
-            @Override
-            public void close() {
-
-            }
-
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public void publish(LogRecord logRecord) {
-
-            }
-        };
+        final android.os.Handler handler = new android.os.Handler();
         final Runnable Update = new Runnable() {
             public void run() {
                 if (currentPage == NUM_PAGES) {
                     currentPage = 0;
+//                    mPager.setCurrentItem(currentPage++, false);
                 }
                 mPager.setCurrentItem(currentPage++, true);
             }
@@ -355,9 +343,9 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         swipeTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-//                handler.post(Update);
+                handler.post(Update);
             }
-        }, 1000, 1000);
+        }, 1500, 1500);
 
         // Pager listener over indicator
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -365,20 +353,18 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             @Override
             public void onPageSelected(int position) {
                 currentPage = position;
-
             }
 
             @Override
             public void onPageScrolled(int pos, float arg1, int arg2) {
+                currentPage = pos;
 
             }
 
             @Override
             public void onPageScrollStateChanged(int pos) {
-
             }
         });
-
     }
 
 
@@ -433,8 +419,21 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
                 dismissDialog();
             }
+            case AppConstants.REQUEST_BRANDING_IMAGES: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
+                        if (jsonResponse.images != null && jsonResponse.images.size() >= 0) {
+                            Log.i(label, "Imagesssssssssssssssssssssssss:" + jsonResponse.result);
+                        }
 
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                }
+
+            }
         }
     }
 
@@ -456,8 +455,14 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + response);
             }
             break;
+            case AppConstants.REQUEST_BRANDING_IMAGES: {
+//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+                Log.i(label, AppConstants.REQUEST_BRANDING_IMAGES + message);
+                Log.i(label, AppConstants.REQUEST_BRANDING_IMAGES + response);
+            }
+            break;
         }
-
 
 
     }

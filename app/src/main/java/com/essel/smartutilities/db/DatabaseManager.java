@@ -22,7 +22,6 @@
  */
 package com.essel.smartutilities.db;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -31,8 +30,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.essel.smartutilities.activity.LoginActivity;
-import com.essel.smartutilities.activity.ManageAccountsActivity;
 import com.essel.smartutilities.db.tables.AboutUsTable;
 import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
@@ -45,14 +42,8 @@ import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.Faq;
 import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.models.User;
-import com.essel.smartutilities.utility.SharedPrefManager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static com.essel.smartutilities.db.DatabaseHelper.dbHelper;
 
 
 /**
@@ -95,6 +86,9 @@ public class DatabaseManager {
     }
 
     public static void saveManageAccounts(Context context, ArrayList<Consumer> consumer) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(ManageAccountsTable.TABLE_NAME,null,null);
         if (consumer != null && consumer.size() > 0) {
             for (Consumer consumer1 : consumer) {
                 ContentValues values = getContentValuesManageAccountsTable(context, consumer1);

@@ -1,15 +1,12 @@
 package com.essel.smartutilities.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -24,16 +21,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
-import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.DialogCreator;
+import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,8 +95,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (v == btnLogin) {
            performLogin();
-          //Intent i = new Intent(this, ActivityLoginLanding.class);
-         //  startActivity(i);
 //            ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
 //            DatabaseManager.saveLoginDetails(this,consumers.get(3));
 
@@ -170,6 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             CommonUtils.saveDetails(this, jsonResponse.user_info.consumer_no, jsonResponse.user_info.consumer_name,
                                     jsonResponse.user_info.city);
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+                            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_LOGGED,"true");
                             Intent i = new Intent(this, ActivityLoginLanding.class);
                             startActivity(i);
                             DatabaseManager.saveLoginDetails(this, jsonResponse.user_info);

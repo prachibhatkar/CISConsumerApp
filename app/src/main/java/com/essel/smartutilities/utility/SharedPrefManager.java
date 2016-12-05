@@ -35,10 +35,10 @@ public class SharedPrefManager {
     public static  String AUTH_TOKEN = "auth_token";
     public static  String ADDRESS = "address";
     public static String USER_NAME = "user_name";
-    public static String USER_ID = "id";
+    public static String EMAIL_ID = "email_id";
     public static  String CONNECTION_TYPE = "connection_type";
     public static  String MOBILE = "mobile";
-
+    public static String CONSUMER_LOGGED ="false" ;
     public static String PASSWORD = "pasword";
     public static String USER_KEY = "user_key";
 
