@@ -17,13 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.activity.ActivityLoginLanding;
 import com.essel.smartutilities.activity.PayNowActivity;
 import com.essel.smartutilities.models.Consumer;
-import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
 import java.util.ArrayList;
@@ -61,8 +58,8 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             public void onClick(final View v) {
                 if (v.getId() == R.id.ic_delete) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                    builder1.setMessage("Are you sure you want to delete account" + mConsumers.get(position).consumer_no + "-" +
-                            mConsumers.get(position).consumer_name);
+                    builder1.setMessage("Are you sure you want to delete Account Of  \n  " + mConsumers.get(position).consumer_name + "  -  " +
+                            mConsumers.get(position).consumer_no);
                     builder1.setCancelable(true);
 
                     builder1.setPositiveButton(
@@ -93,26 +90,26 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                 }
             }
         });
-        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                if (v.getId() == R.id.cv) {
-                    String temp = "Account of  " + mConsumers.get(position).consumer_name + "\n" +
-                            "Consumer No. " + mConsumers.get(position).consumer_no + " is  Selected ";
-                    Toast.makeText(mContext, temp, Toast.LENGTH_LONG).show();
-                    CommonUtils.saveDetails(mContext, mConsumers.get(position).consumer_no, mConsumers.get(position).consumer_name,
-                            mConsumers.get(position).city);
-                    mContext.startActivity(new Intent(mContext, ActivityLoginLanding.class));
-                }
-            }
-        });
+//        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                if (v.getId() == R.id.cv) {
+//                    String temp = "Account of  " + mConsumers.get(position).consumer_name + "\n" +
+//                            "Consumer No. " + mConsumers.get(position).consumer_no + " is  Selected ";
+//                    Toast.makeText(mContext, temp, Toast.LENGTH_LONG).show();
+//                    CommonUtils.saveDetails(mContext, mConsumers.get(position).consumer_no, mConsumers.get(position).consumer_name,
+//                            mConsumers.get(position).city);
+//                    mContext.startActivity(new Intent(mContext, ActivityLoginLanding.class));
+//                }
+//            }
+//        });
         viewHolder.pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if (v.getId() == R.id.btn_paynow) {
-                    SharedPrefManager.saveValue(mContext,SharedPrefManager.CONSUMER_NAME,mConsumers.get(position).consumer_name);
-                    SharedPrefManager.saveValue(mContext,SharedPrefManager.CONSUMER_NO,mConsumers.get(position).consumer_no);
-                    Intent i =new Intent(mContext, PayNowActivity.class);
+                    SharedPrefManager.saveValue(mContext, SharedPrefManager.CONSUMER_NAME, mConsumers.get(position).consumer_name);
+                    SharedPrefManager.saveValue(mContext, SharedPrefManager.CONSUMER_NO, mConsumers.get(position).consumer_no);
+                    Intent i = new Intent(mContext, PayNowActivity.class);
                     mContext.startActivity(i);
                 }
             }
@@ -136,12 +133,12 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cv);
-            name = (TextView) itemView.findViewById(R.id.consumer_name);
+            name = ( TextView) itemView.findViewById(R.id.consumer_name);
             id = (TextView) itemView.findViewById(R.id.consumerid);
             address = (TextView) itemView.findViewById(R.id.address);
             acctype = (TextView) itemView.findViewById(R.id.acctype);
-            netamt = (TextView) itemView.findViewById(R.id.netamt);
-            date = (TextView) itemView.findViewById(R.id.duedate_date);
+//            netamt = (TextView) itemView.findViewById(R.id.netamt);
+//            date = (TextView) itemView.findViewById(R.id.duedate_date);
             ic_dete = (ImageView) itemView.findViewById(R.id.ic_delete);
             pay = (Button) itemView.findViewById(R.id.btn_paynow);
         }
@@ -151,14 +148,16 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             name.setText(consumer.consumer_name);
             id.setText(consumer.consumer_no);
             address.setText(consumer.address);
-            acctype.setText(consumer.acctype);
-            netamt.setText(consumer.netamt);
-            date.setText(consumer.duedate);
-            if (consumer.acctype.equals("primary"))
-                ic_dete.setVisibility(View.GONE);
-            else
-                ic_dete.setVisibility(View.VISIBLE);
 
+//            netamt.setText(consumer.netamt);
+//            date.setText(consumer.duedate);
+            if (consumer.is_primary.equals("true")) {
+                ic_dete.setVisibility(View.GONE);
+                acctype.setText("(Primary)");
+            } else {
+                ic_dete.setVisibility(View.VISIBLE);
+                acctype.setText("");
+            }
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

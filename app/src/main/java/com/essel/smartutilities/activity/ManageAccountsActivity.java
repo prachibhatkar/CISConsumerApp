@@ -1,28 +1,18 @@
 package com.essel.smartutilities.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ManageAccountAdapter;
-import com.essel.smartutilities.adapter.PaymentHistoryAdapter;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
@@ -38,11 +28,12 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
         add.setOnClickListener(this);
         rv_consumers = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
+//        ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
+        ArrayList<Consumer> consumers =  DatabaseManager.getAllManageAccounts(this);
         ManageAccountAdapter adapter = new ManageAccountAdapter(this, consumers);
         rv_consumers.setAdapter(adapter);
         rv_consumers.setLayoutManager(layoutManager);
-        DatabaseManager.saveManageAccounts(this, consumers);
+//        DatabaseManager.saveManageAccounts(this, consumers);
         imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

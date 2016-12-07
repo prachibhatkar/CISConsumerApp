@@ -33,8 +33,9 @@
                     android:id="@+id/iv_pry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:drawable/btn_star_big_on"
-                    android:visibility="invisible" />
+                    android:layout_marginTop="30dp"
+                    android:background="@android:drawable/presence_online"
+                    android:visibility="visible" />
             </LinearLayout>
 
             <RelativeLayout

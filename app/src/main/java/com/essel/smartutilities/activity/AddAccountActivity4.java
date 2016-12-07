@@ -1,45 +1,48 @@
 package com.essel.smartutilities.activity;
 
-import android.app.Dialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.AppCompatButton;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.fragments.LoginLandingFragment;
+import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.utility.App;
+import com.essel.smartutilities.utility.AppConstants;
+import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
+import com.essel.smartutilities.webservice.WebRequests;
 
-public class AddAccountActivity4 extends BaseActivity implements View.OnClickListener {
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    TextInputLayout inputLayoutEmailId, inputLayoutMobileNo;
-    TextView textViewConsumerName,consumerno, textViewConsumerAddress, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
+/**
+ * Created by hp on 11/4/2016.
+ */
 
-    Context mContext;
-    Intent i;
+public class AddAccountActivity4 extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
 
-    @Override
+    Button btnNo, btnyes;
+    ProgressDialog pDialog;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_account4);
-        mContext = this;
-        initialize();
-    }
-
-    private void initialize() {
-        Button con = (Button) findViewById(R.id.btn_continue);
-        Button add = (Button) findViewById(R.id.btn_addmore);
-        add.setOnClickListener(this);
-        con.setOnClickListener(this);
+        btnNo = (Button) findViewById(R.id.btn_no);
+        btnyes = (Button) findViewById(R.id.btn_yes);
+        btnyes.setOnClickListener(this);
+        btnNo.setOnClickListener(this);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,34 +50,96 @@ public class AddAccountActivity4 extends BaseActivity implements View.OnClickLis
                 finish();
             }
         });
+
+    }
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_no:
+                callYes();
+//                Intent i = new Intent(this, AddAccountActivity5.class);
+//                startActivity(i);
+                break;
+            case R.id.btn_yes:
+                callYes();
+                break;
+        }
 
-            case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+
+    }
+
+    private void callYes() {
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage("Requesting, please wait..");
+                pDialog.show();
+            }
+            JSONObject obj = new JSONObject();
+            try {
+                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+                obj.put("id", SharedPrefManager.getStringValue(this, SharedPrefManager.ID));
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            JsonObjectRequest request = WebRequests.getRequestADD(this, Request.Method.POST, AppConstants.URL_ADD_ACCOUNT, AppConstants.REQUEST_ADD_ACCOUNT, this, obj,SharedPrefManager.getStringValue(this,SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_ADD_ACCOUNT);
+
+        } else
+            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+    }
+
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+        switch (label) {
+            case AppConstants.REQUEST_ADD_ACCOUNT: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
+                        Log.i(label, "addaccountrequesttttttttttttttttttttpass:" + jsonResponse.message);
+                        if (jsonResponse.message != null)
+                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(this, AddAccountActivity5.class);
+                        startActivity(i);
+                        dismissDialog();
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
+                        DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
+                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
+                    }
+                } else
+                    Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
+                dismissDialog();
+            }
+            break;
         }
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.btn_addmore) {
-            i = new Intent(this, AddAccountActivity.class);
-            startActivity(i);
-        } else if (v.getId() == R.id.btn_continue) {
-            i = new Intent(this, ActivityLoginLanding.class);
-            startActivity(i);
-        }
-    }
+    public void onAsyncFail(String message, String label, NetworkResponse response) {
+        switch (label) {
+            case AppConstants.REQUEST_ADD_ACCOUNT: {
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+                Log.i(label, "responseeeeeeeeeeee:" + response);
+                Log.i(label, "addaccountrequestttttttttttttttttttttfail:" + message);
+                dismissDialog();
+                break;
+            }
+        }
     }
 }

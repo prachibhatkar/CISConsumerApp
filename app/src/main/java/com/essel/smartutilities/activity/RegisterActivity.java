@@ -89,19 +89,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.txt_login:
-//                break;
             case R.id.BTNNext:
                 validate();
+//                Intent i = new Intent(this, RegisterActivity2.class);
+//                startActivity(i);
                 break;
-//            case R.id.fab_new_connection: {
-//                Snackbar snack = Snackbar.make(rl, "fhbvvbdbvbdhbvdb", Snackbar.LENGTH_LONG);
-//                view = snack.getView();
-//                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
-//                params.gravity = Gravity.TOP;
-//                view.setLayoutParams(params);
-//                snack.show();
-//            }
         }
 
 

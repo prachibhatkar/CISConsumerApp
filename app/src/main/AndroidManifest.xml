@@ -60,17 +60,20 @@
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.ManageAccountsActivity" />
         <activity android:name=".activity.NewConnectionActivity2" />
-        <activity android:name=".activity.RegisterActivity3" />
         <activity android:name=".activity.RegisterActivity2" />
+        <activity android:name=".activity.RegisterActivity3" />
         <activity android:name=".activity.RegisterActivity4" />
         <activity android:name=".activity.PaymentHistoryActivity" />
         <activity android:name=".activity.GetComplaintIdActivity" />
-        <activity android:name=".activity.ForgotActivity2"></activity>
-        <activity android:name=".activity.AddAccountActivity"></activity>
-        <activity android:name=".activity.AddAccountActivity2"></activity>
-        <activity android:name=".activity.AddAccountActivity3"></activity>
-        <activity android:name=".activity.AddAccountActivity4"></activity>
-
+        <activity android:name=".activity.ForgotActivity2" />
+        <activity android:name=".activity.AddAccountActivity" />
+        <activity android:name=".activity.AddAccountActivity3" />
+        <activity android:name=".activity.AddAccountActivity4" />
+        <activity android:name=".activity.AddAccountActivity5" />
+        <activity
+            android:name=".activity.AddAccountActivity2"
+            android:label="@string/title_activity_add_account2"
+            android:theme="@style/Theme.DesignDemo"></activity>
     </application>
 
 </manifest>

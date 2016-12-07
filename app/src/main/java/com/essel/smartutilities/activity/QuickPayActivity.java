@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 /**
  * Created by hp on 11/5/2016.
@@ -20,7 +22,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     private EditText consumerno;
     private TextInputLayout inputLayoutconsumerno;
     private Button Submit;
-
+    private TextView tv_city;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
     private void initialize() {
         consumerno = (EditText) findViewById(R.id.Consumerno);
+        tv_city = (TextView) findViewById(R.id.tv_city);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -39,6 +42,8 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
                 finish();
             }
         });
+        tv_city.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY));
+
     }
 
     @Override

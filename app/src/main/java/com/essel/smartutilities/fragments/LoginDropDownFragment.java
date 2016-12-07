@@ -13,13 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.ManageAccountsActivity;
 import com.essel.smartutilities.adapter.DropDownAdapter;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
-import com.essel.smartutilities.utility.App;
 
 import java.util.ArrayList;
 
@@ -33,7 +31,6 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
 
 
     public LoginDropDownFragment() {
-
     }
 
     public static LoginDropDownFragment newInstance() {
@@ -50,8 +47,7 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
 //        ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
-        ArrayList<Consumer> consumers =  DatabaseManager.getAllManageAccounts(getActivity());
-
+        ArrayList<Consumer> consumers = DatabaseManager.getAllManageAccounts(getActivity());
         DropDownAdapter adapter = new DropDownAdapter(mContext, consumers);
         View rootView = inflater.inflate(R.layout.fragment_login_dropdown, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.tv_title);
@@ -70,8 +66,6 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
     }
 
     public void onButtonPressed(Uri uri) {
-
-
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
@@ -94,11 +88,10 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
         if (view.getId() == R.id.tv_title) {
             onDestroy();
 
-            Intent in =new Intent(getActivity(), ManageAccountsActivity.class);
+            Intent in = new Intent(getActivity(), ManageAccountsActivity.class);
             startActivity(in);
         }
     }
-
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

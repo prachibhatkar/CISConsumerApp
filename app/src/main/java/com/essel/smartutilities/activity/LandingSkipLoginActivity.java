@@ -1,35 +1,29 @@
 package com.essel.smartutilities.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.fragments.LoginLandingFragment;
-import com.essel.smartutilities.utility.DialogCreator;
+
+import java.util.Arrays;
 
 public class LandingSkipLoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button Submit;
     ImageView imgBack;
     LinearLayout action_about_us, action_tips, action_my_traiff, action_faq, action_contactus, action_share;
     EditText consumerno;
+    Spinner sp_city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +56,11 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
                 finish();
             }
         });
+        sp_city = (Spinner) findViewById(R.id.sp_city);
+        String[] routes = this.getResources().getStringArray(R.array.City);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Arrays.asList(routes));
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_city.setAdapter(dataAdapter);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -20,6 +20,7 @@ import com.essel.smartutilities.activity.ActivityLoginLanding;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +56,13 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
             @Override
             public void onClick(final View v) {
                 if (v.getId() == R.id.cv) {
-                    String temp="Account of  " + mConsumers.get(position).consumer_name+"\n"+
-                            "Consumer No. "+mConsumers.get(position).consumer_no + "  is  Selected ";
-                    Toast.makeText(mContext,temp , Toast.LENGTH_LONG).show();
-                    App.dropdown=true;
-                    CommonUtils.saveDetails(mContext,mConsumers.get(position).consumer_no,mConsumers.get(position).consumer_name,
+                    String temp = "Account of  " + mConsumers.get(position).consumer_name + "\n" +
+                            "Consumer No. " + mConsumers.get(position).consumer_no + "  is  Selected ";
+                    Toast.makeText(mContext, temp, Toast.LENGTH_LONG).show();
+                    App.dropdown = true;
+                    CommonUtils.saveDetails(mContext, mConsumers.get(position).consumer_no, mConsumers.get(position).consumer_name,
                             mConsumers.get(position).city);
-                    mContext.startActivity(new Intent(mContext,ActivityLoginLanding.class));
+                    mContext.startActivity(new Intent(mContext, ActivityLoginLanding.class));
 
                 }
             }
@@ -96,12 +97,12 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
             name.setText(consumer.consumer_name);
             id.setText(consumer.consumer_no);
             address.setText(consumer.address);
-
-            if (consumer.is_primary.equals("true"))
-                ic_dete.setVisibility(View.VISIBLE);
-            else
-                ic_dete.setVisibility(View.INVISIBLE);
-
+            if (!SharedPrefManager.getStringValue(context, SharedPrefManager.CONSUMER_NO).isEmpty()) {
+                if (consumer.consumer_no.equals(SharedPrefManager.getStringValue(context, SharedPrefManager.CONSUMER_NO)))
+                    ic_dete.setVisibility(View.VISIBLE);
+                else
+                    ic_dete.setVisibility(View.INVISIBLE);
+            }
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

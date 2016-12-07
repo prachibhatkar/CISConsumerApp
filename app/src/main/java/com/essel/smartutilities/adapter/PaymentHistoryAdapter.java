@@ -71,9 +71,9 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
             month = (TextView) itemView.findViewById(R.id.tv_month);
             tv_amount = (TextView) itemView.findViewById(R.id.amountpaid);
             date = (TextView) itemView.findViewById(R.id.tv_paymentdate);
-            paytime = (TextView) itemView.findViewById(R.id.tv_paymenttime);
-            paymode = (TextView) itemView.findViewById(R.id.lbl_paymentmode);
-            icpaymode = (ImageView) itemView.findViewById(R.id.iv_paymentmode);
+//            paytime = (TextView) itemView.findViewById(R.id.tv_paymenttime);
+//            paymode = (TextView) itemView.findViewById(R.id.lbl_paymentmode);
+//            icpaymode = (ImageView) itemView.findViewById(R.id.iv_paymentmode);
 
         }
 
@@ -82,8 +82,8 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
             month.setText(consumer.month);
             tv_amount.setText(consumer.paidamt);
             date.setText(consumer.payment_date);
-            paymode.setText(consumer.payment_mode);
-            paytime.setText(consumer.payment_time);
+//            paymode.setText(consumer.payment_mode);
+//            paytime.setText(consumer.payment_time);
 //            if (consumer.payment_mode.equals("cash"))
 //                icpaymode.setBackgroundResource(R.drawable.camera);
 //            else

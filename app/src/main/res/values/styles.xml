@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo"/>
+    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo" />
 
     <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowNoTitle">true</item>
@@ -36,8 +36,8 @@
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/colorPrimaryDark</item>
     </style>
-    <style name="MyCustomTabTextAppearance"
-        parent="TextAppearance.Design.Tab">
+
+    <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="textAllCaps">true</item>
@@ -58,7 +58,6 @@
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
     </style>
-
 
 
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">

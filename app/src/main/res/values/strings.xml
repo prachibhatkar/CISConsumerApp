@@ -47,7 +47,6 @@
     <string name="error_empty_consumer_id">  Enter Consumer Number   </string>
 
 
-
     <string-array name="City">
         <item>Select City</item>
         <item>Muzaffarpur</item>
@@ -75,7 +74,6 @@
         <item>Other</item>
 
     </string-array>
-
 
 
     <string-array name="complaintid">
@@ -154,7 +152,7 @@
 
     <string name="raise_complaint">Raise Complaint</string>
     <string name="complaint_status">Complaint Status</string>
-    <string name="transactionid">Transaction No:</string>
+    <string name="Recieptno">Reciept No:</string>
     <string name="paymentamount">Payment Amount</string>
     <string name="transactiontype">Transaction Type</string>
 
@@ -231,6 +229,7 @@
     <string name="login_error_null">Please Contact To Server Admin</string>
     <string name="er_data_not_avaliable">Data Not Avaliable</string>
     <string name="error_internet_not_connected">Please Check Internet Connection</string>
+    <string name="title_activity_add_account2">AddAccountActivity2</string>
 
 
 </resources>

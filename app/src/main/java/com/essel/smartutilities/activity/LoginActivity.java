@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         if (v == btnLogin) {
-           performLogin();
+            performLogin();
 //            ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
 //            DatabaseManager.saveLoginDetails(this,consumers.get(3));
 
@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             CommonUtils.saveDetails(this, jsonResponse.user_info.consumer_no, jsonResponse.user_info.consumer_name,
                                     jsonResponse.user_info.city);
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
-                            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_LOGGED,"true");
+                            SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "true");
                             Intent i = new Intent(this, ActivityLoginLanding.class);
                             startActivity(i);
                             DatabaseManager.saveLoginDetails(this, jsonResponse.user_info);

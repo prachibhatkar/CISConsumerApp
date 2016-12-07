@@ -166,13 +166,11 @@
                         android:text="Net Amount"
                         android:textColor="@color/colorTextWhite" />
                 </RelativeLayout>
-
                 <RelativeLayout
-                    android:id="@+id/rl4"
+                    android:id="@+id/rl6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="120dp"
                     android:layout_marginTop="80dp">
 
                     <TextView
@@ -197,6 +195,39 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:text="Prompt Amount"
+                        android:textColor="@color/colorTextWhite" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="80dp">
+
+                    <TextView
+                        android:id="@+id/promptdate_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aug"
+                        android:textColor="@color/colorTextWhite"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/promptdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:text="15, 2050"
+                        android:textColor="@color/colorTextWhite"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/lblpromptdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Prompt Date"
                         android:textColor="@color/colorTextWhite" />
                 </RelativeLayout>
 

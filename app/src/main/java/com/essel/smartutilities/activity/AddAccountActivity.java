@@ -8,12 +8,9 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +29,6 @@ import com.essel.smartutilities.webservice.WebRequests;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Arrays;
 
 /**
  * Created by hp on 11/4/2016.
@@ -86,6 +81,8 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.BTNNext:
                 validate();
+//                Intent i = new Intent(this, AddAccountActivity2.class);
+//                startActivity(i);
                 break;
         }
     }

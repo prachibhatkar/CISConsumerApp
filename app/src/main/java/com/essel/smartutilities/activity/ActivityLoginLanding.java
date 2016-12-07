@@ -75,6 +75,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         maintitle = (TextView) findViewById(R.id.title_bar);
         if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
             maintitle.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        else
+            maintitle.setText("Welcome");
         maintitle.setOnClickListener(this);
         TextView subtitle = (TextView) findViewById(R.id.subtitle_bar);
         if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME).isEmpty())

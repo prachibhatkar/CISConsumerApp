@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.SharedPrefManager;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -18,13 +17,24 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class MyBillActivity extends AppCompatActivity implements View.OnClickListener {
-    Button  btn_billhistory;
+    Button btn_billhistory;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_bill);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO)!=null)
+        getSupportActionBar().setTitle("My Bill "+ SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO));
+        else
+        getSupportActionBar().setTitle("My Bill");
+        intialize();
+    }
+
+    public void intialize() {
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.setTitle("My Consumtion (Units):Last Six Months");
         btn_billhistory = (Button) findViewById(R.id.btn_history);
@@ -71,20 +81,6 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         staticLabelsFormatter.setHorizontalLabels(new String[]{"Jun", "Jul", "Aug", "Sep", "Oct", "Nov"});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My Bill");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        intialize();
-    }
-
-
-
-
-    public void intialize() {
-
     }
 
     @Override
