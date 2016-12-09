@@ -174,4 +174,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent i=new Intent(this, ActivityLoginLanding.class);
+        startActivity(i);
+    }
 }

@@ -60,4 +60,10 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i=new Intent(this, ActivityLoginLanding.class);
+        startActivity(i);
+    }
 }

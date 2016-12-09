@@ -71,9 +71,9 @@ public class AddAccountActivity4 extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_no:
-                callYes();
-//                Intent i = new Intent(this, AddAccountActivity5.class);
-//                startActivity(i);
+//                callYes();
+                Intent i = new Intent(this, AddAccountActivity.class);
+                startActivity(i);
                 break;
             case R.id.btn_yes:
                 callYes();

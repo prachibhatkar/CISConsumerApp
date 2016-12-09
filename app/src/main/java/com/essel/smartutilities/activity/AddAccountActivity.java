@@ -160,4 +160,9 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i =new Intent(this,ManageAccountsActivity.class);
+        startActivity(i);
+    }
 }
