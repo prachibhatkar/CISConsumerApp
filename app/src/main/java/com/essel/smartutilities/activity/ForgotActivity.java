@@ -35,7 +35,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     AppCompatButton actionSubmit;
     Button actionok;
     ProgressDialog pDialog;
-    String consumerno;
+    String consno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,39 +53,22 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         });
 
         consumerIdEditText = (EditText) findViewById(R.id.edit_consumer_id);
-        consumerno=String.valueOf( consumerIdEditText.getText());
+        consno=consumerIdEditText.toString().trim();
+      //  consumerno=String.valueOf( consumerIdEditText.getText());
         actionSubmit = (AppCompatButton) findViewById(R.id.BTNSubmit);
         actionSubmit.setOnClickListener(this);
 
 
-        //initialize();
-
-    }
-
-    private void initialize() {
-
-        consumerIdEditText = (EditText) findViewById(R.id.edit_consumer_id);
-        consumerno=String.valueOf( consumerIdEditText.getText());
-        actionSubmit = (AppCompatButton) findViewById(R.id.BTNSubmit);
-        actionSubmit.setOnClickListener(this);
 
 
     }
 
-    /*private void showSuccess(){
-
-        dialogSucccess = new Dialog(this, R.style.verify_dialog);
-        dialogSucccess.setContentView(R.layout.dialog_success);
-        dialogSucccess.setCancelable(true);
-        dialogSucccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialogSucccess.show();
-    }*/
 
     @Override
     public void onClick(View v) {
         if (v == actionSubmit) {
+            String consumerno =String.valueOf( consumerIdEditText.getText());
             if (consumerIdEditText.equals("") || consumerIdEditText.length() < 10 || consumerIdEditText.length() > 20) {
-
                 Toast.makeText(this.getApplicationContext(), "Enter correct consumer id", Toast.LENGTH_SHORT).show();
             } else {
                 initProgressDialog();
@@ -93,16 +76,16 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
                     pDialog.setMessage(" please wait..");
                     pDialog.show();
                 }
-                JsonObjectRequest request = WebRequests.forgotrequest(this, Request.Method.POST, AppConstants.URL_POST_FORGOT_PASSWORD, AppConstants.REQUEST_FORGOT_PASSWORD, this, consumerno);
+
+              // String consumerno=String.valueOf( consumerIdEditText.getText());
+                JsonObjectRequest request = WebRequests.forgotpassword(this, Request.Method.POST, AppConstants.URL_POST_FORGOT_PASSWORD, AppConstants.REQUEST_FORGOT_PASSWORD, this, consumerno);
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FORGOT_PASSWORD);
 
 
             }
 
 
-            //Intent in = new Intent(this, ForgotActivity2.class);
-            //startActivity(in);
-            //showSuccess();
+
         }
 
 
@@ -113,8 +96,6 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 }
-
-
 
     private void initProgressDialog() {
 
@@ -155,12 +136,12 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
                         }
 
-
                         if (jsonResponse.authorization != null) {
                             dismissDialog();
-                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Log.i(label, "failllllllllll " + jsonResponse);
                         dismissDialog();
 
 
@@ -183,7 +164,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
                 Log.i(label, "gjjkfhdkh " + message);
-                Log.i(label, "jhjkghfkh " + response);
+                 Log.i(label, "jhjkghfkh " + response);
                 dismissDialog();
             }
             break;

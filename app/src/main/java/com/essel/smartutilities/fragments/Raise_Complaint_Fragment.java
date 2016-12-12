@@ -355,7 +355,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                 Log.i(label, "Complainttype" + response);
             }
             break;
-            case AppConstants.REQUEST_POST_SERVICE_REQUEST: {
+            case AppConstants.REQUEST_POST_ADD_COMPLAINT: {
 //
                     Log.i(label, "addcomplaint" + message);
                     Log.i(label, "addcomplaint" + response);
