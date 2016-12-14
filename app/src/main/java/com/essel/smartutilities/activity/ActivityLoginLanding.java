@@ -116,8 +116,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             JsonObjectRequest request = WebRequests.getAccounts(this, Request.Method.GET, AppConstants.URL_GET_ACCOUNTS, AppConstants.REQUEST_GET_ACCOUNTS, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_ACCOUNTS);
 
-            JsonObjectRequest request2 = WebRequests.getBrandingImages(this, Request.Method.GET, AppConstants.URL_BRANDING_IMAGES, AppConstants.REQUEST_BRANDING_IMAGES, this);
-            App.getInstance().addToRequestQueue(request2, AppConstants.REQUEST_BRANDING_IMAGES);
+          //  JsonObjectRequest request2 = WebRequests.getBrandingImages(this, Request.Method.GET, AppConstants.URL_BRANDING_IMAGES, AppConstants.REQUEST_BRANDING_IMAGES, this);
+          //  App.getInstance().addToRequestQueue(request2, AppConstants.REQUEST_BRANDING_IMAGES);
 
         } else
             Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
@@ -378,10 +378,12 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         if (jsonResponse.message != null) {
+
+                            dismissDialog();
                             Intent in = new Intent(this, LoginActivity.class);
                             startActivity(in);
                             Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
-                            dismissDialog();
+
 
                         }
                         if (jsonResponse.authorization != null) {
@@ -390,8 +392,9 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
-                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
                         dismissDialog();
+                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+
                     }
                     break;
                 }

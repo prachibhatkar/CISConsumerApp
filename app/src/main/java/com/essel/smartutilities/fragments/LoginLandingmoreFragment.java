@@ -176,7 +176,7 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
         // Add data to the intent, the receiving app will decide
         // what to do with it.
         share.putExtra(Intent.EXTRA_SUBJECT, "Title Of The Post");
-        share.putExtra(Intent.EXTRA_TEXT, "http://www.codeofaninja.com");
+        share.putExtra(Intent.EXTRA_TEXT, "http://www.EsselSmartUtilies.com");
 
         startActivity(Intent.createChooser(share, "Share link!"));
     }

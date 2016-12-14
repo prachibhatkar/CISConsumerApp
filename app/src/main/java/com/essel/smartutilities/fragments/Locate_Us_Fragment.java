@@ -157,16 +157,16 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
+                 googleMap = mMap;
 
                 // For showing a move to my location button
-                googleMap.setMyLocationEnabled(true);
+                 googleMap.setMyLocationEnabled(true);
 
                 // For dropping a marker at a point on the Map
-                LatLng all_csd = new LatLng(26.1114, 85.3897);
-                googleMap.addMarker(new MarkerOptions().position(all_csd).title("Amgola Road").snippet("Marker Description"));
+                 LatLng all_csd = new LatLng(20.5937, 78.9629);
+                 googleMap.addMarker(new MarkerOptions().position(all_csd).title("Amgola Road").snippet("Marker Description"));
 
-                // For zooming automatically to the location of the marker
+                 //For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(all_csd).zoom(10).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -174,10 +174,10 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
         });
 
-        String[] locations = mContext.getResources().getStringArray(R.array.CSD_Centers);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, Arrays.asList(locations));
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_location.setAdapter(dataAdapter);
+       String[] locations = mContext.getResources().getStringArray(R.array.CSD_Centers);
+       ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, Arrays.asList(locations));
+       dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       sp_location.setAdapter(dataAdapter);
 
         sp_location.setOnItemSelectedListener(this);
         return rootView;

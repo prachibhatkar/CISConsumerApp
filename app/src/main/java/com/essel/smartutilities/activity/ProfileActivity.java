@@ -1,7 +1,12 @@
 package com.essel.smartutilities.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
@@ -16,12 +21,15 @@ import android.widget.Toast;
 import com.essel.smartutilities.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
     private static final int CAPTURE_IMAGE = 1;
     private String mFragementName;
     private Context mContext;
+    private static final int SELECT_IMAGE = 2;
     //private ViewPager profile_pager;
     ExpandableRelativeLayout expandableLayout_editProfile, expandableLayout_changepass;
     Button expandableButton_editprofile,expandableButton_changepass,save_detail,save_password;
@@ -102,9 +110,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         if (view == circleimage) {
 
-
-            Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
+            showImageOptionsDialog();
+          //  Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+           // startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
         }
         if (view == save_detail) {
 
@@ -125,6 +133,65 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 expandableLayout_changepass.collapse();
 
 
+        }
+    }
+
+
+    private void showImageOptionsDialog() {
+        final String CHOOSE_GALLERY = "Choose Gallery", USE_CAMERA = "Use Camera", UPLOAD_VIDEO = "upload video";
+        ArrayList<String> list = new ArrayList<String>();
+        final CharSequence items[];
+        list.add(CHOOSE_GALLERY);
+        list.add(USE_CAMERA);
+        //list.add(UPLOAD_VIDEO);
+
+        items = list.toArray(new CharSequence[list.size()]);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(" Set Profile Image ");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                // mRemoveImage = false;
+
+                //PermissionUtility permissionUtility = new PermissionUtility(AdvertiseWithUsActivity.this);
+
+                if (items[item].equals(USE_CAMERA)) {
+
+                    Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
+                } else if (items[item].equals(CHOOSE_GALLERY)) {
+
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , SELECT_IMAGE);
+
+
+                }
+            }
+
+        });
+        builder.show();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            circleimage.setImageBitmap(photo);
+            //storeCameraPhotoInSDCard(photo);
+            //saveImageToStorage();
+            circleimage.setVisibility(View.VISIBLE);
+        }
+
+        if (requestCode == SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
+            // Bitmap photo = (Bitmap) data.getExtras().get("data");
+            // circleimage.setImageBitmap(photo);
+            //circleimage.setVisibility(View.VISIBLE);
+
+            Uri selectedImage = data.getData();
+            circleimage.setImageURI(selectedImage);
         }
     }
 
@@ -161,9 +228,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     public void onBackPressed() {
 
-        Intent in =new Intent(this,ActivityLoginLanding.class);
-        startActivity(in);
-
+       super.onBackPressed();
 
     }
 }
