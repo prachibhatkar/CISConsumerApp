@@ -114,7 +114,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
         }else if(v==image1){
-            count="5";
+            count="1";
             tv_rate.setText("bad");
            // Toast.makeText(this.getApplicationContext(), "you have rated 5", Toast.LENGTH_SHORT).show();
 
@@ -122,7 +122,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
         }
         else if(v==image2){
-            count="4";
+            count="2";
             tv_rate.setText("ok");
            // Toast.makeText(this.getApplicationContext(), " you have rated 4", Toast.LENGTH_SHORT).show();
 
@@ -138,7 +138,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
         }
         else if(v==image4){
-            count="2";
+            count="4";
             tv_rate.setText("Good");
            //Toast.makeText(this.getApplicationContext(), "you have rated 2", Toast.LENGTH_SHORT).show();
 
@@ -146,7 +146,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
         }
         else if(v==image5){
-            count="1";
+            count="5";
             tv_rate.setText("loved it");
             //Toast.makeText(this.getApplicationContext(), "you have rated 1", Toast.LENGTH_SHORT).show();
 

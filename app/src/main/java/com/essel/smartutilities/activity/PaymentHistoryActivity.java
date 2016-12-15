@@ -1,6 +1,7 @@
 package com.essel.smartutilities.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,8 @@ import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ManageAccountAdapter;
 import com.essel.smartutilities.adapter.PaymentHistoryAdapter;
 import com.essel.smartutilities.models.Consumer;
+import com.essel.smartutilities.models.NotificationCard;
+import com.essel.smartutilities.models.PaymentHistory;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
@@ -38,6 +41,10 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
     RecyclerView rv_consumers;
     ImageView add;
     private String TAG = "responsedataaaaa";
+   private ArrayList<PaymentHistory> paymenthis;
+    private Context mContext;
+    String date1,date,amount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +56,11 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rv_consumers = (RecyclerView) findViewById(R.id.recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
-        PaymentHistoryAdapter adapter = new PaymentHistoryAdapter(this, consumers, this);
-        rv_consumers.setAdapter(adapter);
-        rv_consumers.setLayoutManager(layoutManager);
+       // LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        ArrayList<Consumer> consumer = Consumer.createConsumersList(10);
+       // PaymentHistoryAdapter adapter = new PaymentHistoryAdapter(mContext,paymenthis);
+        //rv_consumers.setAdapter(adapter);
+       // rv_consumers.setLayoutManager(layoutManager);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +71,7 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
         AsyncCallWS task = new AsyncCallWS();
         task.execute();
+
 
 
     }
@@ -110,7 +118,7 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-           // if(getconsumerno.length()==10) {
+            // if(getconsumerno.length()==10) {
                 Request.addProperty("P_ACCT_ID", "1000039175");
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
@@ -135,29 +143,58 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
 
             SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
-             Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14"));
+            Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14"));
 
             String paymenthistory=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14").toString();
-            StringTokenizer st = new StringTokenizer(paymenthistory, "#");
-            String date = st.nextToken();
-            String amount = st.nextToken();
-            String  receiptno= st.nextToken();
-
-
-            Log.i(TAG, "paymenthistory: " + paymenthistory);
-            Log.i(TAG, "paymenthistory: " + date);
-            Log.i(TAG, "paymenthistory: " + receiptno);
-            Log.i(TAG, "paymenthistory: " + amount);
 
 
 
+                StringTokenizer st = new StringTokenizer(paymenthistory, "~");
+                date1 = st.nextToken();
+                String date2 = st.nextToken();
+                String date3 = st.nextToken();
+                String date4 = st.nextToken();
+                String date5 = st.nextToken();
+                String date6 = st.nextToken();
 
+              StringTokenizer str = new StringTokenizer(date1, "#");
+                String date = str.nextToken();
+                String amount = str.nextToken();
 
+            StringTokenizer str1 = new StringTokenizer(date2, "#");
+            String date11 = str1.nextToken();
+            String amount11 = str1.nextToken();
 
+            StringTokenizer str2 = new StringTokenizer(date3, "#");
+            String date22 = str2.nextToken();
+            String amount22 = str2.nextToken();
 
+            StringTokenizer str3 = new StringTokenizer(date4, "#");
+            String date33 = str3.nextToken();
+            String amount33 = str3.nextToken();
 
+            StringTokenizer str4 = new StringTokenizer(date5, "#");
+            String date44 = str4.nextToken();
+            String amount44 = str4.nextToken();
 
+            StringTokenizer str5 = new StringTokenizer(date6, "#");
+            String date55 = str5.nextToken();
+            String amount55 = str5.nextToken();
 
+          //  paymenthistory();
+
+             paymenthis=new ArrayList<>();
+             PaymentHistory paymenthistory1 = new PaymentHistory();
+             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            for (int i = 0; i < 6; i++) {
+                paymenthistory1.amount = amount;
+                paymenthistory1.date = date;
+                paymenthistory1.receiptno = "dgfgh";
+                paymenthis.add(i,paymenthistory1);
+            }
+            PaymentHistoryAdapter adapter = new PaymentHistoryAdapter(mContext,paymenthis);
+            rv_consumers.setAdapter(adapter);
+            rv_consumers.setLayoutManager(layoutManager);
 
 
         } catch (Exception e) {
@@ -168,11 +205,18 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
     }
 
+
+
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_right_menu, menu);
         return true;
     }
+
+
+
 
 
     @Override

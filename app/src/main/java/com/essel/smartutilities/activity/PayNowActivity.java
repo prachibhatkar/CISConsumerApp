@@ -19,7 +19,7 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class PayNowActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView consumerno,consumername,propmtamt,currentamt,duedate_date,arriers,promptamt,netamt;
+    private TextView consumerno,consumername,propmtamt,currentamt,duedate_date,arriers,netamt,promptdate;
     private TextInputLayout inputLayoutconsumerno;
     private Button Submit;
     private EditText amtpay;
@@ -39,11 +39,11 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initialize() {
-        propmtamt = (TextView) findViewById(R.id.promptamt);
-        currentamt=(TextView)findViewById(R.id.currentamount);
-        duedate_date=(TextView)findViewById(R.id.duedate_date);
-        arriers=(TextView)findViewById(R.id.Arriers);
-        promptamt=(TextView)findViewById(R.id.promptamt);
+         propmtamt = (TextView) findViewById(R.id.promptamt);
+         currentamt=(TextView)findViewById(R.id.currentamount);
+         duedate_date=(TextView)findViewById(R.id.duedate_date);
+         arriers=(TextView)findViewById(R.id.Arriers);
+         promptdate = (TextView) findViewById(R.id.promptdate_month);
          netamt=(TextView)findViewById(R.id.netamt);
         amtpay = (EditText) findViewById(R.id.amt_paying);
         amtpay.setText(propmtamt.getText().toString().trim());
@@ -61,7 +61,7 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         String duedate=intent.getExtras().getString("date");
         String arrears=intent.getExtras().getString("arrears");
         String promptamt=intent.getExtras().getString("promtamt");
-        String promptdate=intent.getExtras().getString("promtdate");
+        String promptdat=intent.getExtras().getString("promtdate");
         String netamount=intent.getExtras().getString("netbill");
         String consumernam =intent.getExtras().getString("consumername");
         String accid =intent.getExtras().getString("accid");
@@ -72,6 +72,7 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         netamt.setText(netamount);
         consumername.setText(consumernam);
         consumerno.setText(accid);
+        promptdate.setText(promptdat);
     }
 
     @Override

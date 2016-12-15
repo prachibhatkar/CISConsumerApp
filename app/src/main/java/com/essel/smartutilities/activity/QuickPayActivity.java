@@ -91,7 +91,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
             Log.i(TAG, "response data: ");
-            Toast.makeText(QuickPayActivity.this, "Response", Toast.LENGTH_LONG).show();
+           //Toast.makeText(QuickPayActivity.this, "Response", Toast.LENGTH_LONG).show();
 
 
         }
@@ -107,11 +107,10 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         String METHOD_NAME = "InputParameters";
         String NAMESPACE = "http://xmlns.oracle.com/pcbpel/adapter/db/sp/CCBGetBillDetailsProc";
         String URL = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
-
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             if(getconsumerno.length()==10) {
-                Request.addProperty("P_ACCT_ID", getconsumerno);
+                Request.addProperty("P_ACCT_ID", "1000039715");
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
             }
@@ -140,18 +139,18 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
             String duedate=  ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
             String currentamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
-            String promptamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("PROMPT_PAYMENT_INCENTIVE").toString();
+            String promptamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
             String netbill=  ((SoapObject)responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
-            String arrears=  ((SoapObject)responceArray.getProperty(0)).getProperty("ARREARS_INCL_CUMM_SURCH").toString();
-             String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty(" CONSUMER_NAME").toString();
-            String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty(" ACCT_ID").toString();
+            String arrears=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
+            String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
+            String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
+            String promptdate =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
 
-            Log.i(TAG, "date: " + duedate);
-            Log.i(TAG, "amt: " + currentamt);
             Intent in = new Intent(this, PayNowActivity.class);
             in.putExtra("date", duedate);
             in.putExtra("amt", currentamt);
             in.putExtra("promtamt", promptamt);
+            in.putExtra("promtdate", promptdate);
             in.putExtra("netbill", netbill);
             in.putExtra("arrears", arrears);
             in.putExtra("consumername", consumername);
@@ -171,7 +170,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
             // startActivity(in);
 
 
-            for (int i = 0; i < responceArray.getPropertyCount(); i++) {
+           /* for (int i = 0; i < responceArray.getPropertyCount(); i++) {
                 Object obj = responceArray.getProperty(i);
                 if (obj instanceof SoapObject) {
                     SoapObject obj1 = (SoapObject) obj;
@@ -185,10 +184,11 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
                             obj1.getProperty("DUE_DT_CASH").toString());
 
                 }
-            }
+            }*/
 
 
-        } catch (Exception e) {
+        }
+         catch (Exception e) {
             Log.e(TAG, "Error: " + e.getMessage());
 
         }

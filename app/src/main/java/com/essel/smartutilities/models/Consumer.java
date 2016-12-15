@@ -25,6 +25,9 @@ public class Consumer implements Serializable {
     public String contact_no;
     public String is_primary;
     public String emailid;
+    public String amount;
+    public String reseiptno;
+
 
 
     public Consumer(String consumer_name, String consumer_no, String address,String is_primary) {
@@ -32,6 +35,13 @@ public class Consumer implements Serializable {
         this.address = address;
         this.consumer_no = consumer_no;
         this.is_primary=is_primary;
+    }
+
+    public Consumer(String amount, String month, String receiptno) {
+        this.amount = amount;
+        this.reseiptno =  month;
+        this.month = receiptno;
+
     }
 
     public Consumer(String transaction_id, String amount, String payment_mode, String acctype, String address, String duedate
@@ -77,6 +87,7 @@ public class Consumer implements Serializable {
         }
         return contacts;
     }
+
 
 
 }

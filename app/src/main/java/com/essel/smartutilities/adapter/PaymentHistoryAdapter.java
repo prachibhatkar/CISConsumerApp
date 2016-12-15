@@ -14,13 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.activity.PaymentHistoryActivity;
 import com.essel.smartutilities.models.Consumer;
+import com.essel.smartutilities.models.PaymentHistory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAdapter.ViewHolder> {
 
     private List<Consumer> mConsumers;
+    private List<PaymentHistory> paymenthistory;
     // Store the context for easy access
     private Context mContext;
     private OnRecycleItemClickListener mListener;
@@ -30,6 +34,15 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
         mConsumers = consumers;
         mContext = context;
         mListener = listener;
+    }
+
+    public PaymentHistoryAdapter(Context mContext, ArrayList<PaymentHistory> paymenthis) {
+
+        paymenthistory=paymenthis;
+        mContext=mContext;
+
+
+
     }
 
     @Override
@@ -45,12 +58,19 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
 
     @Override
     public void onBindViewHolder(PaymentHistoryAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.bind(mConsumers.get(position), mListener);
+        viewHolder.bind(paymenthistory.get(position), mListener);
     }
 
     @Override
     public int getItemCount() {
-        return mConsumers.size();
+
+        /*if (paymenthistory != null && paymenthistory.size() > 0)
+            return paymenthistory.size();
+        else
+            return 0;*/
+
+        return paymenthistory == null ? 0 : paymenthistory.size();
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,23 +85,22 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
         // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.cv);
-            tv_transactionid = (TextView) itemView.findViewById(R.id.lbl_transationid);
-            transactionid = (TextView) itemView.findViewById(R.id.transationid);
-            month = (TextView) itemView.findViewById(R.id.tv_month);
-            tv_amount = (TextView) itemView.findViewById(R.id.amountpaid);
-            date = (TextView) itemView.findViewById(R.id.tv_paymentdate);
+              cardView = (CardView) itemView.findViewById(R.id.cv);
+              tv_transactionid = (TextView) itemView.findViewById(R.id.lbl_transationid);
+              transactionid = (TextView) itemView.findViewById(R.id.transationid);
+              tv_amount = (TextView) itemView.findViewById(R.id.amountpaid);
+              date = (TextView) itemView.findViewById(R.id.tv_month);
+
 //            paytime = (TextView) itemView.findViewById(R.id.tv_paymenttime);
 //            paymode = (TextView) itemView.findViewById(R.id.lbl_paymentmode);
 //            icpaymode = (ImageView) itemView.findViewById(R.id.iv_paymentmode);
 
         }
 
-        public void bind(final Consumer consumer, final OnRecycleItemClickListener listener) {
-            transactionid.setText(consumer.consumer_no);
-            month.setText(consumer.month);
-            tv_amount.setText(consumer.paidamt);
-            date.setText(consumer.payment_date);
+        public void bind(final PaymentHistory payment, final OnRecycleItemClickListener listener) {
+             transactionid.setText(payment.receiptno);
+             tv_amount.setText(payment.amount);
+             date.setText(payment.date);
 //            paymode.setText(consumer.payment_mode);
 //            paytime.setText(consumer.payment_time);
 //            if (consumer.payment_mode.equals("cash"))
@@ -89,12 +108,7 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
 //            else
 //                icpaymode.setBackgroundResource(R.drawable.phone);
 
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(consumer);
-                }
-            });
+
         }
     }
 

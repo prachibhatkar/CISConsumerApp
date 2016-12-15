@@ -4,8 +4,10 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.activity.TipsActivity;
 import com.essel.smartutilities.fragments.TipOneFragment;
 import com.essel.smartutilities.fragments.TipThreeFragment;
 import com.essel.smartutilities.fragments.TipTwoFragment;
@@ -25,9 +27,13 @@ public class TipsAdapter extends FragmentPagerAdapter {
         super(fragmentManager);
         mContext=context;
     }
+
+
+
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
+
+        /*switch (position) {
             case 0:
                 return TipOneFragment.newInstance(0, mContext.getString(R.string.tips));
             case 1:
@@ -35,9 +41,10 @@ public class TipsAdapter extends FragmentPagerAdapter {
             case 2:
                 return TipThreeFragment.newInstance(2, mContext.getString(R.string.tips));
             default:
-                return null;
-        }
-    }
+
+        }*/
+        return null;
+   }
    /* public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:

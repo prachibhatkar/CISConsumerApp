@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +30,7 @@ import com.essel.smartutilities.adapter.TipsAdapter;
 
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.fragments.TipOneFragment;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.utility.App;
@@ -58,7 +62,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
     private TipsAdapter tipsAdapter;
     private Context mContext;
-    private int NUM_PAGES = 10;
+  //  private int NUM_PAGES = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,17 +82,17 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
             }
         });
 
-        init();
-        intext();
+        //init();
+        //intext();
 
         if (CommonUtils.isNetworkAvaliable(this)) {
-            JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
-            App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
+          //  JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
+          //  App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
         } else
             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
-        //setupUI();
-        // loadData();
+         setupUI();
+         loadData();
 
 
 
@@ -99,7 +103,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
     }
 
-    private void init() {
+  /*  private void init() {
         for (int i = 0; i < IMAGES.length; i++)
             // ImagesArray.add(IMAGES[i]);
 
@@ -146,12 +150,14 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
         NUM_PAGES = TipText.length;
 
-    }
+    }*/
 
 
-   /* private void setupUI() {
+    private void setupUI() {
         vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+
+
 
         //tabLayout=(TabLayout)findViewById(R.id.tablayout);
 
@@ -170,10 +176,10 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
     };
 
     private void loadData() {
-        tipsAdapter = new TipsAdapter(this, getSupportFragmentManager());
-        vp_tips.setAdapter(tipsAdapter);
-        vp_tips.addOnPageChangeListener(onPageChangedListener);
-        circlePageIndicator.setViewPager(vp_tips);
+         tipsAdapter = new TipsAdapter(this,getSupportFragmentManager());
+         vp_tips.setAdapter(tipsAdapter);
+         vp_tips.addOnPageChangeListener(onPageChangedListener);
+         circlePageIndicator.setViewPager(vp_tips);
 
         // tabLayout.setupWithViewPager(vp_tips);
 
@@ -182,9 +188,15 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
 
     // circlePageIndicator.OnScrollChangeListener(new ViewPager.OnPageChangeListener() {
-   /* ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
+    public ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
+
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                frag();
+
+
+
 
 
         }
@@ -200,8 +212,22 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
         public void onPageScrollStateChanged(int state) {
 
 
+
+
         }
-    };*/
+    };
+
+    public void frag() {
+
+        Fragment fragment = new TipOneFragment();
+        FragmentManager fragmanager = this.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
+        fragmentTransaction.add(R.id.container, fragment);
+        fragmentTransaction.commit();
+
+
+    }
+
 
     public void onBackPressed() {
 

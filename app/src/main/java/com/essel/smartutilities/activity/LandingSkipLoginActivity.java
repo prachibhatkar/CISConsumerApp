@@ -230,12 +230,10 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
             String promptamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
             String netbill=  ((SoapObject)responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
             String arrears=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
-            String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty(" CONSUMER_NAME").toString();
-            String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty(" ACCT_ID").toString();
-            String promptdate =  ((SoapObject)responceArray.getProperty(0)).getProperty(" ATTRIBUTE19").toString();
+            String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
+            String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
+            String promptdate =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
 
-             Log.i(TAG, "date: " + duedate);
-             Log.i(TAG, "amt: " + currentamt);
              Intent in = new Intent(this, PayNowActivity.class);
              in.putExtra("date", duedate);
              in.putExtra("amt", currentamt);
@@ -260,7 +258,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
            // startActivity(in);
 
 
-            for (int i = 0; i < responceArray.getPropertyCount(); i++) {
+           /* for (int i = 0; i < responceArray.getPropertyCount(); i++) {
                 Object obj = responceArray.getProperty(i);
                 if (obj instanceof SoapObject) {
                     SoapObject obj1 = (SoapObject) obj;
@@ -274,7 +272,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
                             obj1.getProperty("DUE_DT_CASH").toString());
 
                 }
-            }
+            }*/
 
 
         } catch (Exception e) {

@@ -48,7 +48,7 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
-       setnotificationArrayList();
+        setnotificationArrayList();
 
         NotificationCardAdapter adapter = new NotificationCardAdapter(mContext,notification);
         recyclerView.setAdapter(adapter);
@@ -56,7 +56,7 @@ public class NotificationActivity extends Activity implements View.OnClickListen
 
     private void setnotificationArrayList() {
 
-        notification=new ArrayList<>();
+         notification=new ArrayList<>();
             NotificationCard mNotificationCard = new NotificationCard();
             for (int i = 0; i < 5; i++) {
                 mNotificationCard.message="hfg dsfhojd sdfsdnj hvjhv ikgg bg dbvjbv fdnldsj sfnsld sfd ";
