@@ -29,6 +29,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.ComplaintsTable;
 import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
@@ -70,6 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createFaqTable(db);
         createTipsTable(db);
         createContactUsTable(db);
+        createComplaintsTable(db);
 
 
 
@@ -139,6 +141,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ContactUsTable.Cols.ELECTRICITY_THEFT_HELP + " VARCHAR, " +
                 ContactUsTable.Cols.IGRC_NUMBER + " VARCHAR ";
         createTable(db, ContactUsTable.TABLE_NAME, contactusTableFields);
+    }
+
+    private void createComplaintsTable(SQLiteDatabase db) {
+        String complaintsTableFields = ComplaintsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ComplaintsTable.Cols.COMPLAINT_TYPE+ " VARCHAR, " +
+                ComplaintsTable.Cols.COMPLAINT_REMARK + " VARCHAR, " +
+                ComplaintsTable.Cols.COMPLAINT_IMG + " VARCHAR, " +
+                ComplaintsTable.Cols.COMPLAINT_Id + " VARCHAR " ;
+        createTable(db,  ComplaintsTable.TABLE_NAME, complaintsTableFields);
     }
 
 

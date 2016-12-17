@@ -82,31 +82,28 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
             }
         });
 
-        //init();
-        //intext();
+
 
         if (CommonUtils.isNetworkAvaliable(this)) {
-          //  JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
-          //  App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
+            JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
+            App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
         } else
             Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+       // init();
+       // intext();
 
-         setupUI();
-         loadData();
-
-
-
-
-
-
-
+     //    setupUI();
+     //    loadData();
 
     }
 
-  /*  private void init() {
-        for (int i = 0; i < IMAGES.length; i++)
-            // ImagesArray.add(IMAGES[i]);
+   private void init() {
+        for (int i = 0; i < IMAGES.length; i++) {
 
+            ImagesArray.add(imagesurl);
+            ImagesArray.add(IMAGES[i]);
+
+        }
             vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
 
 
@@ -150,7 +147,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
         NUM_PAGES = TipText.length;
 
-    }*/
+    }
 
 
     private void setupUI() {
@@ -193,11 +190,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                frag();
-
-
-
-
+              //  frag();
 
         }
 
@@ -246,12 +239,15 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
                         if(jsonResponse.tips.size()!=0) {
 
                                 imagesurl = jsonResponse.tips.get(0).image;
+                            Log.i(label, "Tipppppppppppp:" + imagesurl);
 
                                // nv.setImageUrl(imagesurl, this.getLoaderManager());
                                 /*Picasso.with(this)
                                         .load(imagesurl)
                                         .resize(100, 100)
                                         .into(img1));*/
+                             init();
+                             intext();
 
                             Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
 

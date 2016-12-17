@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -28,8 +29,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.GetComplaintIdActivity;
 import com.essel.smartutilities.activity.ServiceStatusActivity;
+import com.essel.smartutilities.adapter.PaymentHistoryAdapter;
 import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.Complaints;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.PaymentHistory;
 import com.essel.smartutilities.models.ServiceType;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -39,12 +44,18 @@ import com.essel.smartutilities.webservice.WebRequests;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,7 +75,9 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     String complaintremark;
     EditText complaint_remark;
     String image;
+    private String TAG = "responsedataaaaa";
     private ArrayList<String> complaints;
+    Complaints complaint = new Complaints();
     @Override
     public void onClick(View v) {
 
@@ -78,6 +91,8 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         if(v==btn_submitcomplaint) {
          //  if (isBlankInput()) {
 
+
+
                 JSONObject obj = new JSONObject();
                 try {
                     obj.put("complainttype", complainttype.getSelectedItemPosition());
@@ -89,10 +104,12 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                }
 
                 if( CommonUtils.isNetworkAvaliable(getActivity())) {
-                    JsonObjectRequest request = WebRequests.addComplaint(getActivity(), Request.Method.POST, AppConstants.URL_POST_ADD_COMPLAINT, AppConstants.REQUEST_POST_ADD_COMPLAINT,
-                            this,obj,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
+                    AsyncCallWS task = new AsyncCallWS();
+                    task.execute();
+                   // JsonObjectRequest request = WebRequests.addComplaint(getActivity(), Request.Method.POST, AppConstants.URL_POST_ADD_COMPLAINT, AppConstants.REQUEST_POST_ADD_COMPLAINT,
+                       //     this,obj,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
 
-                    App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_ADD_COMPLAINT);
+                 //   App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_ADD_COMPLAINT);
                 }else
                     Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
@@ -107,6 +124,109 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
         }
     }
+
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+
+
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "onPreExecute");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.i(TAG, "doInBackground");
+            getComplaintId();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Log.i(TAG, "onPostExecute");
+            Log.i(TAG, "response data: ");
+
+            //   Toast.makeText(LandingSkipLoginActivity.this, "Response", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+
+    public void getComplaintId() {
+
+        String getconsumerno = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_NO)).toString();
+        String getconsumercity = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_CITY)).toString();
+        String getconsumermobileno = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.MOBILE)).toString();
+        String remark =  String.valueOf(complaint_remark.getText());
+        String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/CreateComplaint!2.0*soa_5bb8bf43-cb4e-4110-9180-3fda9cacc35e/createcomplaintbpelprocess_client_ep";
+        String METHOD_NAME = "requestElement";
+        String NAMESPACE = "http://www.example.org";
+        String URL = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/CreateComplaint!2.0*soa_5bb8bf43-cb4e-4110-9180-3fda9cacc35e/createcomplaintbpelprocess_client_ep";
+
+        try {
+            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
+            // if(getconsumerno.length()==10) {
+            Request.addProperty("accId", "1000039175");
+            Request.addProperty("city", "Nagpur");
+            Request.addProperty("service", "Electricity");
+            Request.addProperty("caseType", "Meter Burnt Complaint");
+            Request.addProperty("mobile", "9766325977");
+            Request.addProperty("remark", "Bill Adjustment");
+            ///  }
+           /* else{
+                Request.addProperty("P_ACCT_ID", getconsumerno);
+                Request.addProperty("P_BILL_ID", "");
+                Request.addProperty("P_MTR_ID", "OLD#E-NG");
+            }*/
+
+            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            soapEnvelope.dotNet = true;
+
+            soapEnvelope.setOutputSoapObject(Request);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+            androidHttpTransport.debug = true;
+
+
+            androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
+            SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn);
+
+            String caseid =((SoapObject) soapEnvelope.bodyIn).getProperty("caseId").toString();
+            String message =((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString();
+            Log.i(TAG, "caseId" +caseid);
+            Log.i(TAG, "caseId" +message);
+
+            DatabaseManager.saveComplaint(getActivity(),complaint);
+            Intent in = new Intent(getActivity(), GetComplaintIdActivity.class);
+            in.putExtra("caseid", caseid);
+            in.putExtra("message", message);
+            startActivity(in);
+
+           // final SoapObject response = (SoapObject) soapEnvelope.getResponse();
+           // SoapPrimitive response1 = (SoapPrimitive) soapEnvelope.getResponse();
+
+
+
+           // SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
+          //  Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14"));
+
+           // String paymenthistory=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14").toString();
+
+
+
+
+
+
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error: " + e.getMessage());
+
+        }
+
+
+    }
+
+
+
+
 
     private boolean isBlankInput() {
         boolean b = true;

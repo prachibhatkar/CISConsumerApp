@@ -34,6 +34,12 @@ TextView tv_complaintid,tv_complaintmsg;
         tv_complaintid=(TextView)findViewById(R.id.tv_complaintid);
         tv_complaintmsg=(TextView)findViewById(R.id.tv_complaintmsg);
 
+        Intent intent = getIntent();
+        String caseid = intent.getExtras().getString("caseid");
+        String message=intent.getExtras().getString("message");
+        tv_complaintid.setText(caseid);
+        tv_complaintmsg.setText(message);
+
         btn_submitcomplaintid=(Button)findViewById(R.id.btn_submitcomplaintid);
         btn_submitcomplaintid.setOnClickListener(this);
 

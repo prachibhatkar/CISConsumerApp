@@ -1,5 +1,6 @@
 package com.essel.smartutilities.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.CommonUtils;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -33,6 +35,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     static EditText consumerno;
     Spinner sp_city;
     private String TAG = "responsedataaaaa";
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,16 +103,37 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         return flag;
     }
 
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
     @Override
     public void onClick(View v) {
         Intent in;
         switch (v.getId()) {
             case R.id.BTNSubmit:
                 if (validate()) {
-                    AsyncCallWS task = new AsyncCallWS();
-                    task.execute();
-                    //  in = new Intent(this, PayNowActivity.class);
-                    //  startActivity(in);
+                    if (CommonUtils.isNetworkAvaliable(this)) {
+                        AsyncCallWS task = new AsyncCallWS();
+                        task.execute();
+                        //  in = new Intent(this, PayNowActivity.class);
+                        //  startActivity(in);
+                        //
+                        }
+                    else
+                        Toast.makeText(this, " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+
                 }
                 break;
             case R.id.action_about_us:
@@ -163,6 +187,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
+            initProgressDialog();
             getBillDetails();
             return null;
         }
@@ -171,6 +196,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
             Log.i(TAG, "response data: ");
+            dismissDialog();
          //   Toast.makeText(LandingSkipLoginActivity.this, "Response", Toast.LENGTH_LONG).show();
 
 
@@ -233,7 +259,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
             String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
             String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
             String promptdate =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
-
+             dismissDialog();
              Intent in = new Intent(this, PayNowActivity.class);
              in.putExtra("date", duedate);
              in.putExtra("amt", currentamt);

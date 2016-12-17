@@ -31,12 +31,14 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.ComplaintsTable;
 import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 import com.essel.smartutilities.db.tables.TipsTable;
 import com.essel.smartutilities.models.AboutUs;
+import com.essel.smartutilities.models.Complaints;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.Faq;
@@ -65,6 +67,14 @@ public class DatabaseManager {
         if (contactus != null) {
             ContentValues values = getContentValuesContactUsTable(context, contactus);
             savecontactdetail(context, ContactUsTable.CONTENT_URI, values, null);
+
+        }
+    }
+
+    public static void saveComplaint(Context context, Complaints complaint) {
+        if (complaint != null) {
+            ContentValues values = getContentValuesComplaintsTable(context, complaint);
+            savecomplaint(context, ComplaintsTable.CONTENT_URI, values, null);
 
         }
     }
@@ -173,6 +183,17 @@ public class DatabaseManager {
         Log.i("Tag", "savecontactdetail:" + newRowId);
     }
 
+
+    private static void savecomplaint(Context context, Uri table, ContentValues values, String condition) {
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(ComplaintsTable.TABLE_NAME, null, values);
+        // Log.i("Tag", "saveAboutUs:" + newRowId);
+        Log.i("Tag", "savecomplaint:" + newRowId);
+    }
+
 //
 
 
@@ -228,6 +249,22 @@ public class DatabaseManager {
             values.put(ContactUsTable.Cols.CONSUMER_PORTAL, contactus.customer_portal);
             values.put(ContactUsTable.Cols.ELECTRICITY_THEFT_HELP, contactus.electricity_theft_help_no);
             values.put(ContactUsTable.Cols.IGRC_NUMBER, contactus.igrc_no);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
+
+    private static ContentValues getContentValuesComplaintsTable(Context context,Complaints complaints) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(ComplaintsTable.Cols.COMPLAINT_TYPE, complaints.type);
+            values.put(ComplaintsTable.Cols.COMPLAINT_REMARK, complaints.remark);
+            values.put(ComplaintsTable.Cols.COMPLAINT_IMG, complaints.img);
+            values.put(ComplaintsTable.Cols.COMPLAINT_Id, complaints.complaintid);
+
 
         } catch (Exception e) {
             e.printStackTrace();

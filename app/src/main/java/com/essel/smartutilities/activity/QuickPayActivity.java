@@ -1,5 +1,6 @@
 package com.essel.smartutilities.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     private Button Submit;
     private TextView tv_city;
     private String TAG = "responsedataaaaa";
+    ProgressDialog pDialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,20 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(this);
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
 
 
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
@@ -83,6 +99,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
+            initProgressDialog();
             getBillDetails();
             return null;
         }
@@ -91,6 +108,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
             Log.i(TAG, "response data: ");
+            dismissDialog();
            //Toast.makeText(QuickPayActivity.this, "Response", Toast.LENGTH_LONG).show();
 
 
@@ -110,7 +128,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             if(getconsumerno.length()==10) {
-                Request.addProperty("P_ACCT_ID", "1000039715");
+                Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
             }
@@ -145,7 +163,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
             String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
             String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
             String promptdate =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
-
+             dismissDialog();
             Intent in = new Intent(this, PayNowActivity.class);
             in.putExtra("date", duedate);
             in.putExtra("amt", currentamt);

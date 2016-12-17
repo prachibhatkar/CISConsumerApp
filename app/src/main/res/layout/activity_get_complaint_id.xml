@@ -48,12 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical">
+
 
         <TextView
             android:layout_width="match_parent"
@@ -61,13 +56,29 @@
             android:id="@+id/tv_complaintmsg"
             android:text="Your Complaint Registered with us "/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_complaintid"
-            android:text="Complaint Number :5478124589 "/>
+            android:id="@+id/lbl_complaintid"
+            android:text="Complaint ID: "/>
 
-</LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_complaintid"
+                android:text=" "/>
+
+
+        </LinearLayout>
+
+
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_submitcomplaintid"
@@ -84,4 +95,4 @@
         android:layout_marginTop="10dp" />
 
 </LinearLayout>
-    </LinearLayout>
+</LinearLayout>

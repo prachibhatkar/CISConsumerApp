@@ -103,7 +103,8 @@ public class ComplaintActivity extends AppCompatActivity {
 
     public void onBackPressed() {
 
-        super.onBackPressed();
+        Intent in = new Intent(this, ActivityLoginLanding.class);
+        startActivity(in);
 
 
     }

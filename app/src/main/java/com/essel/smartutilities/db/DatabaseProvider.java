@@ -30,6 +30,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 import com.essel.smartutilities.db.tables.AboutUsTable;
+import com.essel.smartutilities.db.tables.ComplaintsTable;
 import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
@@ -91,6 +92,12 @@ public class DatabaseProvider extends ContentProvider {
                         selection, selectionArgs, sortOrder);
                 break;
             }
+
+            case ComplaintsTable.PATH_TOKEN: {
+                result = doQuery(db, uri, ComplaintsTable.TABLE_NAME, projection,
+                        selection, selectionArgs, sortOrder);
+                break;
+            }
         }
         return result;
     }
@@ -134,6 +141,11 @@ public class DatabaseProvider extends ContentProvider {
                         ContactUsTable.CONTENT_URI, uri, values);
                 break;
             }
+            case ComplaintsTable.PATH_TOKEN: {
+                result = doInsert(db, ComplaintsTable.TABLE_NAME,
+                       ComplaintsTable.CONTENT_URI, uri, values);
+                break;
+            }
 
         }
 
@@ -168,6 +180,10 @@ public class DatabaseProvider extends ContentProvider {
             }
             case ContactUsTable.PATH_TOKEN: {
                 table = ContactUsTable.TABLE_NAME;
+                break;
+            }
+            case ComplaintsTable.PATH_TOKEN: {
+                table = ComplaintsTable.TABLE_NAME;
                 break;
             }
         }
@@ -220,6 +236,11 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
+            case ComplaintsTable.PATH_TOKEN: {
+                result = doDelete(db, uri, ComplaintsTable.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            }
         }
 
         return result;
@@ -256,6 +277,11 @@ public class DatabaseProvider extends ContentProvider {
             }
             case ContactUsTable.PATH_TOKEN: {
                 result = doUpdate(db, uri, ContactUsTable.TABLE_NAME, selection,
+                        selectionArgs, values);
+                break;
+            }
+            case ComplaintsTable.PATH_TOKEN: {
+                result = doUpdate(db, uri, ComplaintsTable.TABLE_NAME, selection,
                         selectionArgs, values);
                 break;
             }

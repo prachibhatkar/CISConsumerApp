@@ -89,7 +89,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-    if(v==actionok)
+     if(v==actionok)
 
     {
         dialogSucccess.hide();

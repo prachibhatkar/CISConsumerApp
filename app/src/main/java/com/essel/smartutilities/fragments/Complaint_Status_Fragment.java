@@ -1,18 +1,32 @@
 package com.essel.smartutilities.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.activity.GetComplaintIdActivity;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
+
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.Arrays;
 
@@ -36,6 +50,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
     TextView tv_consumerid,tv_complainttype,tv_complaintraised,tv_complaintstatus;
     Spinner complaintid;
+    private String TAG = "responsedataaaaa";
 
     private OnFragmentInteractionListener mListener;
     private TextView tv_complaintmsg;
@@ -87,8 +102,125 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         complaintid.setAdapter(dataAdapter);
 
+          complaintid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                if (CommonUtils.isNetworkAvaliable(getActivity())) {
+
+                        AsyncCallWS task = new AsyncCallWS();
+                        task.execute();
+
+
+                } else
+                    Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+
+
+                // your code here
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+
+        });
+
         return rootView;
+
     }
+
+
+
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+
+
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "onPreExecute");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.i(TAG, "doInBackground");
+            getComplaintStatus();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Log.i(TAG, "onPostExecute");
+            Log.i(TAG, "response data: ");
+
+            //   Toast.makeText(LandingSkipLoginActivity.this, "Response", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    public void getComplaintStatus() {
+
+        String orderid = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_NO)).toString();
+        String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerCaseDetails/getconsumercasedetailsbpelprocess_client_ep";
+        String METHOD_NAME = "requestElement";
+        String NAMESPACE = "http://www.example.org";
+        String URL = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerCaseDetails/getconsumercasedetailsbpelprocess_client_ep";
+
+        try {
+            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            Request.addProperty("caseOrdId", "4750936879");
+            Request.addProperty("city", "Nagpur");
+            Request.addProperty("service", "Electricity");
+
+
+            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            soapEnvelope.dotNet = true;
+
+            soapEnvelope.setOutputSoapObject(Request);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+            androidHttpTransport.debug = true;
+
+
+            androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
+            SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn);
+
+            String accid =((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString();
+            String status1 =((SoapObject) soapEnvelope.bodyIn).getProperty("status").toString();
+            String type1 =((SoapObject) soapEnvelope.bodyIn).getProperty("type").toString();
+            Log.i(TAG, "caseId" +type1);
+            Log.i(TAG, "caseId" +accid);
+            Log.i(TAG, "caseId" +status1);
+
+             tv_consumerid.setText(accid);
+             tv_complaintstatus.setText(status1);
+             tv_complainttype.setText(type1);
+
+
+            // final SoapObject response = (SoapObject) soapEnvelope.getResponse();
+            // SoapPrimitive response1 = (SoapPrimitive) soapEnvelope.getResponse();
+
+
+
+            // SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
+            //  Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14"));
+
+            // String paymenthistory=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14").toString();
+
+
+
+
+
+
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error: " + e.getMessage());
+
+        }
+
+
+    }
+
 
     private void initialize(View rootView){
         tv_consumerid=(TextView)rootView.findViewById(R.id.tv_consumerid);

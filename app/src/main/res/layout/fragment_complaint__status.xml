@@ -43,7 +43,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/tv_complainttype"
     android:layout_marginLeft="5dp"
-    android:text="Meter Complaint"
+    android:text=""
     android:textColor="@color/colorPrimaryDarkText"/>
 
 
@@ -71,7 +71,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/tv_complaintstatus"
-    android:text="Pending"
+    android:text=""
     android:layout_marginLeft="5dp"
     android:textColor="@color/colorPrimaryDarkText"/>
 
