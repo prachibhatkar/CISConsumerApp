@@ -77,7 +77,7 @@
 
 
     <string-array name="complaintid">
-        <item>101245789</item>
+        <item>Select ComplaintId</item>
         <item>21457854</item>
         <item>514258478</item>
         <item>321457896</item>
