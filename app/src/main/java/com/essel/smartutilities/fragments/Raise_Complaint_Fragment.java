@@ -75,9 +75,11 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     String complaintremark;
     EditText complaint_remark;
     String image;
+    Boolean flag=false;
+
     private String TAG = "responsedataaaaa";
     private ArrayList<String> complaints;
-    Complaints complaint = new Complaints();
+
     @Override
     public void onClick(View v) {
 
@@ -89,7 +91,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     }
 
         if(v==btn_submitcomplaint) {
-         //  if (isBlankInput()) {
+          if (isBlankInput()) {
 
 
 
@@ -106,6 +108,14 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                 if( CommonUtils.isNetworkAvaliable(getActivity())) {
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
+
+                    if(flag=true){
+
+                        callApi();
+
+                    }
+
+
                    // JsonObjectRequest request = WebRequests.addComplaint(getActivity(), Request.Method.POST, AppConstants.URL_POST_ADD_COMPLAINT, AppConstants.REQUEST_POST_ADD_COMPLAINT,
                        //     this,obj,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
 
@@ -115,12 +125,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
 
 
-
-                //  Intent i = new Intent(getActivity(),GetComplaintIdActivity.class);
-               // startActivity(i);
-
-
-           // }
+            }
 
         }
     }
@@ -143,11 +148,42 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         @Override
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
-            Log.i(TAG, "response data: ");
+            flag=true;
 
-            //   Toast.makeText(LandingSkipLoginActivity.this, "Response", Toast.LENGTH_LONG).show();
+
 
         }
+
+
+
+    }
+
+
+    public void callApi(){
+
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("complainttype", complainttype.getSelectedItemPosition());
+            obj.put("consumer_remark", complaintremark);
+            obj.put("complaint_img", image);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if( CommonUtils.isNetworkAvaliable(getActivity())) {
+
+            JsonObjectRequest request = WebRequests.addComplaint(getActivity(), Request.Method.POST, AppConstants.URL_POST_ADD_COMPLAINT, AppConstants.REQUEST_POST_ADD_COMPLAINT,
+                    this,obj,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
+
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_ADD_COMPLAINT);
+        }
+        else
+            Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+
+
+
     }
 
 
@@ -157,6 +193,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         String getconsumercity = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_CITY)).toString();
         String getconsumermobileno = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.MOBILE)).toString();
         String remark =  String.valueOf(complaint_remark.getText());
+        String complainttype1 = String.valueOf(complainttype.getSelectedItemPosition());
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/CreateComplaint!2.0*soa_5bb8bf43-cb4e-4110-9180-3fda9cacc35e/createcomplaintbpelprocess_client_ep";
         String METHOD_NAME = "requestElement";
         String NAMESPACE = "http://www.example.org";
@@ -193,8 +230,18 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             String message =((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString();
             Log.i(TAG, "caseId" +caseid);
             Log.i(TAG, "caseId" +message);
+            Complaints complaint = new Complaints();
+            complaint.img=image;
+            complaint.type=complainttype1;
+            complaint.complaintid=caseid;
+            complaint.remark=remark;
 
-            DatabaseManager.saveComplaint(getActivity(),complaint);
+            //DatabaseManager.saveComplaint(getActivity(),complaint);
+              DatabaseManager.saveComplaint(getActivity(),complaint);
+
+
+
+
             Intent in = new Intent(getActivity(), GetComplaintIdActivity.class);
             in.putExtra("caseid", caseid);
             in.putExtra("message", message);
@@ -258,6 +305,8 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             //saveImageToStorage();
             iv.setVisibility(View.VISIBLE);
             image=CommonUtils.getBitmapEncodedString(photo);
+            Log.i(TAG, "hygt " +  image);
+
 
 
           //  ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -441,8 +490,8 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
                         Log.i(label, "hyif " + jsonResponse.result);
-                        Intent i = new Intent(getActivity(),GetComplaintIdActivity.class);
-                        startActivity(i);
+                      //  Intent i = new Intent(getActivity(),GetComplaintIdActivity.class);
+                       // startActivity(i);
 
                     }
                     if(jsonResponse.message!= null) {

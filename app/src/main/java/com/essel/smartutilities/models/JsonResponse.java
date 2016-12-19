@@ -15,6 +15,7 @@ JsonResponse {
     public ArrayList<Tips> tips;
     public ArrayList<Services> type;
     public ArrayList<Complaints> complaint_type;
+    public ArrayList<Complaints> locate_us;
     public  AboutUs aboutus1;
     public  ArrayList<Services> connectiontype;
     public  ArrayList<TarifCatagory> tariffCategory;

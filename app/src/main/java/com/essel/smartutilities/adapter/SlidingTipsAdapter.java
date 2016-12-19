@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static android.support.v7.appcompat.R.id.image;
 
 public class SlidingTipsAdapter extends PagerAdapter {
 
@@ -31,6 +34,12 @@ public class SlidingTipsAdapter extends PagerAdapter {
         this.IMAGES=IMAGES;
         inflater = LayoutInflater.from(context);
     }
+//    public SlidingTipsAdapter(Context context, ArrayList<String> IMAGES) {
+//        this.context = context;
+//       // this.tiptextdata=textdata;
+//        this.IMAGES=IMAGES;
+//        inflater = LayoutInflater.from(context);
+//    }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
@@ -51,13 +60,23 @@ public class SlidingTipsAdapter extends PagerAdapter {
                 .findViewById(R.id.image);
 
         final TextView textView = (TextView) imageLayout
-                .findViewById(R.id.tiptextarea);
+               .findViewById(R.id.tiptextarea);
 
-        imageView.setImageResource(Integer.parseInt(IMAGES.get(position)));
-        textView.setText(tiptextdata.get(position));
+      //  imageView.setImageResource(Integer.parseInt(IMAGES.get(position)));
 
-        view.addView(imageLayout, 0);
+       // for(int i=0;i<tiptextdata.size();i++) {
+            textView.setText(tiptextdata.get(position));
+       // }
 
+
+         view.addView(imageLayout, 0);
+
+       // for(int i=0;i<IMAGES.size();i++) {
+            Picasso.with(context)
+                    .load(IMAGES.get(position))
+                    .resize(100, 100)
+                    .into(imageView);
+      //  }
         return imageLayout;
     }
 

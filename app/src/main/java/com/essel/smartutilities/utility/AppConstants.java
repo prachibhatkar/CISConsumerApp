@@ -36,6 +36,9 @@ public class AppConstants {
     public static final String REQUEST_GET_COMPLAINT_TYPE = "get-complaint-type/";
     public static final String URL_GET_COMPLAINT_TYPE = BASE_URL + REQUEST_GET_COMPLAINT_TYPE;
 
+    public static final String REQUEST_GET_LOCATE_US= "get-complaint-type/";
+    public static final String URL_GET_LOCATE_US = BASE_URL + REQUEST_GET_LOCATE_US;
+
 
     public static final String REQUEST_GET_CONNECTION_TYPE = "get-service-subtype/";
     public static final String URL_GET_CONNECTION_TYPE = BASE_URL + REQUEST_GET_CONNECTION_TYPE;

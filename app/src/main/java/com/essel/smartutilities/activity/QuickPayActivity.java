@@ -31,6 +31,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     private TextInputLayout inputLayoutconsumerno;
     private Button Submit;
     private TextView tv_city;
+    String consumer_number;
     private String TAG = "responsedataaaaa";
     ProgressDialog pDialog;
 
@@ -42,6 +43,8 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
     private void initialize() {
         consumerno = (EditText) findViewById(R.id.Consumerno);
+        consumer_number=(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO)).toString();
+        consumerno.setText(consumer_number);
         tv_city = (TextView) findViewById(R.id.tv_city);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);

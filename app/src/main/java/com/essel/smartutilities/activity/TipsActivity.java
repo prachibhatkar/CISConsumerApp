@@ -68,7 +68,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tips);
-        nv = (NetworkImageView) findViewById(R.id.img1);
+       // nv = (NetworkImageView) findViewById(R.id.img1);
         //img1=(ImageView)findViewById(R.id.img1);
 
 
@@ -100,17 +100,17 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
    private void init() {
         for (int i = 0; i < IMAGES.length; i++) {
 
-            ImagesArray.add(imagesurl);
-            ImagesArray.add(IMAGES[i]);
+          //  ImagesArray.add(imagesurl);
+           // ImagesArray.add(IMAGES[i]);
 
         }
             vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
 
-
-        vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray, TipTextArray));
+           vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray, TipTextArray));
+      // vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray));
 
         //  mPager.setPageTransformer(true, new DepthPageTransform());
-        CirclePageIndicator indicator = (CirclePageIndicator)
+          CirclePageIndicator indicator = (CirclePageIndicator)
                 findViewById(R.id.indicator);
 
         indicator.setViewPager(vp_tips);
@@ -127,12 +127,13 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
     private void intext() {
         for (int i = 0; i < TipText.length; i++)
-            TipTextArray.add(TipText[i]);
+           // TipTextArray.add(TipText[i]);
 
-        vp_tips = (ViewPager) findViewById(R.id.pager);
+          vp_tips = (ViewPager) findViewById(R.id.vp_tips_pager);
 
 
         vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray, TipTextArray));
+       // vp_tips.setAdapter(new SlidingTipsAdapter(this, ImagesArray));
 
         //  mPager.setPageTransformer(true, new DepthPageTransform());
         CirclePageIndicator indicator = (CirclePageIndicator)
@@ -238,16 +239,21 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
                         if(jsonResponse.tips.size()!=0) {
 
-                                imagesurl = jsonResponse.tips.get(0).image;
-                            Log.i(label, "Tipppppppppppp:" + imagesurl);
+                            for(int i=0;i<jsonResponse.tips.size();i++) {
+
+                                // imagesurl = jsonResponse.tips.get(0).image;
+                                ImagesArray.add(jsonResponse.tips.get(i).image);
+                                TipTextArray.add(jsonResponse.tips.get(i).message);
+                                Log.i(label, "Tipppppppppppp:" + imagesurl);
+                            }
 
                                // nv.setImageUrl(imagesurl, this.getLoaderManager());
-                                /*Picasso.with(this)
+                               /* Picasso.with(this)
                                         .load(imagesurl)
                                         .resize(100, 100)
                                         .into(img1));*/
-                             init();
-                             intext();
+                            init();
+                          //  intext();
 
                             Log.i(label, "Tipppppppppppp:" + jsonResponse.tips);
 

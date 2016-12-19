@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.ServiceType;
+import com.essel.smartutilities.utility.App;
+import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.webservice.WebRequests;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -43,7 +53,7 @@ import java.util.logging.Handler;
  * Use the {@link Locate_Us_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSelectedListener,ServiceCaller {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -135,6 +145,16 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
         View rootView = inflater.inflate(R.layout.fragment_locate__us, container, false);
 
         sp_location = (Spinner) rootView.findViewById(R.id.sp_location);
+
+
+        if (CommonUtils.isNetworkAvaliable(getActivity())) {
+            JsonObjectRequest request = WebRequests.getLocateUs(getActivity(), Request.Method.GET, AppConstants.URL_GET_LOCATE_US, AppConstants.REQUEST_GET_LOCATE_US, this);
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_LOCATE_US);
+        } else
+
+            Toast.makeText(getActivity(), " Please Check  Internet Connection ", Toast.LENGTH_SHORT).show();
+
+
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -410,4 +430,55 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     }
 
 
+    @Override
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+        switch (label) {
+            case AppConstants.REQUEST_GET_LOCATE_US: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+//
+                        Log.i(label, "hygt " + jsonResponse);
+                        // Log.i(label, "hyif " + jsonResponse.complaint_type);
+                        if(jsonResponse.locate_us.size()!=0)
+                        {
+
+                            for(int i = 1 ; i <= jsonResponse.locate_us.size(); i++) {
+
+                                ServiceType complaint1=new ServiceType();
+
+                                Log.i(label, "complainttype" + jsonResponse.complaint_type);
+                                complaint1.setType(jsonResponse.complaint_type.get(i-1).type);
+                                complaint1.setId(jsonResponse.complaint_type.get(i-1).id.toString().trim());
+                             //   complaints.add(i,complaint1.getType());
+                                Log.i(label, "complainttype" + jsonResponse.complaint_type);
+
+
+
+                            }
+
+
+                        }
+                        if (jsonResponse.authorization != null) {
+                            CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
+//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(getContext(), jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+
+                    }
+                    break;
+                }
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onAsyncFail(String message, String label, NetworkResponse response) {
+
+
+
+
+    }
 }
