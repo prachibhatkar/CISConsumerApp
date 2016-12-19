@@ -33,6 +33,8 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
     Toolbar toolbar;
     AppCompatButton buttonRegister, buttonVerify;
     EditText otp;
+    TextView resend,textViewConsumerName,textViewConsumerMobileNo,textViewConsumerAddress,textViewConsumerConnectionType;
+
     TextView maintitle, action_resend, msg;
     ProgressDialog pDialog;
 
@@ -44,6 +46,23 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
         setSupportActionBar(toolbar);
         maintitle = (TextView) findViewById(R.id.title_bar);
         maintitle.setText("Add Account");
+        textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
+            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3) != null)
+            textViewConsumerAddress.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
+        textViewConsumerConnectionType = (TextView) findViewById(R.id.textConsumerConnectionType);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE) != null)
+            textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
+
+        textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
+            textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
         initialize();
     }
 
@@ -86,7 +105,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                 callAdd();
             } else
                 Toast.makeText(this, "Enter valid OTP", Toast.LENGTH_SHORT).show();
-//            Intent i = new Intent(this, AddAccountActivity4.class);
+//            Intent i = new Intent(this, AddAccountActivity5.class);
 //            startActivity(i);
         }
         if (v.getId() == R.id.action_resend)
@@ -110,7 +129,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            JsonObjectRequest request = WebRequests.getRequestOtp(this, Request.Method.POST, AppConstants.URL_GET_OTP, AppConstants.REQUEST_OTP, this, obj);
+            JsonObjectRequest request = WebRequests.getRequestOtpforAdd(this, Request.Method.POST, AppConstants.URL_ADD_ACCOUNT, AppConstants.REQUEST_ADD_ACCOUNT, this, obj,SharedPrefManager.getStringValue(this,SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_OTP);
 
         } else
@@ -147,7 +166,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
-            case AppConstants.REQUEST_OTP: {
+            case AppConstants.REQUEST_ADD_ACCOUNT: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
@@ -156,10 +175,12 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
 //                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME, jsonResponse.name);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS, jsonResponse.address);
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, jsonResponse.address);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, jsonResponse.connection_type);
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.mobile_no);
-                        Intent i = new Intent(this, AddAccountActivity4.class);
+                        if(jsonResponse.authorization!= null)
+                            SharedPrefManager.saveValue(this,SharedPrefManager.AUTH_TOKEN.toString(),jsonResponse.authorization);
+                        Intent i = new Intent(this, AddAccountActivity5.class);
                         startActivity(i);
                         dismissDialog();
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
@@ -197,7 +218,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
     @Override
     public void onAsyncFail(String message, String label, NetworkResponse response) {
         switch (label) {
-            case AppConstants.REQUEST_OTP: {
+            case AppConstants.REQUEST_ADD_ACCOUNT: {
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "addaccountrequestttttttttttttttttttttfail:" + message);

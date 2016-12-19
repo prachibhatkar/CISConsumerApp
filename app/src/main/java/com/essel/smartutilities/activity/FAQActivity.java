@@ -1,11 +1,8 @@
 package com.essel.smartutilities.activity;
 
 import android.app.Dialog;
-import android.app.ExpandableListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,11 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,22 +20,13 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.db.DatabaseManager;
-import com.essel.smartutilities.models.Faq;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
-import com.essel.smartutilities.utility.DialogCreator;
-import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class FAQActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
     LinearLayout linearlayout_newconnection, linearlayout_changeownership, linearlayout_changeconnectiontype, linearlayout_loadextensionreduction, linearlayout_permanantdisconnection;
@@ -108,7 +93,6 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         expandablebutton_changeofconnectiontype = (Button) findViewById(R.id.expandableButton_changeofconnection);
         expandablebutton_loadextensionreduction = (Button) findViewById(R.id.expandableButton_loadextensionreduction);
         expandablebutton_permanantdisconnec = (Button) findViewById(R.id.expandableButton_permanantdisconnect);
-
         expandablebutton_newserviceconnection.setOnClickListener(this);
         expandablebutton_changeofownership.setOnClickListener(this);
         expandablebutton_changeofconnectiontype.setOnClickListener(this);

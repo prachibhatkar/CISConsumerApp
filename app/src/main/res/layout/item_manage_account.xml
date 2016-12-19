@@ -36,7 +36,7 @@
 
                 <TextView
                     android:id="@+id/consumer_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:padding="3dp"
@@ -50,25 +50,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/consumer_name"
-                    android:layout_marginLeft="140dp"
+                    android:layout_marginLeft="150dp"
                     android:padding="3dp"
                     android:text="(Primary)" />
 
 
                 <TextView
                     android:id="@+id/address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="80dp"
                     android:padding="3dp"
-
                     android:text="xvkjnvj nkdnn jndskjf njs sds dscnn knkk" />
 
                 <TextView
                     android:id="@+id/lbl_consumerid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="50dp"
                     android:padding="3dp"
 
                     android:text="Consumer No :" />
@@ -79,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/lbl_transationid"
                     android:layout_marginLeft="100dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="50dp"
                     android:padding="3dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="10dp"

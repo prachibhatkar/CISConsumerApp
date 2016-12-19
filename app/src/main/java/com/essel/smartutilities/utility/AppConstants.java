@@ -5,7 +5,9 @@ public class AppConstants {
 
     public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
 
-    //  public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";
+//    public static final String BASE_URL = "http://192.168.10.100:9999/mobileapi/";
+
+//      public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
 
     public static final String REQUEST_LOGIN = "login/";
@@ -43,7 +45,7 @@ public class AppConstants {
     public static final String REQUEST_GET_CONNECTION_TYPE = "get-service-subtype/";
     public static final String URL_GET_CONNECTION_TYPE = BASE_URL + REQUEST_GET_CONNECTION_TYPE;
 
-    public static final String REQUEST_OTP = "otp-verification/";
+    public static final String REQUEST_OTP = "create-app-user/";
     public static final String URL_GET_OTP = BASE_URL + REQUEST_OTP;
 
     public static final String REQUEST_ADD_ACCOUNT = "add-account/";
@@ -52,10 +54,13 @@ public class AppConstants {
     public static final String REQUEST_RESEND_OTP = "resend-otp/";
     public static final String URL_GET_RESEND_OTP = BASE_URL + REQUEST_RESEND_OTP;
 
+    public static final String REQUEST_DELETE_ACCOUNT = "/";
+    public static final String URL_DELETE_ACCOUNT = BASE_URL + REQUEST_DELETE_ACCOUNT;
+
     public static final String REQUEST_NEW_CONNECTION = "new-consumer/";
     public static final String URL_NEW_CONNECTION = BASE_URL + REQUEST_NEW_CONNECTION;
 
-    public static final String REQUEST_CREATE = "create-app-user/";
+    public static final String REQUEST_CREATE = "registration/";
     public static final String URL_REGISTER = BASE_URL + REQUEST_CREATE;
 
     public static final String REQUEST_REGISTER = "consumer-registration/";

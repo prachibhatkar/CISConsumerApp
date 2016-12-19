@@ -3,6 +3,7 @@ package com.essel.smartutilities.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,33 +15,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.callers.ServiceCaller;
-import com.essel.smartutilities.models.JsonResponse;
-import com.essel.smartutilities.utility.App;
-import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
-import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
-import com.essel.smartutilities.webservice.WebRequests;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
 
 /**
  * Created by hp on 11/4/2016.
  */
 
-public class AddAccountActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
+public class AddAccountActivity extends AppCompatActivity implements View.OnClickListener {
     TextView tv_city;
     Button btnNext;
     EditText editTextConsumerId;
     TextInputLayout inputLayoutConsumerId;
     Context mContext;
     ProgressDialog pDialog;
+    public String TAG="Add Accounttttttttttttt";
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,58 +108,80 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            JsonObjectRequest request = WebRequests.getRequestRegister(this, Request.Method.POST, AppConstants.URL_GET_REGISTER, AppConstants.REQUEST_REGISTER, this, obj);
-            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_REGISTER);
-
+            AsyncCallWS task = new AsyncCallWS();
+            task.execute();
         } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQUEST_REGISTER: {
-                if (jsonResponse != null) {
-                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
-                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
-                        Log.i(label, "addaccountrequestttttttttttttttttttttpass:" + jsonResponse.message);
-                        if (jsonResponse.message != null)
-                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.ID, jsonResponse.id);
-                        dismissDialog();
-                        Intent i = new Intent(this, AddAccountActivity2.class);
-                        startActivity(i);
-
-                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
-                        dismissDialog();
-                        DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
-                    }
-                } else
-                    Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
-                dismissDialog();
-            }
-            break;
-        }
-    }
-
-    @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
-        switch (label) {
-            case AppConstants.REQUEST_REGISTER: {
-
-                Log.i(label, "responseeeeeeeeeeee:" + response);
-                Log.i(label, "addaccountrequestttttttttttttttttttpass:" + message);
-                dismissDialog();
-                break;
-            }
-        }
-    }
 
     @Override
     public void onBackPressed() {
-        Intent i =new Intent(this,ManageAccountsActivity.class);
+        Intent i = new Intent(this, ManageAccountsActivity.class);
         startActivity(i);
+    }
+
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "onPreExecute");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.i(TAG, "doInBackground");
+            consumerdetails();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Log.i(TAG, "onPostExecute");
+            dismissDialog();
+        }
+
+    }
+
+public void consumerdetails()
+    {
+        String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerDetails/getconsumerdetailsbpelprocess_client_ep";
+        String METHOD_NAME = "requestElement";
+        String NAMESPACE = "http://www.example.org";
+        String URL = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerDetails/getconsumerdetailsbpelprocess_client_ep";
+
+        try {
+            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
+            Request.addProperty("acctConsNo", editTextConsumerId.getText().toString());
+            Request.addProperty("city","Nagpur");//SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_CITY));
+            Request.addProperty("serviceType", "Electricity");
+
+            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            soapEnvelope.dotNet = true;
+
+            soapEnvelope.setOutputSoapObject(Request);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+            androidHttpTransport.debug = true;
+
+
+            androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
+            if (((SoapObject) soapEnvelope.bodyIn) != null) {
+                Log.i(TAG, "get bodyin: " + (SoapObject) soapEnvelope.bodyIn);
+                CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
+                        ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
+                Intent i = new Intent(this, AddAccountActivity2.class);
+                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
+                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2,((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
+                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3,((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
+                SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, ((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString());
+                SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, ((SoapObject) soapEnvelope.bodyIn).getProperty("mobile").toString());
+                SharedPrefManager.saveValue(this, SharedPrefManager.CON_NO,((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString());
+                SharedPrefManager.saveValue(this, SharedPrefManager.POSTAL,((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString());
+                startActivity(i);
+                dismissDialog();
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, "Error: " + ex.getMessage());
+        }
     }
 }

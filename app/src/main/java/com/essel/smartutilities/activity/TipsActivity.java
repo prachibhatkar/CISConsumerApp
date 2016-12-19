@@ -20,28 +20,21 @@ import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.adapter.SlidingImageAdapter;
 import com.essel.smartutilities.adapter.SlidingTipsAdapter;
 import com.essel.smartutilities.adapter.TipsAdapter;
-
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.fragments.TipOneFragment;
 import com.essel.smartutilities.models.JsonResponse;
-import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
-import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
-
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 //import static com.essel.smartutilities.R.id.indicator;

@@ -34,9 +34,6 @@ import com.essel.smartutilities.webservice.WebRequests;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class RegisterActivity2 extends BaseActivity implements View.OnClickListener, ServiceCaller {
 
     EditText editTextEmailId, editTextMobileNo, editTextPassword, editTextRetypePassword, editTextOTPCode;
@@ -83,14 +80,24 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
         inputLayoutRetypePassword = (TextInputLayout) findViewById(R.id.inputLayoutRetypePassword);
 
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
-        textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
+            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
         textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3) != null)
+            textViewConsumerAddress.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
         textViewConsumerConnectionType = (TextView) findViewById(R.id.textConsumerConnectionType);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE) != null)
+            textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
+
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
-        if(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE)!=null)
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
             textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
-            else
-                noMobileDialog();
+        else
+            noMobileDialog();
         buttonRegister = (AppCompatButton) findViewById(R.id.btn_register);
         buttonRegister.setOnClickListener(this);
 
@@ -98,7 +105,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
 
     private void noMobileDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your Mobile No. is not registered. Please register in CCB.");
+        builder.setMessage("Your Mobile No. is Not Registered. Please Register Mobile No in CCB.");
         builder.setCancelable(false);
 
         builder.setNegativeButton(
@@ -141,7 +148,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
 
     private boolean validate() {
         Boolean flag = false;
-        if (editTextEmailId.getText().length() == 0 || emailValidator(editTextEmailId.getText().toString())) {
+        if (editTextEmailId.getText().length() == 0 || CommonUtils.emailValidator(editTextEmailId.getText().toString())) {
             if (editTextMobileNo.getText().length() == 10 || editTextMobileNo.getText().length() == 12 || editTextMobileNo.getText().length() == 0) {
                 if (editTextPassword.getText().toString().trim().length() >= 6 && editTextPassword.getText().toString().trim().length() <= 20) {
                     if (editTextRetypePassword.getText().toString().trim().length() >= 6 && editTextRetypePassword.getText().toString().trim().length() <= 20) {
@@ -160,14 +167,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
         return flag;
     }
 
-    public boolean emailValidator(String email) {
-        Pattern pattern;
-        Matcher matcher;
-        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+
 
     void callRegisteruser() {
         if (CommonUtils.isNetworkAvaliable(this)) {
@@ -178,11 +178,20 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
             }
             JSONObject obj = new JSONObject();
             try {
+                obj.put("person_name", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
                 obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
-                obj.put("alternate_email", editTextEmailId.getText().toString() != null ? "" : editTextEmailId.getText().toString());
-                obj.put("alternate_mobile", editTextMobileNo.getText().toString() != null ? "" : editTextMobileNo.getText().toString());
+                obj.put("account_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CON_NO));
+                obj.put("address_line1", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1));
+                obj.put("address_line2", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2));
+                obj.put("address_line3", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
+                obj.put("mobile_no","8180021903");// SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
+                obj.put("city", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY));
+                obj.put("postal", SharedPrefManager.getStringValue(this, SharedPrefManager.POSTAL));
+                obj.put("connection_type", SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
+
+                obj.put("alternet_email_id", editTextEmailId.getText().toString() == null ? " " : editTextEmailId.getText().toString());
+                obj.put("alternet_mobile_no", editTextMobileNo.getText().toString()== null ? "" : editTextMobileNo.getText().toString());
                 obj.put("password", editTextPassword.getText().toString());
-                obj.put("id", SharedPrefManager.getStringValue(this, SharedPrefManager.ID));
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -207,12 +216,11 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
-                            SharedPrefManager.saveValue(this, SharedPrefManager.PASSWORD, editTextPassword.getText().toString());
+                            SharedPrefManager.saveValue(this, SharedPrefManager.ID, jsonResponse.id);
                         Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
                         dismissDialog();
                         Intent i = new Intent(this, RegisterActivity3.class);
                         startActivity(i);
-                        CommonUtils.saveAuthToken(this, jsonResponse.authorization);
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();

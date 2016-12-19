@@ -32,8 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by hp on 11/5/2016.
@@ -111,7 +109,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             if (!address1.isEmpty()) {
                 if (!address2.isEmpty()) {
                     if (phoneno.length() == 10 || phoneno.length() == 12) {
-                        if (email.length() == 0 || emailValidator(email)) {
+                        if (email.length() == 0 ||CommonUtils.emailValidator(email)) {
                             if (connectiontype.getSelectedItemPosition() != 0) {
                                 flag = true;
                             } else
@@ -191,14 +189,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     }
 
 
-    public boolean emailValidator(String email) {
-        Pattern pattern;
-        Matcher matcher;
-        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+
 
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {

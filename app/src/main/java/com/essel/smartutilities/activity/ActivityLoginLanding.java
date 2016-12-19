@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -37,6 +37,7 @@ import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
+import com.essel.smartutilities.models.BrandingImages;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -45,6 +46,11 @@ import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -59,15 +65,16 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     private int NUM_PAGES = 0;
     private static final Integer[] IMAGES = {R.drawable.esselgroup, R.drawable.logo,
             R.drawable.infrastruc};
-    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    private ArrayList<String> ImagesArray = new ArrayList<String>();
+    private ArrayList<BrandingImages> ImagesArray1 = new ArrayList<BrandingImages>();
     private Context mContext;
-
+    private String TAG = "Landingscreennnnnnnnn";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_landing);
-        init();
+
         img = (LinearLayout) findViewById(R.id.linear_img);
         button = (LinearLayout) findViewById(R.id.linear_lay_button);
         table = (LinearLayout) findViewById(R.id.container);
@@ -116,8 +123,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             JsonObjectRequest request = WebRequests.getAccounts(this, Request.Method.GET, AppConstants.URL_GET_ACCOUNTS, AppConstants.REQUEST_GET_ACCOUNTS, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_ACCOUNTS);
 
-          //  JsonObjectRequest request2 = WebRequests.getBrandingImages(this, Request.Method.GET, AppConstants.URL_BRANDING_IMAGES, AppConstants.REQUEST_BRANDING_IMAGES, this);
-          //  App.getInstance().addToRequestQueue(request2, AppConstants.REQUEST_BRANDING_IMAGES);
+            JsonObjectRequest request2 = WebRequests.getBrandingImages(this, Request.Method.GET, AppConstants.URL_BRANDING_IMAGES, AppConstants.REQUEST_BRANDING_IMAGES, this);
+            App.getInstance().addToRequestQueue(request2, AppConstants.REQUEST_BRANDING_IMAGES);
 
         } else
             Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
@@ -219,8 +226,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 startActivity(i);
                 break;
             case R.id.btn_paynow:
-                Intent in = new Intent(this, PayNowActivity.class);
-                startActivity(in);
+                callPayNow();
                 break;
             case R.id.img_drowdown:
                 callDropDown();
@@ -232,6 +238,19 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 callDropDown();
                 break;
         }
+    }
+
+    private void callPayNow() {
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage("Requesting, please wait..");
+                pDialog.show();
+            }
+            AsyncCallWS task = new AsyncCallWS();
+            task.execute();
+        } else
+            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
     }
 
     void callDropDown() {
@@ -258,31 +277,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
     }
 
-    /*public static boolean snackBarMethod() {
-    /* Boolean flag =FeedBackActivity.getflag();
-    if(flag) {
-
-        Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Thanks for your valuable feedback", Snackbar.LENGTH_LONG);
-        View view = snack.getView();
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
-        params.gravity = Gravity.TOP;
-        view.setLayoutParams(params);
-        snack.show();
-        snack.setActionTextColor(Color.WHITE);
-        FeedBackActivity.flag = false;
-
-    }
-    }*/
-
-        /*Fragment fragment = new LoginLandingFragment();
-        FragmentManager fragmanager = BIND_AUTO_CREATE
-
-                .getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.commit();
-        return true;
-    }*/
 
     public void onBackPressed() {
         if (App.dropdown == false) {
@@ -302,9 +296,9 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
 
     private void init() {
-        NUM_PAGES = IMAGES.length;
-        for (int i = 0; i < IMAGES.length; i++)
-            ImagesArray.add(IMAGES[i]);
+        NUM_PAGES = ImagesArray1.size();
+        for (int i = 0; i < NUM_PAGES; i++)
+            ImagesArray.add(ImagesArray1.get(i).image);
 
         mPager = (ViewPager) findViewById(R.id.pager);
 
@@ -348,7 +342,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             public void run() {
                 handler.post(Update);
             }
-        }, 1500, 1500);
+        }, 4000, 4000);
 
         // Pager listener over indicator
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -370,6 +364,90 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         });
     }
 
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+
+
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "onPreExecute");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.i(TAG, "doInBackground");
+            getBillDetails();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Log.i(TAG, "onPostExecute");
+            Log.i(TAG, "response data: ");
+            dismissDialog();
+        }
+    }
+
+    public void getBillDetails() {
+
+        String getconsumerno =SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO);
+        String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
+        String METHOD_NAME = "InputParameters";
+        String NAMESPACE = "http://xmlns.oracle.com/pcbpel/adapter/db/sp/CCBGetBillDetailsProc";
+        String URL = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
+
+        try {
+            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
+            if (getconsumerno.length() == 10) {
+                Request.addProperty("P_ACCT_ID", getconsumerno);
+                Request.addProperty("P_BILL_ID", "");
+                Request.addProperty("P_MTR_ID", "#E-NG");
+            } else if (getconsumerno.length() == 12) {
+                Request.addProperty("P_ACCT_ID", getconsumerno);
+                Request.addProperty("P_BILL_ID", "");
+                Request.addProperty("P_MTR_ID", "OLD#E-NG");
+            }
+
+            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            soapEnvelope.dotNet = true;
+
+            soapEnvelope.setOutputSoapObject(Request);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+            androidHttpTransport.debug = true;
+
+
+            androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
+
+            final SoapObject response = (SoapObject) soapEnvelope.getResponse();
+
+
+            SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
+//            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH"));
+//            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
+            String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
+            String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
+            String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
+            String netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
+            String arrears = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
+            String consumername = ((SoapObject) responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
+            String accid = ((SoapObject) responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
+            String promptdate = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
+            dismissDialog();
+            Intent in = new Intent(this, PayNowActivity.class);
+            in.putExtra("date", duedate);
+            in.putExtra("amt", currentamt);
+            in.putExtra("promtamt", promptamt);
+            in.putExtra("netbill", netbill);
+            in.putExtra("arrears", arrears);
+            in.putExtra("consumername", consumername);
+            in.putExtra("accid", accid);
+            in.putExtra("promtdate", promptdate);
+            startActivity(in);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error: " + e.getMessage());
+
+        }
+    }
 
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
@@ -378,13 +456,13 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         if (jsonResponse.message != null) {
+                            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_LOGGED,"false");
+                            SharedPrefManager.saveValue(this,SharedPrefManager.AUTH_TOKEN,"no");
 
                             dismissDialog();
                             Intent in = new Intent(this, LoginActivity.class);
                             startActivity(in);
                             Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
-
-
                         }
                         if (jsonResponse.authorization != null) {
                             dismissDialog();
@@ -392,9 +470,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
-                        dismissDialog();
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
-
+                        dismissDialog();
                     }
                     break;
                 }
@@ -430,6 +507,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
                         if (jsonResponse.images != null && jsonResponse.images.size() >= 0) {
+                            ImagesArray1=jsonResponse.images;
+                            init();
                             Log.i(label, "Imagesssssssssssssssssssssssss:" + jsonResponse.result);
                         }
 

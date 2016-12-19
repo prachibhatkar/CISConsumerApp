@@ -46,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,6 +67,7 @@
                     android:text="Current Month Bill"
                     android:textColor="@color/colorTextWhite"
                     android:textSize="17dp" />
+
                 <RelativeLayout
                     android:id="@+id/rl1"
                     android:layout_width="wrap_content"
@@ -87,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:text="250"
+                        android:text=""
                         android:textColor="@color/colorTextWhite"
                         android:textSize="18dp" />
 
@@ -121,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:text="250"
+                        android:text=""
                         android:textColor="@color/colorTextWhite"
                         android:textSize="18dp" />
 
@@ -154,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:text="250"
+                        android:text=""
                         android:textColor="@color/colorTextWhite"
                         android:textSize="18dp" />
 
@@ -166,6 +168,7 @@
                         android:text="Net Amount"
                         android:textColor="@color/colorTextWhite" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rl6"
                     android:layout_width="wrap_content"
@@ -185,7 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:text="250"
+                        android:text=""
                         android:textColor="@color/colorTextWhite"
                         android:textSize="18dp" />
 
@@ -197,6 +200,7 @@
                         android:text="Prompt Amount"
                         android:textColor="@color/colorTextWhite" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rl4"
                     android:layout_width="wrap_content"
@@ -205,20 +209,13 @@
                     android:layout_marginLeft="120dp"
                     android:layout_marginTop="80dp">
 
-                    <TextView
-                        android:id="@+id/promptdate_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Aug"
-                        android:textColor="@color/colorTextWhite"
-                        android:textSize="15dp" />
+
 
                     <TextView
                         android:id="@+id/promptdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:text="15, 2050"
+                        android:text=""
                         android:textColor="@color/colorTextWhite"
                         android:textSize="15dp" />
 
@@ -239,20 +236,12 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="80dp">
 
-                    <TextView
-                        android:id="@+id/duedate_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Aug"
-                        android:textColor="@color/colorTextWhite"
-                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/duedate_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:text="25, 2050"
+                        android:text=""
                         android:textColor="@color/colorTextWhite"
                         android:textSize="15dp" />
 
@@ -271,16 +260,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="30dp"
+                android:layout_margin="10dp"
                 android:background="@color/colorPrimary"
-                android:text="View Bill History"
                 android:padding="10dp"
+                android:text="View Bill History"
 
                 android:textColor="@color/colorWhite" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="310dp"
                 android:layout_gravity="center_horizontal">
 
                 <com.jjoe64.graphview.GraphView

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.DialogCreator;
-import com.essel.smartutilities.utility.SharedPrefManager;
 
 /**
  * Created by hp on 11/5/2016.
@@ -19,7 +18,7 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class PayNowActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView consumerno,consumername,propmtamt,currentamt,duedate_date,arriers,netamt,promptdate;
+    private TextView consumerno, consumername, propmtamt, currentamt, duedate_date, arriers, netamt, promptdate;
     private TextInputLayout inputLayoutconsumerno;
     private Button Submit;
     private EditText amtpay;
@@ -39,32 +38,30 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initialize() {
-         propmtamt = (TextView) findViewById(R.id.promptamt);
-         currentamt=(TextView)findViewById(R.id.currentamount);
-         duedate_date=(TextView)findViewById(R.id.duedate_date);
-         arriers=(TextView)findViewById(R.id.Arriers);
-         promptdate = (TextView) findViewById(R.id.promptdate_month);
-         netamt=(TextView)findViewById(R.id.netamt);
+        propmtamt = (TextView) findViewById(R.id.promptamt);
+        currentamt = (TextView) findViewById(R.id.currentamount);
+        duedate_date = (TextView) findViewById(R.id.duedate_date);
+        arriers = (TextView) findViewById(R.id.Arriers);
+        promptdate = (TextView) findViewById(R.id.promptdate);
+        netamt = (TextView) findViewById(R.id.netamt);
         amtpay = (EditText) findViewById(R.id.amt_paying);
-        amtpay.setText(propmtamt.getText().toString().trim());
         consumerno = (TextView) findViewById(R.id.consumerno);
-       // if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) != null)
-          //  consumerno.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        // if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) != null)
+        //  consumerno.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
         consumername = (TextView) findViewById(R.id.consumer_name);
         //if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
-          //  consumername.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        //  consumername.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
-
         Intent intent = getIntent();
         String amount = intent.getExtras().getString("amt");
-        String duedate=intent.getExtras().getString("date");
-        String arrears=intent.getExtras().getString("arrears");
-        String promptamt=intent.getExtras().getString("promtamt");
-        String promptdat=intent.getExtras().getString("promtdate");
-        String netamount=intent.getExtras().getString("netbill");
-        String consumernam =intent.getExtras().getString("consumername");
-        String accid =intent.getExtras().getString("accid");
+        String duedate = intent.getExtras().getString("date");
+        String arrears = intent.getExtras().getString("arrears");
+        String promptamt = intent.getExtras().getString("promtamt");
+        String promptdat = intent.getExtras().getString("promtdate");
+        String netamount = intent.getExtras().getString("netbill");
+        String consumernam = intent.getExtras().getString("consumername");
+        String accid = intent.getExtras().getString("accid");
         currentamt.setText(amount);
         duedate_date.setText(duedate);
         arriers.setText(arrears);
@@ -73,17 +70,17 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         consumername.setText(consumernam);
         consumerno.setText(accid);
         promptdate.setText(promptdat);
+        amtpay.setText(propmtamt.getText().toString().trim());
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BTNSubmit:
-                        if(Integer.parseInt(amtpay.getText().toString())>=Integer.parseInt(propmtamt.getText().toString()))
-                            DialogCreator.showMessageDialog(this,"yesss");
+                if (Float.parseFloat(amtpay.getText().toString()) >= Float.parseFloat(propmtamt.getText().toString()))
+                    DialogCreator.showMessageDialog(this, "yesss");
                 else
-                            DialogCreator.showMessageDialog(this,"Noooo");
-
+                    DialogCreator.showMessageDialog(this, "Noooo");
                 break;
         }
     }

@@ -20,6 +20,8 @@ import com.essel.smartutilities.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class CommonUtils {
@@ -34,7 +36,14 @@ public class CommonUtils {
         }
         return nUtilsHelper;
     }
-
+    public static boolean emailValidator(String email) {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
     public boolean isValidEmail(CharSequence target) {
         if (target == null) {
             return false;
@@ -235,7 +244,8 @@ public class CommonUtils {
     }
 
     public static boolean isLoggedIn(Context context) {
-        if (SharedPrefManager.getStringValue(context, SharedPrefManager.CONSUMER_LOGGED).equals("false"))
+        String boo=SharedPrefManager.getStringValue(context,SharedPrefManager.AUTH_TOKEN);
+        if (!boo.equalsIgnoreCase("no"))
             return true;
         else
             return false;
@@ -246,10 +256,6 @@ public class CommonUtils {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
 
-    public static void logout(Context context) {
-        SharedPrefManager.saveValue(context, SharedPrefManager.CONSUMER_NO, "");
-        SharedPrefManager.saveValue(context, SharedPrefManager.PASSWORD, "");
-        SharedPrefManager.saveValue(context, SharedPrefManager.CONSUMER_LOGGED, "false");
-    }
+
 
 }

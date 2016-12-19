@@ -9,14 +9,17 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.volley.NetworkResponse;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ManageAccountAdapter;
+import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
+import com.essel.smartutilities.models.JsonResponse;
 
 import java.util.ArrayList;
 
-public class ManageAccountsActivity extends AppCompatActivity implements View.OnClickListener {
+public class ManageAccountsActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
     RecyclerView rv_consumers;
     ImageView add, imgBack;
 
@@ -65,5 +68,15 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
     public void onBackPressed() {
         Intent i=new Intent(this, ActivityLoginLanding.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+
+    }
+
+    @Override
+    public void onAsyncFail(String message, String label, NetworkResponse response) {
+
     }
 }

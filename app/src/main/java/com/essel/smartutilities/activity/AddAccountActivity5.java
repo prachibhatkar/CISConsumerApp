@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class AddAccountActivity5 extends BaseActivity implements View.OnClickListener {
 
@@ -33,6 +34,24 @@ public class AddAccountActivity5 extends BaseActivity implements View.OnClickLis
         Button add = (Button) findViewById(R.id.btn_addmore);
         add.setOnClickListener(this);
         con.setOnClickListener(this);
+        textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
+            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+
+        textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3) != null)
+            textViewConsumerAddress.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
+        textViewConsumerConnectionType = (TextView) findViewById(R.id.textConsumerConnectionType);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE) != null)
+            textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
+
+        textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
+            textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +87,8 @@ public class AddAccountActivity5 extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        i = new Intent(this, AddAccountActivity.class);
+        startActivity(i);
+
     }
 }

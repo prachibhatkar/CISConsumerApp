@@ -22,7 +22,7 @@ JsonResponse {
     public  ArrayList<TariffEnergyCharge> tariffEnergyCharge;
     public  ArrayList<FixedEnergyCharge> fixedEnergyCharge;
     public  String aboutus;
-    public  ArrayList<String> images;
+    public  ArrayList<BrandingImages> images;
     public  String logout;
     public  String feedbackmessage;
     public String forgotpasswordmessage;

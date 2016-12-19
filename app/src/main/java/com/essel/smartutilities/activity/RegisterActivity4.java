@@ -37,7 +37,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
     EditText editTextEmailId, editTextMobileNo, editTextPassword, editTextRetypePassword, editTextOTPCode;
     TextInputLayout inputLayoutEmailId, inputLayoutMobileNo, inputLayoutPassword, inputLayoutRetypePassword;
     AppCompatButton buttonRegister, buttonVerify;
-    TextView textViewConsumerName, consumerno, textViewConsumerAddress, maintitle, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
+    TextView textViewConsumerName,consumernotext, consumerno,mobile, textViewConsumerAddress, maintitle, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
 
     Context mContext;
     ProgressDialog pDialog;
@@ -60,18 +60,29 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
 
     private void initialize() {
         Button con = (Button) findViewById(R.id.btn_continue);
+
         Button add = (Button) findViewById(R.id.btn_addmore);
-        inputLayoutEmailId = (TextInputLayout) findViewById(R.id.inputLayoutEmailId);
-        inputLayoutMobileNo = (TextInputLayout) findViewById(R.id.inputLayoutMobileNumber);
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
-        consumerno = (TextView) findViewById(R.id.consumerno);
-        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
-            consumerno.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
+            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+
         textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3) != null)
+            textViewConsumerAddress.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
         textViewConsumerConnectionType = (TextView) findViewById(R.id.textConsumerConnectionType);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE) != null)
+            textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
+        mobile = (TextView) findViewById(R.id.ConsumerMobileNo);
+        mobile.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
-        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).isEmpty())
-            consumerno.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
+        consumernotext = (TextView) findViewById(R.id.consumerno);
+        consumernotext.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
+            textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
         add.setOnClickListener(this);
         con.setOnClickListener(this);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -113,7 +124,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_addmore) {
-            i = new Intent(this, RegisterActivity.class);
+            i = new Intent(this, AddAccountActivity.class);
             startActivity(i);
         } else if (v.getId() == R.id.btn_continue) {
             callLogin();

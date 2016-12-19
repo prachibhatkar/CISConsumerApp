@@ -13,17 +13,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.essel.smartutilities.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SlidingImageAdapter extends PagerAdapter {
 
-    private ArrayList<Integer> IMAGES;
+    private ArrayList<String> IMAGES;
     private LayoutInflater inflater;
     private Context context;
 
 
-    public SlidingImageAdapter(Context context, ArrayList<Integer> IMAGES) {
+    public SlidingImageAdapter(Context context, ArrayList<String> IMAGES) {
         this.context = context;
         this.IMAGES=IMAGES;
         inflater = LayoutInflater.from(context);
@@ -47,7 +48,11 @@ public class SlidingImageAdapter extends PagerAdapter {
         final ImageView imageView = (ImageView) imageLayout
                 .findViewById(R.id.image);
 
-        imageView.setImageResource(IMAGES.get(position));
+        Picasso.with(context)
+                .load(IMAGES.get(position))
+//                .placeholder(R.drawable.user_placeholder)
+//                .error(R.drawable.user_placeholder_error)
+                .into(imageView);
 
         view.addView(imageLayout, 0);
 

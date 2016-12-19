@@ -25,7 +25,7 @@ public class SplashScreenActivity extends BaseActivity  {
 
     private void moveNext() {
         Intent intent = null;
-        if(CommonUtils.isLoggedIn(SplashScreenActivity.this))
+        if(!CommonUtils.isLoggedIn(SplashScreenActivity.this))
             intent = new Intent(SplashScreenActivity.this,ActivityLoginLanding.class);
         else
             intent = new Intent(SplashScreenActivity.this, LoginActivity.class);

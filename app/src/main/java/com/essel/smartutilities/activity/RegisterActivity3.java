@@ -65,11 +65,22 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
 
     private void initialize() {
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
-        textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
+            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
         textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2) != null
+                && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3) != null)
+            textViewConsumerAddress.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2)
+                    + " " + SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
         textViewConsumerConnectionType = (TextView) findViewById(R.id.textConsumerConnectionType);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE) != null)
+            textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
+
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
-        textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
+            textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
         buttonVerify = (AppCompatButton) findViewById(R.id.btn_verify);
         msg = (TextView) findViewById(R.id.msg);
         resend = (TextView) findViewById(R.id.action_resend);
@@ -180,9 +191,11 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME, jsonResponse.name);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS, jsonResponse.address);
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, jsonResponse.address);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, jsonResponse.connection_type);
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.mobile_no);
+                        if(jsonResponse.authorization!= null)
+                            SharedPrefManager.saveValue(this,SharedPrefManager.AUTH_TOKEN.toString(),jsonResponse.authorization);
                         Intent i = new Intent(this, RegisterActivity4.class);
                         startActivity(i);
                         dismissDialog();

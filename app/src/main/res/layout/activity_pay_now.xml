@@ -252,7 +252,7 @@
                 android:id="@+id/promptamt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="250"
+                android:text=""
                 android:textColor="@color/colorTextWhite"
                 android:textSize="15dp"
                 android:layout_alignParentTop="true"
@@ -268,7 +268,7 @@
             android:layout_marginTop="120dp">
 
             <TextView
-                android:id="@+id/promptdate_month"
+                android:id="@+id/promptdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -294,6 +294,13 @@
             android:layout_marginTop="120dp">
 
 
+            <!--<TextView-->
+                <!--android:id="@+id/duedate_month"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=""-->
+                <!--android:textColor="@color/colorTextWhite"-->
+                <!--android:textSize="15dp" />-->
 
             <TextView
                 android:id="@+id/duedate_date"
