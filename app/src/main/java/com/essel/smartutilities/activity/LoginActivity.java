@@ -165,6 +165,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             dismissDialog();
                             CommonUtils.saveDetails(this, jsonResponse.user_info.consumer_no, jsonResponse.user_info.consumer_name,
                                     jsonResponse.user_info.city);
+                            SharedPrefManager.saveValue(this,SharedPrefManager.ADDRESS1,jsonResponse.user_info.address);
+                            SharedPrefManager.saveValue(this,SharedPrefManager.EMAIL_ID,jsonResponse.user_info.emailid);
+                            SharedPrefManager.saveValue(this,SharedPrefManager.MOBILE,jsonResponse.user_info.contact_no);
+
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                             SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "true");
                             Intent i = new Intent(this, ActivityLoginLanding.class);
