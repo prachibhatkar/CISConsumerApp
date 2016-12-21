@@ -112,8 +112,10 @@ public class DatabaseManager {
         try {
             values.put(ManageAccountsTable.Cols.CONSUMER_ID, consumers.consumer_no);
             values.put(ManageAccountsTable.Cols.CONSUMER_NAME, consumers.consumer_name);
+            values.put(ManageAccountsTable.Cols.CITY, consumers.city);
+            values.put(ManageAccountsTable.Cols.CONTACT_NO, consumers.contact_no);
             values.put(ManageAccountsTable.Cols.ADDRESS, consumers.address);
-            values.put(ManageAccountsTable.Cols.IS_PRIMARY, consumers.is_primary);
+                        values.put(ManageAccountsTable.Cols.IS_PRIMARY, consumers.is_primary);
 
         } catch (Exception e) {
             e.printStackTrace();

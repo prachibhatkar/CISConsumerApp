@@ -150,7 +150,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            JsonObjectRequest request = WebRequests.getRequestOtp(this, Request.Method.POST, AppConstants.URL_GET_RESEND_OTP, AppConstants.REQUEST_RESEND_OTP, this, obj);
+            JsonObjectRequest request = WebRequests.getRequestOtpforAdd(this, Request.Method.POST, AppConstants.URL_GET_RESEND_OTP, AppConstants.REQUEST_RESEND_OTP, this, obj,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_RESEND_OTP);
 
         } else
