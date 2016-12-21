@@ -33,7 +33,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
     Toolbar toolbar;
     AppCompatButton buttonRegister, buttonVerify;
     EditText otp;
-    TextView resend,textViewConsumerName,textViewConsumerMobileNo,textViewConsumerAddress,textViewConsumerConnectionType;
+    TextView resend, textViewConsumerName, textViewConsumerMobileNo, textViewConsumerAddress, textViewConsumerConnectionType;
 
     TextView maintitle, action_resend, msg;
     ProgressDialog pDialog;
@@ -107,8 +107,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                 Toast.makeText(this, "Enter valid OTP", Toast.LENGTH_SHORT).show();
 //            Intent i = new Intent(this, AddAccountActivity5.class);
 //            startActivity(i);
-        }
-        if (v.getId() == R.id.action_resend)
+        } else if (v == action_resend)
             msg.setText(R.string.title_verify_resend);
         callResend();
     }
@@ -129,7 +128,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            JsonObjectRequest request = WebRequests.getRequestOtpforAdd(this, Request.Method.POST, AppConstants.URL_ADD_ACCOUNT, AppConstants.REQUEST_ADD_ACCOUNT, this, obj,SharedPrefManager.getStringValue(this,SharedPrefManager.AUTH_TOKEN));
+            JsonObjectRequest request = WebRequests.getRequestOtpforAdd(this, Request.Method.POST, AppConstants.URL_ADD_ACCOUNT, AppConstants.REQUEST_ADD_ACCOUNT, this, obj, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_OTP);
 
         } else
@@ -173,13 +172,13 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                         Log.i(label, "addaccountrequesttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
 //                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
+                            SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME, jsonResponse.name);
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, jsonResponse.address);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, jsonResponse.connection_type);
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.mobile_no);
-                        if(jsonResponse.authorization!= null)
-                            SharedPrefManager.saveValue(this,SharedPrefManager.AUTH_TOKEN.toString(),jsonResponse.authorization);
+                        if (jsonResponse.authorization != null)
+                            SharedPrefManager.saveValue(this, SharedPrefManager.AUTH_TOKEN.toString(), jsonResponse.authorization);
                         Intent i = new Intent(this, AddAccountActivity5.class);
                         startActivity(i);
                         dismissDialog();

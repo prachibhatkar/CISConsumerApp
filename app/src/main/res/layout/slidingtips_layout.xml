@@ -14,7 +14,7 @@
         android:adjustViewBounds="true"
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitXY" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

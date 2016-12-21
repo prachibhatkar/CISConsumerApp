@@ -23,14 +23,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.PayNowActivity;
-import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
-import com.essel.smartutilities.utility.DialogCreator;
+import com.essel.smartutilities.utility.SharedPrefManager;
+import com.essel.smartutilities.webservice.WebRequests;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdapter.ViewHolder> implements ServiceCaller {
+public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdapter.ViewHolder>  {
 
     private List<Consumer> mConsumers;
     // Store the context for easy access
@@ -74,7 +77,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             public void onClick(final View v) {
                 if (v.getId() == R.id.ic_delete) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                    builder1.setMessage("Are you sure you want to delete Account Of  \n  " + mConsumers.get(position).consumer_name + "  -  " +
+                    builder1.setMessage("Are you sure you want to delete Account Of  " + mConsumers.get(position).consumer_name + "  -  " +
                             mConsumers.get(position).consumer_no);
                     builder1.setCancelable(true);
 
@@ -85,8 +88,8 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                     if (CommonUtils.isNetworkAvaliable(mContext)) {
                                         initProgressDialog();
                                         if (pDialog != null && !pDialog.isShowing()) {
-                                            pDialog.setMessage("Requesting, please wait..");
-                                            pDialog.show();
+//                                            pDialog.setMessage("Requesting, please wait..");
+//                                            pDialog.show();
                                             JSONObject obj = new JSONObject();
                                             try {
                                                 obj.put("consumer_no", mConsumers.get(position).consumer_no);
@@ -94,17 +97,18 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                                 // TODO Auto-generated catch block
                                                 e.printStackTrace();
                                             }
-//                                            JsonObjectRequest request = WebRequests.deleteAccount(mContext, Request.Method.POST,
-//                                                    AppConstants.URL_NEW_CONNECTION, AppConstants.REQUEST_NEW_CONNECTION, mContext, obj, SharedPrefManager.getStringValue(mContext, SharedPrefManager.AUTH_TOKEN));
-//                                            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_NEW_CONNECTION);
+                                            JsonObjectRequest request = WebRequests.deleteAccount(mContext, Request.Method.POST,
+                                                    AppConstants.URL_DELETE_ACCOUNT, AppConstants.REQUEST_DELETE_ACCOUNT, mContext, obj, SharedPrefManager.getStringValue(mContext, SharedPrefManager.AUTH_TOKEN));
+                                            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_DELETE_ACCOUNT);
+                                            mConsumers.remove(viewHolder.getAdapterPosition());
+                                            notifyDataSetChanged();
+                                            dialog.cancel();
+                                            Snackbar snack = Snackbar.make(v, "Account Deleted", Snackbar.LENGTH_LONG);
+                                            snack.show();
                                         }
                                     } else
                                         Toast.makeText(mContext, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
-                                    mConsumers.remove(viewHolder.getAdapterPosition());
-                                    notifyDataSetChanged();
-                                    dialog.cancel();
-                                    Snackbar snack = Snackbar.make(v, "Account Deleted", Snackbar.LENGTH_LONG);
-                                    snack.show();
+
                                 }
                             });
 
@@ -161,7 +165,8 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
         return mConsumers.size();
     }
 
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+
+    public static void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
             case AppConstants.REQUEST_DELETE_ACCOUNT: {
                 if (jsonResponse != null) {
@@ -169,29 +174,29 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
-                            DialogCreator.showMessageDialog(mContext,jsonResponse.message);
-
+                          Log.i(label, "responseeeeeeeeeeee:" + jsonResponse.result);
+                        Log.i(label, "requestttttttttttttttttttttfail:" + jsonResponse.message);
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
-                        dismissDialog();
-                        DialogCreator.showMessageDialog(mContext, jsonResponse.message != null ? jsonResponse.message :"error");
-                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
+
+                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse.result);
+                        Log.i(label, "requestttttttttttttttttttttfail:" + jsonResponse.message);
                     }
                 } else
-                    Toast.makeText(mContext, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
-                dismissDialog();
+                    Log.i(label, "requestttttttttttttttttttttfail:" + "jsonResponse");
+
             }
             break;
         }
     }
 
-    @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
+
+    public static void onAsyncFail(String message, String label, NetworkResponse response) {
         switch (label) {
             case AppConstants.REQUEST_DELETE_ACCOUNT: {
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
-                dismissDialog();
+
                 break;
             }
         }
@@ -290,7 +295,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
             String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
             String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
-            String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("PROMPT_PAYMENT_INCENTIVE").toString();
+            String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
             String promptdate = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
             String netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
             String arrears = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();

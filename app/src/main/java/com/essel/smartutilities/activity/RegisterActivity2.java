@@ -94,7 +94,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
             textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
 
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
-        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null || !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("NA"))
             textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
         else
             noMobileDialog();
@@ -184,7 +184,7 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
                 obj.put("address_line1", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1));
                 obj.put("address_line2", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2));
                 obj.put("address_line3", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
-                obj.put("mobile_no","8180021903");// SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
+                obj.put("mobile_no",SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
                 obj.put("city", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY));
                 obj.put("postal", SharedPrefManager.getStringValue(this, SharedPrefManager.POSTAL));
                 obj.put("connection_type", SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));

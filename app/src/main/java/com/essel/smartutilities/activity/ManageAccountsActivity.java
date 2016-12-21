@@ -16,12 +16,14 @@ import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.utility.DialogCreator;
 
 import java.util.ArrayList;
 
 public class ManageAccountsActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
     RecyclerView rv_consumers;
     ImageView add, imgBack;
+    ArrayList<Consumer> consumers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
         rv_consumers = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 //        ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
-        ArrayList<Consumer> consumers =  DatabaseManager.getAllManageAccounts(this);
+         consumers =  DatabaseManager.getAllManageAccounts(this);
         ManageAccountAdapter adapter = new ManageAccountAdapter(this, consumers);
         rv_consumers.setAdapter(adapter);
         rv_consumers.setLayoutManager(layoutManager);
@@ -57,8 +59,11 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_new: {
-                Intent i = new Intent(this, AddAccountActivity.class);
-                startActivity(i);
+                if(consumers.size()<=9) {
+                    Intent i = new Intent(this, AddAccountActivity.class);
+                    startActivity(i);
+                }else
+                    DialogCreator.showMessageDialog(this," Only 10 Accounts can be Added ");
                 break;
             }
         }

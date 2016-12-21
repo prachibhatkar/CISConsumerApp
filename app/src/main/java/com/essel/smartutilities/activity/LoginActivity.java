@@ -233,4 +233,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else
             DialogCreator.showMessageDialog(this, getString(R.string.error_internet_not_connected));
     }
+
+
 }
+

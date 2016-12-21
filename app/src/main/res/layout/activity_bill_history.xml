@@ -114,6 +114,8 @@
 
 
             <TableRow
+                android:id="@+id/tbl0"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
@@ -168,8 +170,11 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tbl1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+
                 android:layout_marginTop="20dp">
 
                 <TextView
@@ -217,8 +222,11 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tbl2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+
                 android:layout_marginTop="20dp">
 
                 <TextView
@@ -267,8 +275,11 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tbl3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+
                 android:layout_marginTop="20dp">
 
                 <TextView
@@ -317,8 +328,11 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tbl4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+
                 android:layout_marginTop="20dp">
 
                 <TextView
@@ -367,8 +381,10 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tbl5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="20dp">
 
                 <TextView

@@ -3,15 +3,20 @@ package com.essel.smartutilities.utility;
 
 public class AppConstants {
 
-    public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
-
-//    public static final String BASE_URL = "http://192.168.10.100:9999/mobileapi/";
+   public static final String BASE_URL = "http://192.168.10.102:9999/mobileapi/";
+  //  public static final String BASE_URL = "http://192.168.10.119:9999/mobileapi/";
 
 //      public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
 
     public static final String REQUEST_LOGIN = "login/";
     public static final String URL_LOGIN = BASE_URL + REQUEST_LOGIN;
+
+    public static final String REQUEST_CONTACT_INFO= "edit-contact-info/";
+    public static final String URL_CONTACT_INFO= BASE_URL + REQUEST_CONTACT_INFO;
+
+    public static final String REQUEST_CHANGE_PASS= "change-password/";
+    public static final String URL_CHANGE_PASS= BASE_URL + REQUEST_CHANGE_PASS;
 
     public static final String REQUEST_LOGOUT = "log-out/";
     public static final String URL_LOGOUT = BASE_URL + REQUEST_LOGOUT;
@@ -54,7 +59,7 @@ public class AppConstants {
     public static final String REQUEST_RESEND_OTP = "resend-otp/";
     public static final String URL_GET_RESEND_OTP = BASE_URL + REQUEST_RESEND_OTP;
 
-    public static final String REQUEST_DELETE_ACCOUNT = "/";
+    public static final String REQUEST_DELETE_ACCOUNT = "delete-account/";
     public static final String URL_DELETE_ACCOUNT = BASE_URL + REQUEST_DELETE_ACCOUNT;
 
     public static final String REQUEST_NEW_CONNECTION = "new-consumer/";

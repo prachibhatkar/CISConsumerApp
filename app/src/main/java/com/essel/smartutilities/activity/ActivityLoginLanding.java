@@ -425,7 +425,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 //            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
             String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
             String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
-            String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
+            String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
             String netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
             String arrears = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
             String consumername = ((SoapObject) responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();

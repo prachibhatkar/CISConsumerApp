@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
     ImageView download1, download2, download3, download4, download5, download6, imgBack;
     DownloadManager downloadManager;
     Uri image_uri, music_uri;
-
+    TableRow[] tbl=new TableRow[6];
     TextView month1, date1, amt1, consum1, month2, date2, amt2, consum2, month3, date3, amt3, consum3, month4, date4, amt4, consum4,
             month5, date5, amt5, consum5, month6, date6, amt6, consum6;
 
@@ -25,12 +26,24 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_history);
         intialize();
-        image_uri = Uri.parse("http://cpnagpur.sndl.in:86/getbillall.php?billnumber=666668201941    ");
+        image_uri = Uri.parse("http://cpnagpur.sndl.in:86/getbillall.php?billnumber=666668201941");
         music_uri = Uri.parse("http://cpnagpur.sndl.in:86/getbillall.php?billnumber=666668201941");
 
     }
 
     private void intialize() {
+
+        tbl[0]=(TableRow)findViewById(R.id.tbl0);
+        tbl[1]=(TableRow)findViewById(R.id.tbl1);
+        tbl[2]=(TableRow)findViewById(R.id.tbl2);
+        tbl[3]=(TableRow)findViewById(R.id.tbl3);
+        tbl[4]=(TableRow)findViewById(R.id.tbl4);
+        tbl[5]=(TableRow)findViewById(R.id.tbl5);
+
+            for(int i=0;i<MyBillActivity.month.length;i++)
+                if(MyBillActivity.month[i]!=null)
+                tbl[i].setVisibility(View.VISIBLE);
+
 
         download1 = (ImageView) findViewById(R.id.download1);
         download1.setOnClickListener(this);
@@ -162,9 +175,9 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 
         //Set the local destination for the downloaded file to a path within the application's external files directory
         if (v.getId() == R.id.download1)
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.mp3");
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.pdf");
         else if (v.getId() == R.id.download2)
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.jpg");
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.pdf");
 
         //Enqueue download and save into referenceId
         downloadReference = downloadManager.enqueue(request);

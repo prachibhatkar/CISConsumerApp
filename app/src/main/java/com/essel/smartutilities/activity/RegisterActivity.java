@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
 import org.ksoap2.SoapEnvelope;
@@ -127,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
-
+        String msg;
         @Override
         protected void onPreExecute() {
             Log.i(TAG, "onPreExecute");
@@ -137,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
             consumerdetails();
+
             return null;
         }
 
@@ -144,9 +146,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
             dismissDialog();
+            if(msg!=null)
+            DialogCreator.showMessageDialog(RegisterActivity.this, msg);
+
         }
 
     }
+
 
     public void consumerdetails() {
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerDetails/getconsumerdetailsbpelprocess_client_ep";
@@ -171,24 +177,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
             if (((SoapObject) soapEnvelope.bodyIn) != null) {
                 Log.i(TAG, "get bodyin: " + (SoapObject) soapEnvelope.bodyIn);
-                if(((SoapObject) soapEnvelope.bodyIn).getProperty("message")!=null)
-                if( (((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString()).equalsIgnoreCase("Please Select Correct Values"))
-                {
-                    Toast.makeText(this,"sdgdgdgdhdhvdhvfdhvhhv",Toast.LENGTH_SHORT).show();
-                }
-                    CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
-                        ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
-                Intent i = new Intent(this, RegisterActivity2.class);
-                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2,((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3,((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, ((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, ((SoapObject) soapEnvelope.bodyIn).getProperty("mobile").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.CON_NO,((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.POSTAL,((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString());
+                if (((SoapObject) soapEnvelope.bodyIn).getProperty("message") != null)
+                    if ((((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString()).equalsIgnoreCase("Please Select Correct Values")) {
+//                        String msg="bskbkjsabjd";
+                       // DialogCreator.showMessageDialog(this, "Please Enter Valid Consumer No");
+                       // Toast.makeText(this, "Please Enter Valid Consumer No", Toast.LENGTH_SHORT).show();
+                    } else {
+                        CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
+                                ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
+                        Intent i = new Intent(this, RegisterActivity2.class);
 
-                startActivity(i);
-                dismissDialog();
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
+                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString().equals("anyType{}"))
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
+                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").equals("anyType{}"))
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
+                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString().equals("anyType{}"))
+
+                            SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, ((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, ((SoapObject) soapEnvelope.bodyIn).getProperty("mobile").toString());
+                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString().equals("anyType{}"))
+
+                            SharedPrefManager.saveValue(this, SharedPrefManager.CON_NO, ((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString());
+                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString().equals("anyType{}"))
+
+                            SharedPrefManager.saveValue(this, SharedPrefManager.POSTAL, ((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString());
+
+                        startActivity(i);
+
+                    }
+
+
             }
         } catch (Exception ex) {
             Log.e(TAG, "Error: " + ex.getMessage());

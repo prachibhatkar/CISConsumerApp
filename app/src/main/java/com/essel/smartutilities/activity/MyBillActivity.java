@@ -32,13 +32,14 @@ import java.util.StringTokenizer;
 public class MyBillActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn_billhistory;
     private ProgressDialog pDialog;
-    public static   int[] consum=new int[6];
+    public static int[] consum = new int[6];
     public static String[] billdate = new String[6];
     public static String[] billamount = new String[6];
     public static String[] month = new String[6];
-    public TextView duedate_date,propmtamt,currentamt,arriers,promptdate,netamt;
-    public String duedate1,promptamt1,currentamt1,arrears1,promptdate1,netbill;
+    public TextView duedate_date, propmtamt, currentamt, arriers, promptdate, netamt;
+    public String duedate1, promptamt1, currentamt1, arrears1, promptdate1, netbill;
     public GraphView graph;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
                 pDialog.setMessage("Requesting, please wait..");
                 pDialog.show();
             }
-          AsyncCallWS task = new AsyncCallWS();
+            AsyncCallWS task = new AsyncCallWS();
             task.execute();
         } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
@@ -124,6 +125,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
     }
+
     private void initProgressDialog() {
 
         if (pDialog == null) {
@@ -137,6 +139,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
+
     @Override
     public void onClick(View view) {
         Intent in = new Intent(this, BillHistoryActivity.class);
@@ -171,7 +174,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
 
     public void getBillDetails() {
 
-        String getconsumerno ="1000039715";
+        String getconsumerno = "1000039715";
         //SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO);
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
         String METHOD_NAME = "InputParameters";
@@ -199,17 +202,22 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
             SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
 //            Log.i("manageAccounts", "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH"));
 //            Log.i("manageAccounts", "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
-
+            duedate1 = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
+            currentamt1 = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
+            promptamt1 = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
+            promptdate1 = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
+            netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
+            arrears1 = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
             for (int i = 0; i < responceArray.getPropertyCount(); i++) {
                 Object obj = responceArray.getProperty(i);
                 if (obj instanceof SoapObject) {
                     SoapObject obj1 = (SoapObject) obj;
-                    consum[i]=Integer.parseInt(obj1.getProperty("KWH_CONSUMPTI").toString());
-                    month[i]=obj1.getProperty("BILL_MONTH").toString();
-                    billdate[i]=obj1.getProperty("BILL_DT").toString();
+                    consum[i] = Integer.parseInt(obj1.getProperty("KWH_CONSUMPTI").toString());
+                    month[i] = obj1.getProperty("BILL_MONTH").toString();
+                    billdate[i] = obj1.getProperty("BILL_DT").toString();
                     StringTokenizer st1 = new StringTokenizer(billdate[i], "-");
                     billdate[i] = st1.nextToken();
-                    billamount[i]=obj1.getProperty("CURRENT_MONTH_BILL").toString();
+                    billamount[i] = obj1.getProperty("CURRENT_MONTH_BILL").toString();
                     StringTokenizer st = new StringTokenizer(month[i], "-");
                     month[i] = st.nextToken();
 

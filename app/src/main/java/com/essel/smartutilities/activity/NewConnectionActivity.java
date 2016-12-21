@@ -105,10 +105,10 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         String address2 = editTextAddress2.getText().toString().trim();
         String phoneno = editTextPhone.getText().toString().trim();
         String email = editTextEmailId.getText().toString().trim();
-        if (!fullname.isEmpty()) {
-            if (!address1.isEmpty()) {
-                if (!address2.isEmpty()) {
-                    if (phoneno.length() == 10 || phoneno.length() == 12) {
+        if (!fullname.isEmpty()&& fullname.toString().length()<=40) {
+            if (!address1.isEmpty()&& fullname.toString().length()<=200) {
+                if (!address2.isEmpty()&& fullname.toString().length()<=200) {
+                    if ((phoneno.length() == 10 || phoneno.length() == 12)) {
                         if (email.length() == 0 ||CommonUtils.emailValidator(email)) {
                             if (connectiontype.getSelectedItemPosition() != 0) {
                                 flag = true;
@@ -160,11 +160,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
     private void submitData() {
         String m = myid.get(connectiontype.getSelectedItemPosition());
-        initProgressDialog();
-        if (pDialog != null && !pDialog.isShowing()) {
-            pDialog.setMessage("Requesting, please wait..");
-            pDialog.show();
-        }
+
         JSONObject obj = new JSONObject();
         try {
             obj.put("consumer_name", editTextFullName.getText().toString());
@@ -182,6 +178,11 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         }
 
         if (CommonUtils.isNetworkAvaliable(this)) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage("Requesting, please wait..");
+                pDialog.show();
+            }
             JsonObjectRequest request = WebRequests.addNewConnectionRequest(this, Request.Method.POST, AppConstants.URL_NEW_CONNECTION, AppConstants.REQUEST_NEW_CONNECTION, this, obj);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_NEW_CONNECTION);
         } else
