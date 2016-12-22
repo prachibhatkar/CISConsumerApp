@@ -78,7 +78,7 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                     this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_TARIFF);
         }else
-            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection", Toast.LENGTH_SHORT).show();
 
 
 

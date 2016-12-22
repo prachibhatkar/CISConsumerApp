@@ -81,9 +81,9 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         edit_remark = (EditText) findViewById(R.id.edit_remark);
 
 
-        ((EditText)findViewById(R.id.edit_remark)).setFilters(new InputFilter[] {
-                new InputFilter.LengthFilter(200)
-        });
+       // ((EditText)findViewById(R.id.edit_remark)).setFilters(new InputFilter[] {
+             //   new InputFilter.LengthFilter(200)
+      //  });
 
         services = new ArrayList<>(12);
         services.add(0, "Select Service Type");
@@ -138,6 +138,11 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
           if (isBlankInput()) {
 
               editremark = edit_remark.getText().toString().trim();
+
+              if(edit_remark.getText().length()>200){
+                  Toast.makeText(this, "remark should be 200 char", Toast.LENGTH_LONG).show();
+
+              }
               JSONObject obj = new JSONObject();
               try {
                   obj.put("service_type", servicetype.getSelectedItemPosition());

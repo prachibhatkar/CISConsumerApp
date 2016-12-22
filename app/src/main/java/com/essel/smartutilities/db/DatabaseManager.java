@@ -375,7 +375,7 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         //  String name = getinfo.consumerno.toString();
-        String selectQuery = "SELECT contact_no FROM ManageAccountsTable WHERE is_primary = '"+isprimary+"'";
+        String selectQuery = "SELECT * FROM ManageAccountsTable WHERE is_primary = '"+isprimary+"'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {

@@ -90,30 +90,37 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         expandableLayout_changepass = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changepass);
         expandableLayout_editProfile = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_editprofile);
 
-        contactno = (EditText) findViewById(R.id.editcontactno);
-        contactno.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE)).toString());
-        emailid = (EditText) findViewById(R.id.editconsumeremailid);
-        old_pass = (EditText) findViewById(R.id.editOldPassword);
-        new_pass = (EditText) findViewById(R.id.editNewPassword);
-        confirm_pass = (EditText) findViewById(R.id.editConfirmPassword);
-
-        consemer_name=(TextView)findViewById(R.id.textConsumerName);
-        consemer_name.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME)).toString());
-
-        consumer_number=(TextView)findViewById(R.id.textConsumerno);
-        consumer_number.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO)).toString());
-
-         consumer_add=(TextView)findViewById(R.id.textConsumerAddress);
-         consumer_add.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1)).toString());
-
-        save_detail.setOnClickListener(this);
-        save_password.setOnClickListener(this);
 
         GetInfo get=new GetInfo();
         String isprimary="true";
         get = DatabaseManager.getProfileinfo(this,isprimary);
         String consumerno =get.consumerno;
         String consumername =get.consumername;
+        String consumeraddress =get.consumeraddress;
+        String consumermobno =get.mobileno;
+
+        contactno = (EditText) findViewById(R.id.editcontactno);
+        contactno.setText(consumermobno);
+        emailid = (EditText) findViewById(R.id.editconsumeremailid);
+        emailid.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.EMAIL_ID)).toString());
+        old_pass = (EditText) findViewById(R.id.editOldPassword);
+        new_pass = (EditText) findViewById(R.id.editNewPassword);
+        confirm_pass = (EditText) findViewById(R.id.editConfirmPassword);
+
+
+        consemer_name=(TextView)findViewById(R.id.textConsumerName);
+        consemer_name.setText(consumername);
+
+        consumer_number=(TextView)findViewById(R.id.textConsumerno);
+        consumer_number.setText(consumerno);
+
+         consumer_add=(TextView)findViewById(R.id.textConsumerAddress);
+         consumer_add.setText(consumeraddress);
+
+        save_detail.setOnClickListener(this);
+        save_password.setOnClickListener(this);
+
+
     }
 
     private void initProgressDialog() {
