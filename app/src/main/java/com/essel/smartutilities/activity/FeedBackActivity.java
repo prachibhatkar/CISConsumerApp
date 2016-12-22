@@ -53,9 +53,9 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         });
 
         edit_remark_feedback=(EditText)findViewById(R.id.edit_remark_feedback);
-       // ((EditText)findViewById(R.id.edit_remark_feedback)).setFilters(new InputFilter[] {
-       //         new InputFilter.LengthFilter(200)
-       // });
+        ((EditText)findViewById(R.id.edit_remark_feedback)).setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(200)
+        });
         btn_submit_feedback=(Button)findViewById(R.id.btn_submit_feedback);
 
         /*edit_remark_feedback.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -120,11 +120,11 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
             }
 
-            if(edit_remark_feedback.getText().length()>200){
+           /* if(edit_remark_feedback.getText().length()>200){
                 Toast.makeText(this, "remark should be 200 char", Toast.LENGTH_LONG).show();
 
 
-            }
+            }*/
 
 
 

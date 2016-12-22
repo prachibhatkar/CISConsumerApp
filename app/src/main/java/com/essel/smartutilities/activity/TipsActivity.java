@@ -29,6 +29,7 @@ import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.fragments.TipOneFragment;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
@@ -81,6 +82,8 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
             JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
         } else
+
+
             Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
        // init();
        // intext();
@@ -237,6 +240,10 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
                                 // imagesurl = jsonResponse.tips.get(0).image;
                                 ImagesArray.add(jsonResponse.tips.get(i).image);
                                 TipTextArray.add(jsonResponse.tips.get(i).message);
+                                Tips tip=new Tips();
+                                tip.images=ImagesArray;
+                                tip.text=TipTextArray;
+                                DatabaseManager.saveTips(this,tip);
                                 Log.i(label, "Tipppppppppppp:" + imagesurl);
                             }
 

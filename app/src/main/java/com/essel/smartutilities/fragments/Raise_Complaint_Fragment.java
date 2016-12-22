@@ -311,10 +311,10 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
             b = false;
         }
-        if(complaintremark.length()>200){
+       /* if(complaintremark.length()>200){
             Toast.makeText(getContext(), "remark should be 200 char", Toast.LENGTH_LONG).show();
             b = false;
-        }
+        }*/
 
         if (complainttype.getSelectedItemPosition()== 0) {
             Toast.makeText(getContext(), "Select complaint type", Toast.LENGTH_LONG).show();

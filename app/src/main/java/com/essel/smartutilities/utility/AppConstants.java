@@ -3,7 +3,7 @@ package com.essel.smartutilities.utility;
 
 public class AppConstants {
 
-   public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
+   public static final String BASE_URL = "http://192.168.0.5:8000/mobileapi/";
   //  public static final String BASE_URL = "http://192.168.10.119:9999/mobileapi/";
 
 //      public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";

@@ -345,6 +345,49 @@ public class DatabaseManager {
 
     }
 
+    public static Faq getFaq(Context context) {
+
+        Faq faq = new Faq();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + FAQTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+
+            faq.arrayanswer.add(cursor.getString(cursor.getColumnIndex("faq_answer")));
+            faq.arrayquestion.add(cursor.getString(cursor.getColumnIndex("faq_question")));
+            Log.i("Tag", "valueselectdb" + cursor);
+
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return faq;
+
+
+    }
+
+    public static Tips getTips(Context context) {
+
+        Tips tips = new Tips();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TipsTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+
+            tips.message = cursor.getString(cursor.getColumnIndex("tips_message"));
+            Log.i("Tag", "valueselectdb" + cursor);
+
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return tips;
+
+
+    }
+
     public static GetInfo getinfo(Context context,String consumerno) {
 
         GetInfo getinfo = new GetInfo();
