@@ -96,15 +96,15 @@
                 android:gravity="center"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/textConsumerConnectionType"
+                    android:id="@+id/lbltextConsumernumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Consumer Number"
+                    android:text="Consumer Number:-"
                     android:textColor="@color/colorTextWhite"
                     android:textSize="@dimen/button_text_size_small" />
 
                 <TextView
-                    android:id="@+id/textConsumerMobileNo"
+                    android:id="@+id/textConsumerno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1012451241"
@@ -193,7 +193,7 @@
                             android:imeActionId="@+id/login"
                             android:imeActionLabel="@string/action_sign_in_short"
                             android:imeOptions="actionUnspecified"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:text="abc@gmail.com"
                             android:maxLines="1"
                             android:singleLine="true"

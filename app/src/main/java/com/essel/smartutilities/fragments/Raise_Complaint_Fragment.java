@@ -1,6 +1,7 @@
 package com.essel.smartutilities.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,11 +11,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +36,7 @@ import com.essel.smartutilities.adapter.PaymentHistoryAdapter;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Complaints;
+import com.essel.smartutilities.models.GetInfo;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.models.PaymentHistory;
 import com.essel.smartutilities.models.ServiceType;
@@ -76,6 +80,8 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     EditText complaint_remark;
     String image;
     Boolean flag=false;
+    ProgressDialog pDialog;
+    String selectcomplainttype,casetype;
 
     private String TAG = "responsedataaaaa";
     private ArrayList<String> complaints;
@@ -106,12 +112,19 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                }
 
                 if( CommonUtils.isNetworkAvaliable(getActivity())) {
+
+                    initProgressDialog();
+                    if (pDialog != null && !pDialog.isShowing()) {
+                        pDialog.setMessage(" please wait..");
+                        pDialog.show();
+                    }
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
 
                     if(flag=true){
 
                         callApi();
+
 
                     }
 
@@ -128,6 +141,21 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             }
 
         }
+    }
+
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
     }
 
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
@@ -149,6 +177,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
             flag=true;
+            dismissDialog();
 
 
 
@@ -161,10 +190,10 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
     public void callApi(){
 
-
-        JSONObject obj = new JSONObject();
+         // selectcomplainttype=complainttype.getSelectedItem().toString();
+          JSONObject obj = new JSONObject();
         try {
-            obj.put("complainttype", complainttype.getSelectedItemPosition());
+            obj.put("complainttype", complainttype.getSelectedItem().toString());
             obj.put("consumer_remark", complaintremark);
             obj.put("complaint_img", image);
 
@@ -188,6 +217,11 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
 
     public void getComplaintId() {
+        GetInfo get =new GetInfo();
+        String consumerno=(SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_NO)).toString();
+        get = DatabaseManager.getinfo(getActivity(),consumerno);
+
+        String mbnno=get.mobileno;
 
         String getconsumerno = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_NO)).toString();
         String getconsumercity = (SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_CITY)).toString();
@@ -201,19 +235,13 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            // if(getconsumerno.length()==10) {
-            Request.addProperty("accId", "1000039175");
-            Request.addProperty("city", "Nagpur");
+
+            Request.addProperty("accId", getconsumerno);
+            Request.addProperty("city", getconsumercity);
             Request.addProperty("service", "Electricity");
-            Request.addProperty("caseType", "Meter Burnt Complaint");
-            Request.addProperty("mobile", "9766325977");
+            Request.addProperty("caseType", casetype);
+            Request.addProperty("mobile", mbnno);
             Request.addProperty("remark", "Bill Adjustment");
-            ///  }
-           /* else{
-                Request.addProperty("P_ACCT_ID", getconsumerno);
-                Request.addProperty("P_BILL_ID", "");
-                Request.addProperty("P_MTR_ID", "OLD#E-NG");
-            }*/
 
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;
@@ -240,7 +268,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
               DatabaseManager.saveComplaint(getActivity(),complaint);
 
 
-
+               dismissDialog();
 
             Intent in = new Intent(getActivity(), GetComplaintIdActivity.class);
             in.putExtra("caseid", caseid);
@@ -398,10 +426,15 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
         complaint_remark=(EditText)rootView.findViewById(R.id.editremark);
 
+        ((EditText)rootView.findViewById(R.id.editremark)).setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(200)
+        });
+
         complaints = new ArrayList<>(12);
         complaints.add(0,"Select Complaint Type");
 
         if (CommonUtils.isNetworkAvaliable(getActivity())) {
+
             JsonObjectRequest request = WebRequests.getComplaintType(getActivity(), Request.Method.GET, AppConstants.URL_GET_COMPLAINT_TYPE, AppConstants.REQUEST_GET_COMPLAINT_TYPE,
                     this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_COMPLAINT_TYPE);
@@ -410,16 +443,43 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             Toast.makeText(getActivity(), " Please Check  Internet Connection ", Toast.LENGTH_SHORT).show();
 
 
-
-
         complainttype = (Spinner)rootView.findViewById(R.id.sp_complainttype);
        // String[] type = mContext.getResources().getStringArray(R.array.complaints);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, complaints);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         complainttype.setAdapter(dataAdapter);
 
+        complainttype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                 if(position==1){
+                     casetype="Mannual Bill Adjustment";
+                 }
+                if(position==2){
+                    casetype="No Power Complaints";
+                }
+                if(position==3){
+                    casetype="Meter Testing";
+                }
+                if(position==4){
+                    casetype="Phase Correction";
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+
+        });
+
+
         return rootView;
     }
+
+
 
 
 

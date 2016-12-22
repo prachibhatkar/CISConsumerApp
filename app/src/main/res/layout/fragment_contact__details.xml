@@ -69,7 +69,7 @@
             android:id="@+id/tv_onlinehelp"
             android:text="Online Complaints"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:id="@+id/tv_onlineemail"
             android:text="online@email.com"/>
@@ -90,7 +90,7 @@
             android:id="@+id/tv_igrcemail"
             android:text="IGRC email"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:id="@+id/tv_igrcemailid"
             android:text="online@email.com"/>
@@ -109,7 +109,7 @@
             android:text="Consumer Portal"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="www.portal.com"
             android:id="@+id/tv_portalsite" />

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -25,6 +26,8 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.GetInfo;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -53,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TabLayout profile_tabs;
     ProgressDialog pDialog;
     EditText contactno, emailid, old_pass, new_pass, confirm_pass;
+    TextView consemer_name,consumer_number,consumer_add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +91,29 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         expandableLayout_editProfile = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_editprofile);
 
         contactno = (EditText) findViewById(R.id.editcontactno);
+        contactno.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE)).toString());
         emailid = (EditText) findViewById(R.id.editconsumeremailid);
         old_pass = (EditText) findViewById(R.id.editOldPassword);
         new_pass = (EditText) findViewById(R.id.editNewPassword);
         confirm_pass = (EditText) findViewById(R.id.editConfirmPassword);
+
+        consemer_name=(TextView)findViewById(R.id.textConsumerName);
+        consemer_name.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME)).toString());
+
+        consumer_number=(TextView)findViewById(R.id.textConsumerno);
+        consumer_number.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO)).toString());
+
+         consumer_add=(TextView)findViewById(R.id.textConsumerAddress);
+         consumer_add.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1)).toString());
+
         save_detail.setOnClickListener(this);
         save_password.setOnClickListener(this);
+
+        GetInfo get=new GetInfo();
+        String isprimary="true";
+        get = DatabaseManager.getProfileinfo(this,isprimary);
+        String consumerno =get.consumerno;
+        String consumername =get.consumername;
     }
 
     private void initProgressDialog() {
@@ -127,7 +148,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             showImageOptionsDialog();
         }
         if (view == save_detail) {
-            saveDetails();
+            if (contactno.equals("") || contactno.length() != 10) {
+
+                Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
+
+            } else if (emailid.getText().length() == 0 || !CommonUtils.emailValidator(emailid.getText().toString())) {
+                Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
+
+            } else
+                saveDetails();
             expandableLayout_editProfile.collapse();
             expandableLayout_changepass.collapse();
         }
@@ -139,13 +168,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             if ((oldpass.equals(" ")) || (newpass.equals("")) || (confirmpass.equals(""))) {
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
                 expandableLayout_changepass.expand();
+            }
+
+            if(oldpass.length()<6||oldpass.length()>20){
+                Toast.makeText(this, " password should have atleast 6 characters", Toast.LENGTH_LONG).show();
+
+            }
+
+            if(newpass!=confirmpass){
+                Toast.makeText(this, " confirm password does not match ", Toast.LENGTH_LONG).show();
+
+            }
             } else {
                 callchangepass();
                 expandableLayout_editProfile.collapse();
                 expandableLayout_changepass.collapse();
             }
         }
-    }
+
 
     private void saveDetails() {
         if (CommonUtils.isNetworkAvaliable(this)) {

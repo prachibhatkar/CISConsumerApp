@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
 import org.ksoap2.SoapEnvelope;
@@ -65,11 +66,30 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
             case R.id.BTNSubmit:
                 if (consumerno.getText().toString().trim().length() >= 10 &&
                         consumerno.getText().toString().trim().length() <= 20) {
+
+                    if (CommonUtils.isNetworkAvaliable(this)) {
+                        initProgressDialog();
+                        if (pDialog != null && !pDialog.isShowing()) {
+                            pDialog.setMessage(" please wait..");
+                            pDialog.show();
+                        }
+                        AsyncCallWS task = new AsyncCallWS();
+                        task.execute();
+                  //  Intent i = new Intent(this, PayNowActivity.class);
+                  //  startActivity(i);
+                }else{
+                        Toast.makeText(this, " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                else{
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
                     //  Intent i = new Intent(this, PayNowActivity.class);
                     //  startActivity(i);
-                } else
+                }
+
                     Toast.makeText(this, "Enter valid Consumer No.", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -101,7 +121,6 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
-            initProgressDialog();
             getBillDetails();
             return null;
         }
@@ -110,11 +129,12 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
             Log.i(TAG, "response data: ");
-            dismissDialog();
-           //Toast.makeText(QuickPayActivity.this, "Response", Toast.LENGTH_LONG).show();
+            //Toast.makeText(QuickPayActivity.this, "Response", Toast.LENGTH_LONG).show();
 
 
         }
+
+
     }
 
 
@@ -151,14 +171,14 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
 
             SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
-            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH"));
-            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
+            Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH"));
+            Log.i(TAG, "get : " +((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
 
-            String duedate =  ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
-            String currentamt =  ((SoapObject)responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
-            String promptamt =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
-            String netbill =  ((SoapObject)responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
-            String arrears =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
+            String duedate=  ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
+            String currentamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
+            String promptamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
+            String netbill=  ((SoapObject)responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
+            String arrears=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
             String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
             String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
             String promptdate =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();

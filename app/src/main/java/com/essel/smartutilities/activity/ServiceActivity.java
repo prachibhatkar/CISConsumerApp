@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -78,7 +79,11 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         btn_submit_service.setOnClickListener(this);
 
         edit_remark = (EditText) findViewById(R.id.edit_remark);
-        editremark = edit_remark.toString().trim();
+
+
+        ((EditText)findViewById(R.id.edit_remark)).setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(200)
+        });
 
         services = new ArrayList<>(12);
         services.add(0, "Select Service Type");
@@ -86,18 +91,13 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         // expListView = (ExpandableListView)findViewById(R.id.expListView);
 
 
-        initProgressDialog();
+       /* initProgressDialog();
         if (pDialog != null && !pDialog.isShowing()) {
             pDialog.setMessage(" please wait..");
-            pDialog.show();
+            pDialog.show();*/
 
             if (CommonUtils.isNetworkAvaliable(this)) {
 
-                initProgressDialog();
-                if (pDialog != null && !pDialog.isShowing()) {
-                    pDialog.setMessage(" please wait..");
-                    pDialog.show();
-                }
                 JsonObjectRequest request = WebRequests.getServiceType(this, Request.Method.GET, AppConstants.URL_GET_SERVICE_TYPE, AppConstants.REQUEST_SERVICE_TYPE,
                         this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_SERVICE_TYPE);
@@ -113,7 +113,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
 
         }
-    }
+
 
     private void initProgressDialog() {
 
@@ -136,6 +136,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         if(v==btn_submit_service){
           if (isBlankInput()) {
+
+              editremark = edit_remark.getText().toString().trim();
               JSONObject obj = new JSONObject();
               try {
                   obj.put("service_type", servicetype.getSelectedItemPosition());
@@ -145,6 +147,12 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
               }
 
               if( CommonUtils.isNetworkAvaliable(this)) {
+
+                  initProgressDialog();
+                  if (pDialog != null && !pDialog.isShowing()) {
+                      pDialog.setMessage(" please wait..");
+                      pDialog.show();
+                  }
 
                    JsonObjectRequest request = WebRequests.serviceRequest(this, Request.Method.POST, AppConstants.URL_POST_SERVICE_REQUEST, AppConstants.REQUEST_POST_SERVICE_REQUEST,
                            this,obj,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
@@ -189,7 +197,6 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
             b = false;
         }
-
 
         if (servicetype.getSelectedItemPosition()== 0) {
             Toast.makeText(this, "Select service type", Toast.LENGTH_LONG).show();

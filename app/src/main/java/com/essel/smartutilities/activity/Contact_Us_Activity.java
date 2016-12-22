@@ -73,9 +73,9 @@ public class Contact_Us_Activity extends AppCompatActivity {
     }
 
     private void loadData() {
-        contactUsAdapter = new ContactUsAdapter(this, getSupportFragmentManager());
-        contactUsAdapter.getItem(1);
-        vp_contact_pager.setAdapter(contactUsAdapter);
+         contactUsAdapter = new ContactUsAdapter(this, getSupportFragmentManager());
+         contactUsAdapter.getItem(1);
+         vp_contact_pager.setAdapter(contactUsAdapter);
         vp_contact_pager.addOnPageChangeListener(onPageChangedListener);
         tablayout.setupWithViewPager(vp_contact_pager);
 

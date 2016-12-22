@@ -71,20 +71,26 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
             if (consumerIdEditText.equals("") || consumerIdEditText.length() < 10 || consumerIdEditText.length() > 20) {
                 Toast.makeText(this.getApplicationContext(), "Enter correct consumer id", Toast.LENGTH_SHORT).show();
             } else {
-                initProgressDialog();
-                if (pDialog != null && !pDialog.isShowing()) {
-                    pDialog.setMessage(" please wait..");
-                    pDialog.show();
+
+                if (CommonUtils.isNetworkAvaliable(this)) {
+                    initProgressDialog();
+                    if (pDialog != null && !pDialog.isShowing()) {
+                        pDialog.setMessage(" please wait..");
+                        pDialog.show();
+                    }
+
+                    // String consumerno=String.valueOf( consumerIdEditText.getText());
+                    JsonObjectRequest request = WebRequests.forgotpassword(this, Request.Method.POST, AppConstants.URL_POST_FORGOT_PASSWORD, AppConstants.REQUEST_FORGOT_PASSWORD, this, consumerno);
+                    App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FORGOT_PASSWORD);
+
+
+                }
+                else {
+
+                    Toast.makeText(this, " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
                 }
 
-              // String consumerno=String.valueOf( consumerIdEditText.getText());
-                JsonObjectRequest request = WebRequests.forgotpassword(this, Request.Method.POST, AppConstants.URL_POST_FORGOT_PASSWORD, AppConstants.REQUEST_FORGOT_PASSWORD, this, consumerno);
-                App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FORGOT_PASSWORD);
-
-
             }
-
-
 
         }
 
@@ -141,6 +147,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+
                         Log.i(label, "failllllllllll " + jsonResponse);
                         dismissDialog();
 
@@ -163,6 +170,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
             case AppConstants.REQUEST_FORGOT_PASSWORD: {
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+
+                toast();
+
                 Log.i(label, "gjjkfhdkh " + message);
                  Log.i(label, "jhjkghfkh " + response);
                 dismissDialog();
@@ -171,5 +181,10 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
+    }
+
+    public void toast(){
+
+        Toast.makeText(this, "you dont have registered emailid,Please contact to nearest CSD Center", Toast.LENGTH_LONG).show();
     }
 }

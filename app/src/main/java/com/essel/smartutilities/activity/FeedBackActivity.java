@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,8 +53,29 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         });
 
         edit_remark_feedback=(EditText)findViewById(R.id.edit_remark_feedback);
+        ((EditText)findViewById(R.id.edit_remark_feedback)).setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(200)
+        });
         btn_submit_feedback=(Button)findViewById(R.id.btn_submit_feedback);
-        remark=edit_remark_feedback.toString().trim();
+
+        /*edit_remark_feedback.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                // TODO Auto-generated method stub
+
+                if (edit_remark_feedback.getText().toString().length() > 0) {
+                    if (edit_remark_feedback.getText().toString().length() > 5) {
+                        edit_remark_feedback.setError("Error");
+                        Toast.makeText(FeedBackActivity.this, "remark less than 200 chracters ", Toast.LENGTH_SHORT).show();
+                        edit_remark_feedback.requestFocus();
+
+                    }
+                }
+            }
+        });*/
+
+
 
         tv_rate=(TextView)findViewById(R.id.tv_rate);
 
@@ -87,34 +109,52 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v==btn_submit_feedback){
-            String feedbackremark  = String.valueOf(edit_remark_feedback.getText());
+        if(v==btn_submit_feedback) {
+            String feedbackremark = String.valueOf(edit_remark_feedback.getText());
+            remark =edit_remark_feedback.getText().toString().trim();
 
-            if(feedbackremark.equals("")){
+
+            if (feedbackremark.equals("")) {
 
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
 
             }
 
+            /*if(edit_remark_feedback.getText().length()>200){
+                Toast.makeText(this, "remark should be 200 char", Toast.LENGTH_LONG).show();
+
+
+            }*/
+
+
+
+
            // ActivityLoginLanding.snackBarMethod();
            // flag=true;
         else {
-                initProgressDialog();
-                if (pDialog != null && !pDialog.isShowing()) {
-                    pDialog.setMessage(" please wait..");
-                    pDialog.show();
+                if (CommonUtils.isNetworkAvaliable(this)) {
+                    initProgressDialog();
+                    if (pDialog != null && !pDialog.isShowing()) {
+                        pDialog.setMessage(" please wait..");
+                        pDialog.show();
+                    }
+                    JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+                    App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FEEDBACK);
+                    // flag=true;
+
+
                 }
-                JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN) );
-                App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FEEDBACK);
-               // flag=true;
 
+                else {
 
+                    Toast.makeText(this, " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+                }
             }
 
 
 
         }else if(v==image1){
-            count="1";
+            count="STAR1";
             tv_rate.setText("bad");
            // Toast.makeText(this.getApplicationContext(), "you have rated 5", Toast.LENGTH_SHORT).show();
 
@@ -122,7 +162,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
         }
         else if(v==image2){
-            count="2";
+            count="STAR2";
             tv_rate.setText("ok");
            // Toast.makeText(this.getApplicationContext(), " you have rated 4", Toast.LENGTH_SHORT).show();
 
@@ -130,7 +170,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
         }
         else if(v==image3){
-            count="3";
+            count="STAR3";
             tv_rate.setText("like it");
           //Toast.makeText(this.getApplicationContext(), "you have rated 3", Toast.LENGTH_SHORT).show();
 
@@ -138,7 +178,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
         }
         else if(v==image4){
-            count="4";
+            count="STAR4";
             tv_rate.setText("Good");
            //Toast.makeText(this.getApplicationContext(), "you have rated 2", Toast.LENGTH_SHORT).show();
 
@@ -146,7 +186,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
         }
         else if(v==image5){
-            count="5";
+            count="STAR5";
             tv_rate.setText("loved it");
             //Toast.makeText(this.getApplicationContext(), "you have rated 1", Toast.LENGTH_SHORT).show();
 

@@ -52,7 +52,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
 
             <LinearLayout
@@ -68,7 +69,8 @@
                     android:background="@color/black_overlay"
                     android:paddingRight="10dp"
                     android:text="New Service Connection"
-                    android:textColor="@color/colorPrimaryDarkText" />
+                    android:textColor="@color/colorPrimaryDarkText"
+                    android:visibility="gone"/>
 
                 <com.github.aakira.expandablelayout.ExpandableRelativeLayout
                     android:id="@+id/expandableLayout_newconnection"
@@ -113,7 +115,8 @@
                     android:background="@color/black_overlay"
                     android:paddingRight="10dp"
                     android:text="Change of OwnerShip"
-                    android:textColor="@color/colorPrimaryDarkText" />
+                    android:textColor="@color/colorPrimaryDarkText"
+                    android:visibility="gone"/>
 
                 <com.github.aakira.expandablelayout.ExpandableRelativeLayout
                     android:id="@+id/expandableLayout_changeofownership"
@@ -155,6 +158,7 @@
                     android:background="@color/black_overlay"
                     android:paddingRight="10dp"
                     android:text="Change of Connection Type"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimaryDarkText" />
 
                 <com.github.aakira.expandablelayout.ExpandableRelativeLayout
@@ -194,6 +198,7 @@
                         android:background="@color/black_overlay"
                         android:paddingRight="10dp"
                         android:text="Load Extension Reduction"
+                        android:visibility="gone"
                         android:textColor="@color/colorPrimaryDarkText" />
 
                     <com.github.aakira.expandablelayout.ExpandableRelativeLayout
@@ -234,6 +239,7 @@
                         android:background="@color/black_overlay"
                         android:paddingRight="10dp"
                         android:text="Permanant Disconnection"
+                        android:visibility="gone"
                         android:textColor="@color/colorPrimaryDarkText" />
 
                     <com.github.aakira.expandablelayout.ExpandableRelativeLayout
@@ -260,8 +266,220 @@
                     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn6"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black_overlay"
+                        android:paddingRight="10dp"
+                        android:text="New Service Connection"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimaryDarkText" />
+
+                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                        android:id="@+id/expandableLayout6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ael_expanded="false"
+                        app:ael_orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:lines="10"
+                            android:maxLines="10"
+                            android:singleLine="false"
+                            android:text=" New Service Connection" />
+
+
+                    </LinearLayout>
+                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
             </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn7"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black_overlay"
+                        android:paddingRight="10dp"
+                        android:text="New Service Connection"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimaryDarkText" />
+
+                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                        android:id="@+id/expandableLayout7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ael_expanded="false"
+                        app:ael_orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:singleLine="false"
+                                android:text=" New Service Connection" />
+
+
+                        </LinearLayout>
+                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn8"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black_overlay"
+                        android:paddingRight="10dp"
+                        android:text="New Service Connection"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimaryDarkText" />
+
+                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                        android:id="@+id/expandableLayout8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ael_expanded="false"
+                        app:ael_orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:singleLine="false"
+                                android:text=" New Service Connection" />
+
+
+                        </LinearLayout>
+                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn9"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black_overlay"
+                        android:paddingRight="10dp"
+                        android:text="New Service Connection"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimaryDarkText" />
+
+                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                        android:id="@+id/expandableLayout9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ael_expanded="false"
+                        app:ael_orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:singleLine="false"
+                                android:text=" New Service Connection" />
+
+
+                        </LinearLayout>
+                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn10"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black_overlay"
+                        android:paddingRight="10dp"
+                        android:text="New Service Connection"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimaryDarkText" />
+
+                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                        android:id="@+id/expandableLayout10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ael_expanded="false"
+                        app:ael_orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_10"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:singleLine="false"
+                                android:text=" New Service Connection" />
+
+
+                        </LinearLayout>
+                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                </LinearLayout>
+        </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

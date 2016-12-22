@@ -57,6 +57,8 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
         }
         else if(v==btn_locate_us){
 
+
+
             Intent in = new Intent(this,Contact_Us_Activity.class);
             startActivity(in);
 

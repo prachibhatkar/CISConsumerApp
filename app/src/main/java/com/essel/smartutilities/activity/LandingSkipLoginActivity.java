@@ -125,6 +125,12 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
             case R.id.BTNSubmit:
                 if (validate()) {
                     if (CommonUtils.isNetworkAvaliable(this)) {
+
+                        initProgressDialog();
+                        if (pDialog != null && !pDialog.isShowing()) {
+                            pDialog.setMessage(" please wait..");
+                            pDialog.show();
+                        }
                         AsyncCallWS task = new AsyncCallWS();
                         task.execute();
                         //  in = new Intent(this, PayNowActivity.class);
@@ -187,7 +193,7 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
-            initProgressDialog();
+
             getBillDetails();
             return null;
         }

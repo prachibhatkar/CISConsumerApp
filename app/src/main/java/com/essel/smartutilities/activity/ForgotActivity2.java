@@ -45,7 +45,7 @@ public class ForgotActivity2 extends AppCompatActivity implements View.OnClickLi
 
     public void onBackPressed() {
 
-        Intent in =new Intent(this,ActivityLoginLanding.class);
+        Intent in =new Intent(this,LoginActivity.class);
         startActivity(in);
 
 

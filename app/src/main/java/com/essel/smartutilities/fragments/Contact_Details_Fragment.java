@@ -157,6 +157,12 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
 
     }
 
+    public void onBackPressed() {
+
+        dismissDialog();
+    }
+
+
 
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {

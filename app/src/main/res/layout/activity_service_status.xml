@@ -72,14 +72,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_time_csd_center"
-            android:text="Please download the service form document from your registered mailid."/>
+            android:text="Please download the service form document from your registered emailid."/>
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_time"
-            android:text="Monday to Saturaday 9:30AM to 5:30PM"/>
+            android:text="Timining:- Monday to Saturaday 9:30AM to 5:30PM"/>
 
 
     </LinearLayout>

@@ -3,7 +3,7 @@ package com.essel.smartutilities.utility;
 
 public class AppConstants {
 
-   public static final String BASE_URL = "http://192.168.10.102:9999/mobileapi/";
+   public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
   //  public static final String BASE_URL = "http://192.168.10.119:9999/mobileapi/";
 
 //      public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";
@@ -43,7 +43,13 @@ public class AppConstants {
     public static final String REQUEST_GET_COMPLAINT_TYPE = "get-complaint-type/";
     public static final String URL_GET_COMPLAINT_TYPE = BASE_URL + REQUEST_GET_COMPLAINT_TYPE;
 
-    public static final String REQUEST_GET_LOCATE_US= "get-complaint-type/";
+
+
+    public static final String REQUEST_GET_COMPLAINT_ID = "get-complaints/";
+    public static final String URL_GET_COMPLAINT_ID = BASE_URL + REQUEST_GET_COMPLAINT_ID;
+
+
+    public static final String REQUEST_GET_LOCATE_US= "get-locate-us/";
     public static final String URL_GET_LOCATE_US = BASE_URL + REQUEST_GET_LOCATE_US;
 
 

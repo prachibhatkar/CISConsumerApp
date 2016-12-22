@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ManageAccountAdapter;
@@ -23,6 +24,7 @@ import com.essel.smartutilities.adapter.PaymentHistoryAdapter;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.NotificationCard;
 import com.essel.smartutilities.models.PaymentHistory;
+import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
@@ -68,10 +70,20 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
                 finish();
             }
         });
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
 
-        AsyncCallWS task = new AsyncCallWS();
-        task.execute();
+            AsyncCallWS task = new AsyncCallWS();
+            task.execute();
 
+        }
+
+        else
+            Toast.makeText(this, " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -104,7 +116,6 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
-            initProgressDialog();
             getPaymentHistory();
             return null;
         }
@@ -140,16 +151,18 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            // if(getconsumerno.length()==10) {
-                Request.addProperty("P_ACCT_ID", "1000462118");
+             if(getconsumerno.length()==10) {
+                Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
-          // }
-           /* else{
+           }
+            else
+             if(getconsumerno.length()==12)
+             {
                 Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "OLD#E-NG");
-            }*/
+            }
 
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;

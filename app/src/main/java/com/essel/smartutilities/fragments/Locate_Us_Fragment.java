@@ -1,5 +1,6 @@
 package com.essel.smartutilities.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -26,6 +27,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.LocateCsd;
+import com.essel.smartutilities.models.LocateUs;
 import com.essel.smartutilities.models.ServiceType;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -41,6 +44,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -60,20 +64,30 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     private static final String ARG_PARAM2 = "param2";
     MapView mMapView;
     private GoogleMap googleMap;
-    TextView tv_address,tv_address2,tv_address3;
+    TextView tv_address,tv_address2,tv_address3,tv_address4;
+   Double lat,lon;
+    ArrayList<String>address1=new ArrayList<String>();
+    ArrayList<String>city1=new ArrayList<String>();
+    ArrayList<String>starttime1=new ArrayList<String>();
+    ArrayList<String>endtime1=new ArrayList<String>();
+    ArrayList<String>lat1=new ArrayList<String>();
+    ArrayList<String>lon1=new ArrayList<String>();
     Geocoder geocoder;
+    ProgressDialog pDialog;
     //List<Address> addresses;
     private List<Address> addresses;
     private List<Address> addresses1;
     private List<Address> addresses2;
     private List<Address> addresses3;
     String address="",city="",country="";
+    private ArrayList<String> csdcenters;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private Spinner sp_location;
     Context mContext;
+    LocateUs locateus1 = new LocateUs();
 
 
 
@@ -112,6 +126,22 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
     }
 
+
+    private void initProgressDialog() {
+
+        if (pDialog == null) {
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+        }
+    }
+
+    private void dismissDialog() {
+        if (pDialog != null && pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
+
     //final FragmentController mFragments = FragmentController.createController(new HostCallbacks());
 
 
@@ -144,24 +174,13 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
         View rootView = inflater.inflate(R.layout.fragment_locate__us, container, false);
 
-        sp_location = (Spinner) rootView.findViewById(R.id.sp_location);
-
-
-        if (CommonUtils.isNetworkAvaliable(getActivity())) {
-            JsonObjectRequest request = WebRequests.getLocateUs(getActivity(), Request.Method.GET, AppConstants.URL_GET_LOCATE_US, AppConstants.REQUEST_GET_LOCATE_US, this);
-            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_LOCATE_US);
-        } else
-
-            Toast.makeText(getActivity(), " Please Check  Internet Connection ", Toast.LENGTH_SHORT).show();
-
-
-
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
         tv_address=(TextView)rootView.findViewById(R.id.tv_address1);
         tv_address2=(TextView)rootView.findViewById(R.id.tv_address2);
-        tv_address3=(TextView)rootView.findViewById(R.id.tv_address3);
+        tv_address3=(TextView)rootView.findViewById(R.id.starttime);
+        tv_address4=(TextView)rootView.findViewById(R.id.endtime);
 
 
 
@@ -183,23 +202,45 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                  googleMap.setMyLocationEnabled(true);
 
                 // For dropping a marker at a point on the Map
-                 LatLng all_csd = new LatLng(20.5937, 78.9629);
+                /* LatLng all_csd = new LatLng(20.5937, 78.9629);
                  googleMap.addMarker(new MarkerOptions().position(all_csd).title("Amgola Road").snippet("Marker Description"));
 
                  //For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(all_csd).zoom(10).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
 
             }
 
         });
 
-       String[] locations = mContext.getResources().getStringArray(R.array.CSD_Centers);
-       ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item, Arrays.asList(locations));
-       dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-       sp_location.setAdapter(dataAdapter);
+        csdcenters = new ArrayList<>(12);
+      //  csdcenters.add(0,"Select CSD Centers");
 
-        sp_location.setOnItemSelectedListener(this);
+
+        if (CommonUtils.isNetworkAvaliable(getActivity())) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
+            JsonObjectRequest request = WebRequests.getLocateUs(getActivity(), Request.Method.GET, AppConstants.URL_GET_LOCATE_US, AppConstants.REQUEST_GET_LOCATE_US, this);
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_LOCATE_US);
+        } else
+
+            Toast.makeText(getActivity(), " Please Check  Internet Connection ", Toast.LENGTH_SHORT).show();
+
+
+
+
+        sp_location = (Spinner) rootView.findViewById(R.id.sp_location);
+       /* ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item,csdcenters);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_location.setAdapter(dataAdapter);
+        sp_location.setOnItemSelectedListener(this);*/
+
+
+        //  String[] locations = mContext.getResources().getStringArray(R.array.CSD_Centers);
+
         return rootView;
     }
 
@@ -234,13 +275,70 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        switch(position) {
+       // if(position!=0) {
+          lat= Double.valueOf(lat1.get(position));
+          lon= Double.valueOf(lon1.get(position));
+        LatLng csd1 = new LatLng(lat,lon);
+       // googleMap.addMarker(new MarkerOptions().position(csd1).title("").snippet("Marker Description"));
+        googleMap.addMarker(new MarkerOptions().position(csd1)
+                .title("")
+                .snippet("")
+                .draggable(true));
+
+        // For zooming automatically to the location of the marker
+        CameraPosition cameraPosition3 = new CameraPosition.Builder().target(csd1).zoom(12).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition3));
+       // googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lon), 14));
+
+
+
+            tv_address.setText(address1.get(position));
+            tv_address2.setText(city1.get(position));
+            tv_address3.setText(starttime1.get(position));
+            tv_address4.setText(endtime1.get(position));
+
+     //   }
+        /*else{
+
+
+            LatLng csd1 = new LatLng(20.5937, 76.9629);
+            googleMap.addMarker(new MarkerOptions().position(csd1).title("").snippet("Marker Description"));
+
+            // For zooming automatically to the location of the marker
+            CameraPosition cameraPosition3 = new CameraPosition.Builder().target(csd1).zoom(10).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition3));
+
+
+
+
+
+
+        }*/
+        //Geocoder geocoder4 = new Geocoder(getContext(), Locale.getDefault());
+
+
+     /*   try {
+            addresses = geocoder4.getFromLocation(lat,lon, 1);
+            // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        String city = addresses.get(0).getLocality();
+        String state = addresses.get(0).getAdminArea();
+        String country = addresses.get(0).getCountryName();
+        String postalCode = addresses.get(0).getPostalCode();
+        String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+        tv_address.setText(address + " \n" + city + " \n" + state + "\n " + country + "\n " + postalCode);
+
+      /*  switch(position) {
 
 
 
                 case 0:
-                    if (CommonUtils.isNetworkAvaliable(getContext())) {
-                        LatLng all_csd = new LatLng(26.1114, 85.3897);
+                   if (CommonUtils.isNetworkAvaliable(getContext())) {
+                        LatLng all_csd = new LatLng(lat,lon);
                         googleMap.addMarker(new MarkerOptions().position(all_csd));
 
 
@@ -276,22 +374,23 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
 
                     }
-                    break;
+
+                   break;
 
                 case 1:
                     if (CommonUtils.isNetworkAvaliable(getContext())) {
-                        LatLng amgola_road = new LatLng(26.1114, 85.3897);
-                        googleMap.addMarker(new MarkerOptions().position(amgola_road).title("Amgola Road").snippet("Marker Description"));
+                       LatLng csd1 = new LatLng(lat,lon);
+                        googleMap.addMarker(new MarkerOptions().position(csd1).title("").snippet("Marker Description"));
 
                         // For zooming automatically to the location of the marker
-                        CameraPosition cameraPosition3 = new CameraPosition.Builder().target(amgola_road).zoom(15).build();
+                        CameraPosition cameraPosition3 = new CameraPosition.Builder().target(csd1).zoom(15).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition3));
 
                         Geocoder geocoder4 = new Geocoder(getContext(), Locale.getDefault());
 
 
                         try {
-                            addresses = geocoder4.getFromLocation(26.1114, 85.3897, 1);
+                            addresses = geocoder4.getFromLocation(lat,lon, 1);
                             // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -318,17 +417,17 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
                 case 2:
                     if (CommonUtils.isNetworkAvaliable(getContext())) {
-                        LatLng saraiganj = new LatLng(26.1221, 85.3659);
-                        googleMap.addMarker(new MarkerOptions().position(saraiganj).title("Saraiganj").snippet("Marker Description"));
+                        LatLng csd2 = new LatLng(lat,lon);
+                        googleMap.addMarker(new MarkerOptions().position(csd2).title("").snippet("Marker Description"));
 
                         // For zooming automatically to the location of the marker
-                        CameraPosition cameraPosition4 = new CameraPosition.Builder().target(saraiganj).zoom(15).build();
+                        CameraPosition cameraPosition4 = new CameraPosition.Builder().target(csd2).zoom(15).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition4));
 
                         Geocoder geocoder1 = new Geocoder(getContext(), Locale.getDefault());
 
                         try {
-                            addresses = geocoder1.getFromLocation(26.1221, 85.3659, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                            addresses = geocoder1.getFromLocation(lat,lon, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -352,11 +451,11 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
                 case 3:
                     if (CommonUtils.isNetworkAvaliable(mContext)) {
-                        LatLng kachhi_sarai = new LatLng(26.1175964, 85.3977566);
-                        googleMap.addMarker(new MarkerOptions().position(kachhi_sarai).title("Kachhi Sarai").snippet("Marker Description"));
+                        LatLng csd3 = new LatLng(lat,lon);
+                        googleMap.addMarker(new MarkerOptions().position(csd3).title("Kachhi Sarai").snippet("Marker Description"));
 
                         // For zooming automatically to the location of the marker
-                        CameraPosition cameraPosition5 = new CameraPosition.Builder().target(kachhi_sarai).zoom(15).build();
+                        CameraPosition cameraPosition5 = new CameraPosition.Builder().target(csd3).zoom(15).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition5));
 
                         Geocoder geocoder2 = new Geocoder(getContext(), Locale.getDefault());
@@ -415,7 +514,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
                     break;
 
-            }
+            }*/
 
         }
 
@@ -436,33 +535,142 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
             case AppConstants.REQUEST_GET_LOCATE_US: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
-//
+
+
                         Log.i(label, "hygt " + jsonResponse);
                         // Log.i(label, "hyif " + jsonResponse.complaint_type);
-                        if(jsonResponse.locate_us.size()!=0)
+                        if(jsonResponse.locateus.size()!=0)
                         {
 
-                            for(int i = 1 ; i <= jsonResponse.locate_us.size(); i++) {
+                            for(int i = 1 ; i <= jsonResponse.locateus.size(); i++) {
 
-                                ServiceType complaint1=new ServiceType();
+                               /* if(jsonResponse.locateus.get(i-1).center_name==null){
+                                    locateus1.setCenter_name(" \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\]");
+                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
+                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
+                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
+                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
+                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
+                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
+                                    lat= Double.valueOf(locateus1.getLatitude());
+                                    lon= Double.valueOf(locateus1.getLongitude());
+                                } else
+                                if(jsonResponse.locateus.get(i-1).address==null){
+                                    locateus1.setAddress(" ");
+                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
+                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
+                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
+                                   // locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
+                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
+                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
+                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
+                                    lat= Double.valueOf(locateus1.getLatitude());
+                                    lon= Double.valueOf(locateus1.getLongitude());
+                                } else
+                                if(jsonResponse.locateus.get(i-1).city==null){
+                                    locateus1.setCity(" ");
+                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
+                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
+                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
+                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
+                                    //locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
+                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
+                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
+                                    lat= Double.valueOf(locateus1.getLatitude());
+                                    lon= Double.valueOf(locateus1.getLongitude());
+                                } else
+                                if(jsonResponse.locateus.get(i-1).start_time==null){
+                                    locateus1.setStart_time(" ");
+                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
+                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
+                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
+                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
+                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
+                                    //locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
+                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
+                                    lat= Double.valueOf(locateus1.getLatitude());
+                                    lon= Double.valueOf(locateus1.getLongitude());
+                                }else
+                                if(jsonResponse.locateus.get(i-1).end_time==null){
+                                    locateus1.setEnd_time(" ");
+                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
+                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
+                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
+                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
+                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
+                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
+                                   // locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
+                                    lat= Double.valueOf(locateus1.getLatitude());
+                                    lon= Double.valueOf(locateus1.getLongitude());
+                                 } else
+                                if(jsonResponse.locateus.get(i-1).latitude==null){
+                                    locateus1.setLatitude(" ");
+                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
+                                   // locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
+                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
+                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
+                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
+                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
+                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
+                                    lat= Double.valueOf(locateus1.getLatitude());
+                                    lon= Double.valueOf(locateus1.getLongitude());
+                                } else
+                                if(jsonResponse.locateus.get(i-1).longitude==null){
+                                    locateus1.setLongitude(" ");
+                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
+                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
+                                   // locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
+                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
+                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
+                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
+                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
+                                    lat= Double.valueOf(locateus1.getLatitude());
+                                    lon= Double.valueOf(locateus1.getLongitude());
+                                }*/
 
-                                Log.i(label, "complainttype" + jsonResponse.complaint_type);
-                                complaint1.setType(jsonResponse.complaint_type.get(i-1).type);
-                                complaint1.setId(jsonResponse.complaint_type.get(i-1).id.toString().trim());
-                             //   complaints.add(i,complaint1.getType());
-                                Log.i(label, "complainttype" + jsonResponse.complaint_type);
-
-
+                                dismissDialog();
+                               Log.i(label, "complainttype" + jsonResponse.locateus);
+                                locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString()!=null?jsonResponse.locateus.get(i-1).center_name.toString():" ");
+                                locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString()!=null?jsonResponse.locateus.get(i-1).latitude.toString():" ");
+                                locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString()!=null?jsonResponse.locateus.get(i-1).longitude.toString(): " ");
+                                locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString()!=null?jsonResponse.locateus.get(i-1).address.toString():" ");
+                                locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString()!=null?jsonResponse.locateus.get(i-1).city.toString():" ");
+                                locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString()!=null?jsonResponse.locateus.get(i-1).start_time.toString():" 00.00");
+                                locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString()!=null?jsonResponse.locateus.get(i-1).end_time.toString():"00.00");
+                                lat= Double.valueOf(locateus1.getLatitude());
+                                lon= Double.valueOf(locateus1.getLongitude());
+                              //  locateus.setCity(jsonResponse.locateus.get(i-1).getCity().toString().trim());
+                             //   locateus.setLatitude(jsonResponse.locateus.get(i-1).getLatitude().toString());
+                              //  locateus.setLongitude(jsonResponse.locateus.get(i-1).getLongitude().toString());
+                                   address1.add(locateus1.address);
+                                   city1.add(locateus1.city);
+                                   starttime1.add(locateus1.start_time);
+                                  endtime1.add(locateus1.end_time);
+                                  lat1.add(locateus1.latitude);
+                                  lon1.add(locateus1.longitude);
+                                 csdcenters.add(i-1,locateus1.getCenter_name());
+                                Log.i(label, "complainttype" + jsonResponse.locateus);
 
                             }
 
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item,csdcenters);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            sp_location.setAdapter(dataAdapter);
+                            sp_location.setOnItemSelectedListener(this);
+
+
+
 
                         }
+
+
                         if (jsonResponse.authorization != null) {
+                            dismissDialog();
                             CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
                         Toast.makeText(getContext(), jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 
                     }
@@ -474,11 +682,26 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
     }
 
+
+    public void onBackPressed() {
+
+        dismissDialog();
+    }
+
     @Override
     public void onAsyncFail(String message, String label, NetworkResponse response) {
+        switch (label) {
+            case AppConstants.REQUEST_GET_LOCATE_US: {
+                 dismissDialog();
+//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+                Log.i(label, "locate" + message);
+                Log.i(label, "locate......." + response);
+            }
+            break;
 
 
-
+        }
 
     }
 }

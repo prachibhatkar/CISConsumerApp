@@ -42,6 +42,7 @@ import com.essel.smartutilities.models.Complaints;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.Faq;
+import com.essel.smartutilities.models.GetInfo;
 import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.models.User;
 
@@ -340,6 +341,56 @@ public class DatabaseManager {
         }
 
         return aboutUs;
+
+
+    }
+
+    public static GetInfo getinfo(Context context,String consumerno) {
+
+        GetInfo getinfo = new GetInfo();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+      //  String name = getinfo.consumerno.toString();
+        String selectQuery = "SELECT contact_no FROM ManageAccountsTable WHERE consumer_id = '"+consumerno+"'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+
+           // getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
+            getinfo.mobileno = cursor.getString(cursor.getColumnIndex("contact_no"));
+            Log.i("Tag", "valueselectdb" + cursor);
+
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return getinfo;
+
+
+    }
+
+
+    public static GetInfo getProfileinfo(Context context,String isprimary) {
+
+        GetInfo getinfo = new GetInfo();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        //  String name = getinfo.consumerno.toString();
+        String selectQuery = "SELECT contact_no FROM ManageAccountsTable WHERE is_primary = '"+isprimary+"'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+
+            // getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
+            getinfo.mobileno = cursor.getString(cursor.getColumnIndex("contact_no"));
+            getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
+            getinfo.consumername = cursor.getString(cursor.getColumnIndex("consumer_name"));
+            getinfo.consumeraddress = cursor.getString(cursor.getColumnIndex("address"));
+            Log.i("Tag", "valueselectdb" + cursor);
+
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return getinfo;
 
 
     }
