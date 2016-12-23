@@ -21,6 +21,8 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.Faq;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -42,6 +44,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     ArrayList<Button>btnarray=new ArrayList<Button>();
     ArrayList<TextView>tvarray=new ArrayList<TextView>();
     ArrayList<ExpandableRelativeLayout> explayoutarray=new ArrayList<ExpandableRelativeLayout>();
+    ArrayList<String>tvarray1=new ArrayList<String>();
+    ArrayList<String>btnarray1=new ArrayList<String>();
 
 
 
@@ -188,7 +192,23 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             JsonObjectRequest request = WebRequests.getFaq(this, Request.Method.GET, AppConstants.URL_GET_FAQ, AppConstants.REQUEST_FAQ, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FAQ);
         }else
-            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+
+        {
+              Faq faq2 = new Faq();
+             faq2=DatabaseManager.getFaq(this);
+             tvarray1.add(faq2.answer);
+             btnarray1.add(faq2.question);
+
+            for(int i=0;i< btnarray1.size();i++){
+                btnarray.get(i).setVisibility(View.VISIBLE);
+                tvarray.get(i).setText(tvarray1.get(i).toString().trim());
+                tvarray.get(i).setText(btnarray1.get(i).toString().trim());
+
+            }
+            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 
@@ -298,6 +318,14 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                                 tvarray.get(i).setText(jsonResponse.faqs.get(i).answer.toString().trim());
                                 btnarray.get(i).setText(jsonResponse.faqs.get(i).question.toString());
 
+                                tvarray1.add(jsonResponse.faqs.get(i).answer.toString().trim());
+                                btnarray1.add(jsonResponse.faqs.get(i).question.toString());
+
+
+                                Faq faq=new Faq();
+                                faq.arrayanswer.add(i,tvarray1.get(i));
+                                faq.arrayquestion.set(i,tvarray1.get(i));
+                                DatabaseManager.saveFAQ(this,faq);
 
 
 

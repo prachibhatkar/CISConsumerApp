@@ -101,7 +101,7 @@ public class AppConstants {
 
     public static String CONSUMER_ID = "consumer_id";
     public static String CONSUMER_PASSWORD = "password";
-    //    public static String CONSUMER_LOGGED ="false" ;
+//    public static String CONSUMER_LOGGED ="false" ;
     public static final int ALL_PERMISSIONS_RESULT = 107;
 
     public static String CONSUMER_NAME = "consumer_name";

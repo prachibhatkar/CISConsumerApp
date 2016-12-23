@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (v == btnLogin) {
              performLogin();
-           // Intent i = new Intent(this, ActivityLoginLanding.class);
-           // startActivity(i);
+          // Intent i = new Intent(this, ActivityLoginLanding.class);
+          //  startActivity(i);
 //            ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
 //            DatabaseManager.saveLoginDetails(this,consumers.get(3));
 
