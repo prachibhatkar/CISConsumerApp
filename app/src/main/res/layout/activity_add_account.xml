@@ -114,6 +114,7 @@
                             android:hint="@string/promt_sconsumer_id"
                             android:inputType="number"
                             android:maxLines="1"
+                            android:maxLength="20"
                             android:paddingBottom="@dimen/margin_large"
                             />
 

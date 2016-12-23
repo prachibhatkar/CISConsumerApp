@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
 import org.json.JSONException;
@@ -37,7 +38,7 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
     TextInputLayout inputLayoutConsumerId;
     Context mContext;
     ProgressDialog pDialog;
-    public String TAG="Add Accounttttttttttttt";
+    public String TAG = "Add Accounttttttttttttt";
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,8 +144,7 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-public void consumerdetails()
-    {
+    public void consumerdetails() {
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerDetails/getconsumerdetailsbpelprocess_client_ep";
         String METHOD_NAME = "requestElement";
         String NAMESPACE = "http://www.example.org";
@@ -153,7 +153,7 @@ public void consumerdetails()
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("acctConsNo", editTextConsumerId.getText().toString());
-            Request.addProperty("city","Nagpur");//SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_CITY));
+            Request.addProperty("city", "Nagpur");//SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_CITY));
             Request.addProperty("serviceType", "Electricity");
 
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -167,18 +167,27 @@ public void consumerdetails()
             androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
             if (((SoapObject) soapEnvelope.bodyIn) != null) {
                 Log.i(TAG, "get bodyin: " + (SoapObject) soapEnvelope.bodyIn);
-                CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
-                        ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
-                Intent i = new Intent(this, AddAccountActivity2.class);
-                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2,((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3,((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, ((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, ((SoapObject) soapEnvelope.bodyIn).getProperty("mobile").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.CON_NO,((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString());
-                SharedPrefManager.saveValue(this, SharedPrefManager.POSTAL,((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString());
-                startActivity(i);
-                dismissDialog();
+                if (((SoapObject) soapEnvelope.bodyIn).getProperty("message") != null)
+                    if ((((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString()).equalsIgnoreCase("Please Select Correct Values")) {
+                        this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                DialogCreator.showMessageDialog(AddAccountActivity.this, "Please Enter Valid Consumer No");
+                            }
+                        });
+                    } else {
+                        CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
+                                ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
+                        Intent i = new Intent(this, AddAccountActivity2.class);
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, ((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, ((SoapObject) soapEnvelope.bodyIn).getProperty("mobile").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CON_NO, ((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.POSTAL, ((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString());
+                        startActivity(i);
+                        dismissDialog();
+                    }
             }
         } catch (Exception ex) {
             Log.e(TAG, "Error: " + ex.getMessage());

@@ -79,7 +79,8 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
             textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
 
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
-        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null || !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("")
+                ||!SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("NA"))
             textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
         else
             noMobileDialog();
@@ -116,7 +117,7 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
 
     private void noMobileDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your Mobile No. is Not Registered. Please Register Mobile No in CCB.");
+        builder.setMessage("Your Mobile No. is Not Registered. Please Register Mobile No in Your Nearest CSD Center.");
         builder.setCancelable(false);
 
         builder.setNegativeButton(

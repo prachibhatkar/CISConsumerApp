@@ -181,6 +181,7 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="number"
                     android:maxLines="1"
+                    android:maxLength="4"
                     android:paddingBottom="@dimen/margin_large"
                     android:singleLine="true"
                     android:textSize="@dimen/edit_text_size_medium" />

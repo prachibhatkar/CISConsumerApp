@@ -161,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String URL = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerDetails/getconsumerdetailsbpelprocess_client_ep";
 
         try {
-            SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
+            final SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
             Request.addProperty("acctConsNo", editTextConsumerId.getText().toString());
             Request.addProperty("city", sp_city.getSelectedItem().toString());
             Request.addProperty("serviceType", "Electricity");
@@ -179,9 +179,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Log.i(TAG, "get bodyin: " + (SoapObject) soapEnvelope.bodyIn);
                 if (((SoapObject) soapEnvelope.bodyIn).getProperty("message") != null)
                     if ((((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString()).equalsIgnoreCase("Please Select Correct Values")) {
-//                        String msg="bskbkjsabjd";
-                       // DialogCreator.showMessageDialog(this, "Please Enter Valid Consumer No");
-                       // Toast.makeText(this, "Please Enter Valid Consumer No", Toast.LENGTH_SHORT).show();
+                        this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                DialogCreator.showMessageDialog(RegisterActivity.this, "Please Enter Valid Consumer No");
+                            }
+                        });
+//
                     } else {
                         CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
                                 ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());

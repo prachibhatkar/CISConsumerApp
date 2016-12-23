@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdapter.ViewHolder>  {
+public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdapter.ViewHolder> {
 
     private List<Consumer> mConsumers;
     // Store the context for easy access
@@ -174,7 +174,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
-                          Log.i(label, "responseeeeeeeeeeee:" + jsonResponse.result);
+                            Log.i(label, "responseeeeeeeeeeee:" + jsonResponse.result);
                         Log.i(label, "requestttttttttttttttttttttfail:" + jsonResponse.message);
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
 
@@ -319,8 +319,6 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             Log.e("manageAccounts", "Error: " + e.getMessage());
 
         }
-
-
     }
 
 }

@@ -177,6 +177,7 @@
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:hint="@string/prompt_otp"
+                    android:maxLength="4"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"

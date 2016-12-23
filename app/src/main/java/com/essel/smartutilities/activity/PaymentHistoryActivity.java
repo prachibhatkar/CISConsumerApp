@@ -1,36 +1,24 @@
 package com.essel.smartutilities.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.adapter.ManageAccountAdapter;
 import com.essel.smartutilities.adapter.PaymentHistoryAdapter;
 import com.essel.smartutilities.models.Consumer;
-import com.essel.smartutilities.models.NotificationCard;
 import com.essel.smartutilities.models.PaymentHistory;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -131,15 +119,9 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
            // adapter = new PaymentHistoryAdapter(mContext, NewPaymentlist);
             rv_consumers.setAdapter(adapter);
             rv_consumers.setLayoutManager(layoutManager);
-
-
         }
 
-
     }
-
-
-
 
     public void getPaymentHistory() {
 

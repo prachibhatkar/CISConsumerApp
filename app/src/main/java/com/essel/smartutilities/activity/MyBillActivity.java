@@ -36,6 +36,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
     public static String[] billdate = new String[6];
     public static String[] billamount = new String[6];
     public static String[] month = new String[6];
+    public static int[] billid = new int[6];
     public TextView duedate_date, propmtamt, currentamt, arriers, promptdate, netamt;
     public String duedate1, promptamt1, currentamt1, arrears1, promptdate1, netbill;
     public GraphView graph;
@@ -143,9 +144,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         Intent in = new Intent(this, BillHistoryActivity.class);
-
         startActivity(in);
-
     }
 
     class AsyncCallWS extends AsyncTask<Void, Void, Void> {
@@ -174,8 +173,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
 
     public void getBillDetails() {
 
-        String getconsumerno = "1000039715";
-        //SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO);
+        String getconsumerno = SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO);
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
         String METHOD_NAME = "InputParameters";
         String NAMESPACE = "http://xmlns.oracle.com/pcbpel/adapter/db/sp/CCBGetBillDetailsProc";
@@ -220,7 +218,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
                     billamount[i] = obj1.getProperty("CURRENT_MONTH_BILL").toString();
                     StringTokenizer st = new StringTokenizer(month[i], "-");
                     month[i] = st.nextToken();
-
+                    billid[i]=Integer.parseInt(obj1.getProperty("BILL_ID").toString());
                 }
             }
 

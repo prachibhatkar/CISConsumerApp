@@ -100,16 +100,20 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if (v == buttonVerify) {
-            if (otp.getText().toString().trim().length() == 4) {
-                callAdd();
-            } else
-                Toast.makeText(this, "Enter valid OTP", Toast.LENGTH_SHORT).show();
-//            Intent i = new Intent(this, AddAccountActivity5.class);
-//            startActivity(i);
-        } else if (v == action_resend)
-            msg.setText(R.string.title_verify_resend);
-        callResend();
+
+        switch (v.getId()) {
+            case R.id.btn_verify:
+                if (otp.getText().toString().trim().length() == 4) {
+                    callAdd();
+                } else
+                    Toast.makeText(this, "Enter valid OTP", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.action_resend:
+                msg.setText(R.string.title_verify_resend);
+                callResend();
+                break;
+        }
     }
 
     void callAdd() {
@@ -150,7 +154,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            JsonObjectRequest request = WebRequests.getRequestOtpforAdd(this, Request.Method.POST, AppConstants.URL_GET_RESEND_OTP, AppConstants.REQUEST_RESEND_OTP, this, obj,SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            JsonObjectRequest request = WebRequests.getRequestOtpforAdd(this, Request.Method.POST, AppConstants.URL_GET_RESEND_OTP, AppConstants.REQUEST_RESEND_OTP, this, obj, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_RESEND_OTP);
 
         } else

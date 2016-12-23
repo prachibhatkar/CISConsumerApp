@@ -16,7 +16,8 @@ import com.essel.smartutilities.R;
 public class BillHistoryActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView download1, download2, download3, download4, download5, download6, imgBack;
     DownloadManager downloadManager;
-    Uri image_uri, music_uri;
+    Uri image_uri;
+    String base;
     TableRow[] tbl=new TableRow[6];
     TextView month1, date1, amt1, consum1, month2, date2, amt2, consum2, month3, date3, amt3, consum3, month4, date4, amt4, consum4,
             month5, date5, amt5, consum5, month6, date6, amt6, consum6;
@@ -25,9 +26,10 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_history);
+        base="http://cpnagpur.sndl.in:86/getbillall.php?billnumber=";
         intialize();
-        image_uri = Uri.parse("http://cpnagpur.sndl.in:86/getbillall.php?billnumber=666668201941");
-        music_uri = Uri.parse("http://cpnagpur.sndl.in:86/getbillall.php?billnumber=666668201941");
+        image_uri = Uri.parse(base);
+
 
     }
 
@@ -131,28 +133,34 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.download1:
+                image_uri = Uri.parse(base +String.valueOf(MyBillActivity.billid[0]));
                 Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
                 DownloadData(image_uri, download1);
                 break;
             case R.id.download2:
+                image_uri = Uri.parse(base + MyBillActivity.billid[1]);
                 Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
-                DownloadData(music_uri, download2);
+                DownloadData(image_uri, download2);
                 break;
             case R.id.download3:
+                image_uri = Uri.parse(base + MyBillActivity.billid[2]);
                 Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
-
+                DownloadData(image_uri, download2);
                 break;
             case R.id.download4:
+                image_uri = Uri.parse(base + MyBillActivity.billid[3]);
                 Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
-
+                DownloadData(image_uri, download2);
                 break;
             case R.id.download5:
+                image_uri = Uri.parse(base + MyBillActivity.billid[4]);
                 Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
-
+                DownloadData(image_uri, download2);
                 break;
             case R.id.download6:
+                image_uri = Uri.parse(base + MyBillActivity.billid[5]);
                 Toast.makeText(this, "6", Toast.LENGTH_SHORT).show();
-
+                DownloadData(image_uri, download2);
                 break;
 
         }

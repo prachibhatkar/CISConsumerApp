@@ -292,6 +292,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             }
             App.dropdown = true;
         }
+        dismissDialog();
+
     }
 
 
@@ -311,16 +313,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
         indicator.setViewPager(mPager);
 
-//        try {
-//            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
-//            mScroller.setAccessible(true);
-//            Interpolator sInterpolator = new AccelerateInterpolator();
-//            FixedSpeedScroller scroller = new FixedSpeedScroller(mPager.getContext(), sInterpolator);
-//            mScroller.set(mPager, scroller);
-//        } catch (NoSuchFieldException e) {
-//        } catch (IllegalArgumentException e) {
-//        } catch (IllegalAccessException e) {
-//        }
+
         final float density = getResources().getDisplayMetrics().density;
 
 //Set circle indicator radius

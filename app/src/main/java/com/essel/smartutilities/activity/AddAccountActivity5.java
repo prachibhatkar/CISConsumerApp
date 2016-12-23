@@ -7,7 +7,6 @@ import android.support.design.widget.TextInputLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
@@ -16,7 +15,7 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 public class AddAccountActivity5 extends BaseActivity implements View.OnClickListener {
 
     TextInputLayout inputLayoutEmailId, inputLayoutMobileNo;
-    TextView textViewConsumerName,consumerno, textViewConsumerAddress, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
+    TextView textViewConsumerName, consumerno, textViewConsumerAddress, textViewConsumerConnectionType, textViewConsumerMobileNo, textViewActionResend;
 
     Context mContext;
     Intent i;
@@ -52,13 +51,7 @@ public class AddAccountActivity5 extends BaseActivity implements View.OnClickLis
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
         if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null && !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
             textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
-        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
     }
 
     @Override
@@ -66,7 +59,6 @@ public class AddAccountActivity5 extends BaseActivity implements View.OnClickLis
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 this.finish();
                 return true;
             default:

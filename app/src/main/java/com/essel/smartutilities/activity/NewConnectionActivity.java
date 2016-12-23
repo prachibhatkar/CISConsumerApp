@@ -105,29 +105,35 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         String address2 = editTextAddress2.getText().toString().trim();
         String phoneno = editTextPhone.getText().toString().trim();
         String email = editTextEmailId.getText().toString().trim();
-        if (!fullname.isEmpty()&& fullname.toString().length()<=40) {
-            if (!address1.isEmpty()&& fullname.toString().length()<=200) {
-                if (!address2.isEmpty()&& fullname.toString().length()<=200) {
-                    if ((phoneno.length() == 10 || phoneno.length() == 12)) {
-                        if (email.length() == 0 ||CommonUtils.emailValidator(email)) {
-                            if (connectiontype.getSelectedItemPosition() != 0) {
-                                flag = true;
+        if (!fullname.isEmpty() && fullname.toString().length() <= 40) {
+            if (!address1.isEmpty() && fullname.toString().length() <= 150) {
+                if (!address2.isEmpty() && fullname.toString().length() <= 150) {
+                    if (phoneno.length() == 10) {
+                        if ((editTextConsumerId.getText().toString().trim().length() >= 10 &&
+                                editTextConsumerId.getText().toString().trim().length() <= 20) ||
+                                editTextConsumerId.getText().toString().trim().length() == 0) {
+                            if ((editTextpoleno.getText().toString().trim().length() >= 5 &&
+                                    editTextpoleno.getText().toString().trim().length() <= 20) ||
+                                    editTextConsumerId.getText().toString().trim().length() == 0) {
+                                if (email.length() != 0 || CommonUtils.emailValidator(email)) {
+                                    if (connectiontype.getSelectedItemPosition() != 0) {
+                                        flag = true;
+                                    } else
+                                        Toast.makeText(this, "Select valid Connection Type", Toast.LENGTH_LONG).show();
+                                } else
+                                    Toast.makeText(this, "Enter vaild  Email", Toast.LENGTH_LONG).show();
                             } else
-                                Toast.makeText(this, "Select valid Connection Type", Toast.LENGTH_LONG).show();
+                                Toast.makeText(this, "Enter vaild pole no", Toast.LENGTH_LONG).show();
                         } else
-                            Toast.makeText(this, "Enter vaild Emailid", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "Enter vaild consumer no", Toast.LENGTH_LONG).show();
                     } else
                         Toast.makeText(this, "Enter vaild Phone no", Toast.LENGTH_LONG).show();
                 } else
                     Toast.makeText(this, "Enter vaild Address", Toast.LENGTH_LONG).show();
-
             } else
                 Toast.makeText(this, "Enter vaild Address", Toast.LENGTH_LONG).show();
-
         } else
             Toast.makeText(this, "Enter vaild Name", Toast.LENGTH_LONG).show();
-
-
         return flag;
 
     }
@@ -154,7 +160,6 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                     submitData();
                 }
                 break;
-
         }
     }
 
@@ -190,8 +195,6 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
     }
 
 
-
-
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
@@ -201,10 +204,10 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newconnectionrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         dismissDialog();
-                        SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_NAME,editTextEmailId.getText().toString());
-                        SharedPrefManager.saveValue(this,SharedPrefManager.EMAIL_ID,editTextEmailId.getText().toString());
-                        SharedPrefManager.saveValue(this,SharedPrefManager.MOBILE,editTextPhone.getText().toString());
-                        SharedPrefManager.saveValue(this,SharedPrefManager.CONNECTION_TYPE,connectiontype.getSelectedItem().toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME, editTextFullName.getText().toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.EMAIL_ID, editTextEmailId.getText().toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, editTextPhone.getText().toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, connectiontype.getSelectedItem().toString());
 
                         i = new Intent(this, NewConnectionActivity2.class);
                         startActivity(i);
@@ -275,7 +278,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        Intent i=new Intent(this, LoginActivity.class);
+        Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
     }
 }

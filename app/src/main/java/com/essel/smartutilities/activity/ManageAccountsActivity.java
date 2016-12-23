@@ -16,6 +16,7 @@ import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.DialogCreator;
 
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ public class ManageAccountsActivity extends AppCompatActivity implements View.On
     public void onBackPressed() {
         Intent i=new Intent(this, ActivityLoginLanding.class);
         startActivity(i);
+        App.dropdown=true;
     }
 
     @Override

@@ -72,6 +72,7 @@
                         android:hint="@string/prompt_newcomnection_full_name"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:maxLength="40"
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium"
                         />
@@ -92,6 +93,7 @@
                         android:hint="@string/prompt_newcomnection_address_line_1"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:maxLength="150"
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium"
                         />
@@ -112,6 +114,8 @@
                         android:hint="@string/prompt_newcomnection_address_line_2"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:maxLength="150"
+
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium"
                         />
@@ -133,6 +137,8 @@
                         android:hint="@string/prompt_newcomnection_mobile_number"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="10"
+
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium"
                         />
@@ -154,6 +160,7 @@
                         android:hint="Enter Nearest Consumer No."
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="20"
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium"
                         />
@@ -174,6 +181,7 @@
                         android:hint="Enter Nearest Pole No."
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="20"
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium"
                         />
@@ -194,6 +202,7 @@
                         android:hint="@string/prompt_newcomnection_email_id"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
+                        android:maxLength="30"
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium"
                         />

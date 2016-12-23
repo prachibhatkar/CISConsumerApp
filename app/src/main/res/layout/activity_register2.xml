@@ -126,6 +126,8 @@
                         android:hint="@string/prompt_mobile_number"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="10"
+
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium" />
 
@@ -146,6 +148,8 @@
                         android:hint="@string/prompt_email_id"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
+                        android:maxLength="30"
+
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium" />
 
@@ -166,6 +170,8 @@
                         android:hint="@string/prompt_epassword"
                         android:inputType="textPassword"
                         android:maxLines="1"
+                        android:maxLength="30"
+
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium" />
 
@@ -186,6 +192,8 @@
                         android:hint="@string/prompt_repassword"
                         android:inputType="textPassword"
                         android:maxLines="1"
+                        android:maxLength="30"
+
                         android:singleLine="true"
                         android:textSize="@dimen/edit_text_size_medium" />
 
