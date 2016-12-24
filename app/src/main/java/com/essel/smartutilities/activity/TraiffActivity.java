@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
     public ArrayList<String>tariffEnergyCharge;
-    TextView tv_bplcatagory1,tv_bplcatagory2,tv_fixedcharge,tv_energycharge,tv_100units,tv_300unoits,tv_500units,tv_1000units,tv_singlephase,tv_threephase,tv_energycharge1,tv_energycharge2,tv_energycharge3,tv_energycharge4;
+    TextView tv_bplcatagory1,tv_bplcatagory2,tv_fixedcharge,tv_energycharge,tv_100units,tv_300unoits,tv_500units,tv_1000units,tv_singlephase,tv_threephase,tv_energycharge1,tv_energycharge2,tv_energycharge3,tv_energycharge4,tv_singlephase_rs,tv_threephase_rs;
     ProgressDialog pDialog;
 
     @Override
@@ -63,6 +63,8 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
         tv_energycharge2=(TextView)findViewById(R.id.tv_energycharge2);
         tv_energycharge3=(TextView)findViewById(R.id.tv_energycharge3);
         tv_energycharge4=(TextView)findViewById(R.id.tv_energycharge4);
+        tv_singlephase_rs=(TextView)findViewById(R.id.single_phase_rs);
+        tv_threephase_rs=(TextView)findViewById(R.id.three_phase_rs);
 
 
 
@@ -150,9 +152,11 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                             for (int i = 1; i <=jsonResponse.tariff.fixedEnergyCharge.size(); i++) {
 
                                 tv_singlephase.setText(jsonResponse.tariff.fixedEnergyCharge.get(0).slab.toString().trim());
+                                tv_singlephase_rs.setText(jsonResponse.tariff.fixedEnergyCharge.get(0).charge.toString().trim());
                                // tv_100units.setText(jsonResponse.tariff.tariffEnergyCharge.get(i).slab.toString().trim());
 
                                 tv_threephase.setText(jsonResponse.tariff.fixedEnergyCharge.get(1).slab.toString().trim());
+                                tv_threephase_rs.setText(jsonResponse.tariff.fixedEnergyCharge.get(1).charge.toString().trim());
                               //  tv_300unoits.setText(jsonResponse.tariff.tariffEnergyCharge.get(i).slab.toString().trim());
 
                                 Log.i(label, "Tariffsucccccc:" + jsonResponse.fixedEnergyCharge);

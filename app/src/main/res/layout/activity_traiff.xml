@@ -413,6 +413,14 @@
                             android:textColor="#666666"
                             android:padding="20dip"
                            />
+                        <TextView
+                            android:id="@+id/single_phase_rs"
+                            android:text=""
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:textColor="#666666"
+                            android:padding="20dip"
+                            />
 
                     </TableRow>
                     <TableRow
@@ -431,6 +439,14 @@
                             android:textColor="#666666"
                             android:padding="20dip"
                            />
+                        <TextView
+                            android:id="@+id/three_phase_rs"
+                            android:text=""
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:textColor="#666666"
+                            android:padding="20dip"
+                            />
 
 
                     </TableRow>

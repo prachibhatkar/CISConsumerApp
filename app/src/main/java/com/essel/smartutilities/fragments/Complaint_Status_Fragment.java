@@ -135,11 +135,11 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
                 if (CommonUtils.isNetworkAvaliable(getActivity())) {
 
-                   /* initProgressDialog();
+                    initProgressDialog();
                     if (pDialog != null && !pDialog.isShowing()) {
                         pDialog.setMessage(" please wait..");
                         pDialog.show();
-                    }*/
+                    }
 
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
@@ -211,11 +211,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                                 arraycomplaintid.add(i,complaintid.complaint_no);
 
 
-                                //  locateus.setCity(jsonResponse.locateus.get(i-1).getCity().toString().trim());
-                                //   locateus.setLatitude(jsonResponse.locateus.get(i-1).getLatitude().toString());
-                                //  locateus.setLongitude(jsonResponse.locateus.get(i-1).getLongitude().toString());
 
-                                Log.i(label, "complainttype" + jsonResponse.locateus);
 
                             }
 
@@ -307,7 +303,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
                     androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
                     SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn);
-
+                    dismissDialog();
                     String accid = ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString();
                     String status1 = ((SoapObject) soapEnvelope.bodyIn).getProperty("status").toString();
                     String type1 = ((SoapObject) soapEnvelope.bodyIn).getProperty("type").toString();

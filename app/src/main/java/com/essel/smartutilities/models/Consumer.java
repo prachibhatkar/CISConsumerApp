@@ -25,6 +25,7 @@ public class Consumer implements Serializable {
     public String contact_no;
     public String is_primary;
     public String emailid;
+    public String alternet_email_id;
     public String profile_img;
 
 
@@ -50,7 +51,7 @@ public class Consumer implements Serializable {
         this.payment_time = payment_time;
         this.payment_date = payment_date;
         this.city = city;
-        this.emailid = emailid;
+        this.alternet_email_id = emailid;
         this.image = image;
         this.contact_no = contact_no;
         this.is_primary=is_primary;

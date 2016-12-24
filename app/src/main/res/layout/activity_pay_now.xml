@@ -123,7 +123,9 @@
             </LinearLayout>
 
         </RelativeLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:id="@+id/rl1"
             android:layout_width="wrap_content"
@@ -138,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rs"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="17dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/currentamount"
@@ -147,7 +149,7 @@
                 android:layout_marginLeft="25dp"
                 android:text="250"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/lblcurrentamt"
@@ -155,6 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Current Amount"
+                android:textSize="12dp"
                 android:textColor="@color/colorTextWhite" />
         </RelativeLayout>
 
@@ -164,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/rl1"
-            android:layout_marginLeft="130dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="50dp">
 
             <TextView
@@ -172,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rs"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="17dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/Arriers"
@@ -181,7 +184,7 @@
                 android:layout_marginLeft="25dp"
                 android:text="250"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/lblarries"
@@ -189,6 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Arriers"
+                android:textSize="12dp"
                 android:textColor="@color/colorTextWhite" />
         </RelativeLayout>
 
@@ -198,14 +202,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rs"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="17dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/netamt"
@@ -214,7 +219,7 @@
                 android:layout_marginLeft="25dp"
                 android:text="250"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/lblnetamt"
@@ -222,8 +227,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Net Amount"
+                android:textSize="12dp"
                 android:textColor="@color/colorTextWhite" />
         </RelativeLayout>
+
+      </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
         <RelativeLayout
             android:id="@+id/rl6"
@@ -237,7 +251,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rs"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="17dp"
+                android:textSize="12dp"
                 android:id="@+id/textView2" />
 
             <TextView
@@ -246,6 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Prompt Amount"
+                android:textSize="12dp"
                 android:textColor="@color/colorTextWhite" />
 
             <TextView
@@ -254,7 +269,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/textView2"
                 android:layout_toEndOf="@+id/textView2" />
@@ -264,7 +279,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="120dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="120dp">
 
             <TextView
@@ -273,7 +288,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
 
 
 
@@ -283,6 +298,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Prompt Date"
+                android:textSize="12dp"
                 android:textColor="@color/colorTextWhite" />
         </RelativeLayout>
         <RelativeLayout
@@ -302,7 +318,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="25,2050"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/lblduedate"
@@ -310,9 +326,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Due Date"
-                android:layout_marginLeft="13dp"
+                android:textSize="12dp"
+                android:layout_marginLeft="26dp"
                 android:textColor="@color/colorTextWhite" />
         </RelativeLayout>
+        </LinearLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

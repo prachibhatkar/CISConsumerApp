@@ -132,8 +132,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         dismissDialog();
-
+                        String msg=jsonResponse.message;
                         Intent in = new Intent(this, ForgotActivity2.class);
+                        in.putExtra("msg", msg);
                         startActivity(in);
                         Log.i(label, "hygt " + jsonResponse);
 
@@ -147,9 +148,11 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
-
+                       // String msg1=jsonResponse.message;
+                      //  Toast.makeText(this, msg1, Toast.LENGTH_LONG).show();
                         Log.i(label, "failllllllllll " + jsonResponse);
                         dismissDialog();
+                      //  toast();
 
 
                     }

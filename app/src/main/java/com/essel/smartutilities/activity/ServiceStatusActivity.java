@@ -40,7 +40,9 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
         tv_time_csd_center=(TextView)findViewById(R.id.tv_time_csd_center);
         btn_service_status_continue=(Button)findViewById(R.id.btn_service_status_continue);
         btn_locate_us=(Button)findViewById(R.id.btn_locate_us);
-
+        Intent intent = getIntent();
+         String msg = intent.getExtras().getString("msg");
+         tv_message.setText(msg);
         btn_service_status_continue.setOnClickListener(this);
         btn_locate_us.setOnClickListener(this);
 

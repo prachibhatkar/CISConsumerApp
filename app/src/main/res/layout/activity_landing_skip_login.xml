@@ -84,6 +84,7 @@
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="number"
+                android:maxLength="20"
                 android:textSize="@dimen/edit_text_size_medium"
 
                 />

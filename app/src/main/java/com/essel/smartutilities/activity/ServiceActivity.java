@@ -200,11 +200,11 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     private boolean isBlankInput() {
         boolean b = true;
         String editremark = String.valueOf(edit_remark.getText());
-        if (editremark.equals("")){
+       /* if (editremark.equals("")){
             Toast.makeText(this, "Enter Remark", Toast.LENGTH_LONG).show();
 
             b = false;
-        }
+        }*/
 
         if (servicetype.getSelectedItemPosition()== 0) {
             Toast.makeText(this, "Select service type", Toast.LENGTH_LONG).show();
@@ -283,7 +283,9 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                         dismissDialog();
 
                         Log.i(label, "hyif " + jsonResponse.result);
+                        String msg=jsonResponse.message;
                         Intent i = new Intent(this, ServiceStatusActivity.class);
+                        i.putExtra("msg", msg);
                         startActivity(i);
 
                     }

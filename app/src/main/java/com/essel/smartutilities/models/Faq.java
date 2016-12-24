@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class Faq implements Serializable  {
     public String answer;
     public String question;
-    public ArrayList<String>arrayanswer;
-    public ArrayList<String>arrayquestion;
+    public ArrayList<String>arrayanswer=new ArrayList<String>();
+    public ArrayList<String>arrayquestion=new ArrayList<String>();
 
 
 

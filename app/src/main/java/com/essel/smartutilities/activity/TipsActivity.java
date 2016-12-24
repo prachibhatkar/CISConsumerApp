@@ -82,7 +82,11 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
             JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
         } else
-
+        {
+             Tips tip1=new Tips();
+            tip1=DatabaseManager.getTips(this);
+            TipTextArray.add(tip1.message);
+            init();
 
             Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
        // init();
@@ -91,6 +95,7 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
      //    setupUI();
      //    loadData();
 
+    }
     }
 
    private void init() {
@@ -241,8 +246,11 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
                                 ImagesArray.add(jsonResponse.tips.get(i).image);
                                 TipTextArray.add(jsonResponse.tips.get(i).message);
                                 Tips tip=new Tips();
-                                tip.images=ImagesArray;
-                                tip.text=TipTextArray;
+                                //tip.images=ImagesArray;
+                                //tip.text=TipTextArray;
+
+                               // tip.text=TipTextArray;
+                                tip.message=jsonResponse.tips.get(i).message;
                                 DatabaseManager.saveTips(this,tip);
                                 Log.i(label, "Tipppppppppppp:" + imagesurl);
                             }

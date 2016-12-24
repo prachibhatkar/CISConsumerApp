@@ -520,9 +520,6 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
 
 
-
-
-
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -537,96 +534,12 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
 
-                        Log.i(label, "hygt " + jsonResponse);
+                        Log.i(label, "hygtghytghyt " + jsonResponse.locateus);
                         // Log.i(label, "hyif " + jsonResponse.complaint_type);
                         if(jsonResponse.locateus.size()!=0)
                         {
 
                             for(int i = 1 ; i <= jsonResponse.locateus.size(); i++) {
-
-                               /* if(jsonResponse.locateus.get(i-1).center_name==null){
-                                    locateus1.setCenter_name(" \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\]");
-                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
-                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
-                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
-                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
-                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
-                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
-                                    lat= Double.valueOf(locateus1.getLatitude());
-                                    lon= Double.valueOf(locateus1.getLongitude());
-                                } else
-                                if(jsonResponse.locateus.get(i-1).address==null){
-                                    locateus1.setAddress(" ");
-                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
-                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
-                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
-                                   // locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
-                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
-                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
-                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
-                                    lat= Double.valueOf(locateus1.getLatitude());
-                                    lon= Double.valueOf(locateus1.getLongitude());
-                                } else
-                                if(jsonResponse.locateus.get(i-1).city==null){
-                                    locateus1.setCity(" ");
-                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
-                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
-                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
-                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
-                                    //locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
-                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
-                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
-                                    lat= Double.valueOf(locateus1.getLatitude());
-                                    lon= Double.valueOf(locateus1.getLongitude());
-                                } else
-                                if(jsonResponse.locateus.get(i-1).start_time==null){
-                                    locateus1.setStart_time(" ");
-                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
-                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
-                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
-                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
-                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
-                                    //locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
-                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
-                                    lat= Double.valueOf(locateus1.getLatitude());
-                                    lon= Double.valueOf(locateus1.getLongitude());
-                                }else
-                                if(jsonResponse.locateus.get(i-1).end_time==null){
-                                    locateus1.setEnd_time(" ");
-                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
-                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
-                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
-                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
-                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
-                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
-                                   // locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
-                                    lat= Double.valueOf(locateus1.getLatitude());
-                                    lon= Double.valueOf(locateus1.getLongitude());
-                                 } else
-                                if(jsonResponse.locateus.get(i-1).latitude==null){
-                                    locateus1.setLatitude(" ");
-                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
-                                   // locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
-                                    locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
-                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
-                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
-                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
-                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
-                                    lat= Double.valueOf(locateus1.getLatitude());
-                                    lon= Double.valueOf(locateus1.getLongitude());
-                                } else
-                                if(jsonResponse.locateus.get(i-1).longitude==null){
-                                    locateus1.setLongitude(" ");
-                                    locateus1.setCenter_name(jsonResponse.locateus.get(i-1).center_name.toString());
-                                    locateus1.setLatitude(jsonResponse.locateus.get(i-1).latitude.toString());
-                                   // locateus1.setLongitude(jsonResponse.locateus.get(i-1).longitude.toString());
-                                    locateus1.setAddress(jsonResponse.locateus.get(i-1).address.toString());
-                                    locateus1.setCity(jsonResponse.locateus.get(i-1).city.toString());
-                                    locateus1.setStart_time(jsonResponse.locateus.get(i-1).start_time.toString());
-                                    locateus1.setEnd_time(jsonResponse.locateus.get(i-1).end_time.toString());
-                                    lat= Double.valueOf(locateus1.getLatitude());
-                                    lon= Double.valueOf(locateus1.getLongitude());
-                                }*/
 
                                 dismissDialog();
                                Log.i(label, "complainttype" + jsonResponse.locateus);

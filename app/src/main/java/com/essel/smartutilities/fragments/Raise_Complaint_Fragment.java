@@ -80,6 +80,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     EditText complaint_remark;
     String image;
     Boolean flag=false;
+    String caseid;
     ProgressDialog pDialog;
     String selectcomplainttype,casetype;
 
@@ -121,12 +122,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
 
-                    if(flag=true){
 
-                        callApi();
-
-
-                    }
 
 
                    // JsonObjectRequest request = WebRequests.addComplaint(getActivity(), Request.Method.POST, AppConstants.URL_POST_ADD_COMPLAINT, AppConstants.REQUEST_POST_ADD_COMPLAINT,
@@ -137,8 +133,15 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                     Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
 
-
+//              if(flag=true){
+//
+//                  callApi();
+//
+//
+//              }
             }
+
+
 
         }
     }
@@ -176,7 +179,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         @Override
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
-            flag=true;
+
             dismissDialog();
 
 
@@ -196,6 +199,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             obj.put("complainttype", complainttype.getSelectedItem().toString());
             obj.put("consumer_remark", complaintremark);
             obj.put("complaint_img", image);
+           // obj.put("complaint_id", caseid);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -207,6 +211,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                     this,obj,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
 
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_ADD_COMPLAINT);
+            flag=false;
         }
         else
             Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
@@ -254,8 +259,21 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
             SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn);
 
-            String caseid =((SoapObject) soapEnvelope.bodyIn).getProperty("caseId").toString();
+             caseid =((SoapObject) soapEnvelope.bodyIn).getProperty("caseId").toString();
             String message =((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString();
+
+
+            if(message=="Please select Correct values"){
+
+                flag=false;
+            }
+            else{
+
+                flag=true;
+                callApi();
+
+            }
+
             Log.i(TAG, "caseId" +caseid);
             Log.i(TAG, "caseId" +message);
             Complaints complaint = new Complaints();
@@ -265,11 +283,10 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             complaint.remark=remark;
 
             //DatabaseManager.saveComplaint(getActivity(),complaint);
-              DatabaseManager.saveComplaint(getActivity(),complaint);
+            DatabaseManager.saveComplaint(getActivity(),complaint);
 
 
-               dismissDialog();
-
+            dismissDialog();
             Intent in = new Intent(getActivity(), GetComplaintIdActivity.class);
             in.putExtra("caseid", caseid);
             in.putExtra("message", message);
@@ -306,11 +323,11 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     private boolean isBlankInput() {
         boolean b = true;
         complaintremark = String.valueOf(complaint_remark.getText());
-        if (complaintremark.equals("")){
+       /* if (complaintremark.equals("")){
             Toast.makeText(getContext(), "Enter Remark", Toast.LENGTH_LONG).show();
 
             b = false;
-        }
+        }*/
        /* if(complaintremark.length()>200){
             Toast.makeText(getContext(), "remark should be 200 char", Toast.LENGTH_LONG).show();
             b = false;
@@ -552,6 +569,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
+                        Log.i(label, "hyif " + jsonResponse.result);
                         Log.i(label, "hyif " + jsonResponse.result);
                       //  Intent i = new Intent(getActivity(),GetComplaintIdActivity.class);
                        // startActivity(i);

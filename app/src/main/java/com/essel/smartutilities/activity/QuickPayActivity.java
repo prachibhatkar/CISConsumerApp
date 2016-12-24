@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
 import org.ksoap2.SoapEnvelope;
@@ -35,6 +36,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     String consumer_number;
     private String TAG = "responsedataaaaa";
     ProgressDialog pDialog;
+    SoapObject responceArray;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +85,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
                     }
                 }
 
-                else{
-                    AsyncCallWS task = new AsyncCallWS();
-                    task.execute();
-                    //  Intent i = new Intent(this, PayNowActivity.class);
-                    //  startActivity(i);
-                }
-
+                 else
                     Toast.makeText(this, "Enter valid Consumer No.", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -170,40 +166,73 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
             final SoapObject response = (SoapObject) soapEnvelope.getResponse();
 
 
-            SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
+             responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
             Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH"));
             Log.i(TAG, "get : " +((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
 
-            String duedate=  ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
-            String currentamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
-            String promptamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
-            String netbill=  ((SoapObject)responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
-            String arrears=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
-            String consumername =  ((SoapObject)responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
-            String accid =  ((SoapObject)responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
-            String promptdate =  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
-             dismissDialog();
-            Intent in = new Intent(this, PayNowActivity.class);
-            in.putExtra("date", duedate);
-            in.putExtra("amt", currentamt);
-            in.putExtra("promtamt", promptamt);
-            in.putExtra("promtdate", promptdate);
-            in.putExtra("netbill", netbill);
-            in.putExtra("arrears", arrears);
-            in.putExtra("consumername", consumername);
-            in.putExtra("accid", accid);
-            startActivity(in);
+            if (((SoapObject) soapEnvelope.bodyIn).getProperty("X_STATUSMESSAGE") != null)
+                if ((((SoapObject) soapEnvelope.bodyIn).getProperty("X_STATUSMESSAGE").toString()).equalsIgnoreCase("BILL_DETAILS_RETRIEVED"))
+                {
+
+                            String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
+                            String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
+                            String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
+                            String netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
+                            String arrears = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
+                            String consumername = ((SoapObject) responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
+                            String accid = ((SoapObject) responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
+                            String promptdate = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
+                            dismissDialog();
+                            Intent in = new Intent(this, PayNowActivity.class);
+                            in.putExtra("date", duedate);
+                            in.putExtra("amt", currentamt);
+                            in.putExtra("promtamt", promptamt);
+                            in.putExtra("promtdate", promptdate);
+                            in.putExtra("netbill", netbill);
+                            in.putExtra("arrears", arrears);
+                            in.putExtra("consumername", consumername);
+                            in.putExtra("accid", accid);
+                            startActivity(in);
+                        }
+
+            else {
+                    this.runOnUiThread(new Runnable() {
+                      public void run() {
+
+                    dismissDialog();
+                    DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No");
+
+                         }
 
 
-            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty(" PROMPT_PAYMENT_INCENTIVE"));
-            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty(" NET_BILL_PAYABLE"));
-            Log.i(TAG, "get : " + ((SoapObject) responceArray.getProperty(0)).getProperty(" ARREARS_INCL_CUMM_SURCH"));
+                   /* String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
+                    String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
+                    String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
+                    String netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
+                    String arrears = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
+                    String consumername = ((SoapObject) responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
+                    String accid = ((SoapObject) responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
+                    String promptdate = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
+                    dismissDialog();
+                    Intent in = new Intent(this, PayNowActivity.class);
+                    in.putExtra("date", duedate);
+                    in.putExtra("amt", currentamt);
+                    in.putExtra("promtamt", promptamt);
+                    in.putExtra("promtdate", promptdate);
+                    in.putExtra("netbill", netbill);
+                    in.putExtra("arrears", arrears);
+                    in.putExtra("consumername", consumername);
+                    in.putExtra("accid", accid);
+                    startActivity(in);*/
 
 
-            //Intent in = new Intent(this, PayNowActivity.class);
-            //in.putExtra("epuzzle", duedate);
-            // in.putExtra("epuzzle", duedate);
-            // startActivity(in);
+
+
+
+                    //Intent in = new Intent(this, PayNowActivity.class);
+                    //in.putExtra("epuzzle", duedate);
+                    // in.putExtra("epuzzle", duedate);
+                    // startActivity(in);
 
 
            /* for (int i = 0; i < responceArray.getPropertyCount(); i++) {
@@ -221,7 +250,11 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
                 }
             }*/
+                    });
 
+
+
+                }
 
         }
          catch (Exception e) {
@@ -230,7 +263,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         }
 
 
-    }
+        }
 
 }
 

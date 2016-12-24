@@ -8,11 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.essel.smartutilities.R;
 
 public class ForgotActivity2 extends AppCompatActivity implements View.OnClickListener{
     Button btn_goto_login;
+    TextView linkmsg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,11 @@ public class ForgotActivity2 extends AppCompatActivity implements View.OnClickLi
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+         linkmsg=(TextView)findViewById(R.id.tv_linkmsg);
+        Intent intent = getIntent();
+        String msg = intent.getExtras().getString("msg");
+        linkmsg.setText(msg);
+
 
     }
 

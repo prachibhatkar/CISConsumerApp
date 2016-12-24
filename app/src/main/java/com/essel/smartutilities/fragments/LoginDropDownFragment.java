@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.ManageAccountsActivity;
-import com.essel.smartutilities.adapter.DropDownAdapter;
+import com.essel.smartutilities.adapter.dropdownadapter;
 import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
 
@@ -48,7 +48,7 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
         mContext = getActivity();
 //        ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
         ArrayList<Consumer> consumers = DatabaseManager.getAllManageAccounts(getActivity());
-        DropDownAdapter adapter = new DropDownAdapter(mContext, consumers);
+        dropdownadapter adapter = new dropdownadapter(mContext, consumers);
         View rootView = inflater.inflate(R.layout.fragment_login_dropdown, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.tv_title);
         tv.setOnClickListener(this);

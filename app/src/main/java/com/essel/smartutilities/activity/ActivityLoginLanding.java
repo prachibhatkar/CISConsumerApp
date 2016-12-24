@@ -198,7 +198,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
         } else {
-            Toast.makeText(this.getApplicationContext(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
         }
 

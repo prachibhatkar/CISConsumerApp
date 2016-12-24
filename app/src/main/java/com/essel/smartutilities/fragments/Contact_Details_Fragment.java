@@ -113,6 +113,15 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
                     this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_CONTACT_DETAILS);
         } else {
+            ContactUs cont=new ContactUs();
+            cont=DatabaseManager.getContactDetail(getActivity());
+            tv_helplineno.setText(cont.helpline_number);
+            tv_antiberiberyno.setText(cont.anti_bribery_help);
+            tv_portalsite.setText(cont.customer_portal);
+            tv_electricitytheftno.setText(cont.electricity_theft_help_no);
+            tv_igrcno.setText(cont.igrc_no);
+            tv_igrcemail.setText(cont.igrc_email);
+            tv_onlinecomplaintno.setText(cont.online_complaint);
             Toast.makeText(getActivity(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
           /*  ContactUs contactus2 = new ContactUs();
@@ -183,7 +192,16 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
                             tv_igrcno.setText(jsonResponse.contactus.igrc_no);
                             tv_igrcemail.setText(jsonResponse.contactus.igrc_email);
                             tv_onlinecomplaintno.setText(jsonResponse.contactus.online_complaint);
-                            DatabaseManager.saveContactDetail(getActivity(),jsonResponse.contactus);
+
+                            ContactUs contactus=new ContactUs();
+                            contactus.helpline_number=jsonResponse.contactus.helpline_number;
+                            contactus.anti_bribery_help=jsonResponse.contactus.anti_bribery_help;
+                            contactus.customer_portal=jsonResponse.contactus.customer_portal;
+                            contactus.electricity_theft_help_no=jsonResponse.contactus.electricity_theft_help_no;
+                            contactus.igrc_no=jsonResponse.contactus.igrc_no;
+                            contactus.igrc_email=jsonResponse.contactus.igrc_email;
+                            contactus.online_complaint=jsonResponse.contactus.online_complaint;
+                            DatabaseManager.saveContactDetail(getActivity(),contactus);
                         }
                         if (jsonResponse.authorization != null) {
                             dismissDialog();

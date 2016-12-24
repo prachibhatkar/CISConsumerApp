@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHolder> {
+public class dropdownadapter extends RecyclerView.Adapter<dropdownadapter.ViewHolder> {
 
     private List<Consumer> mConsumers;
     // Store the context for easy access
@@ -34,7 +34,7 @@ public class DropDownAdapter extends RecyclerView.Adapter<DropDownAdapter.ViewHo
     private OnRecycleItemClickListener mListener;
 
 
-    public DropDownAdapter(Context context, ArrayList<Consumer> consumers) {
+    public dropdownadapter(Context context, ArrayList<Consumer> consumers) {
         mConsumers = consumers;
         mContext = context;
     }

@@ -90,6 +90,12 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
             expandableLayout_changeofconnectiontype.collapse();
             expandableLayout_loadextensionreduction.collapse();
             expandableLayout_permanantdisconnect.collapse();
+            expandablelayout6.collapse();
+            expandablelayout7.collapse();
+            expandablelayout8.collapse();
+            expandablelayout9.collapse();
+            expandablelayout10.collapse();
+
             return true;
 
         }
@@ -112,8 +118,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
 
         btnarray.add(0, expandablebutton_newserviceconnection);
-        btnarray.add(1, expandablebutton_changeofconnectiontype);
-        btnarray.add(2, expandablebutton_changeofownership);
+        btnarray.add(1, expandablebutton_changeofownership);
+        btnarray.add(2, expandablebutton_changeofconnectiontype);
         btnarray.add(3, expandablebutton_loadextensionreduction);
         btnarray.add(4, expandablebutton_permanantdisconnec);
         btnarray.add(5, btn6);
@@ -164,6 +170,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         expandableLayout_loadextensionreduction = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_loadextensionreduction);
         expandableLayout_permanantdisconnect = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_permanantdisconnect);
         expandableLayout_changeofconnectiontype = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofconnection);
+
         expandablelayout6 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout6);
         expandablelayout7 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout7);
         expandablelayout8 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout8);
@@ -195,16 +202,25 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
         {
               Faq faq2 = new Faq();
-             faq2=DatabaseManager.getFaq(this);
-             tvarray1.add(faq2.answer);
-             btnarray1.add(faq2.question);
-
-            for(int i=0;i< btnarray1.size();i++){
-                btnarray.get(i).setVisibility(View.VISIBLE);
-                tvarray.get(i).setText(tvarray1.get(i).toString().trim());
-                tvarray.get(i).setText(btnarray1.get(i).toString().trim());
-
+              faq2=DatabaseManager.getFaq(this);
+             for(int i=0;i<10;i++) {
+                   btnarray.get(i).setVisibility(View.VISIBLE);
+                   tvarray.get(i).setText(faq2.answer);
+                   btnarray.get(i).setText(faq2.answer);
+               // expandablebutton_newserviceconnection.setText(faq2.answer);
             }
+//              for(int i=0;i<faq2.arrayanswer.size();i++) {
+//                  tvarray1.add(faq2.arrayanswer.get(i));
+//                  btnarray1.add(faq2.arrayquestion.get(i));
+//                //  btnarray1.add(String.valueOf(faq2.arrayquestion));
+//                  // btnarray1.add(faq2.question);
+//              }
+//            for(int i=0;i< btnarray1.size();i++){
+//                btnarray.get(i).setVisibility(View.VISIBLE);
+//                tvarray.get(i).setText(tvarray1.toString().trim());
+//                btnarray.get(i).setText(btnarray1.get(i).toString().trim());
+//
+//            }
             Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
         }
 
@@ -311,20 +327,23 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                             dismissDialog();
                             for (int i = 0; i <jsonResponse.faqs.size(); i++) {
                                 btnarray.get(i).setVisibility(View.VISIBLE);
-
-
-                            }   for(int i=0;i<jsonResponse.faqs.size();i++){
-
                                 tvarray.get(i).setText(jsonResponse.faqs.get(i).answer.toString().trim());
                                 btnarray.get(i).setText(jsonResponse.faqs.get(i).question.toString());
+
+                            }
+                            for(int i=0;i<jsonResponse.faqs.size();i++){
 
                                 tvarray1.add(jsonResponse.faqs.get(i).answer.toString().trim());
                                 btnarray1.add(jsonResponse.faqs.get(i).question.toString());
 
-
                                 Faq faq=new Faq();
-                                faq.arrayanswer.add(i,tvarray1.get(i));
-                                faq.arrayquestion.set(i,tvarray1.get(i));
+                                faq.answer=tvarray1.get(i).toString();
+                                faq.question=btnarray1.get(i).toString();
+                               // faq.arrayanswer=tvarray1;
+                               // faq.arrayquestion=btnarray1;
+
+                               // faq.arrayquestion.add(i,btnarray1.get(i));
+                                //faq.arrayanswer.add(i,tvarray1.get(i));
                                 DatabaseManager.saveFAQ(this,faq);
 
 

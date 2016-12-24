@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TabLayout profile_tabs;
     ProgressDialog pDialog;
     EditText contactno, emailid, old_pass, new_pass, confirm_pass;
-    TextView consemer_name,consumer_number,consumer_add;
+    TextView consemer_name,consumer_number,consumer_add,consumer_add1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +116,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
          consumer_add=(TextView)findViewById(R.id.textConsumerAddress);
          consumer_add.setText(consumeraddress);
+         consumer_add1=(TextView)findViewById(R.id.textConsumerAddress1);
+        //consumer_add1.setText(consumeraddress);
+
 
         save_detail.setOnClickListener(this);
         save_password.setOnClickListener(this);
@@ -155,6 +158,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             showImageOptionsDialog();
         }
         if (view == save_detail) {
+
+
             if (contactno.equals("") || contactno.length() != 10) {
 
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
@@ -164,35 +169,40 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             } else
                 saveDetails();
-            expandableLayout_editProfile.collapse();
-            expandableLayout_changepass.collapse();
+//            expandableLayout_editProfile.collapse();
+//            expandableLayout_changepass.collapse();
         }
         if (view == save_password) {
-            String oldpass = String.valueOf(old_pass.getText());
+
+            if(validate()){
+                callchangepass();
+
+            }
+          /*  String oldpass = String.valueOf(old_pass.getText());
             String newpass = String.valueOf(new_pass.getText());
             String confirmpass = String.valueOf(confirm_pass.getText());
 
             if ((oldpass.equals(" ")) || (newpass.equals("")) || (confirmpass.equals(""))) {
-                Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Please fill correct passsword ", Toast.LENGTH_LONG).show();
                 expandableLayout_changepass.expand();
             }
 
-            if(oldpass.length()<6||oldpass.length()>20){
+           else if(oldpass.length()<6||oldpass.length()>20||newpass.length()<6||newpass.length()>20) {
+
+
                 Toast.makeText(this, " password should have atleast 6 characters", Toast.LENGTH_LONG).show();
 
             }
+          //  else if(confirmpass.toString().trim().compareTo(newpass.toString().trim())!= 0){
 
-            if(newpass!=confirmpass){
-                Toast.makeText(this, " confirm password does not match ", Toast.LENGTH_LONG).show();
-
+            else {
+                 callchangepass();
+//                expandableLayout_editProfile.collapse();
+//                expandableLayout_changepass.collapse();
             }
-            } else {
-                callchangepass();
-                expandableLayout_editProfile.collapse();
-                expandableLayout_changepass.collapse();
-            }
+            }*/
         }
-
+    }
 
     private void saveDetails() {
         if (CommonUtils.isNetworkAvaliable(this)) {
@@ -308,7 +318,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
+                         expandableLayout_editProfile.collapse();
                         dismissDialog();
+
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
@@ -326,7 +338,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                        dismissDialog();
+                           dismissDialog();
+                         expandableLayout_changepass.collapse();
+
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
@@ -357,6 +371,28 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             }
         }
+    }
+
+
+    private boolean validate() {
+        Boolean flag = false;
+        if (emailid.getText().length() == 0 || CommonUtils.emailValidator(emailid.getText().toString())) {
+            if (contactno.getText().length() == 10 || contactno.getText().length() == 12 || contactno.getText().length() == 0) {
+                if (old_pass.getText().toString().trim().length() >= 6 && old_pass.getText().toString().trim().length() <= 20) {
+                    if (new_pass.getText().toString().trim().length() >= 6 && new_pass.getText().toString().trim().length() <= 20) {
+                        if (confirm_pass.getText().toString().trim().compareTo(new_pass.getText().toString().trim()) == 0) {
+                            flag = true;
+                        } else
+                            Toast.makeText(this, "Password Does not Match", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(this, "Retype valid Password", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(this, "Enter valid Password", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(this, "Retype valid Mobile", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
+        return flag;
     }
 }
 

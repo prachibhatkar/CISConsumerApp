@@ -89,8 +89,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:lines="10"
-                            android:maxLines="10"
+                            android:lines="50"
+                            android:maxLines="50"
                             android:singleLine="false"
                             android:text=" New Service Connection" />
 
@@ -126,14 +126,14 @@
                     app:ael_orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_changeofownership"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
                             android:lines="10"
                             android:text="Change of OwnerShip" />
 
@@ -169,16 +169,18 @@
                     app:ael_orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_changeofconnectiontype"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=" Change of Connection Typejhbofgnbnfgnbfdnvbnfnbvfdnvbkjfdnovnodnvbfdnnfonvofdnvoifnvoinfdionvoifnvfhuifdfidgfd
-                           fjbvjikfjbvkdbjvbdjkbvjbvkjbsdlkjabjkdbsvjkbsdkjlvbkjdsbvkjbdskjvb h" />
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:maxLines="20"
+                            android:lines="20"
+                            android:text=" "
+                            android:singleLine="false"/>
 
 
                     </LinearLayout>
@@ -250,8 +252,8 @@
                         app:ael_orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
                             android:orientation="vertical">
 
                             <TextView

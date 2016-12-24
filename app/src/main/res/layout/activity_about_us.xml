@@ -43,6 +43,9 @@
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,5 +67,5 @@
 
     </LinearLayout>
 
-
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

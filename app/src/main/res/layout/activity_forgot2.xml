@@ -55,6 +55,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_linkmsg"
             android:text="@string/forgotpass_msg"/>
 
 

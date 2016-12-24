@@ -92,7 +92,7 @@ public class DatabaseManager {
         if (tips != null) {
             ContentValues values = getContentValuesTipsTable(context, tips);
             //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
-            saveTips(context, FAQTable.CONTENT_URI, values, null);
+            saveTips(context, TipsTable.CONTENT_URI, values, null);
         }
     }
 
@@ -280,6 +280,8 @@ public class DatabaseManager {
         try {
             values.put(FAQTable.Cols.FAQ_QUESTION, faq.question);
             values.put(FAQTable.Cols.FAQ_ANSWER, faq.answer);
+//            values.put(FAQTable.Cols.FAQ_QUESTION, String.valueOf(faq.arrayquestion));
+//            values.put(FAQTable.Cols.FAQ_ANSWER, String.valueOf(faq.arrayanswer));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -290,7 +292,7 @@ public class DatabaseManager {
     private static ContentValues getContentValuesTipsTable(Context context, Tips tips) {
         ContentValues values = new ContentValues();
         try {
-            values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
+           // values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
             values.put(TipsTable.Cols.TIPS_MESSAGE, tips.message);
 
         } catch (Exception e) {
@@ -355,14 +357,43 @@ public class DatabaseManager {
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
 
-            faq.arrayanswer.add(cursor.getString(cursor.getColumnIndex("faq_answer")));
-            faq.arrayquestion.add(cursor.getString(cursor.getColumnIndex("faq_question")));
+            faq.answer=(cursor.getString(cursor.getColumnIndex("faq_answer")));
+            faq.question=(cursor.getString(cursor.getColumnIndex("faq_question")));
             Log.i("Tag", "valueselectdb" + cursor);
 
             //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
 
         return faq;
+
+
+    }
+
+
+
+    public static ContactUs contactUs(Context context) {
+
+       ContactUs con = new ContactUs();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + ContactUsTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+
+            con.helpline_number=(cursor.getString(cursor.getColumnIndex("helpline_number")));
+            con.anti_bribery_help=(cursor.getString(cursor.getColumnIndex("anti_beribery_help")));
+            con.online_complaint=(cursor.getString(cursor.getColumnIndex("online_complaint")));
+            con.electricity_theft_help_no=(cursor.getString(cursor.getColumnIndex("electricity_theft_help")));
+            con.igrc_email=(cursor.getString(cursor.getColumnIndex("igrc_email")));
+            con.igrc_no=(cursor.getString(cursor.getColumnIndex("igrc_number")));
+            con.customer_portal=(cursor.getString(cursor.getColumnIndex("consumer_portal")));
+            Log.i("Tag", "valueselectdb" + cursor);
+
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return con;
 
 
     }
