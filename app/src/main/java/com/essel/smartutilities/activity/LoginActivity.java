@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             break;
 
         }
-        dismissDialog();
+        dismissDialog(); 
     }
 
     public void onAsyncFail(String messages, String label, NetworkResponse response) {

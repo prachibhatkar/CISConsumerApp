@@ -1,7 +1,6 @@
 package com.essel.smartutilities.utility;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,22 +10,17 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.activity.LoginActivity;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.models.JsonResponse;
-import com.essel.smartutilities.webservice.WebRequests;
 
 
 /**
  * Created by Admin on 23-08-2016.
  */
-public class DialogCreator  implements ServiceCaller,View.OnClickListener {
+public class DialogCreator implements ServiceCaller, View.OnClickListener {
 
     Context context;
-
-
 
 
     public static void showMessageDialog(Context context, String message) {
@@ -53,7 +47,8 @@ public class DialogCreator  implements ServiceCaller,View.OnClickListener {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                activity.finish();
+                activity.finishAffinity();
+                System.exit(0);
                 dialog.cancel();
 
             }
@@ -84,14 +79,14 @@ public class DialogCreator  implements ServiceCaller,View.OnClickListener {
                     pDialog.setMessage(" please wait..");
                     pDialog.show();
                 }*/
-                  //JsonObjectRequest request = WebRequests.getLogOut(context, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, context,SharedPrefManager.getStringValue(context,SharedPrefManager.AUTH_TOKEN));
-                  //App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
+                //JsonObjectRequest request = WebRequests.getLogOut(context, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, context,SharedPrefManager.getStringValue(context,SharedPrefManager.AUTH_TOKEN));
+                //App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
 
 
                 // CommonUtils.logout(activity);
-               // Intent in =new Intent(activity, LoginActivity.class);
-               // activity.startActivity(in);
-               // activity.finish();
+                // Intent in =new Intent(activity, LoginActivity.class);
+                // activity.startActivity(in);
+                // activity.finish();
                 dialog.cancel();
             }
         });

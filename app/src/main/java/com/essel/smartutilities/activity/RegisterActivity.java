@@ -129,6 +129,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
         String msg;
+
         @Override
         protected void onPreExecute() {
             Log.i(TAG, "onPreExecute");
@@ -146,8 +147,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
             dismissDialog();
-            if(msg!=null)
-            DialogCreator.showMessageDialog(RegisterActivity.this, msg);
+            if (msg != null)
+                DialogCreator.showMessageDialog(RegisterActivity.this, msg);
 
         }
 
@@ -181,28 +182,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if ((((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString()).equalsIgnoreCase("Please Select Correct Values")) {
                         this.runOnUiThread(new Runnable() {
                             public void run() {
-                                DialogCreator.showMessageDialog(RegisterActivity.this, "Please Enter Valid Consumer No");
+                                DialogCreator.showMessageDialog(RegisterActivity.this, "Please Enter Valid Consumer No/Select Valid City");
                             }
                         });
-//
                     } else {
                         CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
                                 ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
                         Intent i = new Intent(this, RegisterActivity2.class);
 
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
-                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString().equals("anyType{}"))
-                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
-                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").equals("anyType{}"))
-                        SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
-                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString().equals("anyType{}"))
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString().equals("anyType{}"))
+                            SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").equals("anyType{}"))
+                            SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString().equals("anyType{}"))
 
                             SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, ((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString());
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, ((SoapObject) soapEnvelope.bodyIn).getProperty("mobile").toString());
-                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString().equals("anyType{}"))
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString().equals("anyType{}"))
 
                             SharedPrefManager.saveValue(this, SharedPrefManager.CON_NO, ((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString());
-                        if(!((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString().equals("anyType{}"))
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString().equals("anyType{}"))
 
                             SharedPrefManager.saveValue(this, SharedPrefManager.POSTAL, ((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString());
 

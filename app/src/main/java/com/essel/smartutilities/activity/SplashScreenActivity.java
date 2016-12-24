@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class SplashScreenActivity extends BaseActivity  {
     /** Duration of wait **/
@@ -25,7 +25,7 @@ public class SplashScreenActivity extends BaseActivity  {
 
     private void moveNext() {
         Intent intent = null;
-        if(!CommonUtils.isLoggedIn(SplashScreenActivity.this))
+        if(SharedPrefManager.CONSUMER_LOGGED.equals("true"))
             intent = new Intent(SplashScreenActivity.this,ActivityLoginLanding.class);
         else
             intent = new Intent(SplashScreenActivity.this, LoginActivity.class);

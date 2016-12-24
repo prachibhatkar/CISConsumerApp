@@ -172,7 +172,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
             obj.put("email_id", editTextEmailId.getText().toString());
             obj.put("address_line1", editTextAddress1.getText().toString());
             obj.put("address_line2", editTextAddress2.getText().toString());
-            obj.put("address_line3", editTextAddress2.getText().toString());
+//            obj.put("address_line3", editTextAddress2.getText().toString());
             obj.put("mobile_no", editTextPhone.getText().toString());
             obj.put("nearest_consumer_no", editTextConsumerId.getText().toString());
             obj.put("nearest_pole_no", editTextpoleno.getText().toString());
