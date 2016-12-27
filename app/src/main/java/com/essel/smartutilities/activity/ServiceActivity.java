@@ -284,8 +284,10 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
                         Log.i(label, "hyif " + jsonResponse.result);
                         String msg=jsonResponse.message;
+                        String serviceid=jsonResponse.serviceid;
                         Intent i = new Intent(this, ServiceStatusActivity.class);
                         i.putExtra("msg", msg);
+                        i.putExtra("id", serviceid);
                         startActivity(i);
 
                     }

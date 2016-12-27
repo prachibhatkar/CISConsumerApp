@@ -74,7 +74,7 @@ public class SlidingTipsAdapter extends PagerAdapter {
        // for(int i=0;i<IMAGES.size();i++) {
             Picasso.with(context)
                     .load(IMAGES.get(position))
-                    .resize(100, 100)
+                    //.resize(100, 100)
                     .into(imageView);
       //  }
         return imageLayout;

@@ -37,9 +37,16 @@ TextView tv_complaintid,tv_complaintmsg;
         Intent intent = getIntent();
         String caseid = intent.getExtras().getString("caseid");
         String message=intent.getExtras().getString("message");
-        tv_complaintid.setText(caseid);
-        tv_complaintmsg.setText(message);
+       String msg="Please select Correct values";
 
+        if(msg.equals(message)){
+            tv_complaintid.setText("");
+            tv_complaintmsg.setText(message);
+        }
+        else {
+            tv_complaintid.setText(caseid);
+            tv_complaintmsg.setText(message);
+        }
         btn_submitcomplaintid=(Button)findViewById(R.id.btn_submitcomplaintid);
         btn_submitcomplaintid.setOnClickListener(this);
 

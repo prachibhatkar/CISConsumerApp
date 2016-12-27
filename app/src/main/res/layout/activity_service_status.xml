@@ -65,8 +65,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_service_id"
-            android:text="Service Id: #124574854214"/>
+            android:id="@+id/lbl_tv_service_id"
+            android:text="Service Id:"/>
+
+
 
         <TextView
             android:layout_width="match_parent"

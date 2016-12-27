@@ -45,9 +45,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
        <!--<&#45;&#45; <com.android.volley.toolbox.NetworkImageView-->
             <!--android:id="@+id/img1"-->
             <!--android:adjustViewBounds="true"-->
@@ -59,12 +61,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_tips_pager"
             android:layout_width="fill_parent"
-            android:layout_height="400dp"
+            android:layout_height="600dp"
             android:background="@android:color/white"
-            android:layout_gravity="center">
+           >
         </android.support.v4.view.ViewPager>
 
         <com.viewpagerindicator.CirclePageIndicator
@@ -88,6 +91,9 @@
 
 
 </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>
     </LinearLayout>
 
 </LinearLayout>

@@ -45,6 +45,7 @@ JsonResponse {
     public Tariff tariff;
     public String result;//success/failure
     public String message;
+    public String serviceid;
     public String authorization;
 
 

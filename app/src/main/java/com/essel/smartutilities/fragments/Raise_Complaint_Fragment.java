@@ -79,10 +79,10 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     String complaintremark;
     EditText complaint_remark;
     String image;
-    Boolean flag=false;
+    Boolean flag=true;
     String caseid;
     ProgressDialog pDialog;
-    String selectcomplainttype,casetype;
+    String selectcomplainttype,casetype,msg;
 
     private String TAG = "responsedataaaaa";
     private ArrayList<String> complaints;
@@ -102,15 +102,16 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
 
 
-                JSONObject obj = new JSONObject();
-                try {
-                    obj.put("complainttype", complainttype.getSelectedItemPosition());
-                    obj.put("consumer_remark", complaintremark);
-                    obj.put("complaint_img", image);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-               }
+//                JSONObject obj = new JSONObject();
+//                try {
+//                    obj.put("complainttype", complainttype.getSelectedItemPosition());
+//                    obj.put("consumer_remark", complaintremark);
+//                    obj.put("complaint_img", image);
+//                    obj.put("complaint_id", caseid);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//               }
 
                 if( CommonUtils.isNetworkAvaliable(getActivity())) {
 
@@ -196,10 +197,10 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
          // selectcomplainttype=complainttype.getSelectedItem().toString();
           JSONObject obj = new JSONObject();
         try {
-            obj.put("complainttype", complainttype.getSelectedItem().toString());
+            obj.put("complaint_type", complainttype.getSelectedItem().toString());
             obj.put("consumer_remark", complaintremark);
             obj.put("complaint_img", image);
-           // obj.put("complaint_id", caseid);
+            obj.put("complaint_id", caseid);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -215,8 +216,6 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         }
         else
             Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
-
-
 
     }
 
@@ -261,18 +260,8 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
              caseid =((SoapObject) soapEnvelope.bodyIn).getProperty("caseId").toString();
             String message =((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString();
+             msg="Please select Correct values";
 
-
-            if(message=="Please select Correct values"){
-
-                flag=false;
-            }
-            else{
-
-                flag=true;
-                callApi();
-
-            }
 
             Log.i(TAG, "caseId" +caseid);
             Log.i(TAG, "caseId" +message);
@@ -291,6 +280,21 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             in.putExtra("caseid", caseid);
             in.putExtra("message", message);
             startActivity(in);
+
+
+            if(msg.equals(message)){
+                Toast.makeText(getContext(), "jghjgjgj", Toast.LENGTH_LONG).show();
+                flag=false;
+
+            }
+            else{
+
+                //flag=true;
+                callApi();
+
+            }
+
+
 
            // final SoapObject response = (SoapObject) soapEnvelope.getResponse();
            // SoapPrimitive response1 = (SoapPrimitive) soapEnvelope.getResponse();
