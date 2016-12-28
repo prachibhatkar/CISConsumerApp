@@ -7,19 +7,23 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginBottom="60dp"
         android:paddingTop="5dp"
         android:scrollbars="vertical" />
-<TextView
-    android:id="@+id/tv_title"
-    android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:text="Manage Accounts"
-    android:textSize="20dp"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:background="@color/background"
-    android:gravity="center_horizontal" />
+
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_centerHorizontal="true"
+
+            android:background="@color/background"
+            android:text="Manage Accounts"
+            android:textSize="20dp" />
 </RelativeLayout>

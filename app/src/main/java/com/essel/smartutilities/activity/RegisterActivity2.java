@@ -94,11 +94,12 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
             textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
 
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
-        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null || !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("NA")
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null
                 || !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase(""))
-            textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
-        else
-            noMobileDialog();
+            if (!SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("NA"))
+                textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
+            else
+                noMobileDialog();
         buttonRegister = (AppCompatButton) findViewById(R.id.btn_register);
         buttonRegister.setOnClickListener(this);
 
@@ -169,7 +170,6 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
     }
 
 
-
     void callRegisteruser() {
         if (CommonUtils.isNetworkAvaliable(this)) {
             initProgressDialog();
@@ -185,13 +185,14 @@ public class RegisterActivity2 extends BaseActivity implements View.OnClickListe
                 obj.put("address_line1", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1));
                 obj.put("address_line2", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2));
                 obj.put("address_line3", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS3));
-                obj.put("mobile_no",SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
+                obj.put("mobile_no", SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
                 obj.put("city", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY));
                 obj.put("postal", SharedPrefManager.getStringValue(this, SharedPrefManager.POSTAL));
                 obj.put("connection_type", SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
+                obj.put("reason", "register");
 
                 obj.put("alternet_email_id", editTextEmailId.getText().toString() == null ? " " : editTextEmailId.getText().toString());
-                obj.put("alternet_mobile_no", editTextMobileNo.getText().toString()== null ? "" : editTextMobileNo.getText().toString());
+                obj.put("alternet_mobile_no", editTextMobileNo.getText().toString() == null ? "" : editTextMobileNo.getText().toString());
                 obj.put("password", editTextPassword.getText().toString());
             } catch (JSONException e) {
                 // TODO Auto-generated catch block

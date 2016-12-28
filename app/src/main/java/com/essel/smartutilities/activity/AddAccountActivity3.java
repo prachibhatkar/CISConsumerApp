@@ -47,8 +47,8 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
         maintitle = (TextView) findViewById(R.id.title_bar);
         maintitle.setText("Add Account");
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
-        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
-            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME_ADD) != null)
+            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME_ADD));
         textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
         if (SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1) != null
                 && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2) != null
@@ -125,7 +125,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
             }
             JSONObject obj = new JSONObject();
             try {
-                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO_ADD));
                 obj.put("otp", otp.getText().toString());
                 obj.put("id", SharedPrefManager.getStringValue(this, SharedPrefManager.ID));
             } catch (JSONException e) {
@@ -148,7 +148,7 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
             }
             JSONObject obj = new JSONObject();
             try {
-                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO_ADD));
                 obj.put("id", SharedPrefManager.getStringValue(this, SharedPrefManager.ID));
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
@@ -176,8 +176,8 @@ public class AddAccountActivity3 extends BaseActivity implements View.OnClickLis
                         Log.i(label, "addaccountrequesttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
 //                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                            SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO, jsonResponse.consumer_no);
-                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME, jsonResponse.name);
+                            SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO_ADD, jsonResponse.consumer_no);
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME_ADD, jsonResponse.name);
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, jsonResponse.address);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, jsonResponse.connection_type);
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.mobile_no);

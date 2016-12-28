@@ -7,15 +7,18 @@ import android.os.Handler;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
-public class SplashScreenActivity extends BaseActivity  {
-    /** Duration of wait **/
+public class SplashScreenActivity extends BaseActivity {
+    /**
+     * Duration of wait
+     **/
     private final int SPLASH_DISPLAY_LENGTH = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 moveNext();
@@ -25,12 +28,11 @@ public class SplashScreenActivity extends BaseActivity  {
 
     private void moveNext() {
         Intent intent = null;
-        if(SharedPrefManager.CONSUMER_LOGGED.equals("true"))
-            intent = new Intent(SplashScreenActivity.this,ActivityLoginLanding.class);
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_LOGGED).equals("true"))
+            intent = new Intent(SplashScreenActivity.this, ActivityLoginLanding.class);
         else
             intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
         SplashScreenActivity.this.startActivity(intent);
         SplashScreenActivity.this.finish();
-//        overridePendingTransition(R.anim.slide_no_change, R.anim.slide_up);
     }
 }

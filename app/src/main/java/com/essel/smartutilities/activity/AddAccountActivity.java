@@ -175,9 +175,11 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
                             }
                         });
                     } else {
-                        CommonUtils.saveDetails(this, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString(),
-                                ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString(), ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
+
                         Intent i = new Intent(this, AddAccountActivity2.class);
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO_ADD, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME_ADD, ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_CITY, ((SoapObject) soapEnvelope.bodyIn).getProperty("city").toString());
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());

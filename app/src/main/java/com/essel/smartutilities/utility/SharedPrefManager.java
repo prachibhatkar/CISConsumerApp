@@ -30,6 +30,9 @@ public class SharedPrefManager {
     public static final String MY_PREFERENCES = "MyPrefs";
     public static String CONSUMER_NAME = "consumer_name";
     public static String CONSUMER_NO = "consumer_no";
+    public static String CONSUMER_NO_ADD = "consumer_no_add";
+    public static String CONSUMER_NAME_ADD = "consumer_no_name";
+
     public static String CONSUMER_CITY = "consumer_city";
     public static String ID = "id";
     public static  String AUTH_TOKEN = "auth_token";
@@ -40,8 +43,7 @@ public class SharedPrefManager {
     public static String EMAIL_ID = "email_id";
     public static  String CONNECTION_TYPE = "connection_type";
     public static  String MOBILE = "mobile";
-    public static String CONSUMER_LOGGED =" " ;
-    public static String PASSWORD = "pasword";
+    public static String CONSUMER_LOGGED ="";
     public static String CON_NO = "con_no";
     public static String POSTAL = "postal";
 

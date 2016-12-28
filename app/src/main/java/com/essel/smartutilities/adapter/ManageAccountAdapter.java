@@ -22,8 +22,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.activity.PayNowActivity;
@@ -32,8 +39,10 @@ import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
-import com.essel.smartutilities.webservice.WebRequests;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,8 +51,11 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdapter.ViewHolder> {
@@ -88,8 +100,8 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                     if (CommonUtils.isNetworkAvaliable(mContext)) {
                                         initProgressDialog();
                                         if (pDialog != null && !pDialog.isShowing()) {
-//                                            pDialog.setMessage("Requesting, please wait..");
-//                                            pDialog.show();
+                                            pDialog.setMessage("Requesting, please wait..");
+                                            pDialog.show();
                                             JSONObject obj = new JSONObject();
                                             try {
                                                 obj.put("consumer_no", mConsumers.get(position).consumer_no);
@@ -97,14 +109,60 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                                 // TODO Auto-generated catch block
                                                 e.printStackTrace();
                                             }
-                                            JsonObjectRequest request = WebRequests.deleteAccount(mContext, Request.Method.POST,
-                                                    AppConstants.URL_DELETE_ACCOUNT, AppConstants.REQUEST_DELETE_ACCOUNT, mContext, obj, SharedPrefManager.getStringValue(mContext, SharedPrefManager.AUTH_TOKEN));
-                                            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_DELETE_ACCOUNT);
-                                            mConsumers.remove(viewHolder.getAdapterPosition());
-                                            notifyDataSetChanged();
-                                            dialog.cancel();
-                                            Snackbar snack = Snackbar.make(v, "Account Deleted", Snackbar.LENGTH_LONG);
-                                            snack.show();
+//                                            JsonObjectRequest request = WebRequests.deleteAccount(mContext, Request.Method.POST,
+//                                                    AppConstants.URL_DELETE_ACCOUNT, AppConstants.REQUEST_DELETE_ACCOUNT, mContext, obj, SharedPrefManager.getStringValue(mContext, SharedPrefManager.AUTH_TOKEN));
+                                            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, AppConstants.URL_DELETE_ACCOUNT, obj, new Response.Listener<JSONObject>() {
+                                                @Override
+                                                public void onResponse(JSONObject response) {
+                                                    Log.d(AppConstants.REQUEST_DELETE_ACCOUNT, response.toString());
+                                                    Gson gson = new Gson();
+                                                    JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
+                                                    DialogCreator.showMessageDialog(mContext, jsonResponse.message );
+                                                    mConsumers.remove(viewHolder.getAdapterPosition());
+                                                    notifyDataSetChanged();
+                                                    Snackbar snack = Snackbar.make(v, "Account Deleted", Snackbar.LENGTH_LONG);
+                                                    snack.show();
+                                                    dismissDialog();
+                                                }
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    NetworkResponse response = error.networkResponse;
+                                                    if (error instanceof ServerError && response != null) {
+                                                        try {
+                                                            String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                                            VolleyLog.d(AppConstants.REQUEST_DELETE_ACCOUNT, "Error: " + res);
+                                                            Gson gson = new Gson();
+                                                            JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
+                                                            DialogCreator.showMessageDialog(mContext, jsonResponse.message + "  " + jsonResponse.result);
+                                                            dismissDialog();
+
+                                                        } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
+                                                            // e1.printStackTrace();
+                                                            DialogCreator.showMessageDialog(mContext, "ERROR");
+                                                            dismissDialog();
+//                                                            DialogCreator.showMessageDialog (mContext,( error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", AppConstants.REQUEST_DELETE_ACCOUNT, response);
+                                                        }
+                                                    } else
+                                                        dismissDialog();
+                                                    DialogCreator.showMessageDialog(mContext, "ERROR");
+//                                                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", AppConstants.REQUEST_DELETE_ACCOUNT, response);
+                                                }
+                                            }) {
+                                                @Override
+                                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                                    HashMap<String, String> params = new HashMap<>();
+                                                    params.put("Content-Type", "application/json");
+                                                    params.put("Authorization", SharedPrefManager.getStringValue(mContext, SharedPrefManager.AUTH_TOKEN));
+                                                    return params;
+                                                }
+                                            };
+
+                                            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                            App.getInstance().addToRequestQueue(jsonObjReq, AppConstants.REQUEST_DELETE_ACCOUNT);
+
+//                                            dialog.cancel();
+
                                         }
                                     } else
                                         Toast.makeText(mContext, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
@@ -165,42 +223,6 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
         return mConsumers.size();
     }
 
-
-    public static void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQUEST_DELETE_ACCOUNT: {
-                if (jsonResponse != null) {
-                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
-                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
-                        Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
-                        if (jsonResponse.message != null)
-                            Log.i(label, "responseeeeeeeeeeee:" + jsonResponse.result);
-                        Log.i(label, "requestttttttttttttttttttttfail:" + jsonResponse.message);
-                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
-
-                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse.result);
-                        Log.i(label, "requestttttttttttttttttttttfail:" + jsonResponse.message);
-                    }
-                } else
-                    Log.i(label, "requestttttttttttttttttttttfail:" + "jsonResponse");
-
-            }
-            break;
-        }
-    }
-
-
-    public static void onAsyncFail(String message, String label, NetworkResponse response) {
-        switch (label) {
-            case AppConstants.REQUEST_DELETE_ACCOUNT: {
-
-                Log.i(label, "responseeeeeeeeeeee:" + response);
-                Log.i(label, "requestttttttttttttttttttttfail:" + message);
-
-                break;
-            }
-        }
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 

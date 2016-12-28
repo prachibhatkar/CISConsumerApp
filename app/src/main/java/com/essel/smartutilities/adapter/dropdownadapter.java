@@ -78,7 +78,7 @@ public class dropdownadapter extends RecyclerView.Adapter<dropdownadapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        public TextView name, id, address;
+        public TextView name, id, address, acctype;
         private CardView cardView;
         private ImageView ic_dete;
 
@@ -90,6 +90,7 @@ public class dropdownadapter extends RecyclerView.Adapter<dropdownadapter.ViewHo
             id = (TextView) itemView.findViewById(R.id.tv_consumerid);
             address = (TextView) itemView.findViewById(R.id.tv_address);
             ic_dete = (ImageView) itemView.findViewById(R.id.iv_pry);
+            acctype = (TextView) itemView.findViewById(R.id.acctype);
         }
 
         public void bind(final Context context, final Consumer consumer, final OnRecycleItemClickListener listener) {
@@ -101,14 +102,15 @@ public class dropdownadapter extends RecyclerView.Adapter<dropdownadapter.ViewHo
                 if (consumer.consumer_no.equals(SharedPrefManager.getStringValue(context, SharedPrefManager.CONSUMER_NO)))
                     ic_dete.setVisibility(View.VISIBLE);
                 else
-                    ic_dete.setVisibility(View.INVISIBLE);
+                    ic_dete.setVisibility(View.GONE);
             }
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    Toast.makeText(context, "Consumer No."+ consumer.consumer_name, Toast.LENGTH_SHORT).show();
-                }
-            });
+            if (consumer.is_primary.equals("true")) {
+
+                acctype.setText("(Primary)");
+            } else {
+                acctype.setText("");
+            }
+
         }
     }
 

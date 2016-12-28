@@ -18,8 +18,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static android.support.v7.appcompat.R.id.image;
-
 public class SlidingTipsAdapter extends PagerAdapter {
 
     private ArrayList<String> IMAGES;
@@ -74,7 +72,7 @@ public class SlidingTipsAdapter extends PagerAdapter {
        // for(int i=0;i<IMAGES.size();i++) {
             Picasso.with(context)
                     .load(IMAGES.get(position))
-                    //.resize(100, 100)
+
                     .into(imageView);
       //  }
         return imageLayout;

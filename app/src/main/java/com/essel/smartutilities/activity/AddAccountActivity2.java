@@ -65,8 +65,8 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
         inputLayoutMobileNo = (TextInputLayout) findViewById(R.id.inputLayoutMobileNumber);
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
         textViewConsumerName = (TextView) findViewById(R.id.textConsumerName);
-        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
-            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+        if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME_ADD) != null)
+            textViewConsumerName.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME_ADD));
         textViewConsumerAddress = (TextView) findViewById(R.id.textConsumerAddress);
         if (SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1) != null
                 && SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2) != null
@@ -159,7 +159,7 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
             JSONObject obj = new JSONObject();
             try {
                 obj.put("person_name", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
-                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+                obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO_ADD));
                 obj.put("account_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CON_NO));
                 obj.put("address_line1", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1));
                 obj.put("address_line2", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS2));
@@ -169,7 +169,7 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
                 obj.put("postal", SharedPrefManager.getStringValue(this, SharedPrefManager.POSTAL));
                 obj.put("connection_type", SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
                 obj.put("password","");
-
+                obj.put("reasone","add" );
                 obj.put("alternet_email_id", editTextEmailId.getText().toString() == null ? "" : editTextEmailId.getText().toString());
                 obj.put("alternet_mobile_no", editTextMobileNo.getText().toString() == null ? "" : editTextMobileNo.getText().toString());
             } catch (JSONException e) {

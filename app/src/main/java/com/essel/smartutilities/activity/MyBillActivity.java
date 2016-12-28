@@ -36,7 +36,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
     public static String[] billdate = new String[6];
     public static String[] billamount = new String[6];
     public static String[] month = new String[6];
-    public static int[] billid = new int[6];
+    public static long[] billid = new long[6];
     public TextView duedate_date, propmtamt, currentamt, arriers, promptdate, netamt;
     public String duedate1, promptamt1, currentamt1, arrears1, promptdate1, netbill;
     public GraphView graph;
@@ -218,7 +218,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
                     billamount[i] = obj1.getProperty("CURRENT_MONTH_BILL").toString();
                     StringTokenizer st = new StringTokenizer(month[i], "-");
                     month[i] = st.nextToken();
-                    billid[i]=Integer.parseInt(obj1.getProperty("BILL_ID").toString());
+                    billid[i]=Long.parseLong(obj1.getProperty("BILL_ID").toString());
                 }
             }
 

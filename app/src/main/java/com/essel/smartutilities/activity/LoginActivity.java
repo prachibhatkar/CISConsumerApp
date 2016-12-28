@@ -147,10 +147,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return b;
     }
 
-    public void onBackPressed() {
-        DialogCreator.showExitDialog(this, getString(R.string.exit), getString(R.string.exit_message));
-    }
 
+    @Override
+    public void onBackPressed() {
+        DialogCreator.showExitDialog(this, "Exit App?", "Do you want to exit?");
+    }
 
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
@@ -197,12 +198,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (res != null) {
                         Gson gson = new Gson();
                         JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
+                        if(jsonResponse.message!=null)
+                            DialogCreator.showMessageDialog(this,jsonResponse.message);
 //                        DialogCreator.showMessageDialog(this,jsonResponse.message);
-                        if (jsonResponse.error_code.equals("101")) {
-                            DialogCreator.showMessageDialog(this, getString(R.string.login_error_101));
-                        } else if (jsonResponse.error_code.equals("102")) {
-                            DialogCreator.showMessageDialog(this, getString(R.string.login_error_102));
-                        }
+//                        if (jsonResponse.error_code.equals("101")) {
+//                            DialogCreator.showMessageDialog(this, getString(R.string.login_error_101));
+//                        } else if (jsonResponse.error_code.equals("102")) {
+//                            DialogCreator.showMessageDialog(this, getString(R.string.login_error_102));
+//                        }
                     }
                 } catch (Exception e) {
                     DialogCreator.showMessageDialog(this, getString(R.string.login_error_null));

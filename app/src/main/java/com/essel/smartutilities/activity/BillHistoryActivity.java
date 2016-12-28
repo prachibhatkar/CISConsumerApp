@@ -183,9 +183,9 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 
         //Set the local destination for the downloaded file to a path within the application's external files directory
         if (v.getId() == R.id.download1)
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.pdf");
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.html");
         else if (v.getId() == R.id.download2)
-            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.pdf");
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "EsselDownloadedData.html");
 
         //Enqueue download and save into referenceId
         downloadReference = downloadManager.enqueue(request);
@@ -197,4 +197,47 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 
         return downloadReference;
     }
+//    public void ConvertWebPageToPDF()
+//    {
+//        // note: be sure to copy the helper function ConvertHTMLStringToPDF() from this webpage
+//
+//        // a url starting with http or an HTML string
+//        String value = "http://www.google.com";
+//        String apiKey = "d733ba16-8d32-4efb-9b51-7fc6baba4643";
+//        String apiURL = "http://api.html2pdfrocket.com/pdf";
+//        HashMap<String,String> params = new HashMap<String, String>();
+//        params.put("apiKey", apiKey);
+//        params.put("value", value);
+//
+//
+//        // Call the API convert to a PDF
+//        InputStreamReader request = new InputStreamReader(Request.Method.POST, apiURL, new Response.Listener<byte[]>(){
+//            @Override
+//            public void onResponse(byte[] response)
+//            {
+//                try
+//                {
+//                    if(response != null)
+//                    {
+//                        File localFolder = new File(Environment.getExternalStorageDirectory(), "WebPageToPDF");
+//                        if(!localFolder.exists())
+//                        {
+//                            localFolder.mkdirs();
+//                        }
+//
+//                        // Write stream output to local file
+//                        File pdfFile =  new File (localFolder, "MySamplePDFFile.pdf");
+//                        OutputStream opStream = new FileOutputStream(pdfFile);
+//                        pdfFile.setWritable(true);
+//                        opStream.write(response);
+//                        opStream.flush();
+//                        op.close();
+//                    }
+//                } catch (Exception ex)
+//                {
+//                    Toast.makeText(this, "Error while generating PDF file!!", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+//    }
 }

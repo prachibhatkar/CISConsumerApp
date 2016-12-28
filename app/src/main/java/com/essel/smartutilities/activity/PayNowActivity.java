@@ -78,7 +78,7 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         switch (view.getId()) {
             case R.id.BTNSubmit:
                 if (!amtpay.getText().toString().equalsIgnoreCase("")&& !amtpay.getText().toString().equalsIgnoreCase(".")) {
-                    if (Float.parseFloat(amtpay.getText().toString()) >= Float.parseFloat(propmtamt.getText().toString()) || (Float.parseFloat(amtpay.getText().toString()) >= 1))
+                    if (Float.parseFloat(amtpay.getText().toString()) >= Float.parseFloat(propmtamt.getText().toString()) && (Float.parseFloat(amtpay.getText().toString()) >= 1))
                         DialogCreator.showMessageDialog(this, "yesss");
                     else
                         DialogCreator.showMessageDialog(this, "Noooo");
@@ -88,5 +88,3 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         }
     }
 }
-
-

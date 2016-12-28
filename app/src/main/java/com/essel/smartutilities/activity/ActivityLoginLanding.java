@@ -120,6 +120,11 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
 
         if (CommonUtils.isNetworkAvaliable(this)) {
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage("Requesting, please wait..");
+                pDialog.show();
+            }
             JsonObjectRequest request = WebRequests.getAccounts(this, Request.Method.GET, AppConstants.URL_GET_ACCOUNTS, AppConstants.REQUEST_GET_ACCOUNTS, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_ACCOUNTS);
 
@@ -291,6 +296,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 DialogCreator.showExitDialog(this, "Exit App?", "Do you want to exit?");
             }
             App.dropdown = true;
+        } else {
+            DialogCreator.showExitDialog(this, "Exit App?", "Do you want to exit?");
         }
         dismissDialog();
 
@@ -382,7 +389,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
     public void getBillDetails() {
 
-        String getconsumerno =SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO);
+        String getconsumerno = SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO);
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
         String METHOD_NAME = "InputParameters";
         String NAMESPACE = "http://xmlns.oracle.com/pcbpel/adapter/db/sp/CCBGetBillDetailsProc";
@@ -443,14 +450,30 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (CommonUtils.isNetworkAvaliable(this)) {
+            JsonObjectRequest request = WebRequests.getAccounts(this, Request.Method.GET, AppConstants.URL_GET_ACCOUNTS, AppConstants.REQUEST_GET_ACCOUNTS, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_ACCOUNTS);
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage("Requesting, please wait..");
+                pDialog.show();
+            }
+        } else
+            Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
             case AppConstants.REQUEST_LOGOUT: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         if (jsonResponse.message != null) {
-                            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_LOGGED,"false");
-                            SharedPrefManager.saveValue(this,SharedPrefManager.AUTH_TOKEN,"no");
+                            SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                            SharedPrefManager.saveValue(this, SharedPrefManager.AUTH_TOKEN, "no");
 
                             dismissDialog();
                             Intent in = new Intent(this, LoginActivity.class);
@@ -459,8 +482,6 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                         }
                         if (jsonResponse.authorization != null) {
                             dismissDialog();
-                            //  CommonUtils.saveAuthToken(this, jsonResponse.authorization);
-//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
@@ -495,17 +516,20 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
                 dismissDialog();
             }
+            break;
             case AppConstants.REQUEST_BRANDING_IMAGES: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
                         if (jsonResponse.images != null && jsonResponse.images.size() >= 0) {
-                            ImagesArray1=jsonResponse.images;
+                            ImagesArray1 = jsonResponse.images;
                             init();
+                            dismissDialog();
                             Log.i(label, "Imagesssssssssssssssssssssssss:" + jsonResponse.result);
                         }
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
                     }
                     break;
@@ -524,6 +548,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
 //                Log.i(label, "Faq:" + message);
 //                Log.i(label, "Faq:" + response);
+                dismissDialog();
             }
             break;
             case AppConstants.REQUEST_GET_ACCOUNTS: {
@@ -531,6 +556,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + message);
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + response);
+                dismissDialog();
             }
             break;
             case AppConstants.REQUEST_BRANDING_IMAGES: {
@@ -538,6 +564,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
                 Log.i(label, AppConstants.REQUEST_BRANDING_IMAGES + message);
                 Log.i(label, AppConstants.REQUEST_BRANDING_IMAGES + response);
+                dismissDialog();
             }
             break;
         }
