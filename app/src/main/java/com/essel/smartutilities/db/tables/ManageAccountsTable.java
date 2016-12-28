@@ -20,6 +20,7 @@ public class ManageAccountsTable {
         public static final String CONSUMER_ID = "consumer_id";
         public static final String CONSUMER_NAME = "consumer_name";
         public static final String CONTACT_NO = "contact_no";
+        public static final String ALTERNATE_CONTACT_NO = "alternate_contact_no";
         public static final String CITY="city";
         public static final String ADDRESS = "address";
         public static final String IS_PRIMARY = "is_primary";

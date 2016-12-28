@@ -96,6 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 LoginTable.Cols.IMAGE + " VARCHAR, " +
                 LoginTable.Cols.CONSUMER_ADDRESS + " VARCHAR, " +
                 LoginTable.Cols.CONSUMER_CONTACT_NO + " VARCHAR, " +
+                LoginTable.Cols.CONSUMER_ALTERNATE_CONTACT_NO + " VARCHAR, " +
                 LoginTable.Cols.CONSUMER_CONNECTION_TYPE + " VARCHAR, " +
                 LoginTable.Cols.LAST_SYNCED_ON + " LONG, " +
                 LoginTable.Cols.LOGIN_ATTEMPTS + " INTEGER";
@@ -108,6 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ManageAccountsTable.Cols.CONSUMER_ID + " VARCHAR, " +
                 ManageAccountsTable.Cols.CONSUMER_NAME + " VARCHAR, " +
                 ManageAccountsTable.Cols.CONTACT_NO + " VARCHAR, " +
+                ManageAccountsTable.Cols.ALTERNATE_CONTACT_NO + " VARCHAR, " +
                 ManageAccountsTable.Cols.CITY + " VARCHAR, " +
                 ManageAccountsTable.Cols.IS_PRIMARY + " VARCHAR, " +
                 ManageAccountsTable.Cols.ADDRESS + " VARCHAR";

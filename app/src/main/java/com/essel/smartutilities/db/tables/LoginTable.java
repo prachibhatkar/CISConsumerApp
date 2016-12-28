@@ -54,6 +54,7 @@ public class LoginTable {
         public static final String CITY = "city";
         public static final String IMAGE = "image";
         public static final String CONSUMER_CONTACT_NO = "consumercontactno";
+        public static final String CONSUMER_ALTERNATE_CONTACT_NO = "consumeraltercontactno";
         public static final String CONSUMER_CONNECTION_TYPE = "consumerconnectiontype";
         public static final String ACTIVE_FLAG = "activeFlag";
         public static final String LAST_SYNCED_ON = "last_synced_on";

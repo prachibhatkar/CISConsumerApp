@@ -99,7 +99,7 @@ public class DatabaseManager {
     public static void saveManageAccounts(Context context, ArrayList<Consumer> consumer) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete(ManageAccountsTable.TABLE_NAME,null,null);
+        db.delete(ManageAccountsTable.TABLE_NAME, null, null);
         if (consumer != null && consumer.size() > 0) {
             for (Consumer consumer1 : consumer) {
                 ContentValues values = getContentValuesManageAccountsTable(context, consumer1);
@@ -115,8 +115,9 @@ public class DatabaseManager {
             values.put(ManageAccountsTable.Cols.CONSUMER_NAME, consumers.consumer_name);
             values.put(ManageAccountsTable.Cols.CITY, consumers.city);
             values.put(ManageAccountsTable.Cols.CONTACT_NO, consumers.contact_no);
+            values.put(ManageAccountsTable.Cols.ALTERNATE_CONTACT_NO, consumers.alternet_contact_no);
             values.put(ManageAccountsTable.Cols.ADDRESS, consumers.address);
-                        values.put(ManageAccountsTable.Cols.IS_PRIMARY, consumers.is_primary);
+            values.put(ManageAccountsTable.Cols.IS_PRIMARY, consumers.is_primary);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,16 +154,16 @@ public class DatabaseManager {
         return consumers;
     }
 
-    public static void deleteAccount(Context context, String Consumer_id) {
-        try {
-            String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
-            DatabaseHelper dbHelper = new DatabaseHelper(context);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.delete("ManageAccountsTable", condition, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void deleteAccount(Context context, String Consumer_id) {
+//        try {
+//            String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
+//            DatabaseHelper dbHelper = new DatabaseHelper(context);
+//            SQLiteDatabase db = dbHelper.getWritableDatabase();
+//            db.delete("ManageAccountsTable", condition, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     private static void saveAboutUs(Context context, Uri table, ContentValues values, String condition) {
@@ -242,6 +243,7 @@ public class DatabaseManager {
         }
         return values;
     }
+
     private static ContentValues getContentValuesContactUsTable(Context context, ContactUs contactus) {
         ContentValues values = new ContentValues();
         try {
@@ -260,7 +262,7 @@ public class DatabaseManager {
     }
 
 
-    private static ContentValues getContentValuesComplaintsTable(Context context,Complaints complaints) {
+    private static ContentValues getContentValuesComplaintsTable(Context context, Complaints complaints) {
         ContentValues values = new ContentValues();
         try {
             values.put(ComplaintsTable.Cols.COMPLAINT_TYPE, complaints.type);
@@ -292,7 +294,7 @@ public class DatabaseManager {
     private static ContentValues getContentValuesTipsTable(Context context, Tips tips) {
         ContentValues values = new ContentValues();
         try {
-           // values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
+            // values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
             values.put(TipsTable.Cols.TIPS_MESSAGE, tips.message);
 
         } catch (Exception e) {
@@ -312,6 +314,7 @@ public class DatabaseManager {
         values.put(LoginTable.Cols.CONSUMER_NAME, user_info.consumer_name);
         values.put(LoginTable.Cols.CONSUMER_ADDRESS, user_info.address);
         values.put(LoginTable.Cols.CONSUMER_CONTACT_NO, user_info.contact_no);
+        values.put(LoginTable.Cols.CONSUMER_ALTERNATE_CONTACT_NO, user_info.alternet_contact_no);
         values.put(LoginTable.Cols.CONSUMER_ID, user_info.consumer_no);
         values.put(LoginTable.Cols.CONSUMER_CONNECTION_TYPE, user_info.acctype);
         values.put(LoginTable.Cols.CONSUMER_EMAIL_ID, user_info.emailid);
@@ -357,8 +360,8 @@ public class DatabaseManager {
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
 
-            faq.answer=(cursor.getString(cursor.getColumnIndex("faq_answer")));
-            faq.question=(cursor.getString(cursor.getColumnIndex("faq_question")));
+            faq.answer = (cursor.getString(cursor.getColumnIndex("faq_answer")));
+            faq.question = (cursor.getString(cursor.getColumnIndex("faq_question")));
             Log.i("Tag", "valueselectdb" + cursor);
 
             //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
@@ -370,10 +373,9 @@ public class DatabaseManager {
     }
 
 
-
     public static ContactUs contactUs(Context context) {
 
-       ContactUs con = new ContactUs();
+        ContactUs con = new ContactUs();
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + ContactUsTable.TABLE_NAME;
@@ -381,13 +383,13 @@ public class DatabaseManager {
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
 
-            con.helpline_number=(cursor.getString(cursor.getColumnIndex("helpline_number")));
-            con.anti_bribery_help=(cursor.getString(cursor.getColumnIndex("anti_beribery_help")));
-            con.online_complaint=(cursor.getString(cursor.getColumnIndex("online_complaint")));
-            con.electricity_theft_help_no=(cursor.getString(cursor.getColumnIndex("electricity_theft_help")));
-            con.igrc_email=(cursor.getString(cursor.getColumnIndex("igrc_email")));
-            con.igrc_no=(cursor.getString(cursor.getColumnIndex("igrc_number")));
-            con.customer_portal=(cursor.getString(cursor.getColumnIndex("consumer_portal")));
+            con.helpline_number = (cursor.getString(cursor.getColumnIndex("helpline_number")));
+            con.anti_bribery_help = (cursor.getString(cursor.getColumnIndex("anti_beribery_help")));
+            con.online_complaint = (cursor.getString(cursor.getColumnIndex("online_complaint")));
+            con.electricity_theft_help_no = (cursor.getString(cursor.getColumnIndex("electricity_theft_help")));
+            con.igrc_email = (cursor.getString(cursor.getColumnIndex("igrc_email")));
+            con.igrc_no = (cursor.getString(cursor.getColumnIndex("igrc_number")));
+            con.customer_portal = (cursor.getString(cursor.getColumnIndex("consumer_portal")));
             Log.i("Tag", "valueselectdb" + cursor);
 
             //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
@@ -419,18 +421,18 @@ public class DatabaseManager {
 
     }
 
-    public static GetInfo getinfo(Context context,String consumerno) {
+    public static GetInfo getinfo(Context context, String consumerno) {
 
         GetInfo getinfo = new GetInfo();
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-      //  String name = getinfo.consumerno.toString();
-        String selectQuery = "SELECT contact_no FROM ManageAccountsTable WHERE consumer_id = '"+consumerno+"'";
+        //  String name = getinfo.consumerno.toString();
+        String selectQuery = "SELECT contact_no FROM ManageAccountsTable WHERE consumer_id = '" + consumerno + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
 
-           // getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
+            // getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
             getinfo.mobileno = cursor.getString(cursor.getColumnIndex("contact_no"));
             Log.i("Tag", "valueselectdb" + cursor);
 
@@ -443,13 +445,13 @@ public class DatabaseManager {
     }
 
 
-    public static GetInfo getProfileinfo(Context context,String isprimary) {
+    public static GetInfo getProfileinfo(Context context, String isprimary) {
 
         GetInfo getinfo = new GetInfo();
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         //  String name = getinfo.consumerno.toString();
-        String selectQuery = "SELECT * FROM ManageAccountsTable WHERE is_primary = '"+isprimary+"'";
+        String selectQuery = "SELECT * FROM ManageAccountsTable WHERE is_primary = '" + isprimary + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
@@ -469,24 +471,24 @@ public class DatabaseManager {
 
     }
 
-    public  static ContactUs getContactDetail(Context context){
+    public static ContactUs getContactDetail(Context context) {
 
-        ContactUs contactus= new ContactUs();
-        DatabaseHelper dbHelper=new DatabaseHelper(context);
-        SQLiteDatabase db  = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + ContactUsTable.TABLE_NAME ;
+        ContactUs contactus = new ContactUs();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + ContactUsTable.TABLE_NAME;
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
 
-            contactus.helpline_number= cursor.getString(cursor.getColumnIndex("helpline_number"));
-            contactus.anti_bribery_help= cursor.getString(cursor.getColumnIndex("anti_beribery_help"));
-            contactus.online_complaint= cursor.getString(cursor.getColumnIndex("online_complaint"));
-            contactus.igrc_email= cursor.getString(cursor.getColumnIndex("igrc_email"));
-            contactus.igrc_no= cursor.getString(cursor.getColumnIndex("igrc_number"));
-            contactus.customer_portal= cursor.getString(cursor.getColumnIndex("consumer_portal"));
-            contactus.electricity_theft_help_no= cursor.getString(cursor.getColumnIndex("electricity_theft_help"));
-            Log.i("Tag","valueselectdb"+cursor);
+            contactus.helpline_number = cursor.getString(cursor.getColumnIndex("helpline_number"));
+            contactus.anti_bribery_help = cursor.getString(cursor.getColumnIndex("anti_beribery_help"));
+            contactus.online_complaint = cursor.getString(cursor.getColumnIndex("online_complaint"));
+            contactus.igrc_email = cursor.getString(cursor.getColumnIndex("igrc_email"));
+            contactus.igrc_no = cursor.getString(cursor.getColumnIndex("igrc_number"));
+            contactus.customer_portal = cursor.getString(cursor.getColumnIndex("consumer_portal"));
+            contactus.electricity_theft_help_no = cursor.getString(cursor.getColumnIndex("electricity_theft_help"));
+            Log.i("Tag", "valueselectdb" + cursor);
 
             //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
@@ -495,7 +497,6 @@ public class DatabaseManager {
 
 
     }
-
 
 
 }

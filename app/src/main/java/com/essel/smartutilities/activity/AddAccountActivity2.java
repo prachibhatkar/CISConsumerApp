@@ -158,7 +158,7 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
             }
             JSONObject obj = new JSONObject();
             try {
-                obj.put("person_name", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
+                obj.put("person_name", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME_ADD));
                 obj.put("consumer_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO_ADD));
                 obj.put("account_no", SharedPrefManager.getStringValue(this, SharedPrefManager.CON_NO));
                 obj.put("address_line1", SharedPrefManager.getStringValue(this, SharedPrefManager.ADDRESS1));

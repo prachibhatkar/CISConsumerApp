@@ -1,14 +1,12 @@
 package com.essel.smartutilities.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
@@ -32,7 +30,7 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
             public void onClick(View view) {
                 finish();
             }
-        });
+        }); 
 
 
         tv_message=(TextView)findViewById(R.id.tv_message);

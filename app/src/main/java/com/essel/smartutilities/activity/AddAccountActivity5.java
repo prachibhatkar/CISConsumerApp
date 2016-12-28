@@ -110,7 +110,7 @@ public class AddAccountActivity5 extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_addmore) {
-            if (consumerArray.size() <= 10 && consumerArray != null) {
+            if (consumerArray.size() <= 9 && consumerArray != null) {
                 i = new Intent(this, AddAccountActivity.class);
                 startActivity(i);
             } else

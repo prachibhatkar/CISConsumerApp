@@ -26,6 +26,7 @@ public class Consumer implements Serializable {
     public String is_primary;
     public String emailid;
     public String alternet_email_id;
+    public String alternet_contact_no;
     public String profile_img;
 
 
