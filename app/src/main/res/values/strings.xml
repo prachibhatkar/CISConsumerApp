@@ -12,6 +12,7 @@
 
     <!-- Strings related to login -->
     <string name="promt_consumer_id">Consumer No. or Mobile No.</string>
+    <string name="promt_consumer_id1">Consumer No.</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>

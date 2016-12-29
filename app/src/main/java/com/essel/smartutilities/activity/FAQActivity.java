@@ -202,11 +202,13 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
         {
               Faq faq2 = new Faq();
-              faq2=DatabaseManager.getFaq(this);
-             for(int i=0;i<10;i++) {
+             ArrayList<Faq>arrayfaq=new ArrayList<Faq>();
+            arrayfaq=DatabaseManager.getFaq(this);
+             for(int i=0;i<arrayfaq.size();i++) {
                    btnarray.get(i).setVisibility(View.VISIBLE);
-                   tvarray.get(i).setText(faq2.answer);
-                   btnarray.get(i).setText(faq2.answer);
+
+                   tvarray.get(i).setText(arrayfaq.get(i).answer);
+                   btnarray.get(i).setText(arrayfaq.get(i).question);
                // expandablebutton_newserviceconnection.setText(faq2.answer);
             }
 //              for(int i=0;i<faq2.arrayanswer.size();i++) {
@@ -337,18 +339,17 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                                 btnarray1.add(jsonResponse.faqs.get(i).question.toString());
 
                                 Faq faq=new Faq();
-                                faq.answer=tvarray1.get(i).toString();
-                                faq.question=btnarray1.get(i).toString();
+
+//                                faq.answer=tvarray1.get(i).toString();
+//                                faq.question=btnarray1.get(i).toString();
                                // faq.arrayanswer=tvarray1;
                                // faq.arrayquestion=btnarray1;
 
-                               // faq.arrayquestion.add(i,btnarray1.get(i));
-                                //faq.arrayanswer.add(i,tvarray1.get(i));
-                                DatabaseManager.saveFAQ(this,faq);
-
-
+//                                faq.arrayquestion.add(i,btnarray1.get(i));
+//                                faq.arrayanswer.add(i,tvarray1.get(i));
 
                             }
+                            DatabaseManager.saveFAQ(this,jsonResponse.faqs);
                                /* tv_1.setText(jsonResponse.faqs.get(0).answer.toString().trim());
                                 expandablebutton_newserviceconnection.setText(jsonResponse.faqs.get(0).question);
 

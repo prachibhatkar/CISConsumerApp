@@ -9,5 +9,8 @@ import java.util.ArrayList;
 public class TarifCatagory {
     public String charge;
     public String slab;
+    public ArrayList<String>arraycharge=new ArrayList<String>();
+    public ArrayList<String>arrayslab=new ArrayList<String>();
+
 
 }

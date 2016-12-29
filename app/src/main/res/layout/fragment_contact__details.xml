@@ -69,7 +69,7 @@
             android:id="@+id/tv_onlinehelp"
             android:text="Online Complaints"/>
         <TextView
-            android:layout_width="90dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:id="@+id/tv_onlineemail"
             android:text="online@email.com"/>

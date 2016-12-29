@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ContactUsAdapter;
 import com.essel.smartutilities.utility.DialogCreator;
+import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class Contact_Us_Activity extends AppCompatActivity {
     private static boolean flag1;
@@ -58,8 +59,9 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_call) {
+            String phnno=(SharedPrefManager.getStringValue(this, SharedPrefManager.HELPLINENO)).toString();
             Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:0123456789"));
+            intent.setData(Uri.parse("tel:" + phnno));
             startActivity(intent);
             return true;
         }

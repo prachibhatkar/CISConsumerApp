@@ -33,7 +33,8 @@ public class ComplaintActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+//               Intent in=new Intent(this,ActivityLoginLanding.class);
+//                startActivity(in);
             }
         });
         setupUI();

@@ -36,6 +36,8 @@ import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.TariffCatagoryTable;
+import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
 import com.essel.smartutilities.db.tables.TipsTable;
 import com.essel.smartutilities.models.AboutUs;
 import com.essel.smartutilities.models.Complaints;
@@ -43,6 +45,8 @@ import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.Faq;
 import com.essel.smartutilities.models.GetInfo;
+import com.essel.smartutilities.models.TarifCatagory;
+import com.essel.smartutilities.models.TariffEnergyCharge;
 import com.essel.smartutilities.models.Tips;
 import com.essel.smartutilities.models.User;
 
@@ -72,6 +76,36 @@ public class DatabaseManager {
         }
     }
 
+    public static void saveTariffCatagory(Context context,ArrayList<TarifCatagory>tariffcatagory) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(TariffCatagoryTable.TABLE_NAME,null,null);
+
+        if (tariffcatagory != null) {
+            for (TarifCatagory tariffcata : tariffcatagory) {
+                ContentValues values = getContentValuesTariffCatagoryTable(context,tariffcata);
+                savetariffctagory(context, TariffCatagoryTable.CONTENT_URI, values, null);
+
+            }
+
+        }
+    }
+    public static void saveTariffEnergyCharge(Context context, ArrayList<TariffEnergyCharge> tariffenergycharge) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(TariffEnergyChargeTable.TABLE_NAME,null,null);
+        if (tariffenergycharge != null) {
+            for (TariffEnergyCharge tariffenergychg : tariffenergycharge) {
+                ContentValues values = getContentValuesTariffEnergyChargeTable(context, tariffenergychg);
+                savetariffenergycharge(context, TariffEnergyChargeTable.CONTENT_URI, values, null);
+            }
+        }
+    }
+
+
+
+
+
     public static void saveComplaint(Context context, Complaints complaint) {
         if (complaint != null) {
             ContentValues values = getContentValuesComplaintsTable(context, complaint);
@@ -80,12 +114,20 @@ public class DatabaseManager {
         }
     }
 
-    public static void saveFAQ(Context context, Faq faq) {
+    public static void saveFAQ(Context context, ArrayList<Faq> faq) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(FAQTable.TABLE_NAME,null,null);
         if (faq != null) {
-            ContentValues values = getContentValuesFAQTable(context, faq);
-            //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
-            saveFAQ(context, FAQTable.CONTENT_URI, values, null);
+            for (Faq faq1 : faq) {
+
+                ContentValues values = getContentValuesFAQTable(context, faq1);
+
+                //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
+                saveFAQ(context, FAQTable.CONTENT_URI, values, null);
+            }
         }
+
     }
 
     public static void saveTips(Context context, Tips tips) {
@@ -187,6 +229,26 @@ public class DatabaseManager {
         Log.i("Tag", "savecontactdetail:" + newRowId);
     }
 
+    private static void savetariffctagory(Context context, Uri table, ContentValues values, String condition) {
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(TariffCatagoryTable.TABLE_NAME, null, values);
+        Log.i("Tag", "savecontactdetail:" + newRowId);
+    }
+
+    private static void savetariffenergycharge(Context context, Uri table, ContentValues values, String condition) {
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(TariffEnergyChargeTable.TABLE_NAME, null, values);
+        // Log.i("Tag", "saveAboutUs:" + newRowId);
+        Log.i("Tag", "savecontactdetail:" + newRowId);
+    }
+
+
 
     private static void savecomplaint(Context context, Uri table, ContentValues values, String condition) {
 
@@ -261,6 +323,29 @@ public class DatabaseManager {
         return values;
     }
 
+    private static ContentValues getContentValuesTariffCatagoryTable(Context context, TarifCatagory tariffcatagory) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(TariffCatagoryTable.Cols.TARIFF_CHARGE, String.valueOf(tariffcatagory.charge));
+            values.put(TariffCatagoryTable.Cols.TARIFF_SLAB, String.valueOf(tariffcatagory.slab));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
+    private static ContentValues getContentValuesTariffEnergyChargeTable(Context context, TariffEnergyCharge tariffenergycharge) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(TariffEnergyChargeTable.Cols.TARIFF_CHARGE,tariffenergycharge.charge);
+            values.put(TariffEnergyChargeTable.Cols.TARIFF_SLAB, tariffenergycharge.slab);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
 
     private static ContentValues getContentValuesComplaintsTable(Context context, Complaints complaints) {
         ContentValues values = new ContentValues();
@@ -280,8 +365,8 @@ public class DatabaseManager {
     private static ContentValues getContentValuesFAQTable(Context context, Faq faq) {
         ContentValues values = new ContentValues();
         try {
-            values.put(FAQTable.Cols.FAQ_QUESTION, faq.question);
-            values.put(FAQTable.Cols.FAQ_ANSWER, faq.answer);
+            values.put(FAQTable.Cols.FAQ_QUESTION, String.valueOf(faq.question));
+            values.put(FAQTable.Cols.FAQ_ANSWER, String.valueOf(faq.answer));
 //            values.put(FAQTable.Cols.FAQ_QUESTION, String.valueOf(faq.arrayquestion));
 //            values.put(FAQTable.Cols.FAQ_ANSWER, String.valueOf(faq.arrayanswer));
 
@@ -350,24 +435,72 @@ public class DatabaseManager {
 
     }
 
-    public static Faq getFaq(Context context) {
+    public static ArrayList<TarifCatagory>getTariffCatagory(Context context) {
 
-        Faq faq = new Faq();
+        TarifCatagory tariffcata = new TarifCatagory();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " +TariffCatagoryTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<TarifCatagory>arraytraiffcata=new ArrayList<TarifCatagory>();
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+            TarifCatagory traiffcata = new TarifCatagory();
+            traiffcata.charge = cursor.getString(cursor.getColumnIndex("traiff_charge"));
+            traiffcata.slab = cursor.getString(cursor.getColumnIndex("traiff_slab"));
+            Log.i("Tag", "valueselectdb" + cursor);
+            arraytraiffcata.add(traiffcata);
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return arraytraiffcata;
+
+
+    }
+
+    public static ArrayList<TariffEnergyCharge> getTariffEnergyCharge(Context context) {
+
+        TariffEnergyCharge tariffenergycharge = new TariffEnergyCharge();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " +TariffEnergyChargeTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<TariffEnergyCharge>arraytraiffenergycharge=new ArrayList<TariffEnergyCharge>();
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+             TariffEnergyCharge traiffenergychg=new TariffEnergyCharge();
+            traiffenergychg.charge = cursor.getString(cursor.getColumnIndex("traiff_charge"));
+            traiffenergychg.slab = cursor.getString(cursor.getColumnIndex("traiff_slab"));
+
+            Log.i("Tag", "valueselectdb" + cursor);
+            arraytraiffenergycharge.add(traiffenergychg);
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return  arraytraiffenergycharge;
+
+
+    }
+
+    public static ArrayList<Faq> getFaq(Context context) {
+
+
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + FAQTable.TABLE_NAME;
         Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<Faq>arrayfaq=new ArrayList<Faq>();
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
-
-            faq.answer = (cursor.getString(cursor.getColumnIndex("faq_answer")));
-            faq.question = (cursor.getString(cursor.getColumnIndex("faq_question")));
+            Faq faq = new Faq();
+            faq.answer=(cursor.getString(cursor.getColumnIndex("faq_answer")));
+            faq.question=(cursor.getString(cursor.getColumnIndex("faq_question")));
             Log.i("Tag", "valueselectdb" + cursor);
-
+            arrayfaq.add(faq);
             //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
 
-        return faq;
+        return arrayfaq;
 
 
     }
@@ -457,7 +590,7 @@ public class DatabaseManager {
         while (cursor.moveToNext()) {
 
             // getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
-            getinfo.mobileno = cursor.getString(cursor.getColumnIndex("contact_no"));
+            getinfo.mobileno = cursor.getString(cursor.getColumnIndex("alternate_contact_no"));
             getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
             getinfo.consumername = cursor.getString(cursor.getColumnIndex("consumer_name"));
             getinfo.consumeraddress = cursor.getString(cursor.getColumnIndex("address"));
@@ -471,7 +604,54 @@ public class DatabaseManager {
 
     }
 
-    public static ContactUs getContactDetail(Context context) {
+
+    public static GetInfo updateProfile(Context context,GetInfo get1) {
+
+        GetInfo get = new GetInfo();
+//        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        db.update(ManageAccountsTable.TABLE_NAME,null,get.mobileno,null);
+        ContentValues values = getContentValuesprofileTable(context, get1);
+        saveupdated(context, ManageAccountsTable.CONTENT_URI, values, null);
+        //String updateQuery = " Update contact_no " + ManageAccountsTable.TABLE_NAME;
+//        Cursor cursor = db.rawQuery(updateQuery, null);
+//
+//        while (cursor.moveToNext()) {
+//
+//            get.mobileno=(cursor.getString(cursor.getColumnIndex("contact_no")));
+//
+//            Log.i("Tag", "valueselectdb" + cursor);
+//
+//        }
+
+        return get;
+
+
+    }
+
+    private static void saveupdated(Context context, Uri table, ContentValues values, String condition) {
+
+        GetInfo get=new GetInfo();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        db.update(ManageAccountsTable.TABLE_NAME, values, get.mobileno, null);
+    }
+
+    private static ContentValues getContentValuesprofileTable(Context context, GetInfo get) {
+        ContentValues values = new ContentValues();
+        try {
+            // values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
+            values.put(ManageAccountsTable.Cols.CONTACT_NO, get.mobileno);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
+
+
+    public  static ContactUs getContactDetail(Context context){
 
         ContactUs contactus = new ContactUs();
         DatabaseHelper dbHelper = new DatabaseHelper(context);

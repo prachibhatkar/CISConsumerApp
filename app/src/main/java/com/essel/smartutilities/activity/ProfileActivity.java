@@ -169,6 +169,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             } else
                 saveDetails();
+
+
 //            expandableLayout_editProfile.collapse();
 //            expandableLayout_changepass.collapse();
         }
@@ -318,6 +320,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
+                          SharedPrefManager.saveValue(this,SharedPrefManager.EMAIL_ID,emailid.getText().toString());
+                          SharedPrefManager.saveValue(this,SharedPrefManager.ALTERNATE_MOB_NO,contactno.getText().toString());
+
+                         GetInfo get=new GetInfo();
+                         get.mobileno= contactno.getText().toString();
+                         DatabaseManager.updateProfile(this,get);
+                        // contactno.setText(get.mobileno);
                          expandableLayout_editProfile.collapse();
                         dismissDialog();
 
@@ -344,7 +353,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
@@ -367,6 +377,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
+                Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
                 dismissDialog();
                 break;
             }

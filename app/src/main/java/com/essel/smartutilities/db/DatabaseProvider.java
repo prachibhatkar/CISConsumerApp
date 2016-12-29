@@ -35,6 +35,8 @@ import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.TariffCatagoryTable;
+import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
 import com.essel.smartutilities.models.ContactUs;
 
 
@@ -98,6 +100,17 @@ public class DatabaseProvider extends ContentProvider {
                         selection, selectionArgs, sortOrder);
                 break;
             }
+            case TariffCatagoryTable.PATH_TOKEN: {
+                result = doQuery(db, uri, TariffCatagoryTable.TABLE_NAME, projection,
+                        selection, selectionArgs, sortOrder);
+                break;
+            }
+            case TariffEnergyChargeTable.PATH_TOKEN: {
+                result = doQuery(db, uri, TariffEnergyChargeTable.TABLE_NAME, projection,
+                        selection, selectionArgs, sortOrder);
+                break;
+            }
+
         }
         return result;
     }
@@ -147,6 +160,18 @@ public class DatabaseProvider extends ContentProvider {
                 break;
             }
 
+            case TariffCatagoryTable.PATH_TOKEN: {
+                result = doInsert(db, TariffCatagoryTable.TABLE_NAME,
+                        TariffCatagoryTable.CONTENT_URI, uri, values);
+                break;
+            }
+
+            case TariffEnergyChargeTable.PATH_TOKEN: {
+                result = doInsert(db, TariffEnergyChargeTable.TABLE_NAME,
+                        TariffEnergyChargeTable.CONTENT_URI, uri, values);
+                break;
+            }
+
         }
 
         if (result == null) {
@@ -184,6 +209,14 @@ public class DatabaseProvider extends ContentProvider {
             }
             case ComplaintsTable.PATH_TOKEN: {
                 table = ComplaintsTable.TABLE_NAME;
+                break;
+            }
+            case TariffCatagoryTable.PATH_TOKEN: {
+                table = TariffCatagoryTable.TABLE_NAME;
+                break;
+            }
+            case TariffEnergyChargeTable.PATH_TOKEN: {
+                table = TariffEnergyChargeTable.TABLE_NAME;
                 break;
             }
         }
@@ -241,6 +274,17 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
+
+            case TariffCatagoryTable.PATH_TOKEN: {
+                result = doDelete(db, uri, TariffCatagoryTable.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            }
+            case TariffEnergyChargeTable.PATH_TOKEN: {
+                result = doDelete(db, uri, TariffCatagoryTable.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            }
         }
 
         return result;
@@ -282,6 +326,16 @@ public class DatabaseProvider extends ContentProvider {
             }
             case ComplaintsTable.PATH_TOKEN: {
                 result = doUpdate(db, uri, ComplaintsTable.TABLE_NAME, selection,
+                        selectionArgs, values);
+                break;
+            }
+            case TariffCatagoryTable.PATH_TOKEN: {
+                result = doUpdate(db, uri, TariffCatagoryTable.TABLE_NAME, selection,
+                        selectionArgs, values);
+                break;
+            }
+            case TariffEnergyChargeTable.PATH_TOKEN: {
+                result = doUpdate(db, uri, TariffEnergyChargeTable.TABLE_NAME, selection,
                         selectionArgs, values);
                 break;
             }

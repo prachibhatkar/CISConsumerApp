@@ -34,6 +34,8 @@ import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.TariffCatagoryTable;
+import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
 import com.essel.smartutilities.db.tables.TipsTable;
 
 import java.text.MessageFormat;
@@ -72,7 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createTipsTable(db);
         createContactUsTable(db);
         createComplaintsTable(db);
-
+        createTariffTable(db);
+        createTariffEnergyChargeTable(db);
 
 
     }
@@ -155,7 +158,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ComplaintsTable.Cols.COMPLAINT_Id + " VARCHAR " ;
         createTable(db,  ComplaintsTable.TABLE_NAME, complaintsTableFields);
     }
-
+    private void createTariffTable(SQLiteDatabase db) {
+        String tariffTableFields = TariffCatagoryTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TariffCatagoryTable.Cols.TARIFF_CHARGE+ " VARCHAR, " +
+                TariffCatagoryTable.Cols.TARIFF_SLAB + " VARCHAR " ;
+        createTable(db,  TariffCatagoryTable.TABLE_NAME, tariffTableFields);
+    }
+    private void createTariffEnergyChargeTable(SQLiteDatabase db) {
+        String tariffenergychargeTableFields = TariffEnergyChargeTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TariffEnergyChargeTable.Cols.TARIFF_CHARGE+ " VARCHAR, " +
+                TariffEnergyChargeTable.Cols.TARIFF_SLAB + " VARCHAR " ;
+        createTable(db,  TariffEnergyChargeTable.TABLE_NAME,tariffenergychargeTableFields);
+    }
 
     /**
      * Drops Table from device database

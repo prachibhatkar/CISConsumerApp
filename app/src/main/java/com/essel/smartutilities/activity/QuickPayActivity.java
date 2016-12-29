@@ -1,5 +1,6 @@
 package com.essel.smartutilities.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,8 +21,15 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+
+import java.util.logging.LogRecord;
 
 /**
  * Created by hp on 11/5/2016.
@@ -37,12 +45,28 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     private String TAG = "responsedataaaaa";
     ProgressDialog pDialog;
     SoapObject responceArray;
-
+    SoapPrimitive responceArray1;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_pay);
         initialize();
     }
+
+
+
+//    Timer timer = new Timer();//Initialized
+//    timer.schedule(new QuickPayActivity() {
+//
+//        public void run(){
+//            // cancel the progress dialogue after 5 seconds
+//           pDialog.cancel();
+//            timer.cancel();
+//
+//    }5000 ,5000);
+//    }
+//
+
+
 
     private void initialize() {
         consumerno = (EditText) findViewById(R.id.Consumerno);
@@ -75,8 +99,10 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
                             pDialog.setMessage(" please wait..");
                             pDialog.show();
                         }
+
                         AsyncCallWS task = new AsyncCallWS();
                         task.execute();
+
                         //  Intent i = new Intent(this, PayNowActivity.class);
                         //  startActivity(i);
                     } else {
@@ -95,12 +121,32 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
+
         }
     }
 
     private void dismissDialog() {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
+    }
+    private void dialogtime(){
+
+
+        final Timer timer;// Declare it above
+        timer = new Timer();//Initialized
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                // cancel the progress dialogue after 5 seconds
+                pDialog.dismiss();
+
+                timer.cancel();
+            }
+        }, 30000 ,30000);
+
+        Toast.makeText(QuickPayActivity.this, "Enter Correct Consumer No.", Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -163,67 +209,13 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
             final SoapObject response = (SoapObject) soapEnvelope.getResponse();
 
-
+           //
             responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
             Log.i(TAG, "get : " + (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL"));
-            Log.i(TAG, "statusmsggggggggg : " + ((SoapObject) responceArray.getProperty(4)).getProperty("X_STATUSMESSAGE"));
-              if(responceArray==null){
+           // Log.i(TAG, "statusmsggggggggg : " + ((SoapObject) responceArray.getProperty(4)).getProperty("X_STATUSMESSAGE"));
 
-                  DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No");
-
-              }
-
-//            if (((SoapObject) soapEnvelope.bodyIn).getProperty("X_STATUS") != null) {
-//                if ((((SoapObject) soapEnvelope.bodyIn).getProperty("X_STATUS").toString().trim()).equalsIgnoreCase("E")) {
-//                    this.runOnUiThread(new Runnable() {
-//                        public void run() {
+             //dialogtime();
 //
-//                            dismissDialog();
-//                            DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No");
-//
-//                        }
-//                    });
-
-//                            String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
-//                            String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
-//                            String promptamt = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE8").toString();
-//                            String netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
-//                            String arrears = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
-//                            String consumername = ((SoapObject) responceArray.getProperty(0)).getProperty("CONSUMER_NAME").toString();
-//                            String accid = ((SoapObject) responceArray.getProperty(0)).getProperty("ACCT_ID").toString();
-//                            String promptdate = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
-//                            dismissDialog();
-//                            Intent in = new Intent(this, PayNowActivity.class);
-//                            in.putExtra("date", duedate);
-//                            in.putExtra("amt", currentamt);
-//                            in.putExtra("promtamt", promptamt);
-//                            in.putExtra("promtdate", promptdate);
-//                            in.putExtra("netbill", netbill);
-//                            in.putExtra("arrears", arrears);
-//                            in.putExtra("consumername", consumername);
-//                            in.putExtra("accid", accid);
-//                            startActivity(in);
-//                        }
-
-               // }
-
-                  //  else{
-//                    this.runOnUiThread(new Runnable() {
-//                      public void run() {
-//
-//                    dismissDialog();
-//                    DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No");
-//
-//                         }
-
-
-           // String conno = ((SoapObject) responceArray.getProperty(0)).getProperty("X_STATUSMESSAGE").toString();
-             String conno = ((SoapObject) soapEnvelope.bodyIn).getProperty("X_STATUSMESSAGE").toString();
-             String msg="BILL_DETAILS_RETRIEVED";
-            if(msg.equals(conno)){
-
-
-
 
                         String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
                         String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
@@ -246,43 +238,9 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
                         startActivity(in);
 
 
-                        //Intent in = new Intent(this, PayNowActivity.class);
-                        //in.putExtra("epuzzle", duedate);
-                        // in.putExtra("epuzzle", duedate);
-                        // startActivity(in);
-
-
-           /* for (int i = 0; i < responceArray.getPropertyCount(); i++) {
-                Object obj = responceArray.getProperty(i);
-                if (obj instanceof SoapObject) {
-                    SoapObject obj1 = (SoapObject) obj;
-//                    obj1.getProperty("BILL_MONTH").toString();
-//                    obj1.getProperty("BILL_YEAR").toString();
-
-                    Log.i(TAG, "Index =  " + i + ", month = " + obj1.getProperty("BILL_MONTH").toString() + " , year = " +
-                            obj1.getProperty("BILL_YEAR").toString());
-
-                    Log.i(TAG, "Index =  " + i + ", currentamt = " + obj1.getProperty("CURR_BILL_AMT").toString() + " , duedate = " +
-                            obj1.getProperty("DUE_DT_CASH").toString());
-
-                }
-            }*/
-
-
-                    }
-
-          //     }
-            else{
-
-                DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No");
-
-           }
-//            else{
-//                Toast.makeText(QuickPayActivity.this, "Enter Valid Consumer ID", Toast.LENGTH_LONG).show();
-//
-          //  }
 
         } catch (Exception e) {
+            dismissDialog();
             Log.i(TAG, "Errorrrrrrrrrrrrrrrrrrrrrrrrrrrr: " + e.getMessage());
 
         }

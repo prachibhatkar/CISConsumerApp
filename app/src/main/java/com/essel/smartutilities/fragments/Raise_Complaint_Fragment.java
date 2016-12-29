@@ -115,11 +115,11 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
                 if( CommonUtils.isNetworkAvaliable(getActivity())) {
 
-                    initProgressDialog();
-                    if (pDialog != null && !pDialog.isShowing()) {
-                        pDialog.setMessage(" please wait..");
-                        pDialog.show();
-                    }
+//                    initProgressDialog();
+//                    if (pDialog != null && !pDialog.isShowing()) {
+//                        pDialog.setMessage(" please wait..");
+//                        pDialog.show();
+//                    }
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
 
@@ -197,7 +197,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
          // selectcomplainttype=complainttype.getSelectedItem().toString();
           JSONObject obj = new JSONObject();
         try {
-            obj.put("complaint_type", complainttype.getSelectedItem().toString());
+            obj.put("complaint_type", complainttype.getSelectedItem());
             obj.put("consumer_remark", complaintremark);
             obj.put("complaint_img", image);
             obj.put("complaint_id", caseid);
@@ -477,7 +477,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                  if(position==1){
-                     casetype="Mannual Bill Adjustment";
+                     casetype="Meter Testing";
                  }
                 if(position==2){
                     casetype="No Power Complaints";

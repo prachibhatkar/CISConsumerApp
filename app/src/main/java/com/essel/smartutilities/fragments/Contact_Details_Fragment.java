@@ -192,7 +192,7 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
                             tv_igrcno.setText(jsonResponse.contactus.igrc_no);
                             tv_igrcemail.setText(jsonResponse.contactus.igrc_email);
                             tv_onlinecomplaintno.setText(jsonResponse.contactus.online_complaint);
-
+                            SharedPrefManager.saveValue(getActivity(),SharedPrefManager.HELPLINENO,tv_helplineno.getText().toString());
                             ContactUs contactus=new ContactUs();
                             contactus.helpline_number=jsonResponse.contactus.helpline_number;
                             contactus.anti_bribery_help=jsonResponse.contactus.anti_bribery_help;

@@ -18,8 +18,11 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
+import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.JsonResponse;
+import com.essel.smartutilities.models.TarifCatagory;
 import com.essel.smartutilities.models.Tariff;
+import com.essel.smartutilities.models.TariffEnergyCharge;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
@@ -79,9 +82,41 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
             JsonObjectRequest request = WebRequests.getTariff(this, Request.Method.GET, AppConstants.URL_GET_TARIFF, AppConstants.REQUEST_TARIFF,
                     this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_TARIFF);
-        }else
-            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection", Toast.LENGTH_SHORT).show();
+        }else {
 
+            TarifCatagory tariffcata=new TarifCatagory();
+            ArrayList<TarifCatagory>arraytraiffcata=new ArrayList<TarifCatagory>();
+            arraytraiffcata = DatabaseManager.getTariffCatagory(this);
+            for(int i=0;i< arraytraiffcata.size();i++) {
+
+                tv_bplcatagory1.setText(arraytraiffcata.get(0).charge);
+                tv_fixedcharge.setText(arraytraiffcata.get(0).slab);
+
+                tv_bplcatagory2.setText(arraytraiffcata.get(1).charge);
+                tv_energycharge.setText(arraytraiffcata.get(1).slab);
+
+            }
+
+            TariffEnergyCharge traiffenergycharge=new TariffEnergyCharge();
+            ArrayList<TariffEnergyCharge>traiffenergy=new ArrayList<TariffEnergyCharge>();
+            traiffenergy=DatabaseManager.getTariffEnergyCharge(this);
+            for(int i=0;i< traiffenergy.size();i++) {
+                tv_energycharge1.setText(traiffenergy.get(0).charge);
+                tv_100units.setText(traiffenergy.get(0).slab);
+
+                tv_energycharge2.setText(traiffenergy.get(1).charge);
+                tv_300unoits.setText(traiffenergy.get(1).slab);
+
+
+                tv_energycharge3.setText(traiffenergy.get(2).charge);
+                tv_500units.setText(traiffenergy.get(2).slab);
+
+
+                tv_energycharge4.setText(traiffenergy.get(3).charge);
+                tv_1000units.setText(traiffenergy.get(3).slab);
+            }
+            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
 
 
@@ -129,7 +164,22 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                                 tv_energycharge.setText(jsonResponse.tariff.tariffCategory.get(1).slab.toString().trim());
                                 Log.i(label, "Tariffsucccccc:" + jsonResponse.tariffCategory);
 
+                                TarifCatagory tariff1=new TarifCatagory();
+
+
+
+//                                tariff1.charge=jsonResponse.tariff.tariffCategory.get(0).charge.toString().trim();
+//                                tariff1.slab=jsonResponse.tariff.tariffCategory.get(0).slab.toString().trim();
+//
+//                                tariff1.charge=jsonResponse.tariff.tariffCategory.get(1).charge.toString().trim();
+//                                tariff1.slab=jsonResponse.tariff.tariffCategory.get(1).slab.toString().trim();
+
+
+
                             }
+
+                            DatabaseManager.saveTariffCatagory(this,jsonResponse.tariff.tariffCategory);
+
                            for (int i = 1; i <=jsonResponse.tariff.tariffEnergyCharge.size(); i++) {
 
                                 tv_energycharge1.setText(jsonResponse.tariff.tariffEnergyCharge.get(0).charge.toString().trim());
@@ -147,7 +197,24 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                                 tv_1000units.setText(jsonResponse.tariff.tariffEnergyCharge.get(3).slab.toString().trim());
                                 Log.i(label, "Tariffsucccccc:" + jsonResponse.tariffEnergyCharge);
 
-                            }
+                               TariffEnergyCharge tariffenergycharge= new TariffEnergyCharge();
+
+//                               tariffenergycharge.charge=jsonResponse.tariff.tariffEnergyCharge.get(0).charge.toString().trim();
+//                               tariffenergycharge.slab=jsonResponse.tariff.tariffEnergyCharge.get(0).slab.toString().trim();
+//
+//                               tariffenergycharge.charge1=jsonResponse.tariff.tariffEnergyCharge.get(1).charge.toString().trim();
+//                               tariffenergycharge.slab1=jsonResponse.tariff.tariffEnergyCharge.get(1).slab.toString().trim();
+//
+//                               tariffenergycharge.charge2=jsonResponse.tariff.tariffEnergyCharge.get(2).charge.toString().trim();
+//                               tariffenergycharge.slab2=jsonResponse.tariff.tariffEnergyCharge.get(2).slab.toString().trim();
+//
+//                               tariffenergycharge.charge3=jsonResponse.tariff.tariffEnergyCharge.get(3).charge.toString().trim();
+//                               tariffenergycharge.slab3=jsonResponse.tariff.tariffEnergyCharge.get(3).slab.toString().trim();
+
+
+
+                           }
+                            DatabaseManager.saveTariffEnergyCharge(this,jsonResponse.tariff.tariffEnergyCharge);
 
                             for (int i = 1; i <=jsonResponse.tariff.fixedEnergyCharge.size(); i++) {
 
