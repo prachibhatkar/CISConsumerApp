@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.FixedEnergyCharge;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.models.TarifCatagory;
 import com.essel.smartutilities.models.Tariff;
@@ -115,6 +116,17 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                 tv_energycharge4.setText(traiffenergy.get(3).charge);
                 tv_1000units.setText(traiffenergy.get(3).slab);
             }
+
+           FixedEnergyCharge fixedenergycharge=new FixedEnergyCharge();
+            ArrayList<FixedEnergyCharge>fixedcharge=new ArrayList<FixedEnergyCharge>();
+            fixedcharge=DatabaseManager.getTariffFixedEnergyCharge(this);
+            for(int i=0;i< fixedcharge.size();i++) {
+                tv_singlephase.setText(fixedcharge.get(0).slab);
+                tv_singlephase_rs.setText(fixedcharge.get(0).charge);
+
+                tv_threephase.setText(fixedcharge.get(1).slab);
+                tv_threephase_rs.setText(fixedcharge.get(1).charge);
+            }
             Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
@@ -197,7 +209,7 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                                 tv_1000units.setText(jsonResponse.tariff.tariffEnergyCharge.get(3).slab.toString().trim());
                                 Log.i(label, "Tariffsucccccc:" + jsonResponse.tariffEnergyCharge);
 
-                               TariffEnergyCharge tariffenergycharge= new TariffEnergyCharge();
+                                  TariffEnergyCharge tariffenergycharge= new TariffEnergyCharge();
 
 //                               tariffenergycharge.charge=jsonResponse.tariff.tariffEnergyCharge.get(0).charge.toString().trim();
 //                               tariffenergycharge.slab=jsonResponse.tariff.tariffEnergyCharge.get(0).slab.toString().trim();
@@ -229,6 +241,9 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
                                 Log.i(label, "Tariffsucccccc:" + jsonResponse.fixedEnergyCharge);
 
                             }
+
+                            DatabaseManager.saveFixedEnergyCharge(this,jsonResponse.tariff.fixedEnergyCharge);
+
                         }
                         if (jsonResponse.authorization != null) {
                             dismissDialog();

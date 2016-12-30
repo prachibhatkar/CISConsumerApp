@@ -197,7 +197,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
          // selectcomplainttype=complainttype.getSelectedItem().toString();
           JSONObject obj = new JSONObject();
         try {
-            obj.put("complaint_type", complainttype.getSelectedItem());
+            obj.put("complaint_type", complainttype.getSelectedItemPosition());
             obj.put("consumer_remark", complaintremark);
             obj.put("complaint_img", image);
             obj.put("complaint_id", caseid);

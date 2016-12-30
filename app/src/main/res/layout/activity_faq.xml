@@ -89,8 +89,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:lines="50"
-                            android:maxLines="50"
+                            android:layout_weight="1"
+                            android:lines="10"
                             android:singleLine="false"
                             android:text=" New Service Connection" />
 
@@ -134,7 +134,7 @@
                             android:id="@+id/tv_changeofownership"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:lines="10"
+                            android:lines="20"
                             android:text="Change of OwnerShip" />
 
 
@@ -178,7 +178,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:maxLines="20"
-                            android:lines="30"
+                            android:lines="20"
                             android:text=" "
                             android:singleLine="false"/>
 
@@ -219,7 +219,7 @@
                                 android:id="@+id/tv_loadextensionreduction"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:lines="50"
+                                android:lines="20"
                                 android:text=" Load Extension Reduction" />
 
 
@@ -261,7 +261,7 @@
                                 android:id="@+id/tv_permanantdisconnect"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:lines="50"
+                                android:lines="20"
                                 android:text=" Permanant Disconnection" />
 
 
@@ -303,7 +303,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:lines="50"
+                            android:lines="20"
                             android:maxLines="10"
                             android:singleLine="false"
                             android:text=" New Service Connection" />
@@ -346,7 +346,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textMultiLine"
-                                android:lines="50"
+                                android:lines="20"
                                 android:maxLines="10"
                                 android:singleLine="false"
                                 android:text=" New Service Connection" />
@@ -388,7 +388,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textMultiLine"
-                                android:lines="50"
+                                android:lines="20"
                                 android:maxLines="10"
                                 android:singleLine="false"
                                 android:text=" New Service Connection" />
@@ -430,7 +430,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textMultiLine"
-                                android:lines="50"
+                                android:lines="20"
                                 android:maxLines="10"
                                 android:singleLine="false"
                                 android:text=" New Service Connection" />
@@ -474,7 +474,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textMultiLine"
-                                android:lines="30"
+                                android:lines="20"
                                 android:maxLines="10"
                                 android:singleLine="false"
                                 android:text=" New Service Connection" />

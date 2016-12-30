@@ -38,12 +38,14 @@ import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 import com.essel.smartutilities.db.tables.TariffCatagoryTable;
 import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
+import com.essel.smartutilities.db.tables.TariffFixedEnergyChargeTable;
 import com.essel.smartutilities.db.tables.TipsTable;
 import com.essel.smartutilities.models.AboutUs;
 import com.essel.smartutilities.models.Complaints;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.Faq;
+import com.essel.smartutilities.models.FixedEnergyCharge;
 import com.essel.smartutilities.models.GetInfo;
 import com.essel.smartutilities.models.TarifCatagory;
 import com.essel.smartutilities.models.TariffEnergyCharge;
@@ -101,7 +103,17 @@ public class DatabaseManager {
             }
         }
     }
-
+    public static void saveFixedEnergyCharge(Context context, ArrayList<FixedEnergyCharge> fixedenergycharge) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(TariffFixedEnergyChargeTable.TABLE_NAME,null,null);
+        if (fixedenergycharge != null) {
+            for (FixedEnergyCharge tarifffixedenergychg : fixedenergycharge) {
+                ContentValues values = getContentValuesTariffFixedEnergyChargeTable(context,tarifffixedenergychg);
+                savetarifffixedenergycharge(context, TariffFixedEnergyChargeTable.CONTENT_URI, values, null);
+            }
+        }
+    }
 
 
 
@@ -130,11 +142,16 @@ public class DatabaseManager {
 
     }
 
-    public static void saveTips(Context context, Tips tips) {
+    public static void saveTips(Context context, ArrayList<Tips> tips) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(TipsTable.TABLE_NAME,null,null);
         if (tips != null) {
-            ContentValues values = getContentValuesTipsTable(context, tips);
-            //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
-            saveTips(context, TipsTable.CONTENT_URI, values, null);
+            for (Tips tip : tips) {
+                ContentValues values = getContentValuesTipsTable(context, tip);
+                //String condition = AboutUsTable.Cols.ID + "='" + aboutUs.id + "'";
+                saveTips(context, TipsTable.CONTENT_URI, values, null);
+            }
         }
     }
 
@@ -247,7 +264,15 @@ public class DatabaseManager {
         // Log.i("Tag", "saveAboutUs:" + newRowId);
         Log.i("Tag", "savecontactdetail:" + newRowId);
     }
+    private static void savetarifffixedenergycharge(Context context, Uri table, ContentValues values, String condition) {
 
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(TariffFixedEnergyChargeTable.TABLE_NAME, null, values);
+        // Log.i("Tag", "saveAboutUs:" + newRowId);
+        Log.i("Tag", "savecontactdetail:" + newRowId);
+    }
 
 
     private static void savecomplaint(Context context, Uri table, ContentValues values, String condition) {
@@ -347,6 +372,19 @@ public class DatabaseManager {
         return values;
     }
 
+
+    private static ContentValues getContentValuesTariffFixedEnergyChargeTable(Context context, FixedEnergyCharge fixedenergy) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(TariffFixedEnergyChargeTable.Cols.TARIFF_CHARGE,fixedenergy.charge);
+            values.put(TariffFixedEnergyChargeTable.Cols.TARIFF_SLAB, fixedenergy.slab);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+
     private static ContentValues getContentValuesComplaintsTable(Context context, Complaints complaints) {
         ContentValues values = new ContentValues();
         try {
@@ -379,7 +417,7 @@ public class DatabaseManager {
     private static ContentValues getContentValuesTipsTable(Context context, Tips tips) {
         ContentValues values = new ContentValues();
         try {
-            // values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
+             values.put(TipsTable.Cols.TIPS_IMAGE, tips.image);
             values.put(TipsTable.Cols.TIPS_MESSAGE, tips.message);
 
         } catch (Exception e) {
@@ -468,7 +506,7 @@ public class DatabaseManager {
         ArrayList<TariffEnergyCharge>arraytraiffenergycharge=new ArrayList<TariffEnergyCharge>();
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
-             TariffEnergyCharge traiffenergychg=new TariffEnergyCharge();
+            TariffEnergyCharge traiffenergychg=new TariffEnergyCharge();
             traiffenergychg.charge = cursor.getString(cursor.getColumnIndex("traiff_charge"));
             traiffenergychg.slab = cursor.getString(cursor.getColumnIndex("traiff_slab"));
 
@@ -478,6 +516,31 @@ public class DatabaseManager {
         }
 
         return  arraytraiffenergycharge;
+
+
+    }
+
+
+    public static ArrayList<FixedEnergyCharge> getTariffFixedEnergyCharge(Context context) {
+
+       FixedEnergyCharge fixedEnergyCharge = new FixedEnergyCharge();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " +TariffFixedEnergyChargeTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<FixedEnergyCharge>arraytraifffixedenergycharge=new ArrayList<FixedEnergyCharge>();
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+           FixedEnergyCharge fixedenergycharge=new FixedEnergyCharge();
+            fixedenergycharge.charge = cursor.getString(cursor.getColumnIndex("traiff_charge"));
+            fixedenergycharge.slab = cursor.getString(cursor.getColumnIndex("traiff_slab"));
+
+            Log.i("Tag", "valueselectdb" + cursor);
+            arraytraifffixedenergycharge.add(fixedenergycharge);
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return  arraytraifffixedenergycharge;
 
 
     }
@@ -504,7 +567,28 @@ public class DatabaseManager {
 
 
     }
+    public static ArrayList<Tips> getTips(Context context) {
 
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TipsTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<Tips>arraytip=new ArrayList<Tips>();
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+            Tips tip1 = new Tips();
+            tip1.image=(cursor.getString(cursor.getColumnIndex("tips_image")));
+            tip1.message=(cursor.getString(cursor.getColumnIndex("tips_message")));
+            Log.i("Tag", "valueselectdb" + cursor);
+            arraytip.add(tip1);
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return arraytip;
+
+
+    }
 
     public static ContactUs contactUs(Context context) {
 
@@ -533,26 +617,7 @@ public class DatabaseManager {
 
     }
 
-    public static Tips getTips(Context context) {
 
-        Tips tips = new Tips();
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + TipsTable.TABLE_NAME;
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
-        while (cursor.moveToNext()) {
-
-            tips.message = cursor.getString(cursor.getColumnIndex("tips_message"));
-            Log.i("Tag", "valueselectdb" + cursor);
-
-            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
-        }
-
-        return tips;
-
-
-    }
 
     public static GetInfo getinfo(Context context, String consumerno) {
 

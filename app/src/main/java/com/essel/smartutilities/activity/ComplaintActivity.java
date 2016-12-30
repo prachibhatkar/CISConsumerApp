@@ -15,13 +15,13 @@ import android.widget.ImageView;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ComplaintAdapter;
 
-public class ComplaintActivity extends AppCompatActivity {
+public class ComplaintActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager vp_complaint_pager;
     private TabLayout tablayout;
     private ComplaintAdapter complaintAdapter;
     private Context mContext;
     Toolbar mToolbar;
-
+    ImageView imgBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +29,11 @@ public class ComplaintActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//               Intent in=new Intent(this,ActivityLoginLanding.class);
-//                startActivity(in);
-            }
-        });
+         imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack.setOnClickListener(this);
+
+
+
         setupUI();
         loadData();
 
@@ -110,4 +107,13 @@ public class ComplaintActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v==imgBack){
+
+            Intent in=new Intent(this,ActivityLoginLanding.class);
+            startActivity(in);
+        }
+
+    }
 }

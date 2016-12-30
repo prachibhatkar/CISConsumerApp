@@ -40,11 +40,15 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
         btn_locate_us=(Button)findViewById(R.id.btn_locate_us);
         Intent intent = getIntent();
          String msg = intent.getExtras().getString("msg");
-        String id = intent.getExtras().getString("id");
+         String id = intent.getExtras().getString("id");
          tv_message.setText(msg);
          tv_service_id.setText(id);
         btn_service_status_continue.setOnClickListener(this);
         btn_locate_us.setOnClickListener(this);
+
+
+
+
 
     }
 
@@ -53,6 +57,7 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
         if(v==btn_service_status_continue){
 
             Intent in = new Intent(this,ActivityLoginLanding.class);
+            in.putExtra("value",1);
             startActivity(in);
 
 
@@ -60,9 +65,12 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
         else if(v==btn_locate_us){
 
 
+//            Contact_Us_Activity.get();
 
-            Intent in = new Intent(this,Contact_Us_Activity.class);
-            startActivity(in);
+             Intent in = new Intent(this,Contact_Us_Activity.class);
+
+             startActivity(in);
+             finish();
 
 
         }

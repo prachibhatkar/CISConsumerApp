@@ -2,6 +2,7 @@ package com.essel.smartutilities.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,7 @@ import com.essel.smartutilities.webservice.WebRequests;
  * Use the {@link Contact_Details_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Contact_Details_Fragment extends Fragment implements ServiceCaller {
+public class Contact_Details_Fragment extends Fragment implements ServiceCaller,View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -103,6 +104,17 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
         tv_helplineno = (TextView) rootView.findViewById(R.id.tv_helplineno);
         tv_antiberiberyno = (TextView) rootView.findViewById(R.id.tv_antiberiberyno);
         tv_onlinecomplaintno = (TextView) rootView.findViewById(R.id.tv_onlineemail);
+
+        tv_helplineno.setOnClickListener(this);
+        tv_antiberiberyno.setOnClickListener(this);
+        tv_onlinecomplaintno.setOnClickListener(this);
+        tv_igrcno.setOnClickListener(this);
+        tv_portalsite.setOnClickListener(this);
+        tv_electricitytheftno.setOnClickListener(this);
+        tv_igrcemail.setOnClickListener(this);
+
+
+
         if (CommonUtils.isNetworkAvaliable(getActivity())) {
             initProgressDialog();
             if (pDialog != null && !pDialog.isShowing()) {
@@ -233,4 +245,67 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller 
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if(v==tv_helplineno){
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + tv_helplineno.getText().toString()));
+            startActivity(intent);
+
+        }
+        if(v==tv_antiberiberyno){
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + tv_antiberiberyno.getText().toString()));
+            startActivity(intent);
+
+
+        }
+
+        if(v==tv_igrcemail){
+//            Intent email = new Intent(android.content.Intent.ACTION_SEND);
+//            email.setType("application/octet-stream");
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/html");
+            intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            intent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+
+            startActivity(Intent.createChooser(intent, "Send Email"));
+
+        }
+
+        if(v==tv_igrcno){
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + tv_igrcno.getText().toString()));
+            startActivity(intent);
+
+
+        }
+
+        if(v==tv_portalsite){
+
+        }
+
+        if(v==tv_onlinecomplaintno){
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/html");
+            intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            intent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+
+            startActivity(Intent.createChooser(intent, "Send Email"));
+
+        }
+
+        if(v==tv_electricitytheftno){
+
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + tv_electricitytheftno.getText().toString()));
+            startActivity(intent);
+
+
+        }
+
+
+    }
 }

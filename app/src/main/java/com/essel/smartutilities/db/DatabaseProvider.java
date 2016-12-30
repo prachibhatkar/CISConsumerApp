@@ -37,6 +37,7 @@ import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 import com.essel.smartutilities.db.tables.TariffCatagoryTable;
 import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
+import com.essel.smartutilities.db.tables.TariffFixedEnergyChargeTable;
 import com.essel.smartutilities.models.ContactUs;
 
 
@@ -171,6 +172,11 @@ public class DatabaseProvider extends ContentProvider {
                         TariffEnergyChargeTable.CONTENT_URI, uri, values);
                 break;
             }
+            case TariffFixedEnergyChargeTable.PATH_TOKEN: {
+                result = doInsert(db, TariffFixedEnergyChargeTable.TABLE_NAME,
+                        TariffFixedEnergyChargeTable.CONTENT_URI, uri, values);
+                break;
+            }
 
         }
 
@@ -217,6 +223,10 @@ public class DatabaseProvider extends ContentProvider {
             }
             case TariffEnergyChargeTable.PATH_TOKEN: {
                 table = TariffEnergyChargeTable.TABLE_NAME;
+                break;
+            }
+            case TariffFixedEnergyChargeTable.PATH_TOKEN: {
+                table = TariffFixedEnergyChargeTable.TABLE_NAME;
                 break;
             }
         }
@@ -285,6 +295,11 @@ public class DatabaseProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
+            case TariffFixedEnergyChargeTable.PATH_TOKEN: {
+                result = doDelete(db, uri, TariffFixedEnergyChargeTable.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            }
         }
 
         return result;
@@ -336,6 +351,11 @@ public class DatabaseProvider extends ContentProvider {
             }
             case TariffEnergyChargeTable.PATH_TOKEN: {
                 result = doUpdate(db, uri, TariffEnergyChargeTable.TABLE_NAME, selection,
+                        selectionArgs, values);
+                break;
+            }
+            case TariffFixedEnergyChargeTable.PATH_TOKEN: {
+                result = doUpdate(db, uri, TariffFixedEnergyChargeTable.TABLE_NAME, selection,
                         selectionArgs, values);
                 break;
             }

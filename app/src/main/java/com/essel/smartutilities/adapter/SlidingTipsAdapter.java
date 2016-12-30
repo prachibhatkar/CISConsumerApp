@@ -63,7 +63,7 @@ public class SlidingTipsAdapter extends PagerAdapter {
       //  imageView.setImageResource(Integer.parseInt(IMAGES.get(position)));
 
        // for(int i=0;i<tiptextdata.size();i++) {
-            textView.setText(tiptextdata.get(position));
+            textView.setText(tiptextdata.get(position).trim());
        // }
 
 

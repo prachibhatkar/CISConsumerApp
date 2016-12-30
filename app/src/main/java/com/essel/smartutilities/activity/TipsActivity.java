@@ -81,21 +81,22 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
         if (CommonUtils.isNetworkAvaliable(this)) {
             JsonObjectRequest request = WebRequests.getTips(this, Request.Method.GET, AppConstants.URL_GET_TIPS, AppConstants.REQEST_TIPS, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_TIPS);
-        } else
-        {
-             Tips tip1=new Tips();
-            tip1=DatabaseManager.getTips(this);
-            TipTextArray.add(tip1.message);
-            init();
+        } else {
+            ArrayList<Tips> arraytips = new ArrayList<Tips>();
+            arraytips = DatabaseManager.getTips(this);
+            for (int i = 0; i < arraytips.size(); i++) {
+                TipTextArray.add(arraytips.get(i).message);
+                ImagesArray.add(arraytips.get(i).image);
+                init();
+                Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
-       // init();
-       // intext();
+                // intext();
 
-     //    setupUI();
-     //    loadData();
+                //    setupUI();
+                //    loadData();
 
-    }
+            }
+        }
     }
 
    private void init() {
@@ -251,9 +252,10 @@ public class TipsActivity extends AppCompatActivity implements ServiceCaller {
 
                                // tip.text=TipTextArray;
                                 tip.message=jsonResponse.tips.get(i).message;
-                                DatabaseManager.saveTips(this,tip);
+
                                 Log.i(label, "Tipppppppppppp:" + imagesurl);
                             }
+                            DatabaseManager.saveTips(this,jsonResponse.tips);
 
                                // nv.setImageUrl(imagesurl, this.getLoaderManager());
                                /* Picasso.with(this)

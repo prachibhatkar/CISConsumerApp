@@ -21,10 +21,11 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 
 public class Contact_Us_Activity extends AppCompatActivity {
     private static boolean flag1;
-    private ViewPager vp_contact_pager;
+    private static ViewPager vp_contact_pager;
     private static TabLayout tablayout;
     private ContactUsAdapter contactUsAdapter;
     private Context mContext;
+    static int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +40,21 @@ public class Contact_Us_Activity extends AppCompatActivity {
             }
         });
         setupUI();
+
+        Intent intent = getIntent();
+        i = intent.getExtras().getInt("value");
+        vp_contact_pager.setCurrentItem(i);
+
+
         loadData();
     }
+
+//
+//    public static void get(){
+//
+//        vp_contact_pager.setCurrentItem(1);
+//
+//    }
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,8 +92,9 @@ public class Contact_Us_Activity extends AppCompatActivity {
          contactUsAdapter = new ContactUsAdapter(this, getSupportFragmentManager());
          contactUsAdapter.getItem(1);
          vp_contact_pager.setAdapter(contactUsAdapter);
-        vp_contact_pager.addOnPageChangeListener(onPageChangedListener);
-        tablayout.setupWithViewPager(vp_contact_pager);
+         vp_contact_pager.addOnPageChangeListener(onPageChangedListener);
+         tablayout.setupWithViewPager(vp_contact_pager);
+         i = tablayout.getSelectedTabPosition();
 
 
     }
@@ -108,6 +123,7 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
 
     }
+
 
 
 }

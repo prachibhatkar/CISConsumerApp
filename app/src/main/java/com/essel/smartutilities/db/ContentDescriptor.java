@@ -36,6 +36,7 @@ import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
 import com.essel.smartutilities.db.tables.TariffCatagoryTable;
 import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
+import com.essel.smartutilities.db.tables.TariffFixedEnergyChargeTable;
 import com.essel.smartutilities.db.tables.TipsTable;
 
 
@@ -65,6 +66,8 @@ public class ContentDescriptor {
         matcher.addURI(AUTHORITY, ComplaintsTable.PATH, ComplaintsTable.PATH_TOKEN);
         matcher.addURI(AUTHORITY, TariffCatagoryTable.PATH, TariffCatagoryTable.PATH_TOKEN);
         matcher.addURI(AUTHORITY, TariffEnergyChargeTable.PATH, TariffEnergyChargeTable.PATH_TOKEN);
+        matcher.addURI(AUTHORITY, TariffFixedEnergyChargeTable.PATH, TariffFixedEnergyChargeTable.PATH_TOKEN);
+
 
 
         return matcher;

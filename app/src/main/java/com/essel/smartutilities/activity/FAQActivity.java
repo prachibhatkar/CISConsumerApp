@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -152,6 +153,11 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         tv_8=(TextView)findViewById(R.id.tv_8);
         tv_9=(TextView)findViewById(R.id.tv_9);
         tv_10=(TextView)findViewById(R.id.tv_10);
+
+        tv_1.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+
 
         tvarray.add(0,tv_1);
         tvarray.add(1,tv_2);

@@ -110,14 +110,18 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if(v==btn_submit_feedback) {
+
             String feedbackremark = String.valueOf(edit_remark_feedback.getText());
             remark =edit_remark_feedback.getText().toString().trim();
-
 
             if (feedbackremark.equals("")) {
 
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
 
+            }
+            else if(count==null){
+
+                Toast.makeText(this, "Please Provide Rating.... ", Toast.LENGTH_LONG).show();
             }
 
            /* if(edit_remark_feedback.getText().length()>200){
