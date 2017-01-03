@@ -71,6 +71,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
     private ArrayList<String> arraycomplaintid;
     ProgressDialog pDialog;
     String orderid;
+    int complaintno;
 
 
     public Complaint_Status_Fragment() {
@@ -112,29 +113,35 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
         mContext = getActivity();
         initialize(rootView);
         arraycomplaintid = new ArrayList<>(12);
-        arraycomplaintid.add(0, "3653503295");
+        arraycomplaintid.add(0, "1600902224");
         complaintid = (Spinner) rootView.findViewById(R.id.sp_complaintid);
         // String[] type = mContext.getResources().getStringArray(R.array.complaintid);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arraycomplaintid);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        complaintid.setAdapter(dataAdapter);
+
+
         if (CommonUtils.isNetworkAvaliable(getActivity())) {
 
             JsonObjectRequest request = WebRequests.getComplaintID(getActivity(), Request.Method.GET, AppConstants.URL_GET_COMPLAINT_ID, AppConstants.REQUEST_GET_COMPLAINT_ID,
-                    this);
+                    this,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_COMPLAINT_ID);
         } else
             Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
-
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arraycomplaintid);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        complaintid.setAdapter(dataAdapter);
         complaintid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
                  orderid=complaintid.getSelectedItem().toString();
+                 complaintno=complaintid.getSelectedItemPosition();
+               // if (CommonUtils.isNetworkAvaliable(getActivity())&&complaintno!=0){
 
-                if (CommonUtils.isNetworkAvaliable(getActivity())) {
 
+                if (CommonUtils.isNetworkAvaliable(getActivity())){
+//                    if(complaintno==0){
+//                        Toast.makeText(getActivity(), " Please Select Complaintid ", Toast.LENGTH_SHORT).show();
+//                    }
                     initProgressDialog();
                     if (pDialog != null && !pDialog.isShowing()) {
                         pDialog.setMessage(" please wait..");

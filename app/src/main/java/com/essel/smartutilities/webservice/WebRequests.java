@@ -682,7 +682,7 @@ public class WebRequests {
 
 
 
-    public static JsonObjectRequest getComplaintID(Context context, int request_type, String url, final String label, final ServiceCaller caller) {
+    public static JsonObjectRequest getComplaintID(Context context, int request_type, String url, final String label, final ServiceCaller caller,final String token) {
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -717,7 +717,7 @@ public class WebRequests {
                 HashMap<String, String> params = new HashMap<>();
               // params.put("Content-Type", "application/json; charset=utf-8");
              //   params.put("Accept", "application/json");
-                // params.put("Authorization", token);
+                 params.put("Authorization", token);
                 return params;
             }
         };

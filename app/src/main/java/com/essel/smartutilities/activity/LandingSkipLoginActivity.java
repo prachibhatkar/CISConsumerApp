@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -242,8 +243,21 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
 
 
             androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
-
+            String msg2="anyType{}";
             final SoapObject response = (SoapObject) soapEnvelope.getResponse();
+            Log.i(TAG, "get : " + response.toString().equals(msg2));
+            if(response.toString().equals(msg2)){
+                dismissDialog();
+                this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        DialogCreator.showMessageDialog(LandingSkipLoginActivity.this, "Please Enter Valid Consumer No/Select Valid City");
+                    }
+                });
+                // DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No/Select Valid City");
+
+            }
+
+            //final SoapObject response = (SoapObject) soapEnvelope.getResponse();
 
 
 

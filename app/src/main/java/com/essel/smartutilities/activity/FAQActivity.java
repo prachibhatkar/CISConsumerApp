@@ -154,7 +154,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         tv_9=(TextView)findViewById(R.id.tv_9);
         tv_10=(TextView)findViewById(R.id.tv_10);
 
-        tv_1.setMovementMethod(LinkMovementMethod.getInstance());
+       // tv_1.setMovementMethod(LinkMovementMethod.getInstance());
 
 
 

@@ -78,14 +78,16 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     Button btn_submitcomplaint;
     String complaintremark;
     EditText complaint_remark;
-    String image;
+    String image,image1;
     Boolean flag=true;
     String caseid;
     ProgressDialog pDialog;
-    String selectcomplainttype,casetype,msg;
+    Bitmap photo;
+    String selectcomplainttype,casetype,msg,msg1;
 
     private String TAG = "responsedataaaaa";
     private ArrayList<String> complaints;
+    private Object fileUri;
 
     @Override
     public void onClick(View v) {
@@ -199,7 +201,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         try {
             obj.put("complaint_type", complainttype.getSelectedItemPosition());
             obj.put("consumer_remark", complaintremark);
-            obj.put("complaint_img", image);
+            obj.put("complaint_img",image);
             obj.put("complaint_id", caseid);
 
         } catch (JSONException e) {
@@ -261,6 +263,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
              caseid =((SoapObject) soapEnvelope.bodyIn).getProperty("caseId").toString();
             String message =((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString();
              msg="Please select Correct values";
+             msg1="This Type Of Case Already Open";
 
 
             Log.i(TAG, "caseId" +caseid);
@@ -281,9 +284,9 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             in.putExtra("message", message);
             startActivity(in);
 
-
-            if(msg.equals(message)){
-                Toast.makeText(getContext(), "jghjgjgj", Toast.LENGTH_LONG).show();
+            //||msg1.equals(message)
+            if(msg.equals(message)|| msg1.equals(message)){
+               // Toast.makeText(getContext(), "jghjgjgj", Toast.LENGTH_LONG).show();
                 flag=false;
 
             }
@@ -351,11 +354,13 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         // TODO Auto-generated method stub
 
         if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get("data");
             iv.setImageBitmap(photo);
+
             //storeCameraPhotoInSDCard(photo);
             //saveImageToStorage();
             iv.setVisibility(View.VISIBLE);
+
             image=CommonUtils.getBitmapEncodedString(photo);
             Log.i(TAG, "hygt " +  image);
 

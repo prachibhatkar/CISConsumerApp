@@ -20,61 +20,61 @@
         />
 </LinearLayout>
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="50dp"
-    android:background="@color/background"
-    android:layout_gravity="left"
-    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:background="@color/background"
+        android:layout_gravity="left"
+        android:orientation="vertical">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text=" SG10458411225"
-    android:layout_marginTop="5dp"
-    android:layout_marginLeft="5dp"
-    android:textColor="@color/colorPrimaryDarkText"
-    android:id="@+id/tv_consumerid"/>
-
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/tv_complainttype"
-    android:layout_marginLeft="5dp"
-    android:text=""
-    android:textColor="@color/colorPrimaryDarkText"/>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consumerid "
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/colorPrimaryDarkText"
+        android:id="@+id/tv_consumerid"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_complaintmsg"
+        android:id="@+id/tv_complainttype"
         android:layout_marginLeft="5dp"
-        android:text="I want to Change my Meter"
-        android:textColor="@color/colorPrimaryDarkText"
+        android:text="ComplaintType"
+        android:textColor="@color/colorPrimaryDarkText"/>
 
-        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_complaintmsg"
+            android:layout_marginLeft="5dp"
+            android:text=""
+            android:textColor="@color/colorPrimaryDarkText"
+
+            />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_complaintraised"
+            android:text=""
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/colorPrimaryDarkText"
+            />
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_complaintraised"
-        android:text="Raised On: 22 june 2016"
+        android:id="@+id/tv_complaintstatus"
+        android:text="status"
         android:layout_marginLeft="5dp"
-        android:textColor="@color/colorPrimaryDarkText"
-        />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/tv_complaintstatus"
-    android:text=""
-    android:layout_marginLeft="5dp"
-    android:textColor="@color/colorPrimaryDarkText"/>
+        android:textColor="@color/colorPrimaryDarkText"/>
 
 
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

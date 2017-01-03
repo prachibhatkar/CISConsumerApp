@@ -15,6 +15,7 @@ import com.essel.smartutilities.adapter.ContactUsAdapter;
 public class ServiceStatusActivity extends AppCompatActivity implements View.OnClickListener{
       TextView tv_message,tv_service_id,tv_time_csd_center;
       Button btn_service_status_continue,btn_locate_us;
+      static Boolean flag=false;
     private ContactUsAdapter contactUsAdapter;
 
     @Override
@@ -57,18 +58,17 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
         if(v==btn_service_status_continue){
 
             Intent in = new Intent(this,ActivityLoginLanding.class);
-            in.putExtra("value",1);
             startActivity(in);
 
 
         }
         else if(v==btn_locate_us){
 
-
+            flag=true;
 //            Contact_Us_Activity.get();
 
              Intent in = new Intent(this,Contact_Us_Activity.class);
-
+             in.putExtra("value",1);
              startActivity(in);
              finish();
 

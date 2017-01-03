@@ -25,7 +25,7 @@ public class Contact_Us_Activity extends AppCompatActivity {
     private static TabLayout tablayout;
     private ContactUsAdapter contactUsAdapter;
     private Context mContext;
-    static int i;
+    static int i,i1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +41,17 @@ public class Contact_Us_Activity extends AppCompatActivity {
         });
         setupUI();
 
-        Intent intent = getIntent();
-        i = intent.getExtras().getInt("value");
-        vp_contact_pager.setCurrentItem(i);
-
-
         loadData();
-    }
+
+        if(ServiceStatusActivity.flag==true) {
+            Intent intent = getIntent();
+            i = intent.getExtras().getInt("value");
+            vp_contact_pager.setCurrentItem(1);
+            ServiceStatusActivity.flag=false;
+
+        }
+
+        }
 
 //
 //    public static void get(){
@@ -61,6 +65,10 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_right_call, menu);
+//        if(i1==1){
+//
+//            getMenuInflater().inflate(R.menu.top_right_faq, menu);
+//        }
         return true;
     }
 
@@ -73,6 +81,7 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_call) {
+
             String phnno=(SharedPrefManager.getStringValue(this, SharedPrefManager.HELPLINENO)).toString();
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + phnno));
@@ -94,7 +103,8 @@ public class Contact_Us_Activity extends AppCompatActivity {
          vp_contact_pager.setAdapter(contactUsAdapter);
          vp_contact_pager.addOnPageChangeListener(onPageChangedListener);
          tablayout.setupWithViewPager(vp_contact_pager);
-         i = tablayout.getSelectedTabPosition();
+         //i1=tablayout.getSelectedTabPosition();
+
 
 
     }

@@ -44,7 +44,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     String consumer_number;
     private String TAG = "responsedataaaaa";
     ProgressDialog pDialog;
-    SoapObject responceArray;
+    SoapObject responceArray,a11;
     SoapPrimitive responceArray1;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +145,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
             }
         }, 30000 ,30000);
 
-        Toast.makeText(QuickPayActivity.this, "Enter Correct Consumer No.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Enter Correct Consumer No.", Toast.LENGTH_LONG).show();
 
     }
 
@@ -206,11 +206,23 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
 
             androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
-
+            String msg2="anyType{}";
             final SoapObject response = (SoapObject) soapEnvelope.getResponse();
+            Log.i(TAG, "get : " + response.toString().equals(msg2));
+             if(response.toString().equals(msg2)){
+                dismissDialog();
+                 this.runOnUiThread(new Runnable() {
+                     public void run() {
+                         DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No/Select Valid City");
+                     }
+                 });
+                // DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No/Select Valid City");
 
+             }
            //
             responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
+          //  a11 = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_STATUSMESSAGE");
+
             Log.i(TAG, "get : " + (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL"));
            // Log.i(TAG, "statusmsggggggggg : " + ((SoapObject) responceArray.getProperty(4)).getProperty("X_STATUSMESSAGE"));
 
@@ -241,6 +253,7 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
 
         } catch (Exception e) {
             dismissDialog();
+          //  Toast.makeText(QuickPayActivity.this, "Enter Valid Consumer No.", Toast.LENGTH_LONG).show();
             Log.i(TAG, "Errorrrrrrrrrrrrrrrrrrrrrrrrrrrr: " + e.getMessage());
 
         }
