@@ -74,16 +74,15 @@
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:layout_weight="1"
-                    android:text="Month" />
+                    android:text="Bill Month" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
                     android:layout_marginLeft="10dp"
-
                     android:layout_weight="1"
-                    android:text="Date" />
+                    android:text="Payment Date" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,14 +90,13 @@
                     android:layout_column="3"
                     android:layout_weight="1"
 
-                    android:text="Consumtion" />
+                    android:text="Units Consumed" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="4"
                     android:layout_weight="1"
-
                     android:text="Bill Amount" />
 
                 <TextView
@@ -106,9 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="5"
                     android:layout_weight="1"
-
-
-                    android:text="Download" />
+                    android:text="                      " />
 
             </TableRow>
 
@@ -126,7 +122,6 @@
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:layout_weight="1"
-
                     android:text="Jan" />
 
                 <TextView
@@ -135,8 +130,6 @@
                     android:layout_height="wrap_content"
                     android:layout_column="2"
                     android:layout_weight="1"
-
-
                     android:text="12 jan" />
 
                 <TextView
@@ -145,7 +138,6 @@
                     android:layout_height="wrap_content"
                     android:layout_column="3"
                     android:layout_gravity="center_horizontal"
-
                     android:layout_weight="1"
                     android:text="250" />
 
@@ -155,17 +147,14 @@
                     android:layout_height="wrap_content"
                     android:layout_column="4"
                     android:layout_weight="1"
-
                     android:text="500" />
 
                 <ImageView
                     android:id="@+id/download1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
                     android:layout_column="5"
-
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:background="@android:drawable/ic_menu_save" />
             </TableRow>
 
@@ -216,8 +205,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_column="5"
-
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:background="@android:drawable/ic_menu_save" />
             </TableRow>
 
@@ -270,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="5"
 
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:background="@android:drawable/ic_menu_save" />
             </TableRow>
 
@@ -322,7 +310,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_column="5"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
 
                     android:background="@android:drawable/ic_menu_save" />
             </TableRow>
@@ -375,7 +363,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_column="5"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
 
                     android:background="@android:drawable/ic_menu_save" />
             </TableRow>
@@ -427,7 +415,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_column="5"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:background="@android:drawable/ic_menu_save" />
             </TableRow>
 

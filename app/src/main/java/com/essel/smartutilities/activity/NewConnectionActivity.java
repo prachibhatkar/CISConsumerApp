@@ -107,14 +107,14 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
         String email = editTextEmailId.getText().toString().trim();
         if (!fullname.isEmpty() && fullname.toString().length() <= 40) {
             if (!address1.isEmpty() && fullname.toString().length() <= 150) {
-                if (!address2.isEmpty() && fullname.toString().length() <= 150) {
+                if ( fullname.toString().length() <= 150) {
                     if (phoneno.length() == 10) {
                         if ((editTextConsumerId.getText().toString().trim().length() >= 10 &&
                                 editTextConsumerId.getText().toString().trim().length() <= 20) ||
                                 editTextConsumerId.getText().toString().trim().length() == 0) {
                             if ((editTextpoleno.getText().toString().trim().length() >= 5 &&
                                     editTextpoleno.getText().toString().trim().length() <= 20) ||
-                                    editTextConsumerId.getText().toString().trim().length() == 0) {
+                                    editTextpoleno.getText().toString().trim().length() == 0) {
                                 if (email.length() != 0 && CommonUtils.emailValidator(email)) {
                                     if (connectiontype.getSelectedItemPosition() != 0) {
                                         flag = true;

@@ -100,6 +100,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onBackPressed();
                 finish();
             }
         });
@@ -149,7 +150,7 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(this, LoginActivity.class);
+        Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
     }
 

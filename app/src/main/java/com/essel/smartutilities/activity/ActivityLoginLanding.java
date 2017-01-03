@@ -227,8 +227,12 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_mybill:
-                Intent i = new Intent(this, MyBillActivity.class);
-                startActivity(i);
+                if (CommonUtils.isNetworkAvaliable(this)) {
+                    Intent i = new Intent(this, MyBillActivity.class);
+                    startActivity(i);
+                } else
+                    Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+
                 break;
             case R.id.btn_paynow:
                 callPayNow();
@@ -342,7 +346,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             public void run() {
                 handler.post(Update);
             }
-        }, 4000, 4000);
+        }, 6000, 6000);
 
         // Pager listener over indicator
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

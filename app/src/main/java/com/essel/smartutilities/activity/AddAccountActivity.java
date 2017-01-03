@@ -79,8 +79,6 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.BTNNext:
                 validate();
-//                Intent i = new Intent(this, AddAccountActivity2.class);
-//                startActivity(i);
                 break;
         }
     }

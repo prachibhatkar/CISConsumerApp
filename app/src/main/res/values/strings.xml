@@ -229,7 +229,7 @@
     <string name="login_error_101">Consumer No. and Password Not Matched</string>
     <string name="login_error_null">Please Contact To Server Admin</string>
     <string name="er_data_not_avaliable">Data Not Avaliable</string>
-    <string name="error_internet_not_connected">Please Check Internet Connection</string>
+    <string name="error_internet_not_connected">Please Check Internet Connection and Try Again</string>
     <string name="title_activity_add_account2">AddAccountActivity2</string>
 
 

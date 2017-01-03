@@ -5,10 +5,10 @@ public class AppConstants {
 
 //    public static final String BASE_URL = "http://192.168.10.109:9999/mobileapi/";
    //   public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
-    public static final String BASE_URL = "http://192.168.0.4:8000/mobileapi/";
+    public static final String BASE_URL = "http://192.168.0.3:8000/mobileapi/";
 //      public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
-
+ // public static final String BASE_URL = " http://192.168.0.29:8000/mobileapi/";
     public static final String REQUEST_LOGIN = "login/";
     public static final String URL_LOGIN = BASE_URL + REQUEST_LOGIN;
 
@@ -101,7 +101,7 @@ public class AppConstants {
 
     public static String CONSUMER_ID = "consumer_id";
     public static String CONSUMER_PASSWORD = "password";
-//    public static String CONSUMER_LOGGED ="false" ;
+    //    public static String CONSUMER_LOGGED ="false" ;
     public static final int ALL_PERMISSIONS_RESULT = 107;
 
     public static String CONSUMER_NAME = "consumer_name";

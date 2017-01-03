@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (v == btnLogin) {
             performLogin();
-         // Intent i = new Intent(this, ActivityLoginLanding.class);
-          //  startActivity(i);
+            // Intent i = new Intent(this, ActivityLoginLanding.class);
+            //  startActivity(i);
 //            ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
 //            DatabaseManager.saveLoginDetails(this,consumers.get(3));
 
@@ -166,9 +166,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             dismissDialog();
                             CommonUtils.saveDetails(this, jsonResponse.user_info.consumer_no, jsonResponse.user_info.consumer_name,
                                     jsonResponse.user_info.city);
-                            SharedPrefManager.saveValue(this,SharedPrefManager.ADDRESS1,jsonResponse.user_info.address);
-                            SharedPrefManager.saveValue(this,SharedPrefManager.EMAIL_ID,jsonResponse.user_info.alternet_email_id);
-                            SharedPrefManager.saveValue(this,SharedPrefManager.MOBILE,jsonResponse.user_info.contact_no);
+                            SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, jsonResponse.user_info.address);
+                            SharedPrefManager.saveValue(this, SharedPrefManager.EMAIL_ID, jsonResponse.user_info.alternet_email_id);
+                            SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.user_info.contact_no);
 
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                             SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "true");
@@ -187,7 +187,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             break;
 
         }
-        dismissDialog(); 
+        dismissDialog();
     }
 
     public void onAsyncFail(String messages, String label, NetworkResponse response) {
@@ -198,14 +198,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (res != null) {
                         Gson gson = new Gson();
                         JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-                        if(jsonResponse.message!=null)
-                            DialogCreator.showMessageDialog(this,jsonResponse.message);
-//                        DialogCreator.showMessageDialog(this,jsonResponse.message);
-//                        if (jsonResponse.error_code.equals("101")) {
-//                            DialogCreator.showMessageDialog(this, getString(R.string.login_error_101));
-//                        } else if (jsonResponse.error_code.equals("102")) {
-//                            DialogCreator.showMessageDialog(this, getString(R.string.login_error_102));
-//                        }
+                        if (jsonResponse.message != null)
+                            DialogCreator.showMessageDialog(this, jsonResponse.message);
                     }
                 } catch (Exception e) {
                     DialogCreator.showMessageDialog(this, getString(R.string.login_error_null));

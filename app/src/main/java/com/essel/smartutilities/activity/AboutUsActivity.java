@@ -2,8 +2,6 @@ package com.essel.smartutilities.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -26,7 +24,6 @@ import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
-import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
 public class AboutUsActivity extends AppCompatActivity implements ServiceCaller {
@@ -53,8 +50,6 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
         tv_aboutus_message=(TextView)findViewById(R.id.textview_about_us);
         AboutUs aboutUs=new AboutUs();
-       // String aboutus="ghjjkhkjhkl";
-
 
 
 

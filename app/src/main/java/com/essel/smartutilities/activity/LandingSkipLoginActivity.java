@@ -23,7 +23,6 @@ import com.essel.smartutilities.utility.DialogCreator;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
@@ -66,7 +65,8 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
+
             }
         });
         sp_city = (Spinner) findViewById(R.id.sp_city);
@@ -205,13 +205,17 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
             Log.i(TAG, "response data: ");
             dismissDialog();
          //   Toast.makeText(LandingSkipLoginActivity.this, "Response", Toast.LENGTH_LONG).show();
-
-
         }
 
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        Intent in = new Intent(LandingSkipLoginActivity.this, LoginActivity.class);
+        startActivity(in);
+    }
 
     public void getBillDetails() {
 

@@ -37,8 +37,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
     public static String[] billamount = new String[6];
     public static String[] month = new String[6];
     public static long[] billid = new long[6];
-    public TextView duedate_date, propmtamt, currentamt, arriers, promptdate, netamt;
-    public String duedate1, promptamt1, currentamt1, arrears1, promptdate1, netbill;
+    public TextView title, duedate_date, propmtamt, currentamt, arriers, promptdate, netamt, amtafterdue;
+    public String duedate1, promptamt1, currentamt1, arrears1, promptdate1, netbill, amtafterdues;
     public GraphView graph;
 
     @Override
@@ -52,7 +52,11 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         duedate_date = (TextView) findViewById(R.id.duedate_date);
         arriers = (TextView) findViewById(R.id.Arriers);
         promptdate = (TextView) findViewById(R.id.promptdate);
+        amtafterdue = (TextView) findViewById(R.id.amtafterdue);
         netamt = (TextView) findViewById(R.id.netamt);
+        title = (TextView) findViewById(R.id.title_bar);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (CommonUtils.isNetworkAvaliable(this)) {
@@ -66,9 +70,9 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
         if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) != null)
-            getSupportActionBar().setTitle("My Bill " + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
+            title.setText("My Bill " + "( " + SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO) + " )");
         else
-            getSupportActionBar().setTitle("My Bill");
+            title.setText("My Bill ");
         btn_billhistory = (Button) findViewById(R.id.btn_history);
         btn_billhistory.setOnClickListener(this);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -88,6 +92,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         duedate_date.setText(duedate1);
         currentamt.setText(currentamt1);
         promptdate.setText(promptdate1);
+        amtafterdue.setText(amtafterdues);
 
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
@@ -173,7 +178,7 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
 
     public void getBillDetails() {
 
-        String getconsumerno = SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO);
+        String getconsumerno = SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO);
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
         String METHOD_NAME = "InputParameters";
         String NAMESPACE = "http://xmlns.oracle.com/pcbpel/adapter/db/sp/CCBGetBillDetailsProc";
@@ -206,6 +211,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
             promptdate1 = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE19").toString();
             netbill = ((SoapObject) responceArray.getProperty(0)).getProperty("NET_BILL_PAYABLE").toString();
             arrears1 = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
+            amtafterdues = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE12").toString();
+
             for (int i = 0; i < responceArray.getPropertyCount(); i++) {
                 Object obj = responceArray.getProperty(i);
                 if (obj instanceof SoapObject) {
@@ -215,10 +222,11 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
                     billdate[i] = obj1.getProperty("BILL_DT").toString();
                     StringTokenizer st1 = new StringTokenizer(billdate[i], "-");
                     billdate[i] = st1.nextToken();
+                    billdate[i] = billdate[i] + " " + st1.nextToken();
                     billamount[i] = obj1.getProperty("CURRENT_MONTH_BILL").toString();
                     StringTokenizer st = new StringTokenizer(month[i], "-");
                     month[i] = st.nextToken();
-                    billid[i]=Long.parseLong(obj1.getProperty("BILL_ID").toString());
+                    billid[i] = Long.parseLong(obj1.getProperty("BILL_ID").toString());
                 }
             }
 
