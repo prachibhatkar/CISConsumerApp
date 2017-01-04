@@ -331,6 +331,10 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 //                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 //                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
 //                        Log.i(label, "Faqqqqqqqqqqqqqqqqq:" + jsonResponse.faqs);
+                        if (jsonResponse.faqs.size() == 0) {
+                            dismissDialog();
+
+                        }
                         if (jsonResponse.faqs.size() != 0) {
                             dismissDialog();
                             for (int i = 0; i <jsonResponse.faqs.size(); i++) {

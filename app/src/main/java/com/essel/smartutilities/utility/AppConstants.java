@@ -5,8 +5,8 @@ public class AppConstants {
 
 //    public static final String BASE_URL = "http://192.168.10.109:9999/mobileapi/";
    //   public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
-    public static final String BASE_URL = "http://192.168.0.3:8000/mobileapi/";
-//      public static final String BASE_URL=  "http://192.168.10.115:9999/mobileapi/";
+   public static final String BASE_URL = "http://192.168.0.4:8000/mobileapi/";
+    // public static final String BASE_URL=  "http://192.168.10.100:9999/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
  // public static final String BASE_URL = " http://192.168.0.29:8000/mobileapi/";
     public static final String REQUEST_LOGIN = "login/";
@@ -76,6 +76,11 @@ public class AppConstants {
 
     public static final String REQUEST_GET_ACCOUNTS = "get-accounts/";
     public static final String URL_GET_ACCOUNTS = BASE_URL + REQUEST_GET_ACCOUNTS;
+
+
+    public static final String REQUEST_POST_PROFILE_IMG = "profile-image/";
+    public static final String URL_POST_PROFILE_IMG  = BASE_URL + REQUEST_POST_PROFILE_IMG ;
+
 
     public static final String REQUEST_FEEDBACK = "add-feedback/";
     public static final String URL_POST_FEEDBACK = BASE_URL + REQUEST_FEEDBACK;

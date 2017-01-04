@@ -195,6 +195,10 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 //                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 //                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
 //                        Log.i(label, "Contactus:" + jsonResponse.contactus);
+                        if (jsonResponse.contactus == null) {
+                            dismissDialog();
+                        }
+
                         if (jsonResponse.contactus != null) {
                             dismissDialog();
                             tv_helplineno.setText(jsonResponse.contactus.helpline_number);

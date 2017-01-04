@@ -70,6 +70,14 @@ public class DatabaseManager {
         }
     }
 
+    public static void saveImage(Context context, Consumer consumer) {
+        if (consumer != null) {
+            ContentValues values = getContentValuesprofileimg(context, consumer);
+            saveimage(context,LoginTable.CONTENT_URI, values, null);
+
+        }
+    }
+
     public static void saveContactDetail(Context context, ContactUs contactus) {
         if (contactus != null) {
             ContentValues values = getContentValuesContactUsTable(context, contactus);
@@ -234,6 +242,15 @@ public class DatabaseManager {
         // Log.i("Tag", "saveAboutUs:" + newRowId);
         Log.i("Tag", "saveAboutUs:" + newRowId);
     }
+    private static void saveimage(Context context, Uri table, ContentValues values, String condition) {
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRowId = db.insert(LoginTable.TABLE_NAME, null, values);
+        // Log.i("Tag", "saveAboutUs:" + newRowId);
+        Log.i("Tag", "saveAboutUs:" + newRowId);
+    }
 
 
     private static void savecontactdetail(Context context, Uri table, ContentValues values, String condition) {
@@ -324,6 +341,16 @@ public class DatabaseManager {
         ContentValues values = new ContentValues();
         try {
             values.put(AboutUsTable.Cols.ABOUT_US_MSG, about_us_msg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return values;
+    }
+    private static ContentValues getContentValuesprofileimg(Context context, Consumer consumer) {
+        ContentValues values = new ContentValues();
+        try {
+            values.put(LoginTable.Cols.IMAGE, consumer.profile_img);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -442,7 +469,7 @@ public class DatabaseManager {
         values.put(LoginTable.Cols.CONSUMER_CONNECTION_TYPE, user_info.acctype);
         values.put(LoginTable.Cols.CONSUMER_EMAIL_ID, user_info.emailid);
         values.put(LoginTable.Cols.CITY, user_info.city);
-        values.put(LoginTable.Cols.IMAGE, user_info.image);
+       // values.put(LoginTable.Cols.IMAGE, user_info.image);
 
         long v = db.insert(LoginTable.TABLE_NAME, null, values);
 
@@ -472,6 +499,28 @@ public class DatabaseManager {
 
 
     }
+
+    public static Consumer getImage(Context context) {
+
+        Consumer con = new Consumer();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + LoginTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
+        while (cursor.moveToNext()) {
+
+            con.profile_img = cursor.getString(cursor.getColumnIndex("image"));
+            Log.i("Tag", "valueselectdb" + cursor);
+
+            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
+        }
+
+        return con;
+
+
+    }
+
 
     public static ArrayList<TarifCatagory>getTariffCatagory(Context context) {
 

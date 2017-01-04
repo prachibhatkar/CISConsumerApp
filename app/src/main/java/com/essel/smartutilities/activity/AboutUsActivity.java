@@ -70,8 +70,15 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
             Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
              AboutUs aboutUs2 =new AboutUs();
             aboutUs2= DatabaseManager.getAboutUs(this);
-            tv_aboutus_message.setText(aboutUs2.about_us_msg.toString().trim());
-           Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
+            if(aboutUs2.about_us_msg!=null){
+                tv_aboutus_message.setText(aboutUs2.about_us_msg.toString().trim());
+                Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
+
+            }
+            else
+            Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
+
+
         }
 
 
@@ -108,6 +115,10 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 //
                         Log.i(label, "hygt " + jsonResponse);
                         Log.i(label, "hyif " + jsonResponse.aboutus);
+                        if(jsonResponse.aboutus== null) {
+                            dismissDialog();
+
+                        }
                         if(jsonResponse.aboutus!= null) {
                             dismissDialog();
                              tv_aboutus_message.setText(jsonResponse.aboutus.toString().trim());

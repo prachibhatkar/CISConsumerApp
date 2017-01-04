@@ -584,7 +584,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                        // startActivity(i);
 
                     }
-                    if(jsonResponse.message!= null) {
+                     if(jsonResponse.message!= null) {
 
 
                     }

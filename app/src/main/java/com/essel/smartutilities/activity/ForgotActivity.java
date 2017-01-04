@@ -25,6 +25,7 @@ import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
@@ -152,6 +153,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
                       //  Toast.makeText(this, msg1, Toast.LENGTH_LONG).show();
                         Log.i(label, "failllllllllll " + jsonResponse);
                         dismissDialog();
+                        DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message :"You don't have regersted email id, please contact to your nearest CSD center.");
                       //  toast();
 
 
@@ -174,7 +176,8 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
 
-                toast();
+                 toast();
+
 
                 Log.i(label, "gjjkfhdkh " + message);
                  Log.i(label, "jhjkghfkh " + response);
@@ -188,6 +191,6 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
     public void toast(){
 
-        Toast.makeText(this, "you dont have registered emailid,Please contact to nearest CSD Center", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "User Doest Not exists, with this consumer_no", Toast.LENGTH_LONG).show();
     }
 }

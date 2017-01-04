@@ -7,12 +7,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +30,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
+import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.GetInfo;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
@@ -40,6 +44,7 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,6 +62,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     ProgressDialog pDialog;
     EditText contactno, emailid, old_pass, new_pass, confirm_pass;
     TextView consemer_name,consumer_number,consumer_add,consumer_add1;
+    String  profileimage;
+    Bitmap bitmap;
+    Consumer con1=new Consumer();
+    String img1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
             }
         });
+
         setupUI();
         loadData();
         return;
@@ -79,7 +89,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void setupUI() {
         circleimage = (CircleImageView) findViewById(R.id.profile_image);
         circleimage.setOnClickListener(this);
+        Consumer con =new Consumer();
+        con=DatabaseManager.getImage(this);
+         if(con.profile_img!=null) {
 
+           //  img1=con.profile_img;
+             bitmap=StringToBitMap(con.profile_img);
+             circleimage.setImageBitmap(bitmap);
+         }
         expandableButton_editprofile = (Button) findViewById(R.id.expandableButton_editprofile);
         expandableButton_editprofile.setOnClickListener(this);
         expandableButton_changepass = (Button) findViewById(R.id.expandableButton_changepass);
@@ -123,6 +140,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         save_detail.setOnClickListener(this);
         save_password.setOnClickListener(this);
 
+
+    }
+
+    public Bitmap StringToBitMap( String img1){
+        try{
+            byte [] encodeByte= Base64.decode(img1,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
 
     }
 
@@ -290,16 +319,50 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             circleimage.setImageBitmap(photo);
+            profileimage=CommonUtils.getBitmapEncodedString( photo);
             //storeCameraPhotoInSDCard(photo);
             //saveImageToStorage();
             circleimage.setVisibility(View.VISIBLE);
+            if(CommonUtils.isNetworkAvaliable(this)) {
+                initProgressDialog();
+                if (pDialog != null && !pDialog.isShowing()) {
+                    pDialog.setMessage(" please wait..");
+                    pDialog.show();
+                }
+
+                JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, profileimage, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+                App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
+
+            }
+            else
+                Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+
         }
 
         if (requestCode == SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
+
             Uri selectedImage = data.getData();
+
+            try {
+              bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             circleimage.setImageURI(selectedImage);
+            profileimage=CommonUtils.getBitmapEncodedString(bitmap);
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
+
+            JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, profileimage, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
+
         }
-    }
+        else
+            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+        }
+
 
     private void loadData() {
 
@@ -347,8 +410,32 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
+                            dismissDialog();
+                           expandableLayout_changepass.collapse();
+
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        dismissDialog();
+                        DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
+                        Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
+                    }
+                } else
+                    Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
+                dismissDialog();
+            }
+
+            case AppConstants.REQUEST_POST_PROFILE_IMG: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
+                        Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
+                        Consumer consumer=new Consumer();
+                        consumer.profile_img=CommonUtils.getBitmapEncodedString(bitmap);
+                        DatabaseManager.saveImage(this,consumer);
+                        if (jsonResponse.message != null)
+                            Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
                            dismissDialog();
-                         expandableLayout_changepass.collapse();
+
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
@@ -378,6 +465,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
                 Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
+                dismissDialog();
+                break;
+            }
+            case AppConstants.REQUEST_POST_PROFILE_IMG: {
+
+                Log.i(label, "responseeeeeeeeeeee:" + response);
+                Log.i(label, "requestttttttttttttttttttttfail:" + message);
                 dismissDialog();
                 break;
             }
