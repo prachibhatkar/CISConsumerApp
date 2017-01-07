@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.DialogCreator;
 
 /**
@@ -22,7 +24,16 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
     private TextInputLayout inputLayoutconsumerno;
     private Button Submit;
     private EditText amtpay;
-
+    public static final String COMMAND = "command";
+    public static final String ACCESS_CODE = "access_code";
+    public static final String MERCHANT_ID = "merchant_id";
+    public static final String ORDER_ID = "order_id";
+    public static final String AMOUNT = "amount";
+    public static final String CURRENCY = "currency";
+    public static final String ENC_VAL = "enc_val";
+    public static final String REDIRECT_URL = "redirect_url";
+    public static final String CANCEL_URL = "cancel_url";
+    public static final String RSA_KEY_URL = "rsa_key_url";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,14 +88,44 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BTNSubmit:
-                if (!amtpay.getText().toString().equalsIgnoreCase("")&& !amtpay.getText().toString().equalsIgnoreCase(".")) {
-                    if (Float.parseFloat(amtpay.getText().toString()) >= Float.parseFloat(propmtamt.getText().toString()) && (Float.parseFloat(amtpay.getText().toString()) >= 1))
-                        DialogCreator.showMessageDialog(this, "yesss");
-                    else
-                        DialogCreator.showMessageDialog(this, "Noooo");
-                } else
-                    DialogCreator.showMessageDialog(this, "Noooo");
-                break;
+                if (CommonUtils.isNetworkAvaliable(this)) {
+                    if (!amtpay.getText().toString().equalsIgnoreCase("") && !amtpay.getText().toString().equalsIgnoreCase(".")) {
+                        if (Float.parseFloat(amtpay.getText().toString()) >= Float.parseFloat(propmtamt.getText().toString()) && (Float.parseFloat(amtpay.getText().toString()) >= 1)) {
+//                            DialogCreator.showMessageDialog(this, "Can go to Payment Gateway");
+                            callwebview();
+                        } else
+                            DialogCreator.showMessageDialog(this, "You can Pay Equal/More than Prompt Amount");
+                    } else
+                        DialogCreator.showMessageDialog(this, "You can Pay Equal/More than Prompt Amount");
+                    break;
+                }else
+                    Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void callwebview() {
+        String vAccessCode = "4YRUXLSRO20O8NIH";//"AVVT64DC39AU91TVUA";4YRUXLSRO20O8NIH
+        String vMerchantId = "2";
+        String vCurrency = "INR";
+        String vAmount = amtpay.getText().toString().trim();
+        String redirect = "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
+        String cancel = "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
+        String rsakey = "http://122.182.6.216/merchant/GetRSA.jsp";
+        Integer orderid = CommonUtils.randInt(0, 9999999);
+        String od = orderid.toString();
+        if (!vAccessCode.equals("") && !vMerchantId.equals("") && !vCurrency.equals("") && !vAmount.equals("")) {
+            Intent intent = new Intent(this, WebViewActivity.class);
+            intent.putExtra(PayNowActivity.ACCESS_CODE, vAccessCode);
+            intent.putExtra(PayNowActivity.MERCHANT_ID, vMerchantId);
+            intent.putExtra(PayNowActivity.ORDER_ID, od);
+            intent.putExtra(PayNowActivity.CURRENCY, vCurrency);
+            intent.putExtra(PayNowActivity.AMOUNT, vAmount);
+            intent.putExtra(PayNowActivity.REDIRECT_URL, redirect);
+            intent.putExtra(PayNowActivity.CANCEL_URL, cancel);
+            intent.putExtra(PayNowActivity.RSA_KEY_URL, rsakey);
+
+            startActivity(intent);
+
         }
     }
 }

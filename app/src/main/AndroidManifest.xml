@@ -45,6 +45,7 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".activity.ComplaintActivity" />
+        <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.Contact_Us_Activity" />
         <activity android:name=".activity.FAQActivity" />
         <activity android:name=".activity.FeedBackActivity" />

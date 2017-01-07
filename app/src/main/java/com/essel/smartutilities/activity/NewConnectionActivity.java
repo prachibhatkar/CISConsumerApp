@@ -115,7 +115,7 @@ public class NewConnectionActivity extends BaseActivity implements View.OnClickL
                             if ((editTextpoleno.getText().toString().trim().length() >= 5 &&
                                     editTextpoleno.getText().toString().trim().length() <= 20) ||
                                     editTextpoleno.getText().toString().trim().length() == 0) {
-                                if (email.length() != 0 && CommonUtils.emailValidator(email)) {
+                                if (email.length() == 0 || CommonUtils.emailValidator(email)) {
                                     if (connectiontype.getSelectedItemPosition() != 0) {
                                         flag = true;
                                     } else

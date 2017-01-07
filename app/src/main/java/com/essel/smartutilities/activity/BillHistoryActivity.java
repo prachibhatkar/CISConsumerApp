@@ -165,27 +165,27 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
             }
             switch (view.getId()) {
                 case R.id.download1:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[0] + ".pdf";
+                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[0] + ".pdf";
                     getPdf(String.valueOf(MyBillActivity.billid[0]), fileName);
                     break;
                 case R.id.download2:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[1] + ".pdf";
+                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[1] + ".pdf";
                     getPdf(String.valueOf(MyBillActivity.billid[1]), fileName);
                     break;
                 case R.id.download3:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[2] + ".pdf";
+                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[2] + ".pdf";
                     getPdf(String.valueOf(MyBillActivity.billid[2]), fileName);
                     break;
                 case R.id.download4:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[3] + ".pdf";
+                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[3] + ".pdf";
                     getPdf(String.valueOf(MyBillActivity.billid[3]), fileName);
                     break;
                 case R.id.download5:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[4] + ".pdf";
+                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[4] + ".pdf";
                     getPdf(String.valueOf(MyBillActivity.billid[4]), fileName);
                     break;
                 case R.id.download6:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this,SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[5] + ".pdf";
+                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[5] + ".pdf";
                     getPdf(String.valueOf(MyBillActivity.billid[5]), fileName);
                     break;
             }
@@ -229,7 +229,7 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
                             if (response != null) {
 //                                Random r = new Random();
 //                                int i1 = r.nextInt(80 - 65) + 65;
-                                fileName=dd;
+                                fileName = dd;
                                 root = new File(Environment.getExternalStorageDirectory(), "Essel Bills");
                                 if (!root.exists()) {
                                     root.mkdirs();

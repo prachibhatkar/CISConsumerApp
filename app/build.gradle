@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    useLibrary 'org.apache.http.legacy'
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.essel.smartutilities"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -32,6 +33,7 @@ dependencies {
     compile files('libs/httpcore-4.0.1.jar')
     compile files('libs/universal-image-loader-1.9.4.jar')
     compile 'com.jjoe64:graphview:4.2.1'    // graph
+    compile 'org.apache.httpcomponents:httpclient:4.5'    //Defaulthttpclient
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
     compile 'com.android.volley:volley:1.0.0'
@@ -45,6 +47,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.github.aakira:expandable-layout:1.4.2@aar'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     compile files('libs/ksoap2-android-assembly-2.4-jar-with-dependencies.jar')
 }

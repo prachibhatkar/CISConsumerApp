@@ -58,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 onBackPressed();
             }
         });
@@ -191,18 +192,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Intent i = new Intent(this, RegisterActivity2.class);
 
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr1").toString());
-                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString().equals("anyType{}"))
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString().equalsIgnoreCase("anyType{}"))
                             SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr2").toString());
-                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").equals("anyType{}"))
+                        else
+                            SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS2, " ");
+
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString().equalsIgnoreCase("anyType{}"))
                             SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3, ((SoapObject) soapEnvelope.bodyIn).getProperty("addr3").toString());
-                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString().equals("anyType{}"))
+                        else
+                            SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS3, " ");
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString().equalsIgnoreCase("anyType{}"))
 
                             SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, ((SoapObject) soapEnvelope.bodyIn).getProperty("conType").toString());
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, ((SoapObject) soapEnvelope.bodyIn).getProperty("mobile").toString());
-                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString().equals("anyType{}"))
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString().equalsIgnoreCase("anyType{}"))
 
                             SharedPrefManager.saveValue(this, SharedPrefManager.CON_NO, ((SoapObject) soapEnvelope.bodyIn).getProperty("consNo").toString());
-                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString().equals("anyType{}"))
+                        if (!((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString().equalsIgnoreCase("anyType{}"))
 
                             SharedPrefManager.saveValue(this, SharedPrefManager.POSTAL, ((SoapObject) soapEnvelope.bodyIn).getProperty("postal").toString());
 

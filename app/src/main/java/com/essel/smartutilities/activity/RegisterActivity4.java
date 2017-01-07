@@ -150,13 +150,51 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(this, RegisterActivity.class);
+        if (CommonUtils.isNetworkAvaliable(this)) {
+
+            initProgressDialog();
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.setMessage(" please wait..");
+                pDialog.show();
+            }
+            JsonObjectRequest request = WebRequests.getLogOut(this, Request.Method.GET, AppConstants.URL_LOGOUT, AppConstants.REQUEST_LOGOUT, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_LOGOUT);
+        } else {
+            Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+
+        }
+
+        Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
     }
 
     @Override
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
+            case AppConstants.REQUEST_LOGOUT: {
+                if (jsonResponse != null) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                        if (jsonResponse.message != null) {
+                            SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                            SharedPrefManager.saveValue(this, SharedPrefManager.AUTH_TOKEN, "no");
+
+                            dismissDialog();
+                            Intent in = new Intent(this, LoginActivity.class);
+                            startActivity(in);
+                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.message);
+                        }
+                        if (jsonResponse.authorization != null) {
+                            dismissDialog();
+                        }
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
+                        dismissDialog();
+                    }
+                    break;
+                }
+
+                dismissDialog();
+            }
             case AppConstants.REQUEST_GET_ACCOUNTS: {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
@@ -176,7 +214,6 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
                     }
                     break;
                 }
-
                 dismissDialog();
             }
         }
@@ -190,6 +227,17 @@ public class RegisterActivity4 extends BaseActivity implements View.OnClickListe
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + response);
                 dismissDialog();
             }
+            break;
+
+
+            case AppConstants.REQUEST_LOGOUT: {
+//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+//                Log.i(label, "Faq:" + message);
+//                Log.i(label, "Faq:" + response);
+                dismissDialog();
+            }
+
             break;
         }
     }

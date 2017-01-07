@@ -103,7 +103,7 @@
     <string name="prompt_newcomnection_address_line_3">Address Line 3</string>
     <string name="prompt_newcomnection_mobile_number">Enter Your Mobile Number *</string>
     <string name="prompt_newcomnection_nearest_consumer_id">Enter Nearest Consumer no/Pole no</string>
-    <string name="prompt_newcomnection_email_id">Enter Email Id *</string>
+    <string name="prompt_newcomnection_email_id">Enter Email Id </string>
 
 
     <string name="edit_contact_detail">Edit Contact Details</string>

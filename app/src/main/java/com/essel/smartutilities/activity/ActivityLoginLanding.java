@@ -38,6 +38,7 @@ import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.models.BrandingImages;
+import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -53,6 +54,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -502,7 +504,12 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
                         if (jsonResponse.consumers != null && jsonResponse.consumers.size() > 0) {
-                            DatabaseManager.saveManageAccounts(this, jsonResponse.consumers);
+                            ArrayList<Consumer> tempArray = new ArrayList<Consumer>();
+
+//                            for (int i=0;i<jsonResponse.consumers.size();i++)
+//                                tempArray.add(i,jsonResponse.consumers.get(jsonResponse.consumers.size()-1-i));
+                            Collections.reverse(jsonResponse.consumers);
+                            DatabaseManager.saveManageAccounts(this,jsonResponse.consumers );
 
                             dismissDialog();
                         }

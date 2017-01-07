@@ -194,9 +194,10 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
                         SharedPrefManager.saveValue(this, SharedPrefManager.ADDRESS1, jsonResponse.address);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONNECTION_TYPE, jsonResponse.connection_type);
                         SharedPrefManager.saveValue(this, SharedPrefManager.MOBILE, jsonResponse.mobile_no);
-                        if(jsonResponse.authorization!= null)
-                            SharedPrefManager.saveValue(this,SharedPrefManager.AUTH_TOKEN.toString(),jsonResponse.authorization);
-                        Intent i = new Intent(this, RegisterActivity4.class);
+                        if(jsonResponse.authorization!= null) {
+                        SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_LOGGED,"true");
+                            SharedPrefManager.saveValue(this, SharedPrefManager.AUTH_TOKEN.toString(), jsonResponse.authorization);
+                        }Intent i = new Intent(this, RegisterActivity4.class);
                         startActivity(i);
                         dismissDialog();
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {

@@ -274,7 +274,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Check for a valid password, if the user entered one.
         if (CommonUtils.isNetworkAvaliable(this) == true) {
             if (isBlankInput()) {
+                inputLayoutUsername.setError("");
                 if (isValidPassword()) {
+                    inputLayoutPassword.setError("");
                     initProgressDialog();
                     if (pDialog != null && !pDialog.isShowing()) {
                         pDialog.setMessage("Logging in, please wait..");

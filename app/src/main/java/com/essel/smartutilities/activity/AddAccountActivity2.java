@@ -79,14 +79,14 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
             textViewConsumerConnectionType.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
 
         textViewConsumerMobileNo = (TextView) findViewById(R.id.textConsumerMobileNo);
-        if (SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE) != null || !SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("")
-                ||!SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("NA"))
+        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE).toString().equalsIgnoreCase("NA")) {
             textViewConsumerMobileNo.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.MOBILE));
-        else
+        } else {
+
             noMobileDialog();
+        }
         buttonRegister = (AppCompatButton) findViewById(R.id.btn_register);
         buttonRegister.setOnClickListener(this);
-
 
     }
 
@@ -135,7 +135,7 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
 
     private boolean validate() {
         Boolean flag = false;
-        if (editTextEmailId.getText().length() == 0 ||CommonUtils.emailValidator(editTextEmailId.getText().toString())) {
+        if (editTextEmailId.getText().length() == 0 || CommonUtils.emailValidator(editTextEmailId.getText().toString())) {
             if (editTextMobileNo.getText().length() == 10 || editTextMobileNo.getText().length() == 12 || editTextMobileNo.getText().length() == 0) {
 
                 flag = true;
@@ -146,7 +146,6 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
             Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
         return flag;
     }
-
 
 
     void callRegisteruser() {
@@ -168,8 +167,8 @@ public class AddAccountActivity2 extends AppCompatActivity implements View.OnCli
                 obj.put("city", SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY));
                 obj.put("postal", SharedPrefManager.getStringValue(this, SharedPrefManager.POSTAL));
                 obj.put("connection_type", SharedPrefManager.getStringValue(this, SharedPrefManager.CONNECTION_TYPE));
-                obj.put("password","");
-                obj.put("reasone","add" );
+                obj.put("password", "");
+                obj.put("reasone", "add");
                 obj.put("alternet_email_id", editTextEmailId.getText().toString() == null ? "" : editTextEmailId.getText().toString());
                 obj.put("alternet_mobile_no", editTextMobileNo.getText().toString() == null ? "" : editTextMobileNo.getText().toString());
             } catch (JSONException e) {
