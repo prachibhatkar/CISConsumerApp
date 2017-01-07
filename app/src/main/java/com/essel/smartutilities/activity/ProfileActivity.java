@@ -40,6 +40,7 @@ import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,10 +62,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TabLayout profile_tabs;
     ProgressDialog pDialog;
     EditText contactno, emailid, old_pass, new_pass, confirm_pass;
-    TextView consemer_name,consumer_number,consumer_add,consumer_add1;
-    String  profileimage;
+    TextView consemer_name, consumer_number, consumer_add, consumer_add1;
+    String profileimage;
     Bitmap bitmap;
-    Consumer con1=new Consumer();
+    Consumer con1 = new Consumer();
     String img1;
 
     @Override
@@ -89,14 +90,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void setupUI() {
         circleimage = (CircleImageView) findViewById(R.id.profile_image);
         circleimage.setOnClickListener(this);
-        Consumer con =new Consumer();
-        con=DatabaseManager.getImage(this);
-         if(con.profile_img!=null) {
+        Consumer con = new Consumer();
+        con = DatabaseManager.getImage(this);
+        if (con.profile_img != null && !con.profile_img.equals("") && con.profile_img.startsWith("http://")) {
 
-           //  img1=con.profile_img;
-             bitmap=StringToBitMap(con.profile_img);
-             circleimage.setImageBitmap(bitmap);
-         }
+
+//             bitmap=StringToBitMap(con.profile_img);
+//             circleimage.setImageBitmap(bitmap);
+            Picasso.with(this)
+                    .load(con.profile_img)
+
+                    .into(circleimage);
+
+        } else if (con.profile_img != null && !con.profile_img.equals("")) {
+
+            bitmap = StringToBitMap(con.profile_img);
+            circleimage.setImageBitmap(bitmap);
+
+        }
+
         expandableButton_editprofile = (Button) findViewById(R.id.expandableButton_editprofile);
         expandableButton_editprofile.setOnClickListener(this);
         expandableButton_changepass = (Button) findViewById(R.id.expandableButton_changepass);
@@ -108,13 +120,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         expandableLayout_editProfile = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_editprofile);
 
 
-        GetInfo get=new GetInfo();
-        String isprimary="true";
-        get = DatabaseManager.getProfileinfo(this,isprimary);
-        String consumerno =get.consumerno;
-        String consumername =get.consumername;
-        String consumeraddress =get.consumeraddress;
-        String consumermobno =get.mobileno;
+        GetInfo get = new GetInfo();
+        String isprimary = "true";
+        get = DatabaseManager.getProfileinfo(this, isprimary);
+        String consumerno = get.consumerno;
+        String consumername = get.consumername;
+        String consumeraddress = get.consumeraddress;
+        String consumermobno = get.mobileno;
 
         contactno = (EditText) findViewById(R.id.editcontactno);
         contactno.setText(consumermobno);
@@ -125,15 +137,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         confirm_pass = (EditText) findViewById(R.id.editConfirmPassword);
 
 
-        consemer_name=(TextView)findViewById(R.id.textConsumerName);
+        consemer_name = (TextView) findViewById(R.id.textConsumerName);
         consemer_name.setText(consumername);
 
-        consumer_number=(TextView)findViewById(R.id.textConsumerno);
+        consumer_number = (TextView) findViewById(R.id.textConsumerno);
         consumer_number.setText(consumerno);
 
-         consumer_add=(TextView)findViewById(R.id.textConsumerAddress);
-         consumer_add.setText(consumeraddress);
-         consumer_add1=(TextView)findViewById(R.id.textConsumerAddress1);
+        consumer_add = (TextView) findViewById(R.id.textConsumerAddress);
+        consumer_add.setText(consumeraddress);
+        consumer_add1 = (TextView) findViewById(R.id.textConsumerAddress1);
         //consumer_add1.setText(consumeraddress);
 
 
@@ -143,12 +155,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public Bitmap StringToBitMap( String img1){
-        try{
-            byte [] encodeByte= Base64.decode(img1,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+    public Bitmap StringToBitMap(String img1) {
+        try {
+            byte[] encodeByte = Base64.decode(img1, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
@@ -205,7 +217,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
         if (view == save_password) {
 
-            if(validate()){
+            if (validate()) {
                 callchangepass();
 
             }
@@ -245,7 +257,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             JSONObject obj = new JSONObject();
             try {
                 obj.put("alternate_mobile", contactno.getText().toString() == null ? "" : contactno.getText().toString());
-                obj.put("alternate_email",emailid.getText().toString() == null ? "" : emailid.getText().toString());
+                obj.put("alternate_email", emailid.getText().toString() == null ? "" : emailid.getText().toString());
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -319,22 +331,29 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             circleimage.setImageBitmap(photo);
-            profileimage=CommonUtils.getBitmapEncodedString( photo);
+            profileimage = CommonUtils.getBitmapEncodedString(photo);
             //storeCameraPhotoInSDCard(photo);
             //saveImageToStorage();
             circleimage.setVisibility(View.VISIBLE);
-            if(CommonUtils.isNetworkAvaliable(this)) {
+            if (CommonUtils.isNetworkAvaliable(this)) {
                 initProgressDialog();
                 if (pDialog != null && !pDialog.isShowing()) {
                     pDialog.setMessage(" please wait..");
                     pDialog.show();
                 }
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("consumer_id", consumer_number.getText().toString() == null ? "" : consumer_number.getText().toString());
+                    obj.put("profile_pic", profileimage.toString() == null ? "" : profileimage.toString());
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 
-                JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, profileimage, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+                JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, obj, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
 
-            }
-            else
+            } else
                 Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
 
         }
@@ -344,24 +363,35 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Uri selectedImage = data.getData();
 
             try {
-              bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             circleimage.setImageURI(selectedImage);
-            profileimage=CommonUtils.getBitmapEncodedString(bitmap);
-            if (pDialog != null && !pDialog.isShowing()) {
-                pDialog.setMessage(" please wait..");
-                pDialog.show();
+
+            profileimage = CommonUtils.getBitmapEncodedString(bitmap);
+            if (CommonUtils.isNetworkAvaliable(this)) {
+                initProgressDialog();
+                if (pDialog != null && !pDialog.isShowing()) {
+                    pDialog.setMessage(" please wait..");
+                    pDialog.show();
+                }
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("image_name", consumer_number.getText().toString() == null ? "" : consumer_number.getText().toString().concat(".JPEG"));
+                    obj.put("profile_pic", profileimage.toString() == null ? "" : profileimage.toString());
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, obj, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
+                App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
+
             }
-
-            JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, profileimage, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
-            App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
-
-        }
-        else
+        } else
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
-        }
+    }
 
 
     private void loadData() {
@@ -383,14 +413,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                          SharedPrefManager.saveValue(this,SharedPrefManager.EMAIL_ID,emailid.getText().toString());
-                          SharedPrefManager.saveValue(this,SharedPrefManager.ALTERNATE_MOB_NO,contactno.getText().toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.EMAIL_ID, emailid.getText().toString());
+                        SharedPrefManager.saveValue(this, SharedPrefManager.ALTERNATE_MOB_NO, contactno.getText().toString());
 
-                         GetInfo get=new GetInfo();
-                         get.mobileno= contactno.getText().toString();
-                         DatabaseManager.updateProfile(this,get);
+                        GetInfo get = new GetInfo();
+                        get.mobileno = contactno.getText().toString();
+                        DatabaseManager.updateProfile(this, get);
                         // contactno.setText(get.mobileno);
-                         expandableLayout_editProfile.collapse();
+                        expandableLayout_editProfile.collapse();
                         dismissDialog();
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
@@ -410,13 +440,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                            dismissDialog();
-                           expandableLayout_changepass.collapse();
+                        dismissDialog();
+                        expandableLayout_changepass.collapse();
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                        Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Please check old Password", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
                     }
                 } else
@@ -429,12 +459,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
-                        Consumer consumer=new Consumer();
-                        consumer.profile_img=CommonUtils.getBitmapEncodedString(bitmap);
-                        DatabaseManager.saveImage(this,consumer);
+                        Consumer consumer = new Consumer();
+                        consumer.profile_img = CommonUtils.getBitmapEncodedString(bitmap);
+                        // consumer.profile_img=circleimage.toString();
+                        DatabaseManager.saveImage(this, consumer);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
-                           dismissDialog();
+                        dismissDialog();
 
 
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
@@ -485,20 +516,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             if (contactno.getText().length() == 10 || contactno.getText().length() == 12 || contactno.getText().length() == 0) {
                 if (old_pass.getText().toString().trim().length() >= 6 && old_pass.getText().toString().trim().length() <= 20) {
                     if (new_pass.getText().toString().trim().length() >= 6 && new_pass.getText().toString().trim().length() <= 20) {
-                        if (confirm_pass.getText().toString().trim().compareTo(new_pass.getText().toString().trim()) == 0) {
-                            flag = true;
+                        if (confirm_pass.getText().length()==0 ||confirm_pass.getText().length()>=6 ||confirm_pass.getText().length()<=20) {
+                            if (confirm_pass.getText().toString().trim().compareTo(new_pass.getText().toString().trim()) == 0) {
+                                flag = true;
+                            } else
+                                Toast.makeText(this, "Password Does not Match", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
                         } else
-                            Toast.makeText(this, "Password Does not Match", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
                     } else
-                        Toast.makeText(this, "Retype valid Password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
                 } else
-                    Toast.makeText(this, "Enter valid Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Retype valid Mobile", Toast.LENGTH_SHORT).show();
             } else
-                Toast.makeText(this, "Retype valid Mobile", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
-        return flag;
+                Toast.makeText(this, "Please Enter valid Email", Toast.LENGTH_SHORT).show();
+            return flag;
+        }
     }
-}
+
 
 

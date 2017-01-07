@@ -457,8 +457,11 @@ public class DatabaseManager {
     public static void saveLoginDetails(Context context, Consumer user_info) {
 
 
+//        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(LoginTable.TABLE_NAME, null, null);
 
         ContentValues values = new ContentValues();
         values.put(LoginTable.Cols.CONSUMER_NAME, user_info.consumer_name);
@@ -469,7 +472,7 @@ public class DatabaseManager {
         values.put(LoginTable.Cols.CONSUMER_CONNECTION_TYPE, user_info.acctype);
         values.put(LoginTable.Cols.CONSUMER_EMAIL_ID, user_info.emailid);
         values.put(LoginTable.Cols.CITY, user_info.city);
-       // values.put(LoginTable.Cols.IMAGE, user_info.image);
+        values.put(LoginTable.Cols.IMAGE, user_info.profile_img);
 
         long v = db.insert(LoginTable.TABLE_NAME, null, values);
 

@@ -25,6 +25,7 @@ import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
@@ -268,14 +269,16 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
         if(v==tv_igrcemail){
 //            Intent email = new Intent(android.content.Intent.ACTION_SEND);
 //            email.setType("application/octet-stream");
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/html");
-            intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-            intent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+            intent.putExtra(Intent.EXTRA_EMAIL, "addresses");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
 
-            startActivity(Intent.createChooser(intent, "Send Email"));
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(intent);
 
+            }else
+                DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
         }
 
         if(v==tv_igrcno){
@@ -287,18 +290,27 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
         }
 
         if(v==tv_portalsite){
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+            intent.putExtra(Intent.EXTRA_EMAIL, "addresses");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(intent);
 
+            }else
+                DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
         }
 
         if(v==tv_onlinecomplaintno){
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/html");
-            intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-            intent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+            intent.putExtra(Intent.EXTRA_EMAIL, "addresses");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(intent);
 
-            startActivity(Intent.createChooser(intent, "Send Email"));
-
+            }else
+                DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
         }
 
         if(v==tv_electricitytheftno){

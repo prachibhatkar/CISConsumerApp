@@ -1020,12 +1020,8 @@ public class WebRequests {
         return jsonObjReq;
     }
 
-    public static JsonObjectRequest profileimg(Context context, int request_type, String url, final String label, final ServiceCaller caller, final String profileimage, final String token) {
-        final Map<String, String> postParam = new HashMap<String, String>();
-        postParam.put("profile_pic", profileimage);
-
-        final JSONObject jsonObject = new JSONObject(postParam);
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, jsonObject, new Response.Listener<JSONObject>() {
+    public static JsonObjectRequest profileimg(Context context, int request_type, String url, final String label, final ServiceCaller caller,  final JSONObject obj, final String token) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
@@ -1044,20 +1040,19 @@ public class WebRequests {
                         Gson gson = new Gson();
                         JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
                         caller.onAsyncSuccess(jsonResponse, label);
-                    } catch (UnsupportedEncodingException e1) {
-                        e1.printStackTrace();
-                    } catch (JsonSyntaxException je) {
-                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : " ", label, response);
+                    } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
+                        // e1.printStackTrace();
+                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
                     }
                 } else
-                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : " ", label, response);
+                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                // params.put("Content-Type", "application/json; charset=utf-8");
-                // params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json");
+                params.put("Accept", "application/json");
                 params.put("Authorization", token);
                 return params;
             }

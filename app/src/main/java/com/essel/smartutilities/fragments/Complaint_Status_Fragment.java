@@ -37,7 +37,9 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -63,6 +65,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
     TextView tv_consumerid, tv_complainttype, tv_complaintraised, tv_complaintstatus;
     Spinner complaintid;
+    String accid,status,type;
     private String TAG = "responsedataaaaa";
 
     private OnFragmentInteractionListener mListener;
@@ -113,7 +116,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
         mContext = getActivity();
         initialize(rootView);
         arraycomplaintid = new ArrayList<>(12);
-        arraycomplaintid.add(0, "1600902224");
+        arraycomplaintid.add(0, "Select Complaint Type");
         complaintid = (Spinner) rootView.findViewById(R.id.sp_complaintid);
         // String[] type = mContext.getResources().getStringArray(R.array.complaintid);
 
@@ -138,7 +141,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                // if (CommonUtils.isNetworkAvaliable(getActivity())&&complaintno!=0){
 
 
-                if (CommonUtils.isNetworkAvaliable(getActivity())){
+                if (CommonUtils.isNetworkAvaliable(getActivity())&&complaintno!=0){
 //                    if(complaintno==0){
 //                        Toast.makeText(getActivity(), " Please Select Complaintid ", Toast.LENGTH_SHORT).show();
 //                    }
@@ -150,7 +153,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
-
+               // }
 
                 } else
                     Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
@@ -171,9 +174,9 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
     }
 
     private void initialize(View rootView) {
-        tv_consumerid = (TextView) rootView.findViewById(R.id.tv_consumerid);
-        tv_complainttype = (TextView) rootView.findViewById(R.id.tv_complainttype);
-        tv_complaintstatus = (TextView) rootView.findViewById(R.id.tv_complaintstatus);
+        tv_consumerid = (TextView) rootView.findViewById(R.id.consumerid);
+        tv_complainttype = (TextView) rootView.findViewById(R.id.complainttype);
+        tv_complaintstatus = (TextView) rootView.findViewById(R.id.complaintstatus);
         tv_complaintraised = (TextView) rootView.findViewById(R.id.tv_complaintraised);
         tv_complaintmsg = (TextView) rootView.findViewById(R.id.tv_complaintmsg);
 
@@ -244,7 +247,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
     public void onAsyncFail(String message, String label, NetworkResponse response) {
 
         switch (label) {
-            case AppConstants.REQUEST_GET_LOCATE_US: {
+            case AppConstants.REQUEST_GET_COMPLAINT_ID: {
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
                 Log.i(label, "comp id......" + message);
@@ -308,21 +311,34 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                     androidHttpTransport.debug = true;
 
 
-                    androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
+                    try {
+                        androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    } catch (XmlPullParserException e1) {
+                        e1.printStackTrace();
+                    }
                     SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn);
                     dismissDialog();
-                    String accid = ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString();
-                    String status1 = ((SoapObject) soapEnvelope.bodyIn).getProperty("status").toString();
-                    String type1 = ((SoapObject) soapEnvelope.bodyIn).getProperty("type").toString();
-                    Log.i(TAG, "caseId" + type1);
+                     accid = ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString();
+                     status = ((SoapObject) soapEnvelope.bodyIn).getProperty("status").toString();
+                     type = ((SoapObject) soapEnvelope.bodyIn).getProperty("type").toString();
+                     getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // This code will always run on the UI thread, therefore is safe to modify UI elements.
+                            tv_consumerid.setText(accid);
+                            tv_complaintstatus.setText(status);
+                            tv_complainttype.setText(type);
+                        }
+                    });
+
+
+
+                    Log.i(TAG, "caseId" + status);
+                    Log.i(TAG, "caseId" + type);
                     Log.i(TAG, "caseId" + accid);
-                    Log.i(TAG, "caseId" + status1);
-
-                    tv_consumerid.setText(accid);
-                    tv_complaintstatus.setText(status1);
-                    tv_complainttype.setText(type1);
-
-
+                    Log.i(TAG, "caseId" + status);
                     // final SoapObject response = (SoapObject) soapEnvelope.getResponse();
                     // SoapPrimitive response1 = (SoapPrimitive) soapEnvelope.getResponse();
 
@@ -334,7 +350,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
 
                 } catch (Exception e) {
-                    Log.e(TAG, "Error: " + e.getMessage());
+                    Log.e(TAG, "Errorrrrrrrrrrrrrrrrrrrr: " + e.getMessage());
 
                 }
 

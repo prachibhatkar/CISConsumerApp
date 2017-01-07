@@ -2,11 +2,14 @@ package com.essel.smartutilities.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -29,7 +32,18 @@ import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
+import org.apache.http.util.ByteArrayBuffer;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Pattern pattern;
     private Matcher matcher;
     ProgressDialog pDialog;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +189,48 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "true");
                             Intent i = new Intent(this, ActivityLoginLanding.class);
                             startActivity(i);
+//                            if(jsonResponse.user_info.profile_img!=null) {
+////                                bitmap = StringToBitMap(jsonResponse.user_info.profile_img);
+////                                jsonResponse.user_info.profile_img = bitmap.toString();
+//                                URL imageUrl = null;
+//                                try {
+//                                    imageUrl = new URL(jsonResponse.user_info.profile_img.toString());
+//                                } catch (MalformedURLException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                URLConnection ucon = null;
+//                                try {
+//                                    ucon = imageUrl.openConnection();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                                InputStream is = null;
+//                                try {
+//                                    is = ucon.getInputStream();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                BufferedInputStream bis = new BufferedInputStream(is);
+//
+//                                ByteArrayBuffer baf = new ByteArrayBuffer(500);
+//                                int current = 0;
+//                                try {
+//                                    while ((current = bis.read()) != -1) {
+//         /* This approach slowdown the process*/
+//                                        baf.append((byte) current);
+//                                    }
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                                byte[] img_ary= baf.toByteArray();
+//                                ByteArrayInputStream imageStream = new ByteArrayInputStream(
+//                                        img_ary);
+//                                Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+//                                String img=BitMapToString(theImage);
+//                                jsonResponse.user_info.profile_img=img;
+//                            }
                             DatabaseManager.saveLoginDetails(this, jsonResponse.user_info);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
@@ -233,5 +290,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                Toast.makeText(this, "Enter Valid User Name", Toast.LENGTH_SHORT).show();
         } else
             DialogCreator.showMessageDialog(this, getString(R.string.error_internet_not_connected));
+
+
+    }
+
+
+    public Bitmap StringToBitMap(String img1) {
+        try {
+            byte[] encodeByte = Base64.decode(img1, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 }

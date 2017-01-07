@@ -129,7 +129,7 @@
                     android:layout_marginBottom="@dimen/text_size_h9">
 
                     <TextView
-                        android:text="Fixed/Demand Change"
+                        android:text=""
                         android:id="@+id/tv_fixeddemandcharge"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -139,7 +139,7 @@
                         android:gravity="center"/>
 
                     <TextView
-                        android:text="Rs 10/Month"
+                        android:text=""
                         android:id="@+id/tv_bplcatagory1"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -157,7 +157,7 @@
 
                     <TextView
                         android:id="@+id/tv_energycharge"
-                        android:text="Energy change"
+                        android:text=""
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -167,7 +167,7 @@
 
                     <TextView
                         android:id="@+id/tv_bplcatagory2"
-                        android:text="0.87"
+                        android:text=""
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -245,7 +245,7 @@
                     >
 
                     <TextView
-                        android:text="0-100 Units"
+                        android:text=""
                         android:id="@+id/tv_100units"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -255,7 +255,7 @@
                         android:gravity="center"/>
 
                     <TextView
-                        android:text="3.76"
+                        android:text=""
                         android:id="@+id/tv_energycharge1"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -275,7 +275,7 @@
                     >
 
                     <TextView
-                        android:text="101-300 Units"
+                        android:text=""
                         android:id="@+id/tv_300units"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -285,7 +285,7 @@
                         android:gravity="center"/>
 
                     <TextView
-                        android:text="7.21"
+                        android:text=""
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -305,7 +305,7 @@
                     >
 
                     <TextView
-                        android:text="301-500 Units"
+                        android:text=""
                         android:id="@+id/tv_500units"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -315,7 +315,7 @@
                         android:gravity="center"/>
 
                     <TextView
-                        android:text="9.21"
+                        android:text=""
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -335,7 +335,7 @@
                     >
 
                     <TextView
-                        android:text="501-1000 Units"
+                        android:text=""
                         android:id="@+id/tv_1000units"
                         android:layout_weight="1"
                         android:background="#ffffff"
@@ -345,7 +345,7 @@
                         android:gravity="center"/>
 
                     <TextView
-                        android:text="11.31"
+                        android:text=""
                         android:layout_weight="1"
                         android:background="#ffffff"
                         android:textColor="#666666"
@@ -417,7 +417,7 @@
                         >
                         <TextView
                             android:id="@+id/single_phase"
-                            android:text="Single Phase:Rs 50 per month"
+                            android:text=" "
                             android:layout_weight="1"
                             android:background="#ffffff"
                             android:textColor="#666666"
@@ -443,7 +443,7 @@
 
                         <TextView
                             android:id="@+id/three_phase"
-                            android:text="Three Phase:Rs 150 per month"
+                            android:text=""
                             android:layout_weight="1"
                             android:background="#ffffff"
                             android:textColor="#666666"

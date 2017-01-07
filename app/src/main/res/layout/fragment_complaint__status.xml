@@ -35,17 +35,24 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:textColor="@color/colorPrimaryDarkText"
-        android:id="@+id/tv_consumerid"/>
+        android:id="@+id/consumerid"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_complainttype"
+        android:id="@+id/complainttype"
         android:layout_marginLeft="5dp"
         android:text="ComplaintType"
         android:textColor="@color/colorPrimaryDarkText"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/complaintstatus"
+            android:text="status"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/colorPrimaryDarkText"/>
 
 
         <TextView
@@ -67,13 +74,6 @@
             android:textColor="@color/colorPrimaryDarkText"
             />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_complaintstatus"
-        android:text="status"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/colorPrimaryDarkText"/>
 
 
     </LinearLayout>

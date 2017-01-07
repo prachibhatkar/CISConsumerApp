@@ -83,6 +83,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     String caseid;
     ProgressDialog pDialog;
     Bitmap photo;
+    String consumerno;
     String selectcomplainttype,casetype,msg,msg1;
 
     private String TAG = "responsedataaaaa";
@@ -117,11 +118,11 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
                 if( CommonUtils.isNetworkAvaliable(getActivity())) {
 
-//                    initProgressDialog();
-//                    if (pDialog != null && !pDialog.isShowing()) {
-//                        pDialog.setMessage(" please wait..");
-//                        pDialog.show();
-//                    }
+                    initProgressDialog();
+                    if (pDialog != null && !pDialog.isShowing()) {
+                        pDialog.setMessage(" please wait..");
+                        pDialog.show();
+                    }
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
 
@@ -195,14 +196,16 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
 
     public void callApi(){
+         consumerno=((SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_NO)).toString());
 
          // selectcomplainttype=complainttype.getSelectedItem().toString();
           JSONObject obj = new JSONObject();
         try {
             obj.put("complaint_type", complainttype.getSelectedItemPosition());
             obj.put("consumer_remark", complaintremark);
-            obj.put("complaint_img",image);
+            obj.put("complaint_img", image == null ? " " : image.toString());
             obj.put("complaint_id", caseid);
+            obj.put("consumer_no", consumerno);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -284,8 +287,9 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             in.putExtra("message", message);
             startActivity(in);
 
+
             //||msg1.equals(message)
-            if(msg.equals(message)|| msg1.equals(message)){
+            if(msg.equals(message)||msg1.equals(message)){
                // Toast.makeText(getContext(), "jghjgjgj", Toast.LENGTH_LONG).show();
                 flag=false;
 
@@ -441,9 +445,6 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
         View rootView = inflater.inflate(R.layout.fragment_raise__complaint, null);
 
-       // expListView = (ExpandableListView) rootView.findViewById(R.id.expListView);
-       // linear_layout_imageview=(LinearLayout)rootView.findViewById(R.id.linear_layout_imageview);
-        //img=(ImageView)rootView.findViewById(R.id.imgv_camera);
         iv = (ImageView)rootView.findViewById(R.id.iv_captured_image);
         iv.setOnClickListener(this);
 
@@ -452,7 +453,7 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         //img.setOnClickListener(this);
         btn_submitcomplaint=(Button)rootView.findViewById(R.id.btn_submitcomplaint);
         btn_submitcomplaint.setOnClickListener(this);
-
+        complainttype = (Spinner)rootView.findViewById(R.id.sp_complainttype);
         complaint_remark=(EditText)rootView.findViewById(R.id.editremark);
 
         ((EditText)rootView.findViewById(R.id.editremark)).setFilters(new InputFilter[] {
@@ -471,10 +472,11 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
 
             Toast.makeText(getActivity(), " Please Check  Internet Connection ", Toast.LENGTH_SHORT).show();
 
-
-        complainttype = (Spinner)rootView.findViewById(R.id.sp_complainttype);
        // String[] type = mContext.getResources().getStringArray(R.array.complaints);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, complaints);
+//        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, complaints);
+//        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        complainttype.setAdapter(dataAdapter);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, complaints);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         complainttype.setAdapter(dataAdapter);
 

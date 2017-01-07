@@ -5,8 +5,8 @@ public class AppConstants {
 
 //    public static final String BASE_URL = "http://192.168.10.109:9999/mobileapi/";
    //   public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
-   public static final String BASE_URL = "http://192.168.0.4:8000/mobileapi/";
-    // public static final String BASE_URL=  "http://192.168.10.100:9999/mobileapi/";
+  // public static final String BASE_URL = "http://192.168.0.4:8000/mobileapi/";
+     public static final String BASE_URL=  "http://192.168.0.4:8000/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
  // public static final String BASE_URL = " http://192.168.0.29:8000/mobileapi/";
     public static final String REQUEST_LOGIN = "login/";

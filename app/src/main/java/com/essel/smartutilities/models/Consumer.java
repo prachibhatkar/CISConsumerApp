@@ -58,7 +58,7 @@ public class Consumer implements Serializable {
         this.payment_date = payment_date;
         this.city = city;
         this.alternet_email_id = emailid;
-        this.image = image;
+        this.profile_img = image;
         this.contact_no = contact_no;
         this.is_primary=is_primary;
 
