@@ -46,6 +46,9 @@ import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.ksoap2.SoapEnvelope;
@@ -63,6 +66,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     ProgressDialog pDialog;
     LinearLayout img, button, table;
     private static ViewPager mPager;
+    public AdView mAdView;
     private static int currentPage = 0;
     private int NUM_PAGES = 0;
     private static final Integer[] IMAGES = {R.drawable.esselgroup, R.drawable.logo,
@@ -76,7 +80,12 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_landing);
-
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        mAdView = (AdView) findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
         img = (LinearLayout) findViewById(R.id.linear_img);
         button = (LinearLayout) findViewById(R.id.linear_lay_button);
         table = (LinearLayout) findViewById(R.id.container);

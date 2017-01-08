@@ -37,7 +37,6 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -48,12 +47,11 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
             }
         });
 
-        tv_aboutus_message=(TextView)findViewById(R.id.textview_about_us);
-        AboutUs aboutUs=new AboutUs();
+        tv_aboutus_message = (TextView) findViewById(R.id.textview_about_us);
+        AboutUs aboutUs = new AboutUs();
 
 
-
-        if( isNetworkAvailable()) {
+        if (isNetworkAvailable()) {
             initProgressDialog();
             if (pDialog != null && !pDialog.isShowing()) {
                 pDialog.setMessage(" please wait..");
@@ -61,29 +59,26 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
             }
 
             JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US, this);
-             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
+            App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
 
-        }
-
-        else{
+        } else {
 
             Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
-             AboutUs aboutUs2 =new AboutUs();
-            aboutUs2= DatabaseManager.getAboutUs(this);
-            if(aboutUs2.about_us_msg!=null){
+            AboutUs aboutUs2 = new AboutUs();
+            aboutUs2 = DatabaseManager.getAboutUs(this);
+            if (aboutUs2.about_us_msg != null) {
                 tv_aboutus_message.setText(aboutUs2.about_us_msg.toString().trim());
-                Log.i("Tag","valueseaboutmsg"+aboutUs2.about_us_msg);
+                Log.i("Tag", "valueseaboutmsg" + aboutUs2.about_us_msg);
 
-            }
-            else
-            Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(this.getApplicationContext(), R.string.error_internet_not_connected, Toast.LENGTH_SHORT).show();
 
 
         }
-
 
 
     }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -106,7 +101,6 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
     }
 
 
-
     public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
         switch (label) {
             case AppConstants.REQEST_ABOUT_US: {
@@ -115,20 +109,20 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 //
                         Log.i(label, "hygt " + jsonResponse);
                         Log.i(label, "hyif " + jsonResponse.aboutus);
-                        if(jsonResponse.aboutus== null) {
+                        if (jsonResponse.aboutus == null) {
                             dismissDialog();
 
                         }
-                        if(jsonResponse.aboutus!= null) {
+                        if (jsonResponse.aboutus != null) {
                             dismissDialog();
-                             tv_aboutus_message.setText(jsonResponse.aboutus.toString().trim());
-                             DatabaseManager.saveAboutUs(this,jsonResponse.aboutus);
+                            tv_aboutus_message.setText(jsonResponse.aboutus.toString().trim());
+                            DatabaseManager.saveAboutUs(this, jsonResponse.aboutus);
 
                         }
 
-                     if (jsonResponse.authorization != null) {
-                           CommonUtils.saveAuthToken(this, jsonResponse.authorization);
-                         dismissDialog();
+                        if (jsonResponse.authorization != null) {
+                            CommonUtils.saveAuthToken(this, jsonResponse.authorization);
+                            dismissDialog();
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
@@ -141,7 +135,6 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
         }
     }
-
 
 
     @Override
@@ -160,7 +153,7 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
     }
 
-    }
+}
 
 
 
