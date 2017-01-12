@@ -329,9 +329,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
 
         if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            circleimage.setImageBitmap(photo);
-            profileimage = CommonUtils.getBitmapEncodedString(photo);
+           bitmap = (Bitmap) data.getExtras().get("data");
+            circleimage.setImageBitmap(bitmap);
+            profileimage = CommonUtils.getBitmapEncodedString(bitmap);
             //storeCameraPhotoInSDCard(photo);
             //saveImageToStorage();
             circleimage.setVisibility(View.VISIBLE);
@@ -343,7 +343,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 JSONObject obj = new JSONObject();
                 try {
-                    obj.put("consumer_id", consumer_number.getText().toString() == null ? "" : consumer_number.getText().toString());
+                    obj.put("image_name", consumer_number.getText().toString() == null ? "" : consumer_number.getText().toString().concat(".JPEG"));
                     obj.put("profile_pic", profileimage.toString() == null ? "" : profileimage.toString());
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
@@ -353,8 +353,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, obj, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
 
-            } else
-                Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+            } else {
+                //Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+            }
 
         }
 
@@ -389,8 +390,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
 
             }
-        } else
-            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+        } else {
+           // Toast.makeText(this, "", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -471,7 +473,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                        Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
                     }
                 } else
@@ -495,7 +497,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
-                Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please check old Password", Toast.LENGTH_SHORT).show();
                 dismissDialog();
                 break;
             }

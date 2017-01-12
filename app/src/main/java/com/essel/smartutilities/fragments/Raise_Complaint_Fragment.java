@@ -1,8 +1,10 @@
 package com.essel.smartutilities.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,6 +57,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -71,7 +74,7 @@ import java.util.StringTokenizer;
  */
 public class Raise_Complaint_Fragment extends Fragment implements View.OnClickListener,ServiceCaller {
 
-    private static final int CAPTURE_IMAGE=1;
+    private static final int CAPTURE_IMAGE=1,SELECT_IMAGE=2;
     private int count = 0;
     ImageView iv;
     Spinner complainttype;
@@ -83,17 +86,20 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
     String caseid;
     ProgressDialog pDialog;
     Bitmap photo;
+    Bitmap bitmap;
     String consumerno;
     String selectcomplainttype,casetype,msg,msg1;
 
     private String TAG = "responsedataaaaa";
     private ArrayList<String> complaints;
+    private ArrayList<String> complaintcode =new ArrayList<String>();
     private Object fileUri;
 
     @Override
     public void onClick(View v) {
 
         if(v==iv){
+            //showImageOptionsDialog();
 
         Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
@@ -376,6 +382,20 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
             byte[] encodedImage = Base64.encode(b, Base64.DEFAULT);
             image=encodedImage.toString().trim();*/
         }
+//        if (requestCode == SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
+//
+//            Uri selectedImage = data.getData();
+//
+//            try {
+//               bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            iv.setImageURI(selectedImage);
+//            image=CommonUtils.getBitmapEncodedString(bitmap);
+//
+//            }
+
 
 
     }
@@ -483,19 +503,32 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         complainttype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                 if(position==1){
-                     casetype="Meter Testing";
+//                 if(complainttype.getSelectedItem().toString()=="Bill Complaint"){
+//                     casetype="Mannual Bill Adjustment";
+//                 }
+//                if(complainttype.getSelectedItem().toString()=="No Power"){
+//                    casetype="No Power Complaints";
+//                }
+//                if(complainttype.getSelectedItem().toString()=="Meter Complaint"){
+//                    casetype="Meter Testing";
+//                }
+//                if(complainttype.getSelectedItem().toString()=="Bill Complaint"){
+//                    casetype="Phase Correction";
+//                }
+                if(position==1){
+                     casetype=complaintcode.get(0).toString();
                  }
                 if(position==2){
-                    casetype="No Power Complaints";
+                    casetype=complaintcode.get(1).toString();
                 }
                 if(position==3){
-                    casetype="Meter Testing";
+                    casetype=complaintcode.get(2).toString();
                 }
                 if(position==4){
-                    casetype="Phase Correction";
+                    casetype=complaintcode.get(3).toString();
                 }
 
+//
             }
 
             @Override
@@ -555,11 +588,15 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
                                 complaint1.setType(jsonResponse.complaint_type.get(i-1).type);
                                 complaint1.setId(jsonResponse.complaint_type.get(i-1).id.toString().trim());
                                 complaints.add(i,complaint1.getType());
+                                complaint1.setCode(jsonResponse.complaint_type.get(i-1).code.toString());
+                                complaintcode.add(i-1,complaint1.getCode());
+
                                 Log.i(label, "complainttype" + jsonResponse.complaint_type);
 
 
 
                             }
+
 
 
                         }
@@ -632,4 +669,42 @@ public class Raise_Complaint_Fragment extends Fragment implements View.OnClickLi
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+    private void showImageOptionsDialog() {
+        final String CHOOSE_GALLERY = "Choose Gallery", USE_CAMERA = "Use Camera", UPLOAD_VIDEO = "upload video";
+        ArrayList<String> list = new ArrayList<String>();
+        final CharSequence items[];
+        list.add(CHOOSE_GALLERY);
+        list.add(USE_CAMERA);
+
+        items = list.toArray(new CharSequence[list.size()]);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(" Set Profile Image ");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+
+                if (items[item].equals(USE_CAMERA)) {
+
+                    Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
+                } else if (items[item].equals(CHOOSE_GALLERY)) {
+
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto, SELECT_IMAGE);
+
+
+                }
+            }
+
+        });
+        builder.show();
+    }
+
+
+
 }

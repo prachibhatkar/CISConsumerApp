@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
+import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
@@ -66,6 +68,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
     TextView tv_consumerid, tv_complainttype, tv_complaintraised, tv_complaintstatus;
     Spinner complaintid;
     String accid,status,type;
+    LinearLayout linearLayout;
     private String TAG = "responsedataaaaa";
 
     private OnFragmentInteractionListener mListener;
@@ -116,19 +119,20 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
         mContext = getActivity();
         initialize(rootView);
         arraycomplaintid = new ArrayList<>(12);
-        arraycomplaintid.add(0, "Select Complaint Type");
+        arraycomplaintid.add(0, "Select Complaint Id");
         complaintid = (Spinner) rootView.findViewById(R.id.sp_complaintid);
         // String[] type = mContext.getResources().getStringArray(R.array.complaintid);
 
 
         if (CommonUtils.isNetworkAvaliable(getActivity())) {
+            String consumer_no=((SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_NO)).toString());
 
-            JsonObjectRequest request = WebRequests.getComplaintID(getActivity(), Request.Method.GET, AppConstants.URL_GET_COMPLAINT_ID, AppConstants.REQUEST_GET_COMPLAINT_ID,
-                    this,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
+            JsonObjectRequest request = WebRequests.getComplaintID(getActivity(), Request.Method.POST, AppConstants.URL_GET_COMPLAINT_ID, AppConstants.REQUEST_GET_COMPLAINT_ID,
+                    this,consumer_no,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_COMPLAINT_ID);
-        } else
+        } else {
             Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
-
+        }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arraycomplaintid);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         complaintid.setAdapter(dataAdapter);
@@ -138,7 +142,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
                  orderid=complaintid.getSelectedItem().toString();
                  complaintno=complaintid.getSelectedItemPosition();
-               // if (CommonUtils.isNetworkAvaliable(getActivity())&&complaintno!=0){
+
 
 
                 if (CommonUtils.isNetworkAvaliable(getActivity())&&complaintno!=0){
@@ -155,8 +159,11 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                     task.execute();
                // }
 
-                } else
-                    Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+                } else{
+
+
+                }
+                   // Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -179,6 +186,7 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
         tv_complaintstatus = (TextView) rootView.findViewById(R.id.complaintstatus);
         tv_complaintraised = (TextView) rootView.findViewById(R.id.tv_complaintraised);
         tv_complaintmsg = (TextView) rootView.findViewById(R.id.tv_complaintmsg);
+        linearLayout=(LinearLayout)rootView.findViewById(R.id.linearlayout1);
 
 
     }
@@ -210,6 +218,10 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
                         Log.i(label, "hygt " + jsonResponse);
                         // Log.i(label, "hyif " + jsonResponse.complaint_type);
+
+                        if (jsonResponse.complaints.size()== 0) {
+                            DialogCreator.showMessageDialog(getActivity(), "No Complaints Found");
+                        }
                         if (jsonResponse.complaints.size() != 0) {
 
                             for (int i = 1; i <= jsonResponse.complaints.size(); i++) {
@@ -219,8 +231,6 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
                                 complaintid.setComplaint_no(jsonResponse.complaints.get(i-1).getComplaint_no().toString());
                                 arraycomplaintid.add(i,complaintid.complaint_no);
-
-
 
 
                             }
@@ -327,7 +337,9 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                         @Override
                         public void run() {
                             // This code will always run on the UI thread, therefore is safe to modify UI elements.
-                            tv_consumerid.setText(accid);
+                           // tv_consumerid.setText(accid);
+
+                            linearLayout.setVisibility(View.VISIBLE);
                             tv_complaintstatus.setText(status);
                             tv_complainttype.setText(type);
                         }

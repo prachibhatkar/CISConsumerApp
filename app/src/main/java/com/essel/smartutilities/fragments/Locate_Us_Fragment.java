@@ -1,13 +1,16 @@
 package com.essel.smartutilities.fragments;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +42,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -57,21 +61,21 @@ import java.util.logging.Handler;
  * Use the {@link Locate_Us_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSelectedListener,ServiceCaller {
+public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSelectedListener, ServiceCaller {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     MapView mMapView;
     private GoogleMap googleMap;
-    TextView tv_address,tv_address2,tv_address3,tv_address4;
-   Double lat,lon;
-    ArrayList<String>address1=new ArrayList<String>();
-    ArrayList<String>city1=new ArrayList<String>();
-    ArrayList<String>starttime1=new ArrayList<String>();
-    ArrayList<String>endtime1=new ArrayList<String>();
-    ArrayList<String>lat1=new ArrayList<String>();
-    ArrayList<String>lon1=new ArrayList<String>();
+    TextView tv_address, tv_address2, tv_address3, tv_address4;
+    Double lat, lon;
+    ArrayList<String> address1 = new ArrayList<String>();
+    ArrayList<String> city1 = new ArrayList<String>();
+    ArrayList<String> starttime1 = new ArrayList<String>();
+    ArrayList<String> endtime1 = new ArrayList<String>();
+    ArrayList<String> lat1 = new ArrayList<String>();
+    ArrayList<String> lon1 = new ArrayList<String>();
     Geocoder geocoder;
     ProgressDialog pDialog;
     //List<Address> addresses;
@@ -79,7 +83,7 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     private List<Address> addresses1;
     private List<Address> addresses2;
     private List<Address> addresses3;
-    String address="",city="",country="";
+    String address = "", city = "", country = "";
     private ArrayList<String> csdcenters;
 
     // TODO: Rename and change types of parameters
@@ -88,7 +92,6 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     private Spinner sp_location;
     Context mContext;
     LocateUs locateus1 = new LocateUs();
-
 
 
     public Locate_Us_Fragment() {
@@ -112,8 +115,6 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
         fragment.setArguments(args);
         return fragment;
     }
-
-
 
 
     @Override
@@ -170,18 +171,17 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mContext=getActivity();
+        mContext = getActivity();
 
         View rootView = inflater.inflate(R.layout.fragment_locate__us, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-
-        tv_address=(TextView)rootView.findViewById(R.id.tv_address1);
-        tv_address2=(TextView)rootView.findViewById(R.id.tv_address2);
-        tv_address3=(TextView)rootView.findViewById(R.id.starttime);
-        tv_address4=(TextView)rootView.findViewById(R.id.endtime);
-
+       // UiSettings.setZoomControlsEnabled(true);
+        tv_address = (TextView) rootView.findViewById(R.id.tv_address1);
+        tv_address2 = (TextView) rootView.findViewById(R.id.tv_address2);
+        tv_address3 = (TextView) rootView.findViewById(R.id.starttime);
+        tv_address4 = (TextView) rootView.findViewById(R.id.endtime);
 
 
         mMapView.onResume(); // needed to get the map to display immediately
@@ -196,10 +196,20 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
-                 googleMap = mMap;
+                googleMap = mMap;
 
                 // For showing a move to my location button
-                 googleMap.setMyLocationEnabled(true);
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);
 
                 // For dropping a marker at a point on the Map
                 /* LatLng all_csd = new LatLng(20.5937, 78.9629);
@@ -557,9 +567,9 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                               //  locateus.setLongitude(jsonResponse.locateus.get(i-1).getLongitude().toString());
                                    address1.add(locateus1.address);
                                    city1.add(locateus1.city);
+                                lat1.add(locateus1.latitude);
                                    starttime1.add(locateus1.start_time);
                                   endtime1.add(locateus1.end_time);
-                                  lat1.add(locateus1.latitude);
                                   lon1.add(locateus1.longitude);
                                  csdcenters.add(i-1,locateus1.getCenter_name());
                                 Log.i(label, "complainttype" + jsonResponse.locateus);

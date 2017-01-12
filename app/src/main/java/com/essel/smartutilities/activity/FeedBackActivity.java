@@ -27,6 +27,7 @@ import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class FeedBackActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
      EditText edit_remark_feedback;
@@ -35,6 +36,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
      String remark;
      TextView tv_rate;
      String count;
+    String refreshedToken;
      ImageView image1,image2,image3,image4,image5;
     ProgressDialog pDialog;
     @Override
@@ -162,7 +164,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
             tv_rate.setText("bad");
            // Toast.makeText(this.getApplicationContext(), "you have rated 5", Toast.LENGTH_SHORT).show();
 
-
+             refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
         }
         else if(v==image2){
@@ -185,6 +187,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
             count="STAR4";
             tv_rate.setText("Good");
            //Toast.makeText(this.getApplicationContext(), "you have rated 2", Toast.LENGTH_SHORT).show();
+            Log.i("jknkjk", "Refreshed token: " + refreshedToken);
 
 
 

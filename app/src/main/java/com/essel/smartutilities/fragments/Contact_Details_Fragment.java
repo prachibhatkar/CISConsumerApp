@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -44,6 +48,7 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
     private static final String ARG_PARAM2 = "param2";
 
     ProgressDialog pDialog;
+    Toolbar toolbar;
 
 
     TextView tv_portalsite, tv_antiberibery, tv_onlinecomplaint, tv_igrcemail, tv_consumerportal, tv_helplineno, tv_antiberiberyno, tv_onlinecomplaintno, tv_electricitytheftno, tv_igrc, tv_igrcno;
@@ -89,7 +94,17 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_contact__details, container, false);
+
         initialize(rootView);
+//        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+//        // setSupportActionBar(toolbar);
+//        ImageView imgBack = (ImageView) rootView.findViewById(R.id.img_back);
+//        imgBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getActivity().finish();
+//            }
+//        });
         return rootView;
 
     }

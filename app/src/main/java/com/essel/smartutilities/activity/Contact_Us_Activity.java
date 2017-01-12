@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -62,13 +63,15 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
-
+      //  MenuInflater inflater = getMenuInflater();
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_right_call, menu);
+       // inflater.inflate(R.menu.top_right_call, menu);
+            // menu.setGroupVisible(0,true);
 //        if(i1==1){
 //
 //            getMenuInflater().inflate(R.menu.top_right_faq, menu);
-//        }
+
         return true;
     }
 
@@ -117,6 +120,8 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
         public void onPageSelected(int position) {
 
+
+
         }
 
 
@@ -133,6 +138,8 @@ public class Contact_Us_Activity extends AppCompatActivity {
 
 
     }
+
+
 
 
 

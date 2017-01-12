@@ -24,14 +24,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
+        android:id="@+id/linearlayout1"
         android:background="@color/background"
         android:layout_gravity="left"
+        android:visibility="gone"
         android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Consumerid "
+        android:text=""
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:textColor="@color/colorPrimaryDarkText"

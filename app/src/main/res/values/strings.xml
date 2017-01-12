@@ -232,5 +232,7 @@
     <string name="error_internet_not_connected">Please Check Internet Connection and Try Again</string>
     <string name="title_activity_add_account2">AddAccountActivity2</string>
 
+    <string name="FCM_PREF">com.essel.smartutilities.fcm_pref</string>
+    <string name="FCM_TOKEN">com.essel.smartutilities.fcm_token</string>
 
 </resources>

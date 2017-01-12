@@ -48,6 +48,8 @@ public class SharedPrefManager {
     public static String CONSUMER_LOGGED ="";
     public static String CON_NO = "con_no";
     public static String POSTAL = "postal";
+    public static String FCM_PREF = "fcm_pref";
+    public static String FCM_TOKEN = "fcm_token";
 
     public static String USER_KEY = "user_key";
 
