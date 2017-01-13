@@ -4,13 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-
-import com.essel.smartutilities.R;
-import com.essel.smartutilities.activity.TipsActivity;
-import com.essel.smartutilities.fragments.TipOneFragment;
-import com.essel.smartutilities.fragments.TipThreeFragment;
-import com.essel.smartutilities.fragments.TipTwoFragment;
 
 /**
  * Created by hp on 9/12/2016.

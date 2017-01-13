@@ -2,8 +2,6 @@ package com.essel.smartutilities.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,19 +25,20 @@ import com.essel.smartutilities.models.TariffEnergyCharge;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
-import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
 import java.util.ArrayList;
 
-public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
+public class TraiffActivity extends AppCompatActivity implements ServiceCaller
+{
 
     public ArrayList<String>tariffEnergyCharge;
     TextView tv_bplcatagory1,tv_bplcatagory2,tv_fixedcharge,tv_energycharge,tv_100units,tv_300unoits,tv_500units,tv_1000units,tv_singlephase,tv_threephase,tv_energycharge1,tv_energycharge2,tv_energycharge3,tv_energycharge4,tv_singlephase_rs,tv_threephase_rs;
     ProgressDialog pDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traiff);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,16 +73,19 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
 
 
-        if( CommonUtils.isNetworkAvaliable(this)) {
+        if( CommonUtils.isNetworkAvaliable(this))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage(" please wait..");
                 pDialog.show();
             }
             JsonObjectRequest request = WebRequests.getTariff(this, Request.Method.GET, AppConstants.URL_GET_TARIFF, AppConstants.REQUEST_TARIFF,
                     this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_TARIFF);
-        }else {
+        }else
+        {
 
             TarifCatagory tariffcata=new TarifCatagory();
             ArrayList<TarifCatagory>arraytraiffcata=new ArrayList<TarifCatagory>();
@@ -120,7 +122,8 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
            FixedEnergyCharge fixedenergycharge=new FixedEnergyCharge();
             ArrayList<FixedEnergyCharge>fixedcharge=new ArrayList<FixedEnergyCharge>();
             fixedcharge=DatabaseManager.getTariffFixedEnergyCharge(this);
-            for(int i=0;i< fixedcharge.size();i++) {
+            for(int i=0;i< fixedcharge.size();i++)
+            {
                 tv_singlephase.setText(fixedcharge.get(0).slab);
                 tv_singlephase_rs.setText(fixedcharge.get(0).charge);
 
@@ -134,36 +137,45 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
 
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
        super.onBackPressed();
 
     }
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQUEST_TARIFF: {
-                if (jsonResponse != null) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_TARIFF:
+            {
+                if (jsonResponse != null)
+                {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         dismissDialog();
 //
-                        if(jsonResponse.tariff!=null) {
+                        if(jsonResponse.tariff!=null)
+                        {
                             Log.i(label, "Tariffsucccccc:" + jsonResponse.tariff);
                             Tariff gettariff = new Tariff();
 
@@ -269,14 +281,13 @@ public class TraiffActivity extends AppCompatActivity implements ServiceCaller {
     }
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
 
-        switch (label) {
-            case AppConstants.REQUEST_TARIFF: {
-//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
-//                Log.i(label, "Faq:" + message);
-                Log.i(label, "tarifffffffff" + response);
+        switch (label)
+        {
+            case AppConstants.REQUEST_TARIFF:
+            {Log.i(label, "tarifffffffff" + response);
                 dismissDialog();
             }
             break;

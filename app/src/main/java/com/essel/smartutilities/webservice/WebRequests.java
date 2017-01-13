@@ -117,50 +117,7 @@ public class WebRequests {
     }
 
 
-
-    public static JsonObjectRequest getRequestADD(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj, final String Token) {
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
-                Gson gson = new Gson();
-                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-                caller.onAsyncSuccess(jsonResponse, label);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkResponse response = error.networkResponse;
-                if (error instanceof ServerError && response != null) {
-                    try {
-                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                        VolleyLog.d(TAG, "Error: " + res);
-                        Gson gson = new Gson();
-                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-                        caller.onAsyncSuccess(jsonResponse, label);
-                    } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
-                        // e1.printStackTrace();
-                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-                    }
-                } else
-                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                params.put("Authorization", Token);
-                return params;
-            }
-        };
-
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        return jsonObjReq;
-    }
-
-//    public static JsonObjectRequest deleteAccount(final Context context, int request_type, String url, final String label, final Context caller, final JSONObject obj, final String Token) {
+//    public static JsonObjectRequest getRequestADD(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj, final String Token) {
 //
 //        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
 //            @Override
@@ -181,7 +138,6 @@ public class WebRequests {
 //                        Gson gson = new Gson();
 //                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
 //                        caller.onAsyncSuccess(jsonResponse, label);
-//
 //                    } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
 //                        // e1.printStackTrace();
 //                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
@@ -202,46 +158,48 @@ public class WebRequests {
 //        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 //        return jsonObjReq;
 //    }
-    public static JsonObjectRequest getRequestRegister(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj) {
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
-                Gson gson = new Gson();
-                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-                caller.onAsyncSuccess(jsonResponse, label);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkResponse response = error.networkResponse;
-                if (error instanceof ServerError && response != null) {
-                    try {
-                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                        VolleyLog.d(TAG, "Error: " + res);
-                        Gson gson = new Gson();
-                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-                        caller.onAsyncSuccess(jsonResponse, label);
-                    } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
-                        // e1.printStackTrace();
-                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-                    }
-                } else
-                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-        };
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        return jsonObjReq;
-    }
+//    public static JsonObjectRequest getRequestRegister(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj) {
+//
+//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Log.d(TAG, response.toString());
+//                Gson gson = new Gson();
+//                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
+//                caller.onAsyncSuccess(jsonResponse, label);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                NetworkResponse response = error.networkResponse;
+//                if (error instanceof ServerError && response != null) {
+//                    try {
+//                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+//                        VolleyLog.d(TAG, "Error: " + res);
+//                        Gson gson = new Gson();
+//                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
+//                        caller.onAsyncSuccess(jsonResponse, label);
+//                    } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
+//                        // e1.printStackTrace();
+//                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
+//                    }
+//                } else
+//                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> params = new HashMap<>();
+//                params.put("Content-Type", "application/json");
+//                return params;
+//            }
+//        };
+//
+//        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//        return jsonObjReq;
+//    }
 
     public static JsonObjectRequest getRequestOtp(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj) {
 
@@ -283,6 +241,7 @@ public class WebRequests {
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         return jsonObjReq;
     }
+
     public static JsonObjectRequest getRequestOtpforAdd(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj, final String Token) {
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
@@ -324,7 +283,8 @@ public class WebRequests {
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         return jsonObjReq;
     }
-    public static JsonObjectRequest getRequestUser(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj ) {
+
+    public static JsonObjectRequest getRequestUser(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj) {
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
             @Override
@@ -764,8 +724,8 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-             //   params.put("Content-Type", "application/json; charset=utf-8");
-              //  params.put("Accept", "application/json");
+                //   params.put("Content-Type", "application/json; charset=utf-8");
+                //  params.put("Accept", "application/json");
                 // params.put("Authorization", token);
                 return params;
             }
@@ -775,24 +735,6 @@ public class WebRequests {
         return jsonObjReq;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public static JsonObjectRequest getContactDetails(Context context, int request_type, String url, final String label, final ServiceCaller caller) {
 
@@ -872,9 +814,6 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-                // params.put("Authorization", token);
                 return params;
             }
         };
@@ -917,9 +856,6 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-                // params.put("Authorization", token);
                 return params;
             }
         };
@@ -963,9 +899,7 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-//                params.put("Authorization", token);
+
                 return params;
             }
         };
@@ -1012,8 +946,6 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                // params.put("Content-Type", "application/json; charset=utf-8");
-                // params.put("Accept", "application/json");
                 params.put("Authorization", token);
                 return params;
             }
@@ -1023,7 +955,7 @@ public class WebRequests {
         return jsonObjReq;
     }
 
-    public static JsonObjectRequest profileimg(Context context, int request_type, String url, final String label, final ServiceCaller caller,  final JSONObject obj, final String token) {
+    public static JsonObjectRequest profileimg(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject obj, final String token) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, obj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -1044,7 +976,6 @@ public class WebRequests {
                         JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
                         caller.onAsyncSuccess(jsonResponse, label);
                     } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
-                        // e1.printStackTrace();
                         caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
                     }
                 } else
@@ -1152,9 +1083,7 @@ public class WebRequests {
     }
 
 
-
-
-    public static JsonObjectRequest forgotpassword(Context context, int request_type, String url, final String label, final ServiceCaller caller,  final String consumerno) {
+    public static JsonObjectRequest forgotpassword(Context context, int request_type, String url, final String label, final ServiceCaller caller, final String consumerno) {
         final Map<String, String> postParam = new HashMap<String, String>();
         postParam.put("consumer_no", consumerno);
         final JSONObject jsonObject = new JSONObject(postParam);
@@ -1189,9 +1118,6 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                // params.put("Content-Type", "application/json; charset=utf-8");
-                // params.put("Accept", "application/json");
-             //   params.put("Authorization", token);
                 return params;
             }
         };
@@ -1237,9 +1163,6 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                // params.put("Content-Type", "application/json; charset=utf-8");
-                // params.put("Accept", "application/json");
-                //params.put("Authorization", token);
                 return params;
             }
         };
@@ -1247,323 +1170,4 @@ public class WebRequests {
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         return jsonObjReq;
     }
-
-
-
-
-
-//
-//    public static JsonObjectRequest getJobCards(int request_type, String url, final String label, final ServiceCaller caller, int pageNumber, final String token)
-//    {
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url + pageNumber, null, new Response.Listener<JSONObject>()
-//        {
-//            @Override
-//            public void onResponse(JSONObject response)
-//            {
-//                Log.d(TAG, response.toString());
-//                Gson gson = new Gson();
-//                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-//                caller.onAsyncSuccess(jsonResponse, label);
-//            }
-//        }, new Response.ErrorListener()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError error)
-//            {
-//                NetworkResponse response = error.networkResponse;
-//                if (error instanceof ServerError && response != null)
-//                {
-//                    try
-//                    {
-//                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-//                        VolleyLog.d(TAG, "Error: " + res);
-//                        Gson gson = new Gson();
-//                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-//                        caller.onAsyncSuccess(jsonResponse, label);
-//                    }
-//                    catch (UnsupportedEncodingException e1)
-//                    {
-//                        e1.printStackTrace();
-//                    }
-//                    catch (JsonSyntaxException je)
-//                    {
-//                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//                    }
-//                }
-//                else
-//                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//            }
-//        })
-//        {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError
-//            {
-//                HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-//                params.put("Authorization", token);
-//                return params;
-//            }
-//        };
-//
-//        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        return jsonObjReq;
-//    }
-//
-//    public static JsonObjectRequest getdeassignedreassignedjobcards(int request_type, String url, final String label, final ServiceCaller caller, int pageNumber, final String token)
-//    {
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url + pageNumber, null, new Response.Listener<JSONObject>()
-//        {
-//            @Override
-//            public void onResponse(JSONObject response)
-//            {
-//                Log.d(TAG, response.toString());
-//                Gson gson = new Gson();
-//                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-//                caller.onAsyncSuccess(jsonResponse, label);
-//            }
-//        }, new Response.ErrorListener()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError error)
-//            {
-//                NetworkResponse response = error.networkResponse;
-//                if (error instanceof ServerError && response != null)
-//                {
-//                    try
-//                    {
-//                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-//                        VolleyLog.d(TAG, "Error: " + res);
-//                        Gson gson = new Gson();
-//                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-//                        caller.onAsyncSuccess(jsonResponse, label);
-//                    }
-//                    catch (UnsupportedEncodingException e1)
-//                    {
-//                        e1.printStackTrace();
-//                    }
-//                    catch (JsonSyntaxException je)
-//                    {
-//                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//                    }
-//                }
-//                else
-//                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//            }
-//        })
-//        {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError
-//            {
-//                HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-//                params.put("Authorization", token);
-//                return params;
-//            }
-//        };
-//
-//        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        return jsonObjReq;
-//    }
-//
-//    private static void saveFile(Context context, String code)
-//    {
-//        // write on SD card file data in the text box
-//        try
-//        {
-//            File myFile = new File(Environment.getExternalStorageDirectory().getPath()+"/mysdfile.txt");
-//            myFile.createNewFile();
-//            FileOutputStream fOut = new FileOutputStream(myFile);
-//            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-//            myOutWriter.append(code);
-//            myOutWriter.close();
-//            fOut.close();
-//            Toast.makeText(context, "Done writing SD 'mysdfile.txt'", Toast.LENGTH_SHORT).show();
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//            //Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    public static JsonObjectRequest uploadMeterReading(Context context, String reader_id, JSONObject jsonObject, int request_type, String url, final String label, final ServiceCaller caller, final String token)
-//    {
-//        //saveFile(context, jsonObject.toString());
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, jsonObject, new Response.Listener<JSONObject>()
-//        {
-//            @Override
-//            public void onResponse(JSONObject response)
-//            {
-//                Log.d(TAG, response.toString());
-//                Gson gson = new Gson();
-//                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-//                caller.onAsyncSuccess(jsonResponse, label);
-//            }
-//        }, new Response.ErrorListener()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError error)
-//            {
-//                NetworkResponse response = error.networkResponse;
-//                if (error instanceof ServerError && response != null)
-//                {
-//                    try
-//                    {
-//                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-//                        VolleyLog.d(TAG, "Error: " + res);
-//                        Gson gson = new Gson();
-//                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-//                        caller.onAsyncSuccess(jsonResponse, label);
-//                    }
-//                    catch (UnsupportedEncodingException e1)
-//                    {
-//                        e1.printStackTrace();
-//                    }
-//                    catch (JsonSyntaxException je)
-//                    {
-//                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//                    }
-//                }
-//                else
-//                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//            }
-//        })
-//        {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError
-//            {
-//                HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-//                params.put("Authorization", token);
-//                return params;
-//            }
-//        };
-//
-//        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        return jsonObjReq;
-//    }
-//
-//
-//    public static JsonObjectRequest uploadConsumerMeterReading(Context context, String reader_id, JSONObject jsonObject, int request_type, String url, final String label, final ServiceCaller caller, final String token)
-//    {
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, jsonObject, new Response.Listener<JSONObject>()
-//        {
-//            @Override
-//            public void onResponse(JSONObject response)
-//            {
-//                Log.d(TAG, response.toString());
-//                Gson gson = new Gson();
-//                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-//                caller.onAsyncSuccess(jsonResponse, label);
-//            }
-//        }, new Response.ErrorListener()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError error)
-//            {
-//                NetworkResponse response = error.networkResponse;
-//                if (error instanceof ServerError && response != null)
-//                {
-//                    try
-//                    {
-//                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-//                        VolleyLog.d(TAG, "Error: " + res);
-//                        Gson gson = new Gson();
-//                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-//                        caller.onAsyncSuccess(jsonResponse, label);
-//                    }
-//                    catch (UnsupportedEncodingException e1)
-//                    {
-//                        e1.printStackTrace();
-//                    }
-//                    catch (JsonSyntaxException je)
-//                    {
-//                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//                    }
-//                }
-//                else
-//                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//            }
-//        })
-//        {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError
-//            {
-//                HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-//                params.put("Authorization", token);
-//                return params;
-//            }
-//        };
-//
-//        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        return jsonObjReq;
-//    }
-//
-//
-//
-//
-//
-//    public static JsonObjectRequest profileImageChange(Context context, int request_type, String url, final String label, final ServiceCaller caller, final JSONObject jsonObj, final String token)
-//    {
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(request_type, url, jsonObj, new Response.Listener<JSONObject>()
-//        {
-//            @Override
-//            public void onResponse(JSONObject response)
-//            {
-//                Log.d(TAG, response.toString());
-//                Gson gson = new Gson();
-//                JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-//                caller.onAsyncSuccess(jsonResponse, label);
-//            }
-//        }, new Response.ErrorListener()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError error)
-//            {
-//                NetworkResponse response = error.networkResponse;
-//                if (error instanceof ServerError && response != null)
-//                {
-//                    try
-//                    {
-//                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-//                        VolleyLog.d(TAG, "Error: " + res);
-//                        Gson gson = new Gson();
-//                        JsonResponse jsonResponse = gson.fromJson(res, JsonResponse.class);
-//                        caller.onAsyncSuccess(jsonResponse, label);
-//                    }
-//                    catch (UnsupportedEncodingException e1)
-//                    {
-//                        e1.printStackTrace();
-//                    }
-//                    catch (JsonSyntaxException je)
-//                    {
-//                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//                    }
-//                }
-//                else
-//                    caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", label, response);
-//            }
-//        })
-//        {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError
-//            {
-//                HashMap<String, String> params = new HashMap<>();
-//                params.put("Content-Type", "application/json; charset=utf-8");
-//                params.put("Accept", "application/json");
-//                params.put("Authorization", token);
-//                return params;
-//            }
-//        };
-//
-//        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        return jsonObjReq;
-//
-//
-//    }
-}
+ }

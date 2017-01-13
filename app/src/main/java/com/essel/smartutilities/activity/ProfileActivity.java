@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -50,12 +49,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller
+{
     private static final int CAPTURE_IMAGE = 1;
-    private String mFragementName;
     private Context mContext;
     private static final int SELECT_IMAGE = 2;
-    //private ViewPager profile_pager;
     ExpandableRelativeLayout expandableLayout_editProfile, expandableLayout_changepass;
     Button expandableButton_editprofile, expandableButton_changepass, save_detail, save_password;
     CircleImageView circleimage;
@@ -69,7 +67,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     String img1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -87,16 +86,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         return;
     }
 
-    private void setupUI() {
+    private void setupUI()
+    {
         circleimage = (CircleImageView) findViewById(R.id.profile_image);
         circleimage.setOnClickListener(this);
         Consumer con = new Consumer();
         con = DatabaseManager.getImage(this);
-        if (con.profile_img != null && !con.profile_img.equals("") && con.profile_img.startsWith("http://")) {
+        if (con.profile_img != null && !con.profile_img.equals("") && con.profile_img.startsWith("http://"))
+        {
 
-
-//             bitmap=StringToBitMap(con.profile_img);
-//             circleimage.setImageBitmap(bitmap);
             Picasso.with(this)
                     .load(con.profile_img)
 
@@ -146,7 +144,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         consumer_add = (TextView) findViewById(R.id.textConsumerAddress);
         consumer_add.setText(consumeraddress);
         consumer_add1 = (TextView) findViewById(R.id.textConsumerAddress1);
-        //consumer_add1.setText(consumeraddress);
 
 
         save_detail.setOnClickListener(this);
@@ -155,53 +152,64 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public Bitmap StringToBitMap(String img1) {
+    public Bitmap StringToBitMap(String img1)
+    {
         try {
             byte[] encodeByte = Base64.decode(img1, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.getMessage();
             return null;
         }
 
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
-    public void onClick(View view) {
-        if (view == expandableButton_editprofile) {
+    public void onClick(View view)
+    {
+        if (view == expandableButton_editprofile)
+        {
 
             expandableLayout_editProfile.toggle();
             expandableLayout_changepass.collapse();
 
 
         }
-        if (view == expandableButton_changepass) {
+        if (view == expandableButton_changepass)
+        {
 
             expandableLayout_changepass.toggle();
             expandableLayout_editProfile.collapse();
         }
 
-        if (view == circleimage) {
+        if (view == circleimage)
+        {
             showImageOptionsDialog();
         }
-        if (view == save_detail) {
+        if (view == save_detail)
+        {
 
 
-            if (contactno.equals("") || contactno.length() != 10) {
+            if (contactno.equals("") || contactno.length() != 10)
+            {
 
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
 
@@ -211,46 +219,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             } else
                 saveDetails();
 
-
-//            expandableLayout_editProfile.collapse();
-//            expandableLayout_changepass.collapse();
         }
-        if (view == save_password) {
+        if (view == save_password)
+        {
 
-            if (validate()) {
+            if (validate())
+            {
                 callchangepass();
-
-            }
-          /*  String oldpass = String.valueOf(old_pass.getText());
-            String newpass = String.valueOf(new_pass.getText());
-            String confirmpass = String.valueOf(confirm_pass.getText());
-
-            if ((oldpass.equals(" ")) || (newpass.equals("")) || (confirmpass.equals(""))) {
-                Toast.makeText(this, "Please fill correct passsword ", Toast.LENGTH_LONG).show();
-                expandableLayout_changepass.expand();
             }
 
-           else if(oldpass.length()<6||oldpass.length()>20||newpass.length()<6||newpass.length()>20) {
-
-
-                Toast.makeText(this, " password should have atleast 6 characters", Toast.LENGTH_LONG).show();
-
-            }
-          //  else if(confirmpass.toString().trim().compareTo(newpass.toString().trim())!= 0){
-
-            else {
-                 callchangepass();
-//                expandableLayout_editProfile.collapse();
-//                expandableLayout_changepass.collapse();
-            }
-            }*/
         }
     }
 
-    private void saveDetails() {
-        if (CommonUtils.isNetworkAvaliable(this)) {
+    private void saveDetails()
+    {
+        if (CommonUtils.isNetworkAvaliable(this))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage("Requesting, please wait..");
                 pDialog.show();
             }
@@ -258,7 +245,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             try {
                 obj.put("alternate_mobile", contactno.getText().toString() == null ? "" : contactno.getText().toString());
                 obj.put("alternate_email", emailid.getText().toString() == null ? "" : emailid.getText().toString());
-            } catch (JSONException e) {
+            } catch (JSONException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -269,18 +257,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
     }
 
-    private void callchangepass() {
-        if (CommonUtils.isNetworkAvaliable(this)) {
+    private void callchangepass()
+    {
+        if (CommonUtils.isNetworkAvaliable(this))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage("Requesting, please wait..");
                 pDialog.show();
             }
             JSONObject obj = new JSONObject();
-            try {
+            try
+            {
                 obj.put("old_password", old_pass.getText().toString() == null ? "" : old_pass.getText().toString());
                 obj.put("new_password", new_pass.getText().toString() == null ? "" : new_pass.getText().toString());
-            } catch (JSONException e) {
+            } catch (JSONException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -291,7 +284,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
     }
 
-    private void showImageOptionsDialog() {
+    private void showImageOptionsDialog()
+    {
         final String CHOOSE_GALLERY = "Choose Gallery", USE_CAMERA = "Use Camera", UPLOAD_VIDEO = "upload video";
         ArrayList<String> list = new ArrayList<String>();
         final CharSequence items[];
@@ -303,16 +297,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(" Set Profile Image ");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
+        builder.setItems(items, new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialog, int item) {
+            public void onClick(DialogInterface dialog, int item)
+            {
 
 
-                if (items[item].equals(USE_CAMERA)) {
+                if (items[item].equals(USE_CAMERA))
+                {
 
                     Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(photoCaptureIntent, CAPTURE_IMAGE);
-                } else if (items[item].equals(CHOOSE_GALLERY)) {
+                } else if (items[item].equals(CHOOSE_GALLERY))
+                {
 
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(pickPhoto, SELECT_IMAGE);
@@ -325,24 +323,29 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         builder.show();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
 
 
-        if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK)
+        {
            bitmap = (Bitmap) data.getExtras().get("data");
             circleimage.setImageBitmap(bitmap);
             profileimage = CommonUtils.getBitmapEncodedString(bitmap);
             //storeCameraPhotoInSDCard(photo);
             //saveImageToStorage();
             circleimage.setVisibility(View.VISIBLE);
-            if (CommonUtils.isNetworkAvaliable(this)) {
+            if (CommonUtils.isNetworkAvaliable(this))
+            {
                 initProgressDialog();
-                if (pDialog != null && !pDialog.isShowing()) {
+                if (pDialog != null && !pDialog.isShowing())
+                {
                     pDialog.setMessage(" please wait..");
                     pDialog.show();
                 }
                 JSONObject obj = new JSONObject();
-                try {
+                try
+                {
                     obj.put("image_name", consumer_number.getText().toString() == null ? "" : consumer_number.getText().toString().concat(".JPEG"));
                     obj.put("profile_pic", profileimage.toString() == null ? "" : profileimage.toString());
                 } catch (JSONException e) {
@@ -359,11 +362,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         }
 
-        if (requestCode == SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == SELECT_IMAGE && resultCode == Activity.RESULT_OK)
+        {
 
             Uri selectedImage = data.getData();
 
-            try {
+            try
+            {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -371,14 +376,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             circleimage.setImageURI(selectedImage);
 
             profileimage = CommonUtils.getBitmapEncodedString(bitmap);
-            if (CommonUtils.isNetworkAvaliable(this)) {
+            if (CommonUtils.isNetworkAvaliable(this))
+            {
                 initProgressDialog();
                 if (pDialog != null && !pDialog.isShowing()) {
                     pDialog.setMessage(" please wait..");
                     pDialog.show();
                 }
                 JSONObject obj = new JSONObject();
-                try {
+                try
+                {
                     obj.put("image_name", consumer_number.getText().toString() == null ? "" : consumer_number.getText().toString().concat(".JPEG"));
                     obj.put("profile_pic", profileimage.toString() == null ? "" : profileimage.toString());
                 } catch (JSONException e) {
@@ -391,26 +398,31 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         } else {
-           // Toast.makeText(this, "", Toast.LENGTH_LONG).show();
         }
     }
 
 
-    private void loadData() {
+
+    private void loadData()
+    {
 
     }
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         super.onBackPressed();
 
     }
 
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
         switch (label) {
-            case AppConstants.REQUEST_CONTACT_INFO: {
+            case AppConstants.REQUEST_CONTACT_INFO:
+            {
                 if (jsonResponse != null) {
-                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS))
+                    {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         if (jsonResponse.message != null)
@@ -421,22 +433,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         GetInfo get = new GetInfo();
                         get.mobileno = contactno.getText().toString();
                         DatabaseManager.updateProfile(this, get);
-                        // contactno.setText(get.mobileno);
                         expandableLayout_editProfile.collapse();
                         dismissDialog();
 
-                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE))
+                    {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
                 dismissDialog();
             }
             break;
-            case AppConstants.REQUEST_CHANGE_PASS: {
-                if (jsonResponse != null) {
+            case AppConstants.REQUEST_CHANGE_PASS:
+            {
+                if (jsonResponse != null)
+                {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
@@ -456,14 +469,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 dismissDialog();
             }
 
-            case AppConstants.REQUEST_POST_PROFILE_IMG: {
-                if (jsonResponse != null) {
+            case AppConstants.REQUEST_POST_PROFILE_IMG:
+            {
+                if (jsonResponse != null)
+                {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         Consumer consumer = new Consumer();
                         consumer.profile_img = CommonUtils.getBitmapEncodedString(bitmap);
-                        // consumer.profile_img=circleimage.toString();
                         DatabaseManager.saveImage(this, consumer);
                         if (jsonResponse.message != null)
                             Toast.makeText(this, jsonResponse.message.toString(), Toast.LENGTH_SHORT).show();
@@ -473,8 +487,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                       // Toast.makeText(this, "Fill Correct Data", Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();
@@ -484,16 +496,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
-        switch (label) {
-            case AppConstants.REQUEST_CONTACT_INFO: {
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_CONTACT_INFO:
+            {
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
                 dismissDialog();
                 break;
             }
-            case AppConstants.REQUEST_CHANGE_PASS: {
+            case AppConstants.REQUEST_CHANGE_PASS:
+            {
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
@@ -501,7 +517,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 dismissDialog();
                 break;
             }
-            case AppConstants.REQUEST_POST_PROFILE_IMG: {
+            case AppConstants.REQUEST_POST_PROFILE_IMG:
+            {
 
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
@@ -512,14 +529,21 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    private boolean validate() {
+    private boolean validate()
+    {
         Boolean flag = false;
-        if (emailid.getText().length() == 0 || CommonUtils.emailValidator(emailid.getText().toString())) {
-            if (contactno.getText().length() == 10 || contactno.getText().length() == 12 || contactno.getText().length() == 0) {
-                if (old_pass.getText().toString().trim().length() >= 6 && old_pass.getText().toString().trim().length() <= 20) {
-                    if (new_pass.getText().toString().trim().length() >= 6 && new_pass.getText().toString().trim().length() <= 20) {
-                        if (confirm_pass.getText().length()==0 ||confirm_pass.getText().length()>=6 ||confirm_pass.getText().length()<=20) {
-                            if (confirm_pass.getText().toString().trim().compareTo(new_pass.getText().toString().trim()) == 0) {
+        if (emailid.getText().length() == 0 || CommonUtils.emailValidator(emailid.getText().toString()))
+        {
+            if (contactno.getText().length() == 10 || contactno.getText().length() == 12 || contactno.getText().length() == 0)
+            {
+                if (old_pass.getText().toString().trim().length() >= 6 && old_pass.getText().toString().trim().length() <= 20)
+                {
+                    if (new_pass.getText().toString().trim().length() >= 6 && new_pass.getText().toString().trim().length() <= 20)
+                    {
+                        if (confirm_pass.getText().length()==0 ||confirm_pass.getText().length()>=6 ||confirm_pass.getText().length()<=20)
+                        {
+                            if (confirm_pass.getText().toString().trim().compareTo(new_pass.getText().toString().trim()) == 0)
+                            {
                                 flag = true;
                             } else
                                 Toast.makeText(this, "Password Does not Match", Toast.LENGTH_SHORT).show();

@@ -28,7 +28,8 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class PaymentHistoryActivity extends AppCompatActivity implements View.OnClickListener {
+public class PaymentHistoryActivity extends AppCompatActivity implements View.OnClickListener
+{
     RecyclerView rv_consumers;
     ImageView add;
     private String TAG = "responsedataaaaa";
@@ -42,7 +43,8 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
     PaymentHistoryAdapter adapter;
     ProgressDialog pDialog;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_history);
 //
@@ -58,9 +60,11 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
                 finish();
             }
         });
-        if (CommonUtils.isNetworkAvaliable(this)) {
+        if (CommonUtils.isNetworkAvaliable(this))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage(" please wait..");
                 pDialog.show();
             }
@@ -77,39 +81,46 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
     }
 
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
 
 
-    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void>
+    {
 
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             Log.i(TAG, "onPreExecute");
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params)
+        {
             Log.i(TAG, "doInBackground");
             getPaymentHistory();
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Void result)
+        {
             Log.i(TAG, "onPostExecute");
             Log.i(TAG, "response data: ");
              dismissDialog();
@@ -123,7 +134,8 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
     }
 
-    public void getPaymentHistory() {
+    public void getPaymentHistory()
+    {
 
         String getconsumerno = (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO)).toString();
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
@@ -133,7 +145,8 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-             if(getconsumerno.length()==10) {
+             if(getconsumerno.length()==10)
+             {
                 Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
@@ -229,7 +242,8 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
                paymenthis=new ArrayList<>();*/
 
 
-           for (int i = 0; i < 6; i++) {
+           for (int i = 0; i < 6; i++)
+           {
                PaymentHistory paymenthistory1 = new PaymentHistory();
 
                  NewPaymentlist.add(Amount.get(i));
@@ -249,7 +263,8 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
 
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             Log.e(TAG, "Error: " + e.getMessage());
 
         }
@@ -261,7 +276,8 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_right_menu, menu);
         return true;
@@ -272,7 +288,8 @@ public class PaymentHistoryActivity extends AppCompatActivity implements View.On
 
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
 
 
     }

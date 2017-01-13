@@ -28,7 +28,8 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.Arrays;
 
-public class LandingSkipLoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LandingSkipLoginActivity extends AppCompatActivity implements View.OnClickListener
+{
     Button Submit;
     ImageView imgBack;
     LinearLayout action_about_us, action_tips, action_my_traiff, action_faq, action_contactus, action_share;
@@ -38,13 +39,15 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     ProgressDialog pDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_skip_login);
         initialize();
     }
 
-    private void initialize() {
+    private void initialize()
+    {
         consumerno = (EditText) findViewById(R.id.consumer_id);
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
@@ -62,7 +65,8 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         action_contactus.setOnClickListener(this);
         action_share.setOnClickListener(this);
         imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        imgBack.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 onBackPressed();
@@ -70,73 +74,88 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
             }
         });
         sp_city = (Spinner) findViewById(R.id.sp_city);
-        String[] routes = this.getResources().getStringArray(R.array.City);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Arrays.asList(routes));
+        String[] city = this.getResources().getStringArray(R.array.City);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Arrays.asList(city));
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_city.setAdapter(dataAdapter);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.top_right_menu, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == R.id.action_logout) {
-            // DialogCreator.showLogoutDialog(this, "Logout", "Are you sure you want to logout?");
+        if (id == R.id.action_logout)
+        {
             return true;
         }
-        if (id == R.id.action_notifications) {
+        if (id == R.id.action_notifications)
+        {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean validate() {
+    public boolean validate()
+    {
         Boolean flag = false;
+        if (sp_city.getSelectedItemPosition()!=0)
+        {
+            if (consumerno.getText().toString().trim().length() != 0 && (consumerno.getText().toString().trim().length() >= 10
+                    && consumerno.getText().toString().trim().length() <= 20))
+            {
+                flag = true;
+            } else
+                Toast.makeText(this, "Enter valid Consumer Number", Toast.LENGTH_LONG).show();
+        }else
+            Toast.makeText(this, "Select valid City ", Toast.LENGTH_LONG).show();
 
-        if (consumerno.getText().toString().trim().length() != 0 && (consumerno.getText().toString().trim().length() >= 10
-                && consumerno.getText().toString().trim().length() <= 20)) {
-            flag = true;
-        } else
-            Toast.makeText(this, "Enter valid Consumer Number", Toast.LENGTH_LONG).show();
         return flag;
     }
 
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         Intent in;
-        switch (v.getId()) {
+        switch (v.getId())
+        {
             case R.id.BTNSubmit:
-                if (validate()) {
-                    if (CommonUtils.isNetworkAvaliable(this)) {
+                if (validate())
+                {
+                    if (CommonUtils.isNetworkAvaliable(this))
+                    {
 
                         initProgressDialog();
-                        if (pDialog != null && !pDialog.isShowing()) {
+                        if (pDialog != null && !pDialog.isShowing())
+                        {
                             pDialog.setMessage(" please wait..");
                             pDialog.show();
                         }
                         AsyncCallWS task = new AsyncCallWS();
                         task.execute();
-                        //  in = new Intent(this, PayNowActivity.class);
-                        //  startActivity(in);
-                        //
+
                         }
                     else
                         Toast.makeText(this, " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
@@ -169,7 +188,8 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
         }
     }
 
-    private void shareTextUrl() {
+    private void shareTextUrl()
+    {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -183,28 +203,30 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
     }
 
 
-    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void>
+    {
 
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             Log.i(TAG, "onPreExecute");
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            Log.i(TAG, "doInBackground");
-
+        protected Void doInBackground(Void... params)
+        {
+//            Log.i(TAG, "doInBackground");
             getBillDetails();
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            Log.i(TAG, "onPostExecute");
-            Log.i(TAG, "response data: ");
+        protected void onPostExecute(Void result)
+        {
+//            Log.i(TAG, "onPostExecute");
+//            Log.i(TAG, "response data: ");
             dismissDialog();
-         //   Toast.makeText(LandingSkipLoginActivity.this, "Response", Toast.LENGTH_LONG).show();
         }
 
 
@@ -212,12 +234,14 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
 
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         Intent in = new Intent(LandingSkipLoginActivity.this, LoginActivity.class);
         startActivity(in);
     }
 
-    public void getBillDetails() {
+    public void getBillDetails()
+    {
 
         String getconsumerno = LandingSkipLoginActivity.consumerno.getText().toString();
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
@@ -232,7 +256,8 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
             }
-            else{
+            else
+            {
                 Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "OLD#E-NG");
@@ -249,31 +274,20 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
             androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
             String msg2="anyType{}";
             final SoapObject response = (SoapObject) soapEnvelope.getResponse();
-            Log.i(TAG, "get : " + response.toString().equals(msg2));
             if(response.toString().equals(msg2)){
                 dismissDialog();
                 this.runOnUiThread(new Runnable() {
-                    public void run() {
+                    public void run()
+                    {
                         DialogCreator.showMessageDialog(LandingSkipLoginActivity.this, "Please Enter Valid Consumer No/Select Valid City");
                     }
                 });
-                // DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No/Select Valid City");
 
             }
 
-            //final SoapObject response = (SoapObject) soapEnvelope.getResponse();
-
-
-
-
-//            Log.i(TAG, "get responce: " + ((SoapObject) soapEnvelope.getResponse()).getProperty(0));
-//            Log.i(TAG, "get bodyin response: " + response);
-
-//            Log.i(TAG, "get bodyin //City: " + ((Object) soapEnvelope.bodyIn).getProperty("X_STATUSMESSAGE"));
-//            Log.i(TAG, "get bodyin //Name: " + ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL"));
             SoapObject responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
-            Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH"));
-            Log.i(TAG, "get : " +((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
+//            Log.i(TAG, "get : " + ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH"));
+//            Log.i(TAG, "get : " +((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT"));
 
             String duedate=  ((SoapObject)responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
             String currentamt=  ((SoapObject)responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
@@ -295,37 +309,8 @@ public class LandingSkipLoginActivity extends AppCompatActivity implements View.
              in.putExtra("accid",accid);
              startActivity(in);
 
-
-
-            Log.i(TAG, "get : " +((SoapObject) responceArray.getProperty(0)).getProperty(" PROMPT_PAYMENT_INCENTIVE"));
-            Log.i(TAG, "get : " +((SoapObject) responceArray.getProperty(0)).getProperty(" NET_BILL_PAYABLE"));
-            Log.i(TAG, "get : " +((SoapObject) responceArray.getProperty(0)).getProperty(" ARREARS_INCL_CUMM_SURCH"));
-
-
-            //Intent in = new Intent(this, PayNowActivity.class);
-            //in.putExtra("epuzzle", duedate);
-           // in.putExtra("epuzzle", duedate);
-           // startActivity(in);
-
-
-           /* for (int i = 0; i < responceArray.getPropertyCount(); i++) {
-                Object obj = responceArray.getProperty(i);
-                if (obj instanceof SoapObject) {
-                    SoapObject obj1 = (SoapObject) obj;
-//                    obj1.getProperty("BILL_MONTH").toString();
-//                    obj1.getProperty("BILL_YEAR").toString();
-
-                    Log.i(TAG, "Index =  " + i + ", month = " + obj1.getProperty("BILL_MONTH").toString() + " , year = " +
-                            obj1.getProperty("BILL_YEAR").toString());
-
-                    Log.i(TAG, "Index =  " + i + ", currentamt = " + obj1.getProperty("CURR_BILL_AMT").toString() + " , duedate = " +
-                            obj1.getProperty("DUE_DT_CASH").toString());
-
-                }
-            }*/
-
-
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             Log.e(TAG, "Error: " + e.getMessage());
 
         }

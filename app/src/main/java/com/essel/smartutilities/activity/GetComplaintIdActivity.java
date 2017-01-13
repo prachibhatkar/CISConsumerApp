@@ -1,9 +1,8 @@
 package com.essel.smartutilities.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +11,14 @@ import android.widget.TextView;
 
 import com.essel.smartutilities.R;
 
-public class GetComplaintIdActivity extends AppCompatActivity implements View.OnClickListener {
+public class GetComplaintIdActivity extends AppCompatActivity implements View.OnClickListener
+{
 TextView tv_complaintid,tv_complaintmsg;
     Button btn_submitcomplaintid;
     ImageView imgBack;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_complaint_id);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -36,11 +37,13 @@ TextView tv_complaintid,tv_complaintmsg;
         String message=intent.getExtras().getString("message");
        String msg="Please select Correct values";
 
-        if(msg.equals(message)){
+        if(msg.equals(message))
+        {
             tv_complaintid.setText("");
             tv_complaintmsg.setText(message);
         }
-        else {
+        else
+        {
             tv_complaintid.setText(caseid);
             tv_complaintmsg.setText(message);
         }
@@ -50,15 +53,18 @@ TextView tv_complaintid,tv_complaintmsg;
     }
 
     @Override
-    public void onClick(View v) {
-        if(v==btn_submitcomplaintid){
+    public void onClick(View v)
+    {
+        if(v==btn_submitcomplaintid)
+        {
 
             Intent in = new Intent(this,ComplaintActivity.class);
             startActivity(in);
 
 
         }
-        if(v==imgBack){
+        if(v==imgBack)
+        {
 
             Intent in = new Intent(this,ActivityLoginLanding.class);
             startActivity(in);
@@ -68,11 +74,4 @@ TextView tv_complaintid,tv_complaintmsg;
 
     }
 
-//    public void onBackPressed() {
-//
-//        Intent in =new Intent(this,ComplaintActivity.class);
-//        startActivity(in);
-//
-//
-//    }
 }

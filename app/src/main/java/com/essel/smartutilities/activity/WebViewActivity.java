@@ -28,7 +28,8 @@ import java.util.List;
  * Created by Admin on 04-01-2017.
  */
 
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity
+{
     private ProgressDialog dialog;
     String html, encVal;
     Intent mainIntent;
@@ -44,7 +45,8 @@ public class WebViewActivity extends BaseActivity {
     public static final String RSA_KEY_URL = "rsa_key_url";
 
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         mainIntent = getIntent();
@@ -53,7 +55,8 @@ public class WebViewActivity extends BaseActivity {
         new RenderView().execute();
 
     }
-    private class RenderView extends AsyncTask<Void, Void, Void> {
+    private class RenderView extends AsyncTask<Void, Void, Void>
+    {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -65,7 +68,8 @@ public class WebViewActivity extends BaseActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... arg0) {
+        protected Void doInBackground(Void... arg0)
+        {
             // Creating service handler class instance
             ServiceHandler sh = new ServiceHandler();
 
@@ -88,7 +92,8 @@ public class WebViewActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Void result)
+        {
             super.onPostExecute(result);
             // Dismiss the progress dialog
             if (dialog.isShowing())
@@ -119,11 +124,14 @@ public class WebViewActivity extends BaseActivity {
             final WebView webview = (WebView) findViewById(R.id.webview);
             webview.getSettings().setJavaScriptEnabled(true);
             webview.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
-            webview.setWebViewClient(new WebViewClient(){
+            webview.setWebViewClient(new WebViewClient()
+            {
                 @Override
-                public void onPageFinished(WebView view, String url) {
+                public void onPageFinished(WebView view, String url)
+                {
                     super.onPageFinished(webview, url);
-                    if(url.indexOf("/ccavResponseHandler.jsp")!=-1){
+                    if(url.indexOf("/ccavResponseHandler.jsp")!=-1)
+                    {
                         webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     }
                 }
@@ -141,16 +149,19 @@ public class WebViewActivity extends BaseActivity {
             params.append(ServiceUtility.addToPostParams(WebViewActivity.ORDER_ID,mainIntent.getStringExtra(WebViewActivity.ORDER_ID)));
             params.append(ServiceUtility.addToPostParams(WebViewActivity.REDIRECT_URL,mainIntent.getStringExtra(WebViewActivity.REDIRECT_URL)));
              params.append(ServiceUtility.addToPostParams(WebViewActivity.CANCEL_URL,mainIntent.getStringExtra(WebViewActivity.CANCEL_URL)));
-            try {
+            try
+            {
                 params.append(ServiceUtility.addToPostParams(WebViewActivity.ENC_VAL, URLEncoder.encode(encVal,"UTF-8")));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 
             String vPostParams = params.substring(0,params.length()-1);
-            try {
+            try
+            {
                 webview.postUrl(ServiceUtility.TRANS_URL, EncodingUtils.getBytes(vPostParams, "UTF-8"));
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 Toast.makeText(getApplicationContext(),"Exception occured while opening webview.",Toast.LENGTH_SHORT).show();
             }
         }

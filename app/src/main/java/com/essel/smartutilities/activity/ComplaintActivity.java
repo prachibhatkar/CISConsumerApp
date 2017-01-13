@@ -2,7 +2,6 @@ package com.essel.smartutilities.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,23 +14,25 @@ import android.widget.ImageView;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ComplaintAdapter;
 
-public class ComplaintActivity extends AppCompatActivity implements View.OnClickListener {
+public class ComplaintActivity extends AppCompatActivity implements View.OnClickListener
+{
     private ViewPager vp_complaint_pager;
     private TabLayout tablayout;
     private ComplaintAdapter complaintAdapter;
     private Context mContext;
-    Toolbar mToolbar;
+
     ImageView imgBack;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-         imgBack = (ImageView) findViewById(R.id.img_back);
+        imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(this);
-
 
 
         setupUI();
@@ -41,7 +42,8 @@ public class ComplaintActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -50,7 +52,8 @@ public class ComplaintActivity extends AppCompatActivity implements View.OnClick
         //noinspection SimplifiableIfStatement
 
 
-        if(id == R.id.action_notifications){
+        if (id == R.id.action_notifications)
+        {
 
             return true;
         }
@@ -58,48 +61,56 @@ public class ComplaintActivity extends AppCompatActivity implements View.OnClick
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupUI() {
-       // mToolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(mToolbar);
-      //  getSupportActionBar().setTitle("Complaint");
+    private void setupUI()
+    {
+        // mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setSupportActionBar(mToolbar);
+        //  getSupportActionBar().setTitle("Complaint");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      //  ActionBar actionBar = getSupportActionBar();
-       // if (actionBar != null) {
-         // actionBar.setDisplayShowHomeEnabled(true);
-            //String title = getString(R.string.complaint);
-            //getSupportActionBar().setTitle(title);
-      //  }
+        //  ActionBar actionBar = getSupportActionBar();
+        // if (actionBar != null) {
+        // actionBar.setDisplayShowHomeEnabled(true);
+        //String title = getString(R.string.complaint);
+        //getSupportActionBar().setTitle(title);
+        //  }
 
 
-        vp_complaint_pager = (ViewPager)findViewById(R.id.vp_complaint_pager);
-        tablayout = (TabLayout)findViewById(R.id.tabs);
+        vp_complaint_pager = (ViewPager) findViewById(R.id.vp_complaint_pager);
+        tablayout = (TabLayout) findViewById(R.id.tabs);
     }
 
-    private void loadData() {
-        complaintAdapter = new ComplaintAdapter(this,getSupportFragmentManager());
+    private void loadData()
+    {
+        complaintAdapter = new ComplaintAdapter(this, getSupportFragmentManager());
         vp_complaint_pager.setAdapter(complaintAdapter);
         vp_complaint_pager.addOnPageChangeListener(onPageChangedListener);
         tablayout.setupWithViewPager(vp_complaint_pager);
 
     }
-    ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener() {
+
+    ViewPager.OnPageChangeListener onPageChangedListener = new ViewPager.OnPageChangeListener()
+    {
         @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+        {
 
         }
 
-        public void onPageSelected(int position) {
+        public void onPageSelected(int position)
+        {
 
         }
 
 
         @Override
-        public void onPageScrollStateChanged(int state) {
+        public void onPageScrollStateChanged(int state)
+        {
 
         }
     };
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         Intent in = new Intent(this, ActivityLoginLanding.class);
         startActivity(in);
@@ -108,10 +119,12 @@ public class ComplaintActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void onClick(View v) {
-        if(v==imgBack){
+    public void onClick(View v)
+    {
+        if (v == imgBack)
+        {
 
-            Intent in=new Intent(this,ActivityLoginLanding.class);
+            Intent in = new Intent(this, ActivityLoginLanding.class);
             startActivity(in);
         }
 

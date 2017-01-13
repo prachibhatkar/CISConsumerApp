@@ -70,7 +70,8 @@ public class ContactUsAdapter extends FragmentPagerAdapter {
 
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return NUM_ITEMS;
     }
 

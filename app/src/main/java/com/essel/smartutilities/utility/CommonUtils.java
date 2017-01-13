@@ -93,7 +93,6 @@ public class CommonUtils {
             pBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
             String image = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            // return Base64.encodeToString(byteArray, Base64.DEFAULT);
             return image;
         }
         return "";
@@ -104,7 +103,6 @@ public class CommonUtils {
         final ConnectivityManager conn_manager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo network_info = conn_manager.getActiveNetworkInfo();
-
         if (network_info != null && network_info.isConnected()) {
             if (network_info.getType() == ConnectivityManager.TYPE_WIFI)
                 return true;

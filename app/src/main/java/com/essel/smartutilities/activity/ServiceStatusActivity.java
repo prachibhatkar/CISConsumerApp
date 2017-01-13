@@ -26,9 +26,11 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        imgBack.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 finish();
             }
         }); 
@@ -54,15 +56,18 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
-    public void onClick(View v) {
-        if(v==btn_service_status_continue){
+    public void onClick(View v)
+    {
+        if(v==btn_service_status_continue)
+        {
 
             Intent in = new Intent(this,ActivityLoginLanding.class);
             startActivity(in);
 
 
         }
-        else if(v==btn_locate_us){
+        else if(v==btn_locate_us)
+        {
 
             flag=true;
 //            Contact_Us_Activity.get();
@@ -78,7 +83,8 @@ public class ServiceStatusActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         Intent in =new Intent(this,ActivityLoginLanding.class);
         startActivity(in);

@@ -89,10 +89,15 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             public void onClick(final View v) {
                 if (v.getId() == R.id.ic_delete) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                    builder1.setMessage("Are you sure you want to delete Account Of  " + mConsumers.get(position).consumer_name + "  -  " +
-                            mConsumers.get(position).consumer_no);
-                    builder1.setCancelable(true);
+                    if (SharedPrefManager.getStringValue(mContext, SharedPrefManager.CONSUMER_NO).equalsIgnoreCase(mConsumers.get(position).consumer_no))
+                        builder1.setMessage("This Account is Selected.Are you sure you want to delete Account of " + mConsumers.get(position).consumer_name + "  -  " +
+                                mConsumers.get(position).consumer_no);
+                    else
+                        builder1.setMessage("Are you sure you want to delete Account of " + mConsumers.get(position).consumer_name + "  -  " +
+                                mConsumers.get(position).consumer_no);
 
+                    builder1.setCancelable(true);
+                    final int p = position;
                     builder1.setPositiveButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
@@ -117,9 +122,10 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                                     Log.d(AppConstants.REQUEST_DELETE_ACCOUNT, response.toString());
                                                     Gson gson = new Gson();
                                                     JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);
-                                                    DialogCreator.showMessageDialog(mContext, jsonResponse.message );
+                                                    DialogCreator.showMessageDialog(mContext, jsonResponse.message);
                                                     mConsumers.remove(viewHolder.getAdapterPosition());
                                                     notifyDataSetChanged();
+                                                    //DatabaseManager.deleteAccount(mContext, mConsumers.get(p).consumer_no);
                                                     Snackbar snack = Snackbar.make(v, "Account Deleted", Snackbar.LENGTH_LONG);
                                                     snack.show();
                                                     dismissDialog();
@@ -138,15 +144,12 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                                             dismissDialog();
 
                                                         } catch (UnsupportedEncodingException | JsonSyntaxException e1) {
-                                                            // e1.printStackTrace();
                                                             DialogCreator.showMessageDialog(mContext, "ERROR");
                                                             dismissDialog();
-//                                                            DialogCreator.showMessageDialog (mContext,( error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", AppConstants.REQUEST_DELETE_ACCOUNT, response);
                                                         }
                                                     } else
                                                         dismissDialog();
                                                     DialogCreator.showMessageDialog(mContext, "ERROR");
-//                                                        caller.onAsyncFail(error.getMessage() != null && !error.getMessage().equals("") ? error.getMessage() : "Please Contact Server Admin", AppConstants.REQUEST_DELETE_ACCOUNT, response);
                                                 }
                                             }) {
                                                 @Override
@@ -161,7 +164,6 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                             jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                             App.getInstance().addToRequestQueue(jsonObjReq, AppConstants.REQUEST_DELETE_ACCOUNT);
 
-//                                            dialog.cancel();
 
                                         }
                                     } else

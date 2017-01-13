@@ -32,22 +32,13 @@ import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
-import org.apache.http.util.ByteArrayBuffer;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller
+{
     private AppCompatButton btnLogin;
     private EditText editTextUsername, editTextPassword;
     private TextInputLayout inputLayoutUsername, inputLayoutPassword;
@@ -60,7 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Bitmap bitmap;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initialize();
@@ -90,45 +82,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
 
 
-        if (v == btnLogin) {
+        if (v == btnLogin)
+        {
             performLogin();
             // Intent i = new Intent(this, ActivityLoginLanding.class);
             //  startActivity(i);
 //            ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
 //            DatabaseManager.saveLoginDetails(this,consumers.get(3));
 
-        } else if (v == actionRegister) {
-            Intent i = new Intent(this, RegisterActivity.class);
+        } else if (v == actionRegister)
+        {
+            Intent i = new Intent(this, RegisterGetUserActivity.class);
             startActivity(i);
 
-        } else if (v == actionForgot) {
-            Intent i = new Intent(this, ForgotActivity.class);
+        } else if (v == actionForgot)
+        {
+            Intent i = new Intent(this, ForgotRequestActivity.class);
             startActivity(i);
-        } else if (v == actionRegister) {
-            Intent i = new Intent(this, RegisterActivity.class);
+        } else if (v == actionRegister)
+        {
+            Intent i = new Intent(this, RegisterGetUserActivity.class);
             startActivity(i);
-        } else if (v == actionnewconnection) {
-            Intent in = new Intent(this, NewConnectionActivity.class);
+        } else if (v == actionnewconnection)
+        {
+            Intent in = new Intent(this, NewConnectionRequestActivity.class);
             startActivity(in);
-        } else if (v == actioncontinueasguest) {
+        } else if (v == actioncontinueasguest)
+        {
             Intent in = new Intent(this, LandingSkipLoginActivity.class);
             startActivity(in);
 
@@ -137,7 +139,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private boolean isBlankInput() {
+    private boolean isBlankInput()
+    {
         boolean b = true;
         String username = String.valueOf(editTextUsername.getText());
         if (username.equals("") || username.length() < 10 || username.length() > 20) {
@@ -150,7 +153,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private boolean isValidPassword() {
+    private boolean isValidPassword()
+    {
         boolean b = true;
         String password = String.valueOf(editTextPassword.getText());
         if (password.equals("") || password.length() < 6 || password.length() > 20) {
@@ -164,14 +168,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DialogCreator.showExitDialog(this, "Exit App?", "Do you want to exit?");
     }
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
         switch (label) {
-            case AppConstants.REQUEST_LOGIN: {
+            case AppConstants.REQUEST_LOGIN:
+            {
                 if (jsonResponse != null) {
                     System.out.println("Login Response " + jsonResponse.result);
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
@@ -247,7 +254,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         dismissDialog();
     }
 
-    public void onAsyncFail(String messages, String label, NetworkResponse response) {
+    public void onAsyncFail(String messages, String label, NetworkResponse response)
+    {
         switch (label) {
             case AppConstants.REQUEST_LOGIN: {
                 try {
@@ -267,13 +275,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void performLogin() {
+    private void performLogin()
+    {
 
         String password = editTextPassword.getText().toString();
         String consumer_id = editTextUsername.getText().toString();
         // Check for a valid password, if the user entered one.
-        if (CommonUtils.isNetworkAvaliable(this) == true) {
-            if (isBlankInput()) {
+        if (CommonUtils.isNetworkAvaliable(this) == true)
+        {
+            if (isBlankInput())
+            {
                 inputLayoutUsername.setError("");
                 if (isValidPassword()) {
                     inputLayoutPassword.setError("");

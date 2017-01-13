@@ -418,6 +418,7 @@
                         <TextView
                             android:id="@+id/single_phase"
                             android:text=" "
+                            android:gravity="center"
                             android:layout_weight="1"
                             android:background="#ffffff"
                             android:textColor="#666666"
@@ -429,6 +430,7 @@
                             android:layout_weight="1"
                             android:background="#ffffff"
                             android:textColor="#666666"
+                            android:gravity="center"
                             android:padding="20dip"
                             />
 
@@ -447,6 +449,7 @@
                             android:layout_weight="1"
                             android:background="#ffffff"
                             android:textColor="#666666"
+                            android:gravity="center"
                             android:padding="20dip"
                            />
                         <TextView
@@ -455,6 +458,7 @@
                             android:layout_weight="1"
                             android:background="#ffffff"
                             android:textColor="#666666"
+                            android:gravity="center"
                             android:padding="20dip"
                             />
 

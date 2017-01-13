@@ -18,7 +18,8 @@ import com.essel.smartutilities.utility.DialogCreator;
  * Created by hp on 11/5/2016.
  */
 
-public class PayNowActivity extends BaseActivity implements View.OnClickListener {
+public class PayNowActivity extends BaseActivity implements View.OnClickListener
+{
 
     private TextView consumerno, consumername, propmtamt, currentamt, duedate_date, arriers, netamt, promptdate;
     private TextInputLayout inputLayoutconsumerno;
@@ -35,7 +36,8 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
     public static final String CANCEL_URL = "cancel_url";
     public static final String RSA_KEY_URL = "rsa_key_url";
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_now);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
@@ -48,7 +50,8 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         initialize();
     }
 
-    private void initialize() {
+    private void initialize()
+    {
         propmtamt = (TextView) findViewById(R.id.promptamt);
         currentamt = (TextView) findViewById(R.id.currentamount);
         duedate_date = (TextView) findViewById(R.id.duedate_date);
@@ -85,11 +88,15 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
             case R.id.BTNSubmit:
-                if (CommonUtils.isNetworkAvaliable(this)) {
-                    if (!amtpay.getText().toString().equalsIgnoreCase("") && !amtpay.getText().toString().equalsIgnoreCase(".")) {
+                if (CommonUtils.isNetworkAvaliable(this))
+                {
+                    if (!amtpay.getText().toString().equalsIgnoreCase("") && !amtpay.getText().toString().equalsIgnoreCase("."))
+                    {
                         if (Float.parseFloat(amtpay.getText().toString()) >= Float.parseFloat(propmtamt.getText().toString()) && (Float.parseFloat(amtpay.getText().toString()) >= 1)) {
 //                            DialogCreator.showMessageDialog(this, "Can go to Payment Gateway");
                             callwebview();
@@ -103,7 +110,8 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void callwebview() {
+    private void callwebview()
+    {
         String vAccessCode = "4YRUXLSRO20O8NIH";//"AVVT64DC39AU91TVUA";4YRUXLSRO20O8NIH
         String vMerchantId = "2";
         String vCurrency = "INR";
@@ -113,7 +121,8 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         String rsakey = "http://122.182.6.216/merchant/GetRSA.jsp";
         Integer orderid = CommonUtils.randInt(0, 9999999);
         String od = orderid.toString();
-        if (!vAccessCode.equals("") && !vMerchantId.equals("") && !vCurrency.equals("") && !vAmount.equals("")) {
+        if (!vAccessCode.equals("") && !vMerchantId.equals("") && !vCurrency.equals("") && !vAmount.equals(""))
+        {
             Intent intent = new Intent(this, WebViewActivity.class);
             intent.putExtra(PayNowActivity.ACCESS_CODE, vAccessCode);
             intent.putExtra(PayNowActivity.MERCHANT_ID, vMerchantId);

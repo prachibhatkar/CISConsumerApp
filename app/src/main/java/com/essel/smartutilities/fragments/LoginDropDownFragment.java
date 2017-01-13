@@ -28,7 +28,7 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
     private OnFragmentInteractionListener mListener;
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
-
+    private View rootView;
 
     public LoginDropDownFragment() {
     }
@@ -46,29 +46,42 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
-//        ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
-        ArrayList<Consumer> consumers = DatabaseManager.getAllManageAccounts(getActivity());
-        dropdownadapter adapter = new dropdownadapter(mContext, consumers);
-        View rootView = inflater.inflate(R.layout.fragment_login_dropdown, container, false);
+
+         rootView = inflater.inflate(R.layout.fragment_login_dropdown, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.tv_title);
         tv.setOnClickListener(this);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        getData();
+        return rootView;
+    }
+
+    public void getData()
+    {
+        ArrayList<Consumer> consumers = DatabaseManager.getAllManageAccounts(getActivity());
+        dropdownadapter adapter = new dropdownadapter(mContext, consumers);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        return rootView;
     }
-
     @Override
     public void onPause() {
         super.onPause();
     }
 
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+
     }
 
     @Override

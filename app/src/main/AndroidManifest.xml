@@ -37,48 +37,45 @@
 
         <activity android:name=".activity.LandingSkipLoginActivity" />
         <activity
-            android:name=".activity.ForgotActivity"
+            android:name=".activity.ForgotRequestActivity"
             android:theme="@style/Theme.DesignDemo" />
-        <activity android:name=".activity.LoginActivity"
-            />
-        <activity android:name=".activity.ActivityLoginLanding"
-            android:screenOrientation="portrait"
-            />
+        <activity android:name=".activity.LoginActivity" />
+        <activity
+            android:name=".activity.ActivityLoginLanding"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.ComplaintActivity" />
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.Contact_Us_Activity" />
         <activity android:name=".activity.FAQActivity" />
         <activity android:name=".activity.FeedBackActivity" />
-        <activity android:name=".activity.NewConnectionActivity" />
-        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.NewConnectionRequestActivity" />
+        <activity android:name=".activity.RegisterGetUserActivity" />
         <activity android:name=".activity.ServiceActivity" />
         <activity android:name=".activity.TipsActivity" />
         <activity android:name=".activity.TraiffActivity" />
         <activity android:name=".activity.AboutUsActivity" />
         <activity android:name=".activity.ProfileActivity" />
         <activity android:name=".activity.ServiceStatusActivity" />
-        <activity android:name=".activity.MyBillActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".activity.MyBillActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.BillHistoryActivity" />
         <activity android:name=".activity.PayNowActivity" />
         <activity android:name=".activity.QuickPayActivity" />
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.ManageAccountsActivity" />
-        <activity android:name=".activity.NewConnectionActivity2" />
-        <activity android:name=".activity.RegisterActivity2" />
-        <activity android:name=".activity.RegisterActivity3" />
-        <activity android:name=".activity.RegisterActivity4" />
+        <activity android:name=".activity.NewConnectionSuccessActivity" />
+        <activity android:name=".activity.RegisterGetOTPActivity" />
+        <activity android:name=".activity.RegisterVerifyOTPActivity" />
+        <activity android:name=".activity.RegisterCreateUserActivity4" />
         <activity android:name=".activity.PaymentHistoryActivity" />
         <activity android:name=".activity.GetComplaintIdActivity" />
-        <activity android:name=".activity.ForgotActivity2" />
-        <activity android:name=".activity.AddAccountActivity" />
-        <activity android:name=".activity.AddAccountActivity3" />
-        <activity android:name=".activity.AddAccountActivity4" />
-        <activity android:name=".activity.AddAccountActivity5" />
+        <activity android:name=".activity.ForgotSuccessActivity" />
+        <activity android:name=".activity.AddAccountGetUserActivity" />
+        <activity android:name=".activity.AddAccountVerifyOTPActivity" />
+        <activity android:name=".activity.AddAccountCreateUserActivity" />
         <activity
-            android:name=".activity.AddAccountActivity2"
-            android:label="@string/title_activity_add_account2"
+            android:name=".activity.AddAccountGetOTPActivity"
             android:theme="@style/Theme.DesignDemo"></activity>
     </application>
 

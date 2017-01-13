@@ -221,16 +221,16 @@ public class DatabaseManager {
         return consumers;
     }
 
-//    public static void deleteAccount(Context context, String Consumer_id) {
-//        try {
-//            String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
-//            DatabaseHelper dbHelper = new DatabaseHelper(context);
-//            SQLiteDatabase db = dbHelper.getWritableDatabase();
-//            db.delete("ManageAccountsTable", condition, null);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void deleteAccount(Context context, String Consumer_id) {
+        try {
+            String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.delete("ManageAccountsTable", condition, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private static void saveAboutUs(Context context, Uri table, ContentValues values, String condition) {
@@ -728,25 +728,9 @@ public class DatabaseManager {
     public static GetInfo updateProfile(Context context, GetInfo get1) {
 
         GetInfo get = new GetInfo();
-//        DatabaseHelper dbHelper = new DatabaseHelper(context);
-//        SQLiteDatabase db = dbHelper.getReadableDatabase();
-//        db.update(ManageAccountsTable.TABLE_NAME,null,get.mobileno,null);
         ContentValues values = getContentValuesprofileTable(context, get1);
         saveupdated(context, ManageAccountsTable.CONTENT_URI, values, null);
-        //String updateQuery = " Update contact_no " + ManageAccountsTable.TABLE_NAME;
-//        Cursor cursor = db.rawQuery(updateQuery, null);
-//
-//        while (cursor.moveToNext()) {
-//
-//            get.mobileno=(cursor.getString(cursor.getColumnIndex("contact_no")));
-//
-//            Log.i("Tag", "valueselectdb" + cursor);
-//
-//        }
-
         return get;
-
-
     }
 
     private static void saveupdated(Context context, Uri table, ContentValues values, String condition) {
@@ -789,13 +773,7 @@ public class DatabaseManager {
             contactus.electricity_theft_help_no = cursor.getString(cursor.getColumnIndex("electricity_theft_help"));
             Log.i("Tag", "valueselectdb" + cursor);
 
-            //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
-
         return contactus;
-
-
     }
-
-
 }

@@ -32,7 +32,8 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BillHistoryActivity extends AppCompatActivity implements View.OnClickListener {
+public class BillHistoryActivity extends AppCompatActivity implements View.OnClickListener
+{
     ImageView download1, download2, download3, download4, download5, download6, imgBack;
     DownloadManager downloadManager;
     Uri image_uri;
@@ -49,7 +50,8 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
             month5, date5, amt5, consum5, month6, date6, amt6, consum6;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_history);
         base = "http://cpnagpur.sndl.in:86/getbillall.php?billnumber=";
@@ -59,7 +61,8 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void intialize() {
+    private void intialize()
+    {
 
         tbl[0] = (TableRow) findViewById(R.id.tbl0);
         tbl[1] = (TableRow) findViewById(R.id.tbl1);
@@ -95,7 +98,8 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
         setvalues();
     }
 
-    private void setvalues() {
+    private void setvalues()
+    {
         month1 = (TextView) findViewById(R.id.month1);
         date1 = (TextView) findViewById(R.id.date1);
         amt1 = (TextView) findViewById(R.id.amount1);
@@ -156,14 +160,18 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View view) {
-        if (CommonUtils.isNetworkAvaliable(this)) {
+    public void onClick(View view)
+    {
+        if (CommonUtils.isNetworkAvaliable(this))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage("Downloding, please wait..");
                 pDialog.show();
             }
-            switch (view.getId()) {
+            switch (view.getId())
+            {
                 case R.id.download1:
                     fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[0] + ".pdf";
                     getPdf(String.valueOf(MyBillActivity.billid[0]), fileName);
@@ -194,22 +202,26 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
-    public void getPdf(String ss, final String dd) {
+    public void getPdf(String ss, final String dd)
+    {
         strApiKey = "d733ba16-8d32-4efb-9b51-7fc6baba4643";//Web api Parameter
         strValue = base + ss; //Web api Parameter
 
@@ -226,15 +238,18 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
                     public void onResponse(byte[] response) {
                         // TODO handle the response
                         try {
-                            if (response != null) {
+                            if (response != null)
+                            {
 //                                Random r = new Random();
 //                                int i1 = r.nextInt(80 - 65) + 65;
                                 fileName = dd;
                                 root = new File(Environment.getExternalStorageDirectory(), "Essel Bills");
-                                if (!root.exists()) {
+                                if (!root.exists())
+                                {
                                     root.mkdirs();
                                 }
-                                if (root.exists()) {
+                                if (root.exists())
+                                {
 
                                     if (gpxfile == null || !gpxfile.exists()) {
                                         gpxfile = new File(root, dd);
@@ -285,18 +300,19 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 }
 
 
-class InputStreamReader extends Request<byte[]> {
+class InputStreamReader extends Request<byte[]>
+{
     private final Response.Listener<byte[]> mListener;
     private Map<String, String> mParams;
     public Map<String, String> responseHeaders;
 
     public InputStreamReader(int method, String mUrl, Response.Listener<byte[]> listener,
-                             Response.ErrorListener errorListener, HashMap<String, String> params) {
+                             Response.ErrorListener errorListener, HashMap<String, String> params)
+    {
         // TODO Auto-generated constructor stub
 
         super(method, mUrl, errorListener);
-        //super(post,mUrl,errorListener);
-        // this request would never use cache.
+
         setShouldCache(false);
         mListener = listener;
         mParams = params;
@@ -304,19 +320,22 @@ class InputStreamReader extends Request<byte[]> {
 
     @Override
     protected Map<String, String> getParams()
-            throws com.android.volley.AuthFailureError {
+            throws com.android.volley.AuthFailureError
+    {
         return mParams;
     }
 
     ;
 
     @Override
-    protected void deliverResponse(byte[] response) {
+    protected void deliverResponse(byte[] response)
+    {
         mListener.onResponse(response);
     }
 
     @Override
-    protected Response<byte[]> parseNetworkResponse(NetworkResponse response) {
+    protected Response<byte[]> parseNetworkResponse(NetworkResponse response)
+    {
 
         //Initialise local responseHeaders map with response headers received
         responseHeaders = response.headers;

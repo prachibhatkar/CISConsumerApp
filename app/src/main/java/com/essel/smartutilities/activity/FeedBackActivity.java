@@ -2,7 +2,6 @@ package com.essel.smartutilities.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
-import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -29,7 +27,8 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-public class FeedBackActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
+public class FeedBackActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller
+{
      EditText edit_remark_feedback;
      Button  btn_submit_feedback;
      public static Boolean flag=false;
@@ -40,22 +39,26 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
      ImageView image1,image2,image3,image4,image5;
     ProgressDialog pDialog;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        imgBack.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 finish();
             }
         });
 
         edit_remark_feedback=(EditText)findViewById(R.id.edit_remark_feedback);
-        ((EditText)findViewById(R.id.edit_remark_feedback)).setFilters(new InputFilter[] {
+        ((EditText)findViewById(R.id.edit_remark_feedback)).setFilters(new InputFilter[]
+                {
                 new InputFilter.LengthFilter(200)
         });
         btn_submit_feedback=(Button)findViewById(R.id.btn_submit_feedback);
@@ -95,33 +98,40 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         image5.setOnClickListener(this);
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
     @Override
-    public void onClick(View v) {
-        if(v==btn_submit_feedback) {
+    public void onClick(View v)
+    {
+        if(v==btn_submit_feedback)
+        {
 
             String feedbackremark = String.valueOf(edit_remark_feedback.getText());
             remark =edit_remark_feedback.getText().toString().trim();
 
-            if (feedbackremark.equals("")) {
+            if (feedbackremark.equals(""))
+            {
 
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
 
             }
-            else if(count==null){
+            else if(count==null)
+            {
 
                 Toast.makeText(this, "Please Provide Rating.... ", Toast.LENGTH_LONG).show();
             }
@@ -138,9 +148,11 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
            // ActivityLoginLanding.snackBarMethod();
            // flag=true;
         else {
-                if (CommonUtils.isNetworkAvaliable(this)) {
+                if (CommonUtils.isNetworkAvaliable(this))
+                {
                     initProgressDialog();
-                    if (pDialog != null && !pDialog.isShowing()) {
+                    if (pDialog != null && !pDialog.isShowing())
+                    {
                         pDialog.setMessage(" please wait..");
                         pDialog.show();
                     }
@@ -159,7 +171,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-        }else if(v==image1){
+        }else if(v==image1)
+        {
             count="STAR1";
             tv_rate.setText("bad");
            // Toast.makeText(this.getApplicationContext(), "you have rated 5", Toast.LENGTH_SHORT).show();
@@ -167,7 +180,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
              refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
         }
-        else if(v==image2){
+        else if(v==image2)
+        {
             count="STAR2";
             tv_rate.setText("ok");
            // Toast.makeText(this.getApplicationContext(), " you have rated 4", Toast.LENGTH_SHORT).show();
@@ -175,7 +189,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
         }
-        else if(v==image3){
+        else if(v==image3)
+        {
             count="STAR3";
             tv_rate.setText("like it");
           //Toast.makeText(this.getApplicationContext(), "you have rated 3", Toast.LENGTH_SHORT).show();
@@ -183,7 +198,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
         }
-        else if(v==image4){
+        else if(v==image4)
+        {
             count="STAR4";
             tv_rate.setText("Good");
            //Toast.makeText(this.getApplicationContext(), "you have rated 2", Toast.LENGTH_SHORT).show();
@@ -192,7 +208,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
         }
-        else if(v==image5){
+        else if(v==image5)
+        {
             count="STAR5";
             tv_rate.setText("loved it");
             //Toast.makeText(this.getApplicationContext(), "you have rated 1", Toast.LENGTH_SHORT).show();
@@ -207,12 +224,17 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQUEST_FEEDBACK: {
-                if (jsonResponse != null) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_FEEDBACK:
+            {
+                if (jsonResponse != null)
+                {
                     Log.i("Tag","valueresponse"+flag);
-                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS))
+                    {
                         dismissDialog();
                         flag=true;
                         Intent in = new Intent(this, ActivityLoginLanding.class);
@@ -225,11 +247,13 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                         }
 
 
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.authorization != null)
+                        {
                             dismissDialog();
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                         }
-                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE))
+                    {
                         dismissDialog();
 
 
@@ -244,12 +268,13 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
 
-        switch (label) {
-            case AppConstants.REQUEST_FEEDBACK: {
-//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+        switch (label)
+        {
+            case AppConstants.REQUEST_FEEDBACK:
+            {
                 Log.i(label, "gjjkfhdkh " + message);
                 Log.i(label, "jhjkghfkh " + response);
                 dismissDialog();
@@ -261,7 +286,8 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
 
     }
-    public static Boolean getflag(){
+    public static Boolean getflag()
+    {
 
         Log.i("Tag","valuegetflg" +flag);
         return flag;

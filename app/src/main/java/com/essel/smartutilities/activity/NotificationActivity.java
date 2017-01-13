@@ -19,7 +19,8 @@ import java.util.ArrayList;
 /**
  * Created by hp on 10/10/2016.
  */
-public class NotificationActivity extends Activity implements View.OnClickListener {
+public class NotificationActivity extends Activity implements View.OnClickListener
+{
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -30,7 +31,8 @@ public class NotificationActivity extends Activity implements View.OnClickListen
     private ImageView imgBack;
     private Typeface regular;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         mContext=this;
@@ -43,7 +45,8 @@ public class NotificationActivity extends Activity implements View.OnClickListen
     }
 
 
-    private void loadRecyclerView() {
+    private void loadRecyclerView()
+    {
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(mContext);
@@ -54,7 +57,8 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         recyclerView.setAdapter(adapter);
     }
 
-    private void setnotificationArrayList() {
+    private void setnotificationArrayList()
+    {
 
          notification=new ArrayList<>();
             NotificationCard mNotificationCard = new NotificationCard();
@@ -68,8 +72,9 @@ public class NotificationActivity extends Activity implements View.OnClickListen
 
 
     @Override
-    public void onClick(View v) {
-        if (v == imgBack) {
+    public void onClick(View v)
+    {if (v == imgBack)
+        {
             finish();
         }
 

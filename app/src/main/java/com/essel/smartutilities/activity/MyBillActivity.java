@@ -29,7 +29,8 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.StringTokenizer;
 
-public class MyBillActivity extends AppCompatActivity implements View.OnClickListener {
+public class MyBillActivity extends AppCompatActivity implements View.OnClickListener
+{
     Button btn_billhistory;
     private ProgressDialog pDialog;
     public static int[] consum = new int[6];
@@ -42,7 +43,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
     public GraphView graph;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_bill);
         graph = (GraphView) findViewById(R.id.graph);
@@ -59,9 +61,11 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (CommonUtils.isNetworkAvaliable(this)) {
+        if (CommonUtils.isNetworkAvaliable(this))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage("Requesting, please wait..");
                 pDialog.show();
             }
@@ -85,7 +89,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void intialize() {
+    public void intialize()
+    {
         arriers.setText(arrears1);
         netamt.setText(netbill);
         propmtamt.setText(promptamt1);
@@ -95,7 +100,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         amtafterdue.setText(amtafterdues);
 
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]
+                {
                 new DataPoint(0, consum[0]),
                 new DataPoint(1, consum[1]),
                 new DataPoint(2, consum[2]),
@@ -111,7 +117,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         graph.addSeries(series);
 
 
-        BarGraphSeries<DataPoint> series1 = new BarGraphSeries<>(new DataPoint[]{
+        BarGraphSeries<DataPoint> series1 = new BarGraphSeries<>(new DataPoint[]
+                {
                 new DataPoint(0, consum[0]),
                 new DataPoint(1, consum[1]),
                 new DataPoint(2, consum[2]),
@@ -125,14 +132,14 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         series1.setValuesOnTopColor(getResources().getColor(R.color.colorPrimaryDarkText));
         series1.setSpacing(120);
 
-        // set manual labels on horizontal axis
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
         staticLabelsFormatter.setHorizontalLabels(month);
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
         if (pDialog == null) {
             pDialog = new ProgressDialog(this);
@@ -141,34 +148,40 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         Intent in = new Intent(this, BillHistoryActivity.class);
         startActivity(in);
     }
 
-    class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+    class AsyncCallWS extends AsyncTask<Void, Void, Void>
+    {
 
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             Log.i("manageAccounts", "onPreExecute");
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params)
+        {
             Log.i("manageAccounts", "doInBackground");
             getBillDetails();
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Void result)
+        {
             Log.i("manageAccounts", "onPostExecute");
             Log.i("manageAccounts", "response data: ");
             dismissDialog();
@@ -176,7 +189,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void getBillDetails() {
+    public void getBillDetails()
+    {
 
         String getconsumerno = SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO);
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
@@ -184,13 +198,16 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
         String NAMESPACE = "http://xmlns.oracle.com/pcbpel/adapter/db/sp/CCBGetBillDetailsProc";
         String URL = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
 
-        try {
+        try
+        {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            if (getconsumerno.length() == 10) {
+            if (getconsumerno.length() == 10)
+            {
                 Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
-            } else if (getconsumerno.length() == 12) {
+            } else if (getconsumerno.length() == 12)
+            {
                 Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "OLD#E-NG");
@@ -213,9 +230,11 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
             arrears1 = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE20").toString();
             amtafterdues = ((SoapObject) responceArray.getProperty(0)).getProperty("ATTRIBUTE12").toString();
 
-            for (int i = 0; i < responceArray.getPropertyCount(); i++) {
+            for (int i = 0; i < responceArray.getPropertyCount(); i++)
+            {
                 Object obj = responceArray.getProperty(i);
-                if (obj instanceof SoapObject) {
+                if (obj instanceof SoapObject)
+                {
                     SoapObject obj1 = (SoapObject) obj;
                     consum[i] = Integer.parseInt(obj1.getProperty("KWH_CONSUMPTI").toString());
                     month[i] = obj1.getProperty("BILL_MONTH").toString();
@@ -230,7 +249,8 @@ public class MyBillActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             Log.e("manageAccounts", "Error: " + e.getMessage());
 
         }

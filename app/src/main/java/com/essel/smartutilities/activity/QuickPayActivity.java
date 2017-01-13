@@ -1,11 +1,9 @@
 package com.essel.smartutilities.activity;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,54 +19,34 @@ import com.essel.smartutilities.utility.SharedPrefManager;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
-
-import java.util.logging.LogRecord;
 
 /**
  * Created by hp on 11/5/2016.
  */
 
-public class QuickPayActivity extends BaseActivity implements View.OnClickListener {
+public class QuickPayActivity extends BaseActivity implements View.OnClickListener
+{
 
     private static EditText consumerno;
-    private TextInputLayout inputLayoutconsumerno;
     private Button Submit;
     private TextView tv_city;
     String consumer_number;
     private String TAG = "responsedataaaaa";
     ProgressDialog pDialog;
-    SoapObject responceArray,a11;
-    SoapPrimitive responceArray1;
-    protected void onCreate(Bundle savedInstanceState) {
+    SoapObject responceArray;
+
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_pay);
         initialize();
     }
 
 
-
-//    Timer timer = new Timer();//Initialized
-//    timer.schedule(new QuickPayActivity() {
-//
-//        public void run(){
-//            // cancel the progress dialogue after 5 seconds
-//           pDialog.cancel();
-//            timer.cancel();
-//
-//    }5000 ,5000);
-//    }
-//
-
-
-
-    private void initialize() {
+    private void initialize()
+    {
         consumerno = (EditText) findViewById(R.id.Consumerno);
         consumer_number = (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO)).toString();
         consumerno.setText(consumer_number);
@@ -87,15 +65,20 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
             case R.id.BTNSubmit:
                 if (consumerno.getText().toString().trim().length() >= 10 &&
-                        consumerno.getText().toString().trim().length() <= 20) {
+                        consumerno.getText().toString().trim().length() <= 20)
+                {
 
-                    if (CommonUtils.isNetworkAvaliable(this)) {
+                    if (CommonUtils.isNetworkAvaliable(this))
+                    {
                         initProgressDialog();
-                        if (pDialog != null && !pDialog.isShowing()) {
+                        if (pDialog != null && !pDialog.isShowing())
+                        {
                             pDialog.setMessage(" please wait..");
                             pDialog.show();
                         }
@@ -115,9 +98,11 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
@@ -125,52 +110,35 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
-    private void dialogtime(){
 
-
-        final Timer timer;// Declare it above
-        timer = new Timer();//Initialized
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                // cancel the progress dialogue after 5 seconds
-                pDialog.dismiss();
-
-                timer.cancel();
-            }
-        }, 30000 ,30000);
-
-        Toast.makeText(this, "Enter Correct Consumer No.", Toast.LENGTH_LONG).show();
-
-    }
-
-
-    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void>
+    {
 
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             Log.i(TAG, "onPreExecute");
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params)
+        {
             Log.i(TAG, "doInBackground");
             getBillDetails();
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Void result)
+        {
             Log.i(TAG, "onPostExecute");
             Log.i(TAG, "response data: ");
-            //Toast.makeText(QuickPayActivity.this, "Response", Toast.LENGTH_LONG).show();
-
 
         }
 
@@ -178,7 +146,8 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-    public void getBillDetails() {
+    public void getBillDetails()
+    {
 
         String getconsumerno = QuickPayActivity.consumerno.getText().toString();
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
@@ -187,11 +156,13 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
         String URL = "http://123.63.20.164:8001/soa-infra/services/Maharashtra/EsselCCBGetBillDetails!1.0*soa_8b795420-6bdd-4416-aa61-cf0cec7e5698/EsselCCBGetBillSvc";
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            if (getconsumerno.length() == 10) {
+            if (getconsumerno.length() == 10)
+            {
                 Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "#E-NG");
-            } else if (getconsumerno.length() == 12) {
+            } else if (getconsumerno.length() == 12)
+            {
                 Request.addProperty("P_ACCT_ID", getconsumerno);
                 Request.addProperty("P_BILL_ID", "");
                 Request.addProperty("P_MTR_ID", "OLD#E-NG");
@@ -209,25 +180,21 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
             String msg2="anyType{}";
             final SoapObject response = (SoapObject) soapEnvelope.getResponse();
             Log.i(TAG, "get : " + response.toString().equals(msg2));
-             if(response.toString().equals(msg2)){
+             if(response.toString().equals(msg2))
+             {
                 dismissDialog();
-                 this.runOnUiThread(new Runnable() {
+                 this.runOnUiThread(new Runnable()
+                 {
                      public void run() {
                          DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No/Select Valid City");
                      }
                  });
-                // DialogCreator.showMessageDialog(QuickPayActivity.this, "Please Enter Valid Consumer No/Select Valid City");
 
              }
-           //
             responceArray = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL");
-          //  a11 = (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_STATUSMESSAGE");
 
             Log.i(TAG, "get : " + (SoapObject) ((SoapObject) soapEnvelope.bodyIn).getProperty("X_BILLDTLS_TBL"));
-           // Log.i(TAG, "statusmsggggggggg : " + ((SoapObject) responceArray.getProperty(4)).getProperty("X_STATUSMESSAGE"));
 
-             //dialogtime();
-//
 
                         String duedate = ((SoapObject) responceArray.getProperty(0)).getProperty("DUE_DT_CASH").toString();
                         String currentamt = ((SoapObject) responceArray.getProperty(0)).getProperty("CURR_BILL_AMT").toString();
@@ -250,10 +217,9 @@ public class QuickPayActivity extends BaseActivity implements View.OnClickListen
                         startActivity(in);
 
 
-
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             dismissDialog();
-          //  Toast.makeText(QuickPayActivity.this, "Enter Valid Consumer No.", Toast.LENGTH_LONG).show();
             Log.i(TAG, "Errorrrrrrrrrrrrrrrrrrrrrrrrrrrr: " + e.getMessage());
 
         }

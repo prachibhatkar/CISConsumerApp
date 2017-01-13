@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +32,8 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 import java.util.ArrayList;
 
-public class FAQActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller {
+public class FAQActivity extends AppCompatActivity implements View.OnClickListener, ServiceCaller
+{
     LinearLayout linearlayout_newconnection, linearlayout_changeownership, linearlayout_changeconnectiontype, linearlayout_loadextensionreduction, linearlayout_permanantdisconnection;
     ExpandableRelativeLayout expandableLayout_newserviceconnection, expandableLayout_changeofownership, expandableLayout_changeofconnectiontype, expandableLayout_loadextensionreduction, expandableLayout_permanantdisconnect,expandablelayout6,expandablelayout7,expandablelayout8, expandablelayout9,expandablelayout10;
 
@@ -51,7 +51,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,7 +71,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_right_faq, menu);
@@ -78,14 +80,16 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_detail_view) {
+        if (id == R.id.action_detail_view)
+        {
             expandableLayout_newserviceconnection.collapse();
             expandableLayout_changeofownership.collapse();
             expandableLayout_changeofconnectiontype.collapse();
@@ -105,7 +109,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         return super.onOptionsItemSelected(item);
     }
 
-    private void initialize() {
+    private void initialize()
+    {
         expandablebutton_newserviceconnection = (Button) findViewById(R.id.expandableButton_newconnection);
         expandablebutton_changeofownership = (Button) findViewById(R.id.expandableButton_changeofowner);
         expandablebutton_changeofconnectiontype = (Button) findViewById(R.id.expandableButton_changeofconnection);
@@ -195,10 +200,12 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         explayoutarray.add(9,expandablelayout6);
 
 
-        if( CommonUtils.isNetworkAvaliable(this)) {
+        if( CommonUtils.isNetworkAvaliable(this))
+        {
 
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage(" please wait..");
                 pDialog.show();
             }
@@ -217,18 +224,7 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                    btnarray.get(i).setText(arrayfaq.get(i).question);
                // expandablebutton_newserviceconnection.setText(faq2.answer);
             }
-//              for(int i=0;i<faq2.arrayanswer.size();i++) {
-//                  tvarray1.add(faq2.arrayanswer.get(i));
-//                  btnarray1.add(faq2.arrayquestion.get(i));
-//                //  btnarray1.add(String.valueOf(faq2.arrayquestion));
-//                  // btnarray1.add(faq2.question);
-//              }
-//            for(int i=0;i< btnarray1.size();i++){
-//                btnarray.get(i).setVisibility(View.VISIBLE);
-//                tvarray.get(i).setText(tvarray1.toString().trim());
-//                btnarray.get(i).setText(btnarray1.get(i).toString().trim());
 //
-//            }
             Toast.makeText(this.getApplicationContext(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
         }
 
@@ -236,7 +232,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
         if (pDialog == null) {
             pDialog = new ProgressDialog(this);
@@ -246,61 +243,73 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
 
 
-        if (v == expandablebutton_newserviceconnection) {
+        if (v == expandablebutton_newserviceconnection)
+        {
 
             expandableLayout_newserviceconnection.toggle();
         }
 
-        if (v == expandablebutton_changeofownership) {
+        if (v == expandablebutton_changeofownership)
+        {
 
             expandableLayout_changeofownership.toggle();
 
         }
-        if (v == expandablebutton_changeofconnectiontype) {
+        if (v == expandablebutton_changeofconnectiontype)
+        {
 
             expandableLayout_changeofconnectiontype.toggle();
 
         }
-        if (v == expandablebutton_loadextensionreduction) {
+        if (v == expandablebutton_loadextensionreduction)
+        {
 
             expandableLayout_loadextensionreduction.toggle();
         }
-        if (v == expandablebutton_permanantdisconnec) {
+        if (v == expandablebutton_permanantdisconnec)
+        {
 
             expandableLayout_permanantdisconnect.toggle();
 
         }
-        if (v == btn6) {
+        if (v == btn6)
+        {
 
            expandablelayout6.toggle();
 
         }
-        if (v == btn7) {
+        if (v == btn7)
+        {
 
             expandablelayout7.toggle();
 
         }
-        if (v == btn8) {
+        if (v == btn8)
+        {
 
             expandablelayout8.toggle();
 
         }
-        if (v == btn9) {
+        if (v == btn9)
+        {
 
             expandablelayout9.toggle();
 
         }
-        if (v == btn10) {
+        if (v == btn10)
+        {
 
             expandablelayout10.toggle();
 
@@ -308,7 +317,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         super.onBackPressed();
 
@@ -320,10 +330,14 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQUEST_FAQ: {
-                if (jsonResponse != null) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_FAQ:
+            {
+                if (jsonResponse != null)
+                {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
 
@@ -331,19 +345,23 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 //                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 //                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
 //                        Log.i(label, "Faqqqqqqqqqqqqqqqqq:" + jsonResponse.faqs);
-                        if (jsonResponse.faqs.size() == 0) {
+                        if (jsonResponse.faqs.size() == 0)
+                        {
                             dismissDialog();
 
                         }
-                        if (jsonResponse.faqs.size() != 0) {
+                        if (jsonResponse.faqs.size() != 0)
+                        {
                             dismissDialog();
-                            for (int i = 0; i <jsonResponse.faqs.size(); i++) {
+                            for (int i = 0; i <jsonResponse.faqs.size(); i++)
+                            {
                                 btnarray.get(i).setVisibility(View.VISIBLE);
                                 tvarray.get(i).setText(jsonResponse.faqs.get(i).answer.toString().trim());
                                 btnarray.get(i).setText(jsonResponse.faqs.get(i).question.toString());
 
                             }
-                            for(int i=0;i<jsonResponse.faqs.size();i++){
+                            for(int i=0;i<jsonResponse.faqs.size();i++)
+                            {
 
                                 tvarray1.add(jsonResponse.faqs.get(i).answer.toString().trim());
                                 btnarray1.add(jsonResponse.faqs.get(i).question.toString());
@@ -409,11 +427,13 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
-        switch (label) {
-            case AppConstants.REQUEST_FAQ: {
-//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_FAQ:
+            {
+
                 Log.i(label, "Faq:" + message);
                 Log.i(label, "Faq:" + response);
             }

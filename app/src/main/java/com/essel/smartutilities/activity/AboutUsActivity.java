@@ -34,15 +34,18 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView imgBack = (ImageView) findViewById(R.id.img_back);
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        imgBack.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 finish();
             }
         });
@@ -51,9 +54,11 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
         AboutUs aboutUs = new AboutUs();
 
 
-        if (isNetworkAvailable()) {
+        if (isNetworkAvailable())
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage(" please wait..");
                 pDialog.show();
             }
@@ -61,7 +66,8 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
             JsonObjectRequest request = WebRequests.getAboutUs(this, Request.Method.GET, AppConstants.URL_GET_ABOUT_US, AppConstants.REQEST_ABOUT_US, this);
             App.getInstance().addToRequestQueue(request, AppConstants.REQEST_ABOUT_US);
 
-        } else {
+        } else
+        {
 
             Toast.makeText(this.getApplicationContext(), " check internet connection", Toast.LENGTH_SHORT).show();
             AboutUs aboutUs2 = new AboutUs();
@@ -79,52 +85,65 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
     }
 
-    private boolean isNetworkAvailable() {
+    private boolean isNetworkAvailable()
+    {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
 
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQEST_ABOUT_US: {
-                if (jsonResponse != null) {
-                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
+        switch (label)
+        {
+            case AppConstants.REQEST_ABOUT_US:
+            {
+                if (jsonResponse != null)
+                {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS))
+                    {
 //
                         Log.i(label, "hygt " + jsonResponse);
                         Log.i(label, "hyif " + jsonResponse.aboutus);
-                        if (jsonResponse.aboutus == null) {
+                        if (jsonResponse.aboutus == null)
+                        {
                             dismissDialog();
 
                         }
-                        if (jsonResponse.aboutus != null) {
+                        if (jsonResponse.aboutus != null)
+                        {
                             dismissDialog();
                             tv_aboutus_message.setText(jsonResponse.aboutus.toString().trim());
                             DatabaseManager.saveAboutUs(this, jsonResponse.aboutus);
 
                         }
 
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.authorization != null)
+                        {
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
                             dismissDialog();
                         }
-                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE))
+                    {
                         Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 
                     }
@@ -138,12 +157,13 @@ public class AboutUsActivity extends AppCompatActivity implements ServiceCaller 
 
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
 
-        switch (label) {
-            case AppConstants.REQEST_ABOUT_US: {
-//                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-//                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
+        switch (label)
+        {
+            case AppConstants.REQEST_ABOUT_US:
+            {
                 Log.i(label, " " + message);
                 Log.i(label, " " + response);
             }

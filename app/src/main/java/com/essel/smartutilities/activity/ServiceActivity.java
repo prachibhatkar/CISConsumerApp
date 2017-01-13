@@ -3,7 +3,6 @@ package com.essel.smartutilities.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +23,6 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
-import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.models.ServiceType;
 import com.essel.smartutilities.utility.App;
@@ -37,13 +35,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.essel.smartutilities.activity.FeedBackActivity.flag;
-
-public class ServiceActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller {
+public class ServiceActivity extends AppCompatActivity implements View.OnClickListener,ServiceCaller
+{
     private Context Context;
     private Button btn_submit_service;
     private EditText edit_remark;
@@ -62,7 +58,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     Spinner servicetype;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,7 +80,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
 
 
-        ((EditText)findViewById(R.id.edit_remark)).setFilters(new InputFilter[] {
+        ((EditText)findViewById(R.id.edit_remark)).setFilters(new InputFilter[]
+                {
                 new InputFilter.LengthFilter(200)
         });
 
@@ -98,7 +96,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
             pDialog.setMessage(" please wait..");
             pDialog.show();*/
 
-            if (CommonUtils.isNetworkAvaliable(this)) {
+            if (CommonUtils.isNetworkAvaliable(this))
+            {
 
                 JsonObjectRequest request = WebRequests.getServiceType(this, Request.Method.GET, AppConstants.URL_GET_SERVICE_TYPE, AppConstants.REQUEST_SERVICE_TYPE,
                         this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
@@ -117,16 +116,19 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         }
 
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
@@ -135,9 +137,12 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
 
         @Override
-    public void onClick(View v) {
-        if(v==btn_submit_service){
-          if (isBlankInput()) {
+    public void onClick(View v)
+        {
+        if(v==btn_submit_service)
+        {
+          if (isBlankInput())
+          {
 
               editremark = edit_remark.getText().toString().trim();
               consumerno=((SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO)).toString());
@@ -146,7 +151,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
               }*/
               JSONObject obj = new JSONObject();
-              try {
+              try
+              {
                   obj.put("service_type", servicetype.getSelectedItemPosition());
                   obj.put("consumer_remark", editremark);
                   obj.put("consumer_no", consumerno);
@@ -154,10 +160,12 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                   e.printStackTrace();
               }
 
-              if( CommonUtils.isNetworkAvaliable(this)) {
+              if( CommonUtils.isNetworkAvaliable(this))
+              {
 
                   initProgressDialog();
-                  if (pDialog != null && !pDialog.isShowing()) {
+                  if (pDialog != null && !pDialog.isShowing())
+                  {
                       pDialog.setMessage(" please wait..");
                       pDialog.show();
                   }
@@ -197,7 +205,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
     }*/
 
-    private boolean isBlankInput() {
+    private boolean isBlankInput()
+    {
         boolean b = true;
         String editremark = String.valueOf(edit_remark.getText());
        /* if (editremark.equals("")){
@@ -217,7 +226,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
 
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         Intent in =new Intent(this,ActivityLoginLanding.class);
         startActivity(in);
@@ -226,11 +236,14 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
 
 
-        switch (label) {
-            case AppConstants.REQUEST_SERVICE_TYPE: {
+        switch (label)
+        {
+            case AppConstants.REQUEST_SERVICE_TYPE:
+            {
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 //
@@ -262,7 +275,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
 
                         }
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.authorization != null)
+                        {
                             dismissDialog();
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
@@ -275,7 +289,8 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
 
-            case AppConstants.REQUEST_POST_SERVICE_REQUEST: {
+            case AppConstants.REQUEST_POST_SERVICE_REQUEST:
+            {
                 if (jsonResponse != null) {
                     Log.i(label, "hyif " + jsonResponse);
 
@@ -293,12 +308,14 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
                         finish();
 
                     }
-                     if(jsonResponse.servicerequestmessage!= null) {
+                     if(jsonResponse.servicerequestmessage!= null)
+                     {
                          dismissDialog();
 
 
                     }
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.authorization != null)
+                        {
                             dismissDialog();
                             CommonUtils.saveAuthToken(this, jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
@@ -316,10 +333,13 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
 
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
 
-        switch (label) {
-            case AppConstants.REQUEST_SERVICE_TYPE: {
+        switch (label)
+        {
+            case AppConstants.REQUEST_SERVICE_TYPE:
+            {
 //
                Log.i(label, "servicetype" + message);
                Log.i(label, "servicetype" + response);
@@ -327,8 +347,10 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
             break;
         }
 
-        switch (label) {
-            case AppConstants.REQUEST_POST_SERVICE_REQUEST: {
+        switch (label)
+        {
+            case AppConstants.REQUEST_POST_SERVICE_REQUEST:
+            {
 //
                 Log.i(label, "servicerequest" + message);
                 Log.i(label, "servicerequest" + response);
