@@ -6,16 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -23,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
-import com.essel.smartutilities.models.AboutUs;
 import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
@@ -41,7 +36,8 @@ import com.essel.smartutilities.webservice.WebRequests;
  * Use the {@link Contact_Details_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Contact_Details_Fragment extends Fragment implements ServiceCaller,View.OnClickListener {
+public class Contact_Details_Fragment extends Fragment implements ServiceCaller,View.OnClickListener
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,7 +54,8 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
     private String mParam2;
 
 
-    public Contact_Details_Fragment() {
+    public Contact_Details_Fragment()
+    {
         // Required empty public constructor
     }
 
@@ -81,9 +78,11 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -91,7 +90,8 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_contact__details, container, false);
 
@@ -110,7 +110,8 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
     }
 
 
-    private void initialize(View rootView) {
+    private void initialize(View rootView)
+    {
         tv_portalsite = (TextView) rootView.findViewById(R.id.tv_portalsite);
         tv_antiberibery = (TextView) rootView.findViewById(R.id.tv_antiberihelp);
         tv_onlinecomplaint = (TextView) rootView.findViewById(R.id.tv_onlinehelp);
@@ -131,9 +132,11 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
 
 
-        if (CommonUtils.isNetworkAvaliable(getActivity())) {
+        if (CommonUtils.isNetworkAvaliable(getActivity()))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage(" please wait..");
                 pDialog.show();
             }
@@ -152,30 +155,22 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
             tv_onlinecomplaintno.setText(cont.online_complaint);
             Toast.makeText(getActivity(), " Please Connection Internet ", Toast.LENGTH_SHORT).show();
 
-          /*  ContactUs contactus2 = new ContactUs();
-            contactus2 = DatabaseManager.getContactDetail(getActivity());
-            tv_helplineno.setText(contactus2.helpline_number.toString().trim());
-            tv_antiberiberyno.setText(contactus2.anti_bribery_help.toString().trim());
-            tv_onlinecomplaint.setText(contactus2.online_complaint.toString().trim());
-            tv_igrcemail.setText(contactus2.igrc_email.toString().trim());
-            tv_consumerportal.setText(contactus2.customer_portal.toString().trim());
-            tv_electricitytheftno.setText(contactus2.electricity_theft_help_no.toString().trim());
-            tv_igrcno.setText(contactus2.igrc_no.toString().trim());*/
-
-
         }
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(getActivity());
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
@@ -183,18 +178,21 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
 
     }
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         dismissDialog();
     }
@@ -202,20 +200,26 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQUEST_GET_CONTACT_DETAILS: {
-                if (jsonResponse != null) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_GET_CONTACT_DETAILS:
+            {
+                if (jsonResponse != null)
+                {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 //                            DatabaseManager.saveJobCards(mContext, jsonResponse.responsedata.jobcards);
 //                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 //                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
 //                        Log.i(label, "Contactus:" + jsonResponse.contactus);
-                        if (jsonResponse.contactus == null) {
+                        if (jsonResponse.contactus == null)
+                        {
                             dismissDialog();
                         }
 
-                        if (jsonResponse.contactus != null) {
+                        if (jsonResponse.contactus != null)
+                        {
                             dismissDialog();
                             tv_helplineno.setText(jsonResponse.contactus.helpline_number);
                             tv_antiberiberyno.setText(jsonResponse.contactus.anti_bribery_help);
@@ -235,7 +239,8 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
                             contactus.online_complaint=jsonResponse.contactus.online_complaint;
                             DatabaseManager.saveContactDetail(getActivity(),contactus);
                         }
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.authorization != null)
+                        {
                             dismissDialog();
                             CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
@@ -252,9 +257,12 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
     }
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
-        switch (label) {
-            case AppConstants.REQUEST_GET_CONTACT_DETAILS: {
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_GET_CONTACT_DETAILS:
+            {
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
 //                Log.i(label, "Contactus" + message);
@@ -266,14 +274,17 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
 
     @Override
-    public void onClick(View v) {
-        if(v==tv_helplineno){
+    public void onClick(View v)
+    {
+        if(v==tv_helplineno)
+        {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + tv_helplineno.getText().toString()));
             startActivity(intent);
 
         }
-        if(v==tv_antiberiberyno){
+        if(v==tv_antiberiberyno)
+        {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + tv_antiberiberyno.getText().toString()));
             startActivity(intent);
@@ -281,22 +292,25 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
         }
 
-        if(v==tv_igrcemail){
-//            Intent email = new Intent(android.content.Intent.ACTION_SEND);
-//            email.setType("application/octet-stream");
-            Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-            intent.putExtra(Intent.EXTRA_EMAIL, "addresses");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
+        if(v==tv_igrcemail)
+        {
+            Intent send = new Intent(Intent.ACTION_SENDTO);
+            String uriText = "mailto:" + Uri.encode(tv_igrcemail.getText().toString()) +
+                    "?subject=" + Uri.encode("") +
+                    "&body=" + Uri.encode("");
+            Uri uri = Uri.parse(uriText);
+            send.setData(uri);
+            startActivity(Intent.createChooser(send, "Send mail..."));
 
-            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                startActivity(intent);
+            if (send.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(send);
 
             }else
                 DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
         }
 
-        if(v==tv_igrcno){
+        if(v==tv_igrcno)
+        {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + tv_igrcno.getText().toString()));
             startActivity(intent);
@@ -304,31 +318,33 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
         }
 
-        if(v==tv_portalsite){
-            Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-            intent.putExtra(Intent.EXTRA_EMAIL, "addresses");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
-            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                startActivity(intent);
+        if(v==tv_portalsite)
+        {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(tv_portalsite.getText().toString()));
+            startActivity(i);
+        }
+
+        if(v==tv_onlinecomplaintno)
+        {
+            Intent send = new Intent(Intent.ACTION_SENDTO);
+            String uriText = "mailto:" + Uri.encode(tv_onlinecomplaintno.getText().toString()) +
+                    "?subject=" + Uri.encode("") +
+                    "&body=" + Uri.encode("");
+            Uri uri = Uri.parse(uriText);
+            send.setData(uri);
+            startActivity(Intent.createChooser(send, "Send mail..."));
+
+            if (send.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(send);
 
             }else
                 DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
+
         }
 
-        if(v==tv_onlinecomplaintno){
-            Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-            intent.putExtra(Intent.EXTRA_EMAIL, "addresses");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
-            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                startActivity(intent);
-
-            }else
-                DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
-        }
-
-        if(v==tv_electricitytheftno){
+        if(v==tv_electricitytheftno)
+        {
 
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + tv_electricitytheftno.getText().toString()));

@@ -34,6 +34,7 @@ import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.NotificationTable;
 import com.essel.smartutilities.db.tables.TariffCatagoryTable;
 import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
 import com.essel.smartutilities.db.tables.TariffFixedEnergyChargeTable;
@@ -78,6 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createTariffTable(db);
         createTariffEnergyChargeTable(db);
         createTariffFixedEnergyChargeTable(db);
+        createNotificationTable(db);
 
     }
 
@@ -107,6 +109,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createTable(db, LoginTable.TABLE_NAME, loginTableFields);
     }
 
+    private void createNotificationTable(SQLiteDatabase db) {
+        String notificationTableFields = NotificationTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                NotificationTable.Cols.TITLE+ " VARCHAR, " +
+                NotificationTable.Cols.MSG + " VARCHAR, " +
+                NotificationTable.Cols.DATE + " VARCHAR, " +
+                NotificationTable.Cols.IS_READED + " VARCHAR " ;
+
+        createTable(db, NotificationTable.TABLE_NAME, notificationTableFields);
+    }
 
     private void createManageAccountsTable(SQLiteDatabase db) {
         String ManageAccountsTableFields = ManageAccountsTable.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -114,6 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ManageAccountsTable.Cols.CONSUMER_NAME + " VARCHAR, " +
                 ManageAccountsTable.Cols.CONTACT_NO + " VARCHAR, " +
                 ManageAccountsTable.Cols.ALTERNATE_CONTACT_NO + " VARCHAR, " +
+                ManageAccountsTable.Cols.ALTERNATE_EMAIL_ID + " VARCHAR, " +
                 ManageAccountsTable.Cols.CITY + " VARCHAR, " +
                 ManageAccountsTable.Cols.IS_PRIMARY + " VARCHAR, " +
                 ManageAccountsTable.Cols.ADDRESS + " VARCHAR";

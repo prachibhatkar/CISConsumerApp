@@ -63,7 +63,7 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
                                     mNotificationCard.remove(holder.getAdapterPosition());
                                     notifyDataSetChanged();
                                     dialog.cancel();
-//                                    DatabaseManager.deleteAccount(mContext,mConsumers.get(position).consumer_no);
+//                                    DatabaseManager.deleteNotification(mcontext,mNotificationCard.get(holder.getAdapterPosition()).title);
                                     Snackbar snack = Snackbar.make(view, "Notification Deleted", Snackbar.LENGTH_LONG);
                                     snack.show();
                                 }

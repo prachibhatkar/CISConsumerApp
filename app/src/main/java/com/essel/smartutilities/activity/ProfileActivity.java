@@ -64,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     String profileimage;
     Bitmap bitmap;
     Consumer con1 = new Consumer();
-    String img1;
+    public String img1,consumerno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -87,14 +87,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setupUI()
-    {
+    {  Consumer consumer=new Consumer();
+        String isprimary = "true";
+        consumer = DatabaseManager.getProfileinfo(this, isprimary);
+        consumerno = consumer.consumer_no;
         circleimage = (CircleImageView) findViewById(R.id.profile_image);
         circleimage.setOnClickListener(this);
         Consumer con = new Consumer();
-        con = DatabaseManager.getImage(this);
+        con = DatabaseManager.getImage(this,consumerno);
         if (con.profile_img != null && !con.profile_img.equals("") && con.profile_img.startsWith("http://"))
         {
-
             Picasso.with(this)
                     .load(con.profile_img)
 
@@ -117,35 +119,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         expandableLayout_changepass = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changepass);
         expandableLayout_editProfile = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_editprofile);
 
-
-        GetInfo get = new GetInfo();
-        String isprimary = "true";
-        get = DatabaseManager.getProfileinfo(this, isprimary);
-        String consumerno = get.consumerno;
-        String consumername = get.consumername;
-        String consumeraddress = get.consumeraddress;
-        String consumermobno = get.mobileno;
+        String consumername = consumer.consumer_name;
+        String consumeraddress = consumer.address;
+        String consumermobno = consumer.alternet_contact_no;
+        String consumeremail=consumer.alternet_email_id;
 
         contactno = (EditText) findViewById(R.id.editcontactno);
         contactno.setText(consumermobno);
         emailid = (EditText) findViewById(R.id.editconsumeremailid);
-        emailid.setText((SharedPrefManager.getStringValue(this, SharedPrefManager.EMAIL_ID)).toString());
+        emailid.setText(consumeremail);
         old_pass = (EditText) findViewById(R.id.editOldPassword);
         new_pass = (EditText) findViewById(R.id.editNewPassword);
         confirm_pass = (EditText) findViewById(R.id.editConfirmPassword);
-
-
         consemer_name = (TextView) findViewById(R.id.textConsumerName);
         consemer_name.setText(consumername);
-
         consumer_number = (TextView) findViewById(R.id.textConsumerno);
         consumer_number.setText(consumerno);
-
         consumer_add = (TextView) findViewById(R.id.textConsumerAddress);
         consumer_add.setText(consumeraddress);
         consumer_add1 = (TextView) findViewById(R.id.textConsumerAddress1);
-
-
         save_detail.setOnClickListener(this);
         save_password.setOnClickListener(this);
 
@@ -206,17 +198,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
         if (view == save_detail)
         {
-
-
             if (contactno.equals("") || contactno.length() != 10)
             {
 
                 Toast.makeText(this, "Please fill all fields ", Toast.LENGTH_LONG).show();
 
-            } else if (emailid.getText().length() == 0 || !CommonUtils.emailValidator(emailid.getText().toString())) {
-                Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
+            } else if (emailid.getText().length() == 0 || !CommonUtils.emailValidator(emailid.getText().toString()))
+                {
+                    Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
 
-            } else
+                } else
                 saveDetails();
 
         }
@@ -224,8 +215,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         {
 
             if (validate())
-            {
-                callchangepass();
+            {callchangepass();
             }
 
         }
@@ -330,13 +320,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK)
         {
            bitmap = (Bitmap) data.getExtras().get("data");
-            circleimage.setImageBitmap(bitmap);
+
             profileimage = CommonUtils.getBitmapEncodedString(bitmap);
             //storeCameraPhotoInSDCard(photo);
             //saveImageToStorage();
             circleimage.setVisibility(View.VISIBLE);
             if (CommonUtils.isNetworkAvaliable(this))
-            {
+            {circleimage.setImageBitmap(bitmap);
                 initProgressDialog();
                 if (pDialog != null && !pDialog.isShowing())
                 {
@@ -356,8 +346,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 JsonObjectRequest request = WebRequests.profileimg(this, Request.Method.POST, AppConstants.URL_POST_PROFILE_IMG, AppConstants.REQUEST_POST_PROFILE_IMG, this, obj, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
 
-            } else {
-                //Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
             }
 
         }
@@ -373,11 +364,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            circleimage.setImageURI(selectedImage);
+
 
             profileimage = CommonUtils.getBitmapEncodedString(bitmap);
             if (CommonUtils.isNetworkAvaliable(this))
-            {
+            {circleimage.setImageURI(selectedImage);
                 initProgressDialog();
                 if (pDialog != null && !pDialog.isShowing()) {
                     pDialog.setMessage(" please wait..");
@@ -397,11 +388,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_POST_PROFILE_IMG);
 
             }
-        } else {
+             else {
+                Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+                    }
         }
     }
-
-
 
     private void loadData()
     {
@@ -410,11 +401,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     public void onBackPressed()
     {
-
         super.onBackPressed();
-
     }
-
     public void onAsyncSuccess(JsonResponse jsonResponse, String label)
     {
         switch (label) {
@@ -477,6 +465,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
                         Log.i(label, "newrequestttttttttttttttttttttpass:" + jsonResponse.message);
                         Consumer consumer = new Consumer();
+                        consumer.consumer_no=consumerno;
                         consumer.profile_img = CommonUtils.getBitmapEncodedString(bitmap);
                         DatabaseManager.saveImage(this, consumer);
                         if (jsonResponse.message != null)
@@ -532,15 +521,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private boolean validate()
     {
         Boolean flag = false;
-        if (emailid.getText().length() == 0 || CommonUtils.emailValidator(emailid.getText().toString()))
-        {
-            if (contactno.getText().length() == 10 || contactno.getText().length() == 12 || contactno.getText().length() == 0)
-            {
-                if (old_pass.getText().toString().trim().length() >= 6 && old_pass.getText().toString().trim().length() <= 20)
+
+        if (old_pass.getText().toString().trim().length() >= 6 && old_pass.getText().toString().trim().length() <= 20)
                 {
                     if (new_pass.getText().toString().trim().length() >= 6 && new_pass.getText().toString().trim().length() <= 20)
                     {
-                        if (confirm_pass.getText().length()==0 ||confirm_pass.getText().length()>=6 ||confirm_pass.getText().length()<=20)
+                        if (confirm_pass.getText().length()>=6 && confirm_pass.getText().length()<=20)
                         {
                             if (confirm_pass.getText().toString().trim().compareTo(new_pass.getText().toString().trim()) == 0)
                             {
@@ -553,10 +539,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
                     } else
                         Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(this, "Retype valid Mobile", Toast.LENGTH_SHORT).show();
-            } else
-                Toast.makeText(this, "Please Enter valid Email", Toast.LENGTH_SHORT).show();
+
             return flag;
         }
     }

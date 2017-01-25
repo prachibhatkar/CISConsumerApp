@@ -29,10 +29,7 @@ public class Consumer implements Serializable {
     public String alternet_contact_no;
     public String profile_img;
 
-    public Consumer(){
-
-
-    }
+    public Consumer(){ }
 
 
     public Consumer(String consumer_name, String consumer_no, String address,String is_primary) {

@@ -51,7 +51,8 @@ import java.util.List;
  * Use the {@link Locate_Us_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSelectedListener, ServiceCaller {
+public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSelectedListener, ServiceCaller
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -84,7 +85,8 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     LocateUs locateus1 = new LocateUs();
 
 
-    public Locate_Us_Fragment() {
+    public Locate_Us_Fragment()
+    {
         // Required empty public constructor
     }
 
@@ -97,7 +99,8 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
      * @return A new instance of fragment Locate_Us_Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Locate_Us_Fragment newInstance(int param1, String param2) {
+    public static Locate_Us_Fragment newInstance(int param1, String param2)
+    {
         Locate_Us_Fragment fragment = new Locate_Us_Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, String.valueOf(param1));
@@ -108,9 +111,11 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -118,21 +123,25 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     }
 
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(getActivity());
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
-    private FragmentManager getSupportFragmentManager() {
+    private FragmentManager getSupportFragmentManager()
+    {
         FragmentActivity mFragments = new FragmentActivity();
         return mFragments.getSupportFragmentManager();
     }
@@ -155,7 +164,8 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         mContext = getActivity();
 
@@ -173,16 +183,20 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
         mMapView.onResume(); // needed to get the map to display immediately
 
-        try {
+        try
+        {
             MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
 
 
-        mMapView.getMapAsync(new OnMapReadyCallback() {
+        mMapView.getMapAsync(new OnMapReadyCallback()
+        {
             @Override
-            public void onMapReady(GoogleMap mMap) {
+            public void onMapReady(GoogleMap mMap)
+            {
                 googleMap = mMap;
 
                 // For showing a move to my location button
@@ -214,9 +228,11 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
       //  csdcenters.add(0,"Select CSD Centers");
 
 
-        if (CommonUtils.isNetworkAvaliable(getActivity())) {
+        if (CommonUtils.isNetworkAvaliable(getActivity()))
+        {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
+            if (pDialog != null && !pDialog.isShowing())
+            {
                 pDialog.setMessage(" please wait..");
                 pDialog.show();
             }
@@ -243,41 +259,48 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
     }
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         mMapView.onPause();
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         super.onDestroy();
         mMapView.onDestroy();
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         mMapView.onResume();
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
 
     }
-    public void onLowMemory() {
+    public void onLowMemory()
+    {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
 
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l)
+    {
        // if(position!=0) {
           lat= Double.valueOf(lat1.get(position));
           lon= Double.valueOf(lon1.get(position));
@@ -303,17 +326,23 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
 
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    public void onNothingSelected(AdapterView<?> adapterView)
+    {
 
     }
 
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
-        switch (label) {
-            case AppConstants.REQUEST_GET_LOCATE_US: {
-                if (jsonResponse != null) {
-                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_GET_LOCATE_US:
+            {
+                if (jsonResponse != null)
+                {
+                    if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS))
+                    {
 
 
                         Log.i(label, "hygtghytghyt " + jsonResponse.locateus);
@@ -359,12 +388,14 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                         }
 
 
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.authorization != null)
+                        {
                             dismissDialog();
                             CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
-                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE))
+                    {
                         dismissDialog();
                         Toast.makeText(getContext(), jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 
@@ -378,15 +409,19 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
     }
 
 
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         dismissDialog();
     }
 
     @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
-        switch (label) {
-            case AppConstants.REQUEST_GET_LOCATE_US: {
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
+        switch (label)
+        {
+            case AppConstants.REQUEST_GET_LOCATE_US:
+            {
                  dismissDialog();
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();

@@ -54,14 +54,6 @@ public class SharedPrefManager {
     public static String USER_KEY = "user_key";
 
 
-
-//    public static void saveUserCredentials(Context context, String userKey, String userName, String password, String userid) {
-//        SharedPreferences sharedPref = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putString(USER_KEY, userKey).putString(USER_NAME, userName).putString(PASSWORD, password).putString(USER_ID,userid);
-//        editor.commit();
-//    }
-
     public static void saveValue(Context context, String key, Object value) {
         SharedPreferences sharedPref = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -100,13 +92,7 @@ public class SharedPrefManager {
         return sharedPref.getBoolean(key, false);
     }
 
-    /**
-     * method to determine whether we have asked
-     * for this permission before.. if we have, we do not want to ask again.
-     * They either rejected us or later removed the permission.
-     * @param permission
-     * @return
-     */
+
     public static boolean shouldWeAskPermission(Context context, String permission) {
         SharedPreferences sharedPref = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         return sharedPref.getBoolean(permission, true);

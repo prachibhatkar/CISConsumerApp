@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.ContactUsAdapter;
@@ -46,7 +47,8 @@ public class Contact_Us_Activity extends AppCompatActivity
         loadData();
 
         if(ServiceStatusActivity.flag==true)
-        {
+        {   PopupMenu p  = new PopupMenu(this, null);
+            mymenu = p.getMenu();
             Intent intent = getIntent();
             i = intent.getExtras().getInt("value");
             vp_contact_pager.setCurrentItem(1);
@@ -56,13 +58,13 @@ public class Contact_Us_Activity extends AppCompatActivity
 
         }
 
-
-
-
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
       //  MenuInflater inflater = getMenuInflater();
         mymenu=menu;
         setMenu(mymenu);
+//        getMenuInflater().inflate(R.menu.top_right_call, menu);
+
         // Inflate the menu; this adds items to the action bar if it is present.
        // inflater.inflate(R.menu.top_right_call, menu);
             // menu.setGroupVisible(0,true);
@@ -73,25 +75,25 @@ public class Contact_Us_Activity extends AppCompatActivity
         return true;
     }
 
-    private void setMenu(Menu menu) {
-        if(pos==0)
-        getMenuInflater().inflate(R.menu.top_right_call, menu);
+    private void setMenu(Menu menu)
+    {
+
+        if (pos == 0)
+            getMenuInflater().inflate(R.menu.top_right_call, menu);
         else
             menu.clear();
-
     }
 
-
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_call) {
-
-            String phnno=(SharedPrefManager.getStringValue(this, SharedPrefManager.HELPLINENO)).toString();
+        if (id == R.id.action_call)
+        {String phnno=(SharedPrefManager.getStringValue(this, SharedPrefManager.HELPLINENO)).toString();
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + phnno));
             startActivity(intent);
@@ -101,21 +103,19 @@ public class Contact_Us_Activity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupUI() {
+    private void setupUI()
+    {
         vp_contact_pager = (ViewPager)findViewById(R.id.vp_contact_pager);
         tablayout = (TabLayout)findViewById(R.id.tabs);
     }
 
-    private void loadData() {
+    private void loadData()
+    {
          contactUsAdapter = new ContactUsAdapter(this, getSupportFragmentManager());
          contactUsAdapter.getItem(1);
          vp_contact_pager.setAdapter(contactUsAdapter);
          vp_contact_pager.addOnPageChangeListener(onPageChangedListener);
          tablayout.setupWithViewPager(vp_contact_pager);
-
-
-
-
 
     }
 

@@ -11,6 +11,7 @@ public class Complaints implements Serializable  {
     public String type;
     public String remark;
     public String code;
+    public String raised_date;
     public String img;
     public String complaintid;
 

@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout android:id="@+id/main_section"
+    <RelativeLayout
+        android:id="@+id/main_section"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -12,6 +13,7 @@
             android:id="@+id/menu_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -19,42 +21,39 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <TableLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/layout_table"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:shrinkColumns="*"
-                    android:stretchColumns="*"
                     android:layout_margin="5dp"
-                    android:id="@+id/layout_table"
-                    >
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:weightSum="4"
-                        >
+                        android:weightSum="4">
 
                         <LinearLayout
                             android:id="@+id/action_about_us"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:background="@color/colorPrimaryOverlay"
-                            android:orientation="vertical"
-                            android:padding="@dimen/margin_medium"
                             android:layout_marginLeft="@dimen/margin_small"
                             android:layout_marginRight="2dp"
-                            >
+                            android:layout_weight="1"
+                            android:background="@color/colorPrimaryOverlay"
+                            android:orientation="vertical"
+                            android:padding="@dimen/margin_medium">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:minHeight="60dp"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:minHeight="60dp">
+
                                 <ImageView
-                                    android:scaleType="center"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="center" />
                             </LinearLayout>
 
 
@@ -63,8 +62,8 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="About Us"
                                 android:gravity="center"
+                                android:text="About Us"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -72,9 +71,9 @@
 
                         <LinearLayout
                             android:id="@+id/action_tips"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:background="@color/colorPrimaryOverlay"
                             android:orientation="vertical"
                             android:padding="7dp">
@@ -82,12 +81,14 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:minHeight="60dp" android:gravity="center">
+                                android:gravity="center"
+                                android:minHeight="60dp">
+
                                 <ImageView
 
-                                    android:scaleType="center"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="center" />
                             </LinearLayout>
 
 
@@ -96,8 +97,8 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Tips"
                                 android:gravity="center"
+                                android:text="Tips"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -106,65 +107,67 @@
                         <LinearLayout
 
                             android:id="@+id/action_my_traiff"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
                             android:background="@color/colorPrimaryOverlay"
                             android:orientation="vertical"
                             android:padding="@dimen/margin_medium"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginRight="@dimen/margin_small"
 
                             >
 
                             <LinearLayout
-                                android:layout_height="wrap_content"
                                 android:layout_width="match_parent"
-                                android:minHeight="60dp" android:gravity="center">
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:minHeight="60dp">
+
                                 <ImageView
 
-                                    android:scaleType="center"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="center" />
                             </LinearLayout>
 
 
                             <TextView
 
+                                android:id="@+id/textView"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Tariff"
                                 android:gravity="center"
+                                android:text="Tariff"
                                 android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/text_size_h5"
-                                android:id="@+id/textView" />
+                                android:textSize="@dimen/text_size_h5" />
 
                         </LinearLayout>
 
 
                         <LinearLayout
                             android:id="@+id/action_faq"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="-4dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_weight="1"
                             android:background="@color/colorPrimaryOverlay"
                             android:orientation="vertical"
-                            android:padding="@dimen/margin_medium"
-                            android:layout_marginRight="2dp"
-                            android:layout_marginLeft="-4dp"
-                            >
+                            android:padding="@dimen/margin_medium">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:minHeight="60dp"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:minHeight="60dp">
+
                                 <ImageView
 
-                                    android:scaleType="center"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="center" />
                             </LinearLayout>
 
 
@@ -173,39 +176,40 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="FAQ"
                                 android:gravity="center"
+                                android:text="FAQ"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
 
                         </LinearLayout>
                     </TableRow>
+
                     <TableRow
-                        android:layout_marginTop="2dp"
                         android:layout_width="match_parent"
-                        android:weightSum="4"
-                        >
+                        android:layout_marginTop="2dp"
+                        android:weightSum="4">
 
                         <LinearLayout
                             android:id="@+id/action_feedback"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="3dp"
+                            android:layout_weight="1"
                             android:background="@color/colorPrimaryOverlay"
                             android:orientation="vertical"
-                            android:layout_marginLeft="3dp"
                             android:padding="10dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:minHeight="60dp"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:minHeight="60dp">
+
                                 <ImageView
 
-                                    android:scaleType="center"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="center" />
                             </LinearLayout>
 
                             <TextView
@@ -213,37 +217,36 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Feedback"
                                 android:gravity="center"
+                                android:text="Feedback"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
-
-
 
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/action_share"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="@dimen/margin_small"
+                            android:layout_weight="1"
                             android:background="@color/colorPrimaryOverlay"
                             android:orientation="vertical"
-                            android:padding="@dimen/margin_medium"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginRight="@dimen/margin_small">
+                            android:padding="@dimen/margin_medium">
 
                             <LinearLayout
-                                android:layout_height="wrap_content"
                                 android:layout_width="match_parent"
-                                android:minHeight="60dp"
-                                android:gravity="center">
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:minHeight="60dp">
+
                                 <ImageView
 
-                                    android:scaleType="center"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="center" />
                             </LinearLayout>
 
 
@@ -252,8 +255,8 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Share"
                                 android:gravity="center"
+                                android:text="Share"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -261,25 +264,26 @@
 
                         <LinearLayout
                             android:id="@+id/action_back_menu"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="-3dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_weight="1"
                             android:background="@color/colorPrimaryOverlay"
                             android:orientation="vertical"
-                            android:padding="@dimen/margin_medium"
-                            android:layout_marginRight="2dp"
-                            android:layout_marginLeft="-3dp"
-                            >
+                            android:padding="@dimen/margin_medium">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:minHeight="60dp" android:gravity="center">
+                                android:gravity="center"
+                                android:minHeight="60dp">
+
                                 <ImageView
 
-                                    android:scaleType="center"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:scaleType="center" />
                             </LinearLayout>
 
 
@@ -288,8 +292,8 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Back"
                                 android:gravity="center"
+                                android:text="Back"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -305,8 +309,6 @@
         </android.support.v4.widget.NestedScrollView>
 
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

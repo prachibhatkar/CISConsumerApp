@@ -2,7 +2,6 @@ package com.essel.smartutilities.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,15 +21,12 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.essel.smartutilities.R;
-import com.essel.smartutilities.activity.GetComplaintIdActivity;
 import com.essel.smartutilities.callers.ServiceCaller;
-import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.ComplaintId;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
-import com.essel.smartutilities.utility.DialogCreator;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.essel.smartutilities.webservice.WebRequests;
 
@@ -43,9 +38,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import static android.R.id.message;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,8 +56,8 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    TextView tv_consumerid, tv_complainttype, tv_complaintraised, tv_complaintstatus;
+    public ArrayList<ComplaintId> temp;
+    TextView tv_consumerid, tv_complainttype, tv_complaintraised, tv_complaintstatus,tv_nocomplaintfound;
     Spinner complaintid;
     String accid,status,type;
     LinearLayout linearLayout;
@@ -76,22 +68,15 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
     private Context mContext;
     private ArrayList<String> arraycomplaintid;
     ProgressDialog pDialog;
-    String orderid;
+    String orderid,com;
     int complaintno;
 
 
     public Complaint_Status_Fragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Complaint_Status_Fragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static Complaint_Status_Fragment newInstance(int param1, String param2) {
         Complaint_Status_Fragment fragment = new Complaint_Status_Fragment();
@@ -124,13 +109,15 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
         // String[] type = mContext.getResources().getStringArray(R.array.complaintid);
 
 
-        if (CommonUtils.isNetworkAvaliable(getActivity())) {
+        if (CommonUtils.isNetworkAvaliable(getActivity()))
+        {
             String consumer_no=((SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.CONSUMER_NO)).toString());
 
             JsonObjectRequest request = WebRequests.getComplaintID(getActivity(), Request.Method.POST, AppConstants.URL_GET_COMPLAINT_ID, AppConstants.REQUEST_GET_COMPLAINT_ID,
                     this,consumer_no,SharedPrefManager.getStringValue(getActivity(), SharedPrefManager.AUTH_TOKEN));
             App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_GET_COMPLAINT_ID);
-        } else {
+        } else
+        {
             Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
         }
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arraycomplaintid);
@@ -145,25 +132,25 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
 
 
-                if (CommonUtils.isNetworkAvaliable(getActivity())&&complaintno!=0){
-//                    if(complaintno==0){
-//                        Toast.makeText(getActivity(), " Please Select Complaintid ", Toast.LENGTH_SHORT).show();
-//                    }
+                if (CommonUtils.isNetworkAvaliable(getActivity())&&complaintno!=0)
+                {
                     initProgressDialog();
-                    if (pDialog != null && !pDialog.isShowing()) {
+                    if (pDialog != null && !pDialog.isShowing())
+                    {
                         pDialog.setMessage(" please wait..");
                         pDialog.show();
                     }
-
+                    com=complaintid.getSelectedItem().toString();
+                    tv_complaintmsg.setText(temp.get(complaintid.getSelectedItemPosition()-1).remark);
+                    tv_complaintraised.setText(temp.get(complaintid.getSelectedItemPosition()-1).raised_date);
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
-               // }
 
-                } else{
 
+                } else
+                {
 
                 }
-                   // Toast.makeText(getActivity(), " Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -180,51 +167,72 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
     }
 
-    private void initialize(View rootView) {
+    private void initialize(View rootView)
+    {
         tv_consumerid = (TextView) rootView.findViewById(R.id.consumerid);
         tv_complainttype = (TextView) rootView.findViewById(R.id.complainttype);
         tv_complaintstatus = (TextView) rootView.findViewById(R.id.complaintstatus);
-        tv_complaintraised = (TextView) rootView.findViewById(R.id.tv_complaintraised);
-        tv_complaintmsg = (TextView) rootView.findViewById(R.id.tv_complaintmsg);
+        tv_complaintraised = (TextView) rootView.findViewById(R.id.tv_complaintraisedate);
+        tv_complaintmsg = (TextView) rootView.findViewById(R.id.tv_complaintremark);
+        tv_nocomplaintfound=(TextView)rootView.findViewById(R.id.tv_nocomplaintfound);
         linearLayout=(LinearLayout)rootView.findViewById(R.id.linearlayout1);
 
 
     }
 
 
-    private void initProgressDialog() {
+    private void initProgressDialog()
+    {
 
-        if (pDialog == null) {
+        if (pDialog == null)
+        {
             pDialog = new ProgressDialog(getActivity());
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog() {
+    private void dismissDialog()
+    {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
     @Override
-    public void onAsyncSuccess(JsonResponse jsonResponse, String label) {
+    public void onResume()
+    {
+        super.onResume();
+    }
+
+    @Override
+    public void onAsyncSuccess(JsonResponse jsonResponse, String label)
+    {
 
 
-        switch (label) {
-            case AppConstants.REQUEST_GET_COMPLAINT_ID: {
-                if (jsonResponse != null) {
+        switch (label)
+        {
+            case AppConstants.REQUEST_GET_COMPLAINT_ID:
+            {
+                if (jsonResponse != null)
+                {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
 
                         Log.i(label, "hygt " + jsonResponse);
                         // Log.i(label, "hyif " + jsonResponse.complaint_type);
 
-                        if (jsonResponse.complaints.size()== 0) {
-                            DialogCreator.showMessageDialog(getActivity(), "No Complaints Found");
+                        if (jsonResponse.complaints.size()== 0)
+                        {
+                           // linearLayout.setVisibility(View.VISIBLE);
+                            complaintid.setEnabled(false);
+                            tv_nocomplaintfound.setText("No Complaints Found");
                         }
-                        if (jsonResponse.complaints.size() != 0) {
+                        if (jsonResponse.complaints.size() != 0)
+                        {
 
-                            for (int i = 1; i <= jsonResponse.complaints.size(); i++) {
+                            temp=jsonResponse.complaints;
+                            for (int i = 1; i <= jsonResponse.complaints.size(); i++)
+                            {
 
                                 ComplaintId complaintid = new ComplaintId();
                                 Log.i(label, "complainttype" + jsonResponse.complaints);
@@ -235,13 +243,14 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
                             }
 
-
                         }
-                        if (jsonResponse.authorization != null) {
+                        if (jsonResponse.authorization != null)
+                        {
                             CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
 //                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
-                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
+                    } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE))
+                    {
                         Toast.makeText(getContext(), jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
 
                     }
@@ -253,11 +262,15 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
     }
 
-    @Override
-    public void onAsyncFail(String message, String label, NetworkResponse response) {
 
-        switch (label) {
-            case AppConstants.REQUEST_GET_COMPLAINT_ID: {
+    @Override
+    public void onAsyncFail(String message, String label, NetworkResponse response)
+    {
+
+        switch (label)
+        {
+            case AppConstants.REQUEST_GET_COMPLAINT_ID:
+            {
 //                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
 //                Toast.makeText(mContext, ""+ response, Toast.LENGTH_LONG).show();
                 Log.i(label, "comp id......" + message);
@@ -271,7 +284,8 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
     }
 
 
-    private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
+    private class AsyncCallWS extends AsyncTask<Void, Void, Void>
+    {
 
 
             @Override
@@ -280,14 +294,16 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
             }
 
             @Override
-            protected Void doInBackground(Void... params) {
+            protected Void doInBackground(Void... params)
+            {
                 Log.i(TAG, "doInBackground");
                 getComplaintStatus();
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(Void result)
+            {
                 Log.i(TAG, "onPostExecute");
                 Log.i(TAG, "response data: ");
 
@@ -297,7 +313,8 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
             }
 
 
-            public void getComplaintStatus() {
+            public void getComplaintStatus()
+            {
 
 
                 String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerCaseDetails/getconsumercasedetailsbpelprocess_client_ep";
@@ -305,7 +322,8 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                 String NAMESPACE = "http://www.example.org";
                 String URL = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerCaseDetails/getconsumercasedetailsbpelprocess_client_ep";
 
-                try {
+                try
+                {
                     SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
 
                     Request.addProperty("caseOrdId", orderid);
@@ -321,7 +339,8 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                     androidHttpTransport.debug = true;
 
 
-                    try {
+                    try
+                    {
                         androidHttpTransport.call(SOAP_ACTION, soapEnvelope);
                     } catch (IOException e1) {
                         e1.printStackTrace();
@@ -333,13 +352,15 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                      accid = ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString();
                      status = ((SoapObject) soapEnvelope.bodyIn).getProperty("status").toString();
                      type = ((SoapObject) soapEnvelope.bodyIn).getProperty("type").toString();
-                     getActivity().runOnUiThread(new Runnable() {
+                     getActivity().runOnUiThread(new Runnable()
+                     {
                         @Override
                         public void run() {
                             // This code will always run on the UI thread, therefore is safe to modify UI elements.
                            // tv_consumerid.setText(accid);
 
                             linearLayout.setVisibility(View.VISIBLE);
+                            tv_consumerid.setText(com);
                             tv_complaintstatus.setText(status);
                             tv_complainttype.setText(type);
                         }
@@ -361,7 +382,8 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                     // String paymenthistory=  ((SoapObject)responceArray.getProperty(0)).getProperty("ATTRIBUTE14").toString();
 
 
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     Log.e(TAG, "Errorrrrrrrrrrrrrrrrrrrr: " + e.getMessage());
 
                 }
@@ -376,26 +398,31 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
 
             // TODO: Rename method, update argument and hook method into UI event
-            public void onButtonPressed(Uri uri) {
-                if (mListener != null) {
+            public void onButtonPressed(Uri uri)
+            {
+                if (mListener != null)
+                {
                     mListener.onFragmentInteraction(uri);
                 }
             }
 
             @Override
-            public void onAttach(Context context) {
+            public void onAttach(Context context)
+            {
                 super.onAttach(context);
 
             }
 
             @Override
-            public void onDetach() {
+            public void onDetach()
+            {
                 super.onDetach();
                 mListener = null;
             }
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
             }
 
@@ -409,7 +436,8 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
              * "http://developer.android.com/training/basics/fragments/communicating.html"
              * >Communicating with Other Fragments</a> for more information.
              */
-            public interface OnFragmentInteractionListener {
+            public interface OnFragmentInteractionListener
+            {
                 // TODO: Update argument type and name
                 void onFragmentInteraction(Uri uri);
             }

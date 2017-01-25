@@ -245,6 +245,11 @@ public class AddAccountGetOTPActivity extends AppCompatActivity implements View.
                 Log.i(label, "responseeeeeeeeeeee:" + response);
                 Log.i(label, "requestttttttttttttttttttttfail:" + message);
                 dismissDialog();
+                if(response.statusCode==401)
+                {Intent intent=new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                    SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                }
                 break;
             }
         }

@@ -22,7 +22,8 @@ import com.essel.smartutilities.models.Consumer;
 import java.util.ArrayList;
 
 
-public class LoginDropDownFragment extends Fragment implements View.OnClickListener {
+public class LoginDropDownFragment extends Fragment implements View.OnClickListener
+{
 
     private Context mContext;
     private OnFragmentInteractionListener mListener;
@@ -30,16 +31,19 @@ public class LoginDropDownFragment extends Fragment implements View.OnClickListe
     private RecyclerView recyclerView;
     private View rootView;
 
-    public LoginDropDownFragment() {
+    public LoginDropDownFragment()
+    {
     }
 
-    public static LoginDropDownFragment newInstance() {
+    public static LoginDropDownFragment newInstance()
+    {
         LoginDropDownFragment fragment = new LoginDropDownFragment();
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
     }
 

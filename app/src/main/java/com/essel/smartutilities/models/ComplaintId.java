@@ -8,7 +8,10 @@ import java.io.Serializable;
 
 public class ComplaintId implements Serializable  {
     public String id;
+    public String remark;
+    public String raised_date;
     public String complaint_no;
+
 
     public String getComplaint_no() {
         return complaint_no;

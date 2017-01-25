@@ -107,10 +107,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v == btnLogin)
         {
             performLogin();
-            // Intent i = new Intent(this, ActivityLoginLanding.class);
-            //  startActivity(i);
-//            ArrayList<Consumer> consumers = Consumer.createConsumersList(10);
-//            DatabaseManager.saveLoginDetails(this,consumers.get(3));
 
         } else if (v == actionRegister)
         {
@@ -141,6 +137,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private boolean isBlankInput()
     {
+        inputLayoutPassword.setError("");
         boolean b = true;
         String username = String.valueOf(editTextUsername.getText());
         if (username.equals("") || username.length() < 10 || username.length() > 20) {
@@ -196,48 +193,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "true");
                             Intent i = new Intent(this, ActivityLoginLanding.class);
                             startActivity(i);
-//                            if(jsonResponse.user_info.profile_img!=null) {
-////                                bitmap = StringToBitMap(jsonResponse.user_info.profile_img);
-////                                jsonResponse.user_info.profile_img = bitmap.toString();
-//                                URL imageUrl = null;
-//                                try {
-//                                    imageUrl = new URL(jsonResponse.user_info.profile_img.toString());
-//                                } catch (MalformedURLException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                URLConnection ucon = null;
-//                                try {
-//                                    ucon = imageUrl.openConnection();
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//                                InputStream is = null;
-//                                try {
-//                                    is = ucon.getInputStream();
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                BufferedInputStream bis = new BufferedInputStream(is);
-//
-//                                ByteArrayBuffer baf = new ByteArrayBuffer(500);
-//                                int current = 0;
-//                                try {
-//                                    while ((current = bis.read()) != -1) {
-//         /* This approach slowdown the process*/
-//                                        baf.append((byte) current);
-//                                    }
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//                                byte[] img_ary= baf.toByteArray();
-//                                ByteArrayInputStream imageStream = new ByteArrayInputStream(
-//                                        img_ary);
-//                                Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-//                                String img=BitMapToString(theImage);
-//                                jsonResponse.user_info.profile_img=img;
-//                            }
                             DatabaseManager.saveLoginDetails(this, jsonResponse.user_info);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {

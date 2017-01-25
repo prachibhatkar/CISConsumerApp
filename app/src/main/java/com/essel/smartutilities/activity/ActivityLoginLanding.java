@@ -38,7 +38,6 @@ import com.essel.smartutilities.fragments.LoginDropDownFragment;
 import com.essel.smartutilities.fragments.LoginLandingFragment;
 import com.essel.smartutilities.models.BrandingImages;
 import com.essel.smartutilities.models.Consumer;
-import com.essel.smartutilities.models.GetInfo;
 import com.essel.smartutilities.models.JsonResponse;
 import com.essel.smartutilities.utility.App;
 import com.essel.smartutilities.utility.AppConstants;
@@ -126,8 +125,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     }
 
     public void setTitle()
-    {
-        ArrayList<Consumer> consumers = DatabaseManager.getAllManageAccounts(this);
+    {ArrayList<Consumer> consumers = DatabaseManager.getAllManageAccounts(this);
         int i=0;
         if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO).isEmpty())
             if (!consumers.isEmpty() && consumers.size() != 0) {
@@ -147,12 +145,12 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             }
         if(i==0)
         {
-            GetInfo get = new GetInfo();
+            Consumer get = new Consumer();
             get = DatabaseManager.getProfileinfo(this,"true");
-            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_NO,get.consumerno);
-            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_NAME,get.consumername);
-            maintitle.setText(get.consumerno);
-            subtitle.setText(get.consumername);
+            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_NO,get.consumer_no);
+            SharedPrefManager.saveValue(this,SharedPrefManager.CONSUMER_NAME,get.consumer_name);
+            maintitle.setText(get.consumer_no);
+            subtitle.setText(get.consumer_name);
         }
 
         maintitle.setOnClickListener(this);
@@ -312,7 +310,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             initProgressDialog();
             if (pDialog != null && !pDialog.isShowing()) {
                 pDialog.setMessage("Requesting, please wait..");
-                pDialog.show();
+               pDialog.show();
             }
             AsyncCallWS task = new AsyncCallWS();
             task.execute();
@@ -405,15 +403,16 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 mPager.setCurrentItem(currentPage++, true);
             }
         };
+        final int time=6000;
+
         Timer swipeTimer = new Timer();
         swipeTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.post(Update);
             }
-        }, 6000, 6000);
+        }, time, time);
 
-        // Pager listener over indicator
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
 
@@ -557,8 +556,7 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 if (jsonResponse != null) {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
                         if (jsonResponse.message != null)
-                        {
-                            SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                        {   SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
                             SharedPrefManager.saveValue(this, SharedPrefManager.AUTH_TOKEN, "no");
 
                             dismissDialog();
@@ -587,8 +585,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                         if (jsonResponse.consumers != null && jsonResponse.consumers.size() > 0) {
                             Collections.reverse(jsonResponse.consumers);
                             DatabaseManager.saveManageAccounts(this, jsonResponse.consumers);
-
                             dismissDialog();
+                            setTitle();
                         }
                         if (jsonResponse.authorization != null) {
                             dismissDialog();
@@ -638,6 +636,11 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             {
                 Log.i(label, "REQUEST_LOGOUT " + response);
                 dismissDialog();
+                if(response.statusCode==401)
+                {Intent intent=new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                    SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                }
             }
             break;
             case AppConstants.REQUEST_GET_ACCOUNTS:
@@ -645,6 +648,11 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + message);
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + response);
                 dismissDialog();
+                if(response.statusCode==401)
+                {Intent intent=new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                    SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                }
             }
             break;
             case AppConstants.REQUEST_BRANDING_IMAGES:
@@ -652,6 +660,11 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
                 Log.i(label, AppConstants.REQUEST_BRANDING_IMAGES + message);
                 Log.i(label, AppConstants.REQUEST_BRANDING_IMAGES + response);
                 dismissDialog();
+                if(response.statusCode==401)
+                {Intent intent=new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                    SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                }
             }
             break;
         }

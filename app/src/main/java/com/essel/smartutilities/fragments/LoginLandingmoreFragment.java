@@ -27,7 +27,8 @@ import com.essel.smartutilities.activity.TraiffActivity;
  * Use the {@link LoginLandingmoreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginLandingmoreFragment extends Fragment implements View.OnClickListener {
+public class LoginLandingmoreFragment extends Fragment implements View.OnClickListener
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,7 +43,8 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
     private OnFragmentInteractionListener mListener;
     private Context mContext;
 
-    public LoginLandingmoreFragment() {
+    public LoginLandingmoreFragment()
+    {
         // Required empty public constructor
     }
 
@@ -55,7 +57,8 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
      * @return A new instance of fragment LandingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoginLandingmoreFragment newInstance(String param1, String param2) {
+    public static LoginLandingmoreFragment newInstance(String param1, String param2)
+    {
         LoginLandingmoreFragment fragment = new LoginLandingmoreFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -65,9 +68,11 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -75,7 +80,8 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_login_landingmore, container, false);
         setupUI(layout);
@@ -83,7 +89,8 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
 
     }
 
-    private void setupUI(View layout) {
+    private void setupUI(View layout)
+    {
         action_back_menu=(LinearLayout)layout.findViewById(R.id.action_back_menu);
         action_about_us=(LinearLayout)layout.findViewById(R.id.action_about_us);
         action_tips=(LinearLayout)layout.findViewById(R.id.action_tips);
@@ -105,60 +112,72 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
+    public void onButtonPressed(Uri uri)
+    {
+        if (mListener != null)
+        {
             mListener.onFragmentInteraction(uri);
         }
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
         mListener = null;
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
 
-        if(view==action_back_menu) {
+        if(view==action_back_menu)
+        {
             Fragment fragment = new LoginLandingFragment();
             addFragment(fragment, true);
 
         }
-        else  if(view==action_about_us){
+        else  if(view==action_about_us)
+        {
             Intent i = new Intent(getActivity(), AboutUsActivity.class);
             startActivity(i);
 
 
         }
-        else if(view==action_tips){
+        else if(view==action_tips)
+        {
             Intent i = new Intent(getActivity(), TipsActivity.class);
             startActivity(i);
 
         }
-        else if(view==action_my_traiff) {
+        else if(view==action_my_traiff)
+        {
             Intent i = new Intent(getActivity(), TraiffActivity.class);
             startActivity(i);
 
         }
-        else if(view==action_faq) {
+        else if(view==action_faq)
+        {
             Intent i = new Intent(getActivity(), FAQActivity.class);
             startActivity(i);
 
         }
-        else if(view==action_feedback) {
+        else if(view==action_feedback)
+        {
             Intent i = new Intent(getActivity(), FeedBackActivity.class);
             startActivity(i);
 
 
         }
-        else if(view==action_share) {
+        else if(view==action_share)
+        {
             shareTextUrl();
 
 
@@ -168,7 +187,8 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
 
     }
 
-    private void shareTextUrl() {
+    private void shareTextUrl()
+    {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -181,7 +201,8 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
         startActivity(Intent.createChooser(share, "Share link!"));
     }
 
-    public void addFragment(Fragment fragment, boolean withAnimation) {
+    public void addFragment(Fragment fragment, boolean withAnimation)
+    {
         String backStateName = fragment.getClass().getName();
         FragmentManager manager = getFragmentManager();
         int entryCount = manager.getBackStackEntryCount();
@@ -190,11 +211,14 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
         if (entryCount > 0)
             fragName = manager.getBackStackEntryAt(entryCount - 1).getName();
 
-        if (!backStateName.equals(fragName)) {
+        if (!backStateName.equals(fragName))
+        {
             boolean poped = manager.popBackStackImmediate(backStateName, 0);//int index= getBackStackEntryIndex(backStateName);
-            if (!poped && manager.findFragmentByTag(backStateName) == null) {
+            if (!poped && manager.findFragmentByTag(backStateName) == null)
+            {
                 FragmentTransaction ft = manager.beginTransaction();
-                if (withAnimation) {
+                if (withAnimation)
+                {
                     ft.setCustomAnimations(R.anim.slide_enter, R.anim.slide_exit);
                 }
                 ft.replace(R.id.container, fragment, backStateName);
@@ -215,7 +239,8 @@ public class LoginLandingmoreFragment extends Fragment implements View.OnClickLi
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener
+    {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }

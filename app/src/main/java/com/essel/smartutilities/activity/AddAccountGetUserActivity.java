@@ -26,6 +26,10 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 /**
  * Created by hp on 11/4/2016.
@@ -108,7 +112,7 @@ public class AddAccountGetUserActivity extends AppCompatActivity implements View
             if (pDialog != null && !pDialog.isShowing())
             {
                 pDialog.setMessage("Requesting, please wait..");
-                pDialog.show();
+                 pDialog.show();
             }
             JSONObject obj = new JSONObject();
             try {
@@ -160,7 +164,7 @@ public class AddAccountGetUserActivity extends AppCompatActivity implements View
     }
 
     public void consumerdetails()
-    {
+    { int TimeOut=3000;
         String SOAP_ACTION = "http://123.63.20.164:8001/soa-infra/services/FieldMobility/getConsumerDetails/getconsumerdetailsbpelprocess_client_ep";
         String METHOD_NAME = "requestElement";
         String NAMESPACE = "http://www.example.org";
@@ -187,15 +191,16 @@ public class AddAccountGetUserActivity extends AppCompatActivity implements View
                 Log.i(TAG, "get bodyin: " + (SoapObject) soapEnvelope.bodyIn);
                 if (((SoapObject) soapEnvelope.bodyIn).getProperty("message") != null)
                     if ((((SoapObject) soapEnvelope.bodyIn).getProperty("message").toString()).equalsIgnoreCase("Please Select Correct Values")) {
-                        this.runOnUiThread(new Runnable() {
+                        this.runOnUiThread(new Runnable()
+                        {
                             public void run()
                             {
                                 DialogCreator.showMessageDialog(AddAccountGetUserActivity.this, "Please Enter Valid Consumer No");
                             }
                         });
-                    } else
+                    }
+                    else
                     {
-
                         Intent i = new Intent(this, AddAccountGetOTPActivity.class);
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NO_ADD, ((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString().equalsIgnoreCase("anytype{}")?" " :((SoapObject) soapEnvelope.bodyIn).getProperty("accId").toString());
                         SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_NAME_ADD, ((SoapObject) soapEnvelope.bodyIn).getProperty("perNam").toString());
@@ -211,9 +216,24 @@ public class AddAccountGetUserActivity extends AppCompatActivity implements View
                         dismissDialog();
                     }
             }
-        } catch (Exception ex)
+        } catch (XmlPullParserException e)
         {
-            Log.e(TAG, "Error: " + ex.getMessage());
+            e.printStackTrace();
+        } catch (SocketTimeoutException e)
+        {  e.printStackTrace();
+            dismissDialog();
+            this.runOnUiThread(new Runnable()
+                {
+                     public void run()
+                     {
+                    DialogCreator.showMessageDialog(AddAccountGetUserActivity.this, "This is TimeOut Event");
+                     }
+                });
+        } catch (IOException e)
+        {
+            e.printStackTrace();
         }
+
+
     }
 }

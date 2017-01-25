@@ -1,11 +1,13 @@
 package com.essel.smartutilities.activity;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,56 +15,43 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.Volley;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-public class BillHistoryActivity extends AppCompatActivity implements View.OnClickListener
-{
+public class BillHistoryActivity extends Activity implements View.OnClickListener {
     ImageView download1, download2, download3, download4, download5, download6, imgBack;
     DownloadManager downloadManager;
     Uri image_uri;
-    String strApiKey;
     String fileName;
-    File root;
     ProgressDialog pDialog;
-    String strValue;
-    String webUrl = null;
-    File gpxfile = null;
     String base;
+    public static Context con;
     TableRow[] tbl = new TableRow[6];
     TextView month1, date1, amt1, consum1, month2, date2, amt2, consum2, month3, date3, amt3, consum3, month4, date4, amt4, consum4,
             month5, date5, amt5, consum5, month6, date6, amt6, consum6;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_history);
-        base = "http://cpnagpur.sndl.in:86/getbillall.php?billnumber=";
+        base = "http://192.168.0.5:8000/mobileapi/get-bill-pdf/?";
+        base = base + "city=" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY);
         intialize();
         image_uri = Uri.parse(base);
-
-
+        con=this;
     }
 
-    private void intialize()
-    {
+    private void intialize() {
 
         tbl[0] = (TableRow) findViewById(R.id.tbl0);
         tbl[1] = (TableRow) findViewById(R.id.tbl1);
@@ -98,8 +87,7 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
         setvalues();
     }
 
-    private void setvalues()
-    {
+    private void setvalues() {
         month1 = (TextView) findViewById(R.id.month1);
         date1 = (TextView) findViewById(R.id.date1);
         amt1 = (TextView) findViewById(R.id.amount1);
@@ -160,41 +148,50 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View view)
-    {
-        if (CommonUtils.isNetworkAvaliable(this))
-        {
+    public void onBackPressed() {
+        super.onBackPressed();
+        dismissDialog();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (CommonUtils.isNetworkAvaliable(this)) {
             initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing())
-            {
+            if (pDialog != null && !pDialog.isShowing()) {
                 pDialog.setMessage("Downloding, please wait..");
                 pDialog.show();
             }
-            switch (view.getId())
-            {
+            String b;
+            switch (view.getId()) {
                 case R.id.download1:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[0] + ".pdf";
-                    getPdf(String.valueOf(MyBillActivity.billid[0]), fileName);
+                    fileName = "MY Bill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[0] + ".pdf";
+                     b=base+"&&bill_id=" + MyBillActivity.billid[0];
+                    new DownloadFile().execute(b, fileName);
                     break;
                 case R.id.download2:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[1] + ".pdf";
-                    getPdf(String.valueOf(MyBillActivity.billid[1]), fileName);
+                    fileName = "MY Bill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[1] + ".pdf";
+                     b=base+"&&bill_id=" + MyBillActivity.billid[1];
+                    new DownloadFile().execute(b, fileName);
                     break;
                 case R.id.download3:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[2] + ".pdf";
-                    getPdf(String.valueOf(MyBillActivity.billid[2]), fileName);
+                    fileName = "MY Bill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[2] + ".pdf";
+                    b=base+"&&bill_id=" + MyBillActivity.billid[2];
+                    new DownloadFile().execute(b, fileName);
                     break;
                 case R.id.download4:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[3] + ".pdf";
-                    getPdf(String.valueOf(MyBillActivity.billid[3]), fileName);
+                    fileName = "MY Bill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[3] + ".pdf";
+                    b=base+"&&bill_id=" + MyBillActivity.billid[3];
+                    new DownloadFile().execute(b, fileName);
                     break;
                 case R.id.download5:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[4] + ".pdf";
-                    getPdf(String.valueOf(MyBillActivity.billid[4]), fileName);
+                    fileName = "MY Bill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[4] + ".pdf";
+                    b=base+"&&bill_id=" + MyBillActivity.billid[4];
+                    new DownloadFile().execute(b, fileName);
                     break;
                 case R.id.download6:
-                    fileName = "MYbill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[5] + ".pdf";
-                    getPdf(String.valueOf(MyBillActivity.billid[5]), fileName);
+                    fileName = "MY Bill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[5] + ".pdf";
+                    b=base+"&&bill_id=" + MyBillActivity.billid[5];
+                    new DownloadFile().execute(b, fileName);
                     break;
             }
         } else
@@ -202,145 +199,89 @@ public class BillHistoryActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void initProgressDialog()
-    {
+    private void initProgressDialog() {
 
 
-        if (pDialog == null)
-        {
+        if (pDialog == null) {
             pDialog = new ProgressDialog(this);
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
         }
     }
 
-    private void dismissDialog()
-    {
+    private void dismissDialog() {
         if (pDialog != null && pDialog.isShowing())
             pDialog.dismiss();
     }
 
-    public void getPdf(String ss, final String dd)
-    {
-        strApiKey = "d733ba16-8d32-4efb-9b51-7fc6baba4643";//Web api Parameter
-        strValue = base + ss; //Web api Parameter
+    class DownloadFile extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute()
+        {
+            Log.i("Bill History", "onPreExecute");
+        }
 
-        webUrl = "http://api.html2pdfrocket.com/pdf";//Web Api Url
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("apiKey", strApiKey);
-        params.put("value", strValue);
 
-        webUrl = "http://api.html2pdfrocket.com/pdf";
-        String mUrl = webUrl;
-        InputStreamReader request = new InputStreamReader(Request.Method.POST, webUrl,
-                new Response.Listener<byte[]>() {
-                    @Override
-                    public void onResponse(byte[] response) {
-                        // TODO handle the response
-                        try {
-                            if (response != null)
-                            {
-//                                Random r = new Random();
-//                                int i1 = r.nextInt(80 - 65) + 65;
-                                fileName = dd;
-                                root = new File(Environment.getExternalStorageDirectory(), "Essel Bills");
-                                if (!root.exists())
-                                {
-                                    root.mkdirs();
-                                }
-                                if (root.exists())
-                                {
 
-                                    if (gpxfile == null || !gpxfile.exists()) {
-                                        gpxfile = new File(root, dd);
-                                        OutputStream op = new FileOutputStream(gpxfile);
-                                        gpxfile.setWritable(true);
-                                        op.write(response);
-                                        op.flush();
-                                        op.close();
-                                    } else {
+        @Override
+        protected void onPostExecute(Void result)
+        {
+            Log.i("Bill History", "onPostExecute");
+            Toast.makeText(BillHistoryActivity.con,"Bill is Saved in "+" Essel bills "+" Folder",Toast.LENGTH_LONG).show();
+            dismissDialog();
+        }
+        @Override
+        protected Void doInBackground(String... strings) {
+            String fileUrl = strings[0];
+            String fileName = strings[1];
 
-                                        if (gpxfile.exists()) {
-                                            OutputStream op = new FileOutputStream(gpxfile, true);
-                                            op.write(response);
-                                            op.flush();
-                                            op.close();
-                                        }
-                                    }
-                                }
-                                dismissDialog();
-                                Toast.makeText(getBaseContext(), "File Save in Essel Folder", Toast.LENGTH_LONG).show();
-                                System.out.print("Response ----------------------" + response.toString());
+            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+            File folder = new File(extStorageDirectory, "Essel Bills ");
+            folder.mkdir();
 
-                            }
-                        } catch (Exception e) {
-                            Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
-                            Toast.makeText(BillHistoryActivity.this, "KEY_ERROR UNABLE TO DOWNLOAD FILE", Toast.LENGTH_LONG).show();
-                            dismissDialog();
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                , new Response.ErrorListener() {
+            File pdfFile = new File(folder, fileName);
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(BillHistoryActivity.this, "Error", Toast.LENGTH_LONG).show();
-                dismissDialog();
-                error.printStackTrace();
+            try{
+                pdfFile.createNewFile();
+            }catch (IOException e){
+                e.printStackTrace();
             }
-        }, params);
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                5000000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext(), new HurlStack());
-        mRequestQueue.add(request);
+            FileDownloader.downloadFile(fileUrl, pdfFile);
+            return null;
+        }
     }
+
+
+
 }
+ class FileDownloader {
+    private static final int  MEGABYTE = 1024 * 1024;
+
+    public static void downloadFile(String fileUrl, File directory){
+        try {
+
+            URL url = new URL(fileUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+            urlConnection.connect();
+            InputStream inputStream = urlConnection.getInputStream();
+            FileOutputStream fileOutputStream = new FileOutputStream(directory);
+            int totalSize = urlConnection.getContentLength();
+
+            byte[] buffer = new byte[MEGABYTE];
+            int bufferLength = 0;
+            while((bufferLength = inputStream.read(buffer))>0 ){
+                fileOutputStream.write(buffer, 0, bufferLength);
+            }
+            fileOutputStream.close();
 
 
-class InputStreamReader extends Request<byte[]>
-{
-    private final Response.Listener<byte[]> mListener;
-    private Map<String, String> mParams;
-    public Map<String, String> responseHeaders;
 
-    public InputStreamReader(int method, String mUrl, Response.Listener<byte[]> listener,
-                             Response.ErrorListener errorListener, HashMap<String, String> params)
-    {
-        // TODO Auto-generated constructor stub
-
-        super(method, mUrl, errorListener);
-
-        setShouldCache(false);
-        mListener = listener;
-        mParams = params;
-    }
-
-    @Override
-    protected Map<String, String> getParams()
-            throws com.android.volley.AuthFailureError
-    {
-        return mParams;
-    }
-
-    ;
-
-    @Override
-    protected void deliverResponse(byte[] response)
-    {
-        mListener.onResponse(response);
-    }
-
-    @Override
-    protected Response<byte[]> parseNetworkResponse(NetworkResponse response)
-    {
-
-        //Initialise local responseHeaders map with response headers received
-        responseHeaders = response.headers;
-
-        //Pass the response data here
-        return Response.success(response.data, HttpHeaderParser.parseCacheHeaders(response));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

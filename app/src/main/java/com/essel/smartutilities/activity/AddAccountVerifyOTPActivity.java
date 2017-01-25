@@ -242,6 +242,11 @@ public class AddAccountVerifyOTPActivity extends BaseActivity implements View.On
 //                Log.i(label, "responseeeeeeeeeeee:" + response);
 //                Log.i(label, "addaccountrequestttttttttttttttttttttfail:" + message);
                 dismissDialog();
+                if(response.statusCode==401)
+                {Intent intent=new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                    SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                }
                 break;
             }
             case AppConstants.REQUEST_RESEND_OTP: {
@@ -249,6 +254,11 @@ public class AddAccountVerifyOTPActivity extends BaseActivity implements View.On
 //                Log.i(label, "responseeeeeeeeeeee:" + response);
 //                Log.i(label, "OTPrequestttttttttttttttttttttfail:" + message);
                 dismissDialog();
+                if(response.statusCode==401)
+                  {Intent intent=new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                    SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                  }
                 break;
             }
         }

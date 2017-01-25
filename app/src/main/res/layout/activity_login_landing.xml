@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.essel.smartutilities.activity.ActivityLoginLanding">
+
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
@@ -25,136 +26,148 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-            <TextView
-                android:id="@+id/title_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="title"
-                android:textColor="#ffffff"
-                android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/subtitle_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="title"
-                android:textColor="#ffffff"
-                android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/title_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="title"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/subtitle_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="title"
+                    android:textColor="#ffffff"
+                    android:textSize="10sp" />
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/img_drowdown"
                 android:layout_width="20dp"
-                android:layout_marginLeft="15dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/drop_downarrow" />
 
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/big_container"/>
-    <LinearLayout
-        android:id="@+id/linear_img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/background">
-        <RelativeLayout
-            android:id="@+id/header"
-            android:layout_width="fill_parent"
-            android:layout_height="300dp" >
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignParentTop="true" />
-
-            <com.viewpagerindicator.CirclePageIndicator
-                android:id="@+id/indicator"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="bottom"
-                android:padding="10dip"
-                app:centered="true"
-                app:fillColor="#ff0099"
-                app:pageColor="@color/colorWhite"
-                app:snap="false" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/linear_lay_button"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
-                android:gravity="center_horizontal">
-
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:id="@+id/btn_paynow"
-                    android:background="@color/colorPrimary"
-                    android:text="Pay Now"
-                    android:textColor="#ffffff"
-                    android:textAlignment="center"
-                    android:layout_marginLeft="5dp"/>
-
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:id="@+id/btn_mybill"
-                    android:background="@color/colorPrimary"
-                    android:text="My Bill"
-                    android:textColor="#ffffff"
-                    android:textAlignment="center"
-                    android:layout_marginLeft="20dp"/>
-
-            </LinearLayout>
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/container"
-            android:orientation="vertical"/>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/ad_view"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:id="@+id/big_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad_unit_id" />
+                android:orientation="vertical"
+               />
+
+            <LinearLayout
+                android:id="@+id/linear_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:orientation="vertical"
+                android:weightSum="10">
+
+                <RelativeLayout
+                    android:id="@+id/header"
+                    android:layout_width="fill_parent"
+                    android:layout_height="300dp">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentTop="true" />
+
+                    <com.viewpagerindicator.CirclePageIndicator
+                        android:id="@+id/indicator"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="bottom"
+                        android:padding="10dip"
+                        app:centered="true"
+                        app:fillColor="#ff0099"
+                        app:pageColor="@color/colorWhite"
+                        app:snap="false" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_lay_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="30dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_paynow"
+                            android:layout_width="100dp"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="5dp"
+                            android:background="@color/colorPrimary"
+                            android:text="Pay Now"
+                            android:textAlignment="center"
+                            android:textColor="#ffffff" />
+
+                        <Button
+                            android:id="@+id/btn_mybill"
+                            android:layout_width="100dp"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/colorPrimary"
+                            android:text="My Bill"
+                            android:textAlignment="center"
+                            android:textColor="#ffffff" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.gms.ads.AdView
+                        android:id="@+id/ad_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        ads:adSize="BANNER"
+                        ads:adUnitId="@string/banner_ad_unit_id" />
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
-
-    </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

@@ -60,11 +60,7 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
         netamt = (TextView) findViewById(R.id.netamt);
         amtpay = (EditText) findViewById(R.id.amt_paying);
         consumerno = (TextView) findViewById(R.id.consumerno);
-        // if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) != null)
-        //  consumerno.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO));
         consumername = (TextView) findViewById(R.id.consumer_name);
-        //if (SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME) != null)
-        //  consumername.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
         Submit = (Button) findViewById(R.id.BTNSubmit);
         Submit.setOnClickListener(this);
         Intent intent = getIntent();
@@ -112,13 +108,13 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
 
     private void callwebview()
     {
-        String vAccessCode = "4YRUXLSRO20O8NIH";//"AVVT64DC39AU91TVUA";4YRUXLSRO20O8NIH
-        String vMerchantId = "2";
+        String vAccessCode = "4YRUXLSRO20O8NIH";//"AVVT64DC39AU91TVUA";4YRUXLSRO20O8NIH\\AVOU64DD84AY49UOYA
+        String vMerchantId = "2";//"92360";
         String vCurrency = "INR";
         String vAmount = amtpay.getText().toString().trim();
-        String redirect = "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
-        String cancel = "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
-        String rsakey = "http://122.182.6.216/merchant/GetRSA.jsp";
+        String redirect = "http://122.182.6.216/merchant/ccavResponseHandler.jsp";//"http://123.63.20.166:81/merchant/ccavResponseHandler.jsp";//"http://122.182.6.216/merchant/ccavResponseHandler.jsp";
+        String cancel ="http://122.182.6.216/merchant/ccavResponseHandler.jsp";//"http://123.63.20.166:81/merchant/ccavResponseHandler.jsp";// "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
+        String rsakey ="http://122.182.6.216/merchant/GetRSA.jsp"; //"http://123.63.20.166:81/merchant/GetRSA.jsp";//"http://122.182.6.216/merchant/GetRSA.jsp";
         Integer orderid = CommonUtils.randInt(0, 9999999);
         String od = orderid.toString();
         if (!vAccessCode.equals("") && !vMerchantId.equals("") && !vCurrency.equals("") && !vAmount.equals(""))

@@ -1,14 +1,12 @@
-package com.essel.smartutilities.adapter;
+package com.essel.smartutilities.Services;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.utility.SharedPrefManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 /*
  * Created by hp on 1/09/2017.
@@ -25,7 +23,7 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
         Log.i(TAG, "Refreshed token: " + refreshedToken);
 // TODO: Implement this method to send any registration to your app's servers.
         sendRegistrationToServer(refreshedToken);
-        FirebaseMessaging.getInstance().subscribeToTopic("info");
+//        FirebaseMessaging.getInstance().subscribeToTopic("info");
         FirebaseInstanceId.getInstance().getToken();
 //        SharedPrefManager sharedPref= (SharedPrefManager) getApplicationContext().getSharedPreferences(getString(R.string.FCM_PREF),context.MODE_PRIVATE);
 //        SharedPreferences.Editor editor=sharedPref.sa;

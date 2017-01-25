@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_tips"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.essel.smartutilities.activity.TipsActivity">
+
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
@@ -43,57 +43,34 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <android.support.v4.widget.NestedScrollView
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/toolbar">-->
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-       <!--<&#45;&#45; <com.android.volley.toolbox.NetworkImageView-->
-            <!--android:id="@+id/img1"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:scaleType="fitCenter"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"/>-->
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_tips_pager"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_tips_pager"
-            android:layout_width="fill_parent"
-            android:layout_height="600dp"
-            android:background="@android:color/white"
-           >
-        </android.support.v4.view.ViewPager>
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:padding="5dp"
+                app:centered="true"
+                app:fillColor="@color/colorPrimary"
+                app:pageColor="@color/colorWhite"
+                app:radius="8dp" />
+        </RelativeLayout>
+    <!--</android.support.v4.widget.NestedScrollView>-->
+</RelativeLayout>
 
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/indicator"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            app:centered="true"
-            android:padding="5dp"
-            app:radius="8dp"
-            android:layout_alignParentBottom="true"
-            app:fillColor="@color/colorPrimary"
-            app:pageColor="@color/colorWhite" />
-
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/container"-->
-            <!--android:orientation="vertical"/>-->
-
-
-</LinearLayout>
-
-
-</android.support.v4.widget.NestedScrollView>
-    </LinearLayout>
-
-</LinearLayout>

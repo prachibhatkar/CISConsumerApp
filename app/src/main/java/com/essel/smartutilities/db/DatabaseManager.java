@@ -36,6 +36,7 @@ import com.essel.smartutilities.db.tables.ContactUsTable;
 import com.essel.smartutilities.db.tables.FAQTable;
 import com.essel.smartutilities.db.tables.LoginTable;
 import com.essel.smartutilities.db.tables.ManageAccountsTable;
+import com.essel.smartutilities.db.tables.NotificationTable;
 import com.essel.smartutilities.db.tables.TariffCatagoryTable;
 import com.essel.smartutilities.db.tables.TariffEnergyChargeTable;
 import com.essel.smartutilities.db.tables.TariffFixedEnergyChargeTable;
@@ -47,6 +48,7 @@ import com.essel.smartutilities.models.ContactUs;
 import com.essel.smartutilities.models.Faq;
 import com.essel.smartutilities.models.FixedEnergyCharge;
 import com.essel.smartutilities.models.GetInfo;
+import com.essel.smartutilities.models.NotificationCard;
 import com.essel.smartutilities.models.TarifCatagory;
 import com.essel.smartutilities.models.TariffEnergyCharge;
 import com.essel.smartutilities.models.Tips;
@@ -73,9 +75,20 @@ public class DatabaseManager {
     public static void saveImage(Context context, Consumer consumer) {
         if (consumer != null) {
             ContentValues values = getContentValuesprofileimg(context, consumer);
-            saveimage(context, LoginTable.CONTENT_URI, values, null);
+            saveimage(context, LoginTable.CONTENT_URI, values, null,consumer);
 
         }
+    }
+    private static void saveimage(Context context, Uri table, ContentValues values, String condition,Consumer consumer) {
+
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        db.update(LoginTable.TABLE_NAME, values, LoginTable.Cols.CONSUMER_ID + " = ?",
+                new String[] { String.valueOf(consumer.consumer_no)});
+//        long newRowId = db.insert(LoginTable.TABLE_NAME, null, values);
+        Log.i("Tag", "ManageDB Updated Image:");
+
     }
 
     public static void saveContactDetail(Context context, ContactUs contactus) {
@@ -183,6 +196,7 @@ public class DatabaseManager {
             values.put(ManageAccountsTable.Cols.CITY, consumers.city);
             values.put(ManageAccountsTable.Cols.CONTACT_NO, consumers.contact_no);
             values.put(ManageAccountsTable.Cols.ALTERNATE_CONTACT_NO, consumers.alternet_contact_no);
+            values.put(ManageAccountsTable.Cols.ALTERNATE_EMAIL_ID, consumers.alternet_email_id);
             values.put(ManageAccountsTable.Cols.ADDRESS, consumers.address);
             values.put(ManageAccountsTable.Cols.IS_PRIMARY, consumers.is_primary);
 
@@ -196,9 +210,8 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
-        Log.i("Tag", "saveValues:" + newRowId);
+//        Log.i("Tag", "saveValues:" + newRowId);
     }
-
     public static ArrayList<Consumer> getAllManageAccounts(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -220,7 +233,6 @@ public class DatabaseManager {
         db.close();
         return consumers;
     }
-
     public static void deleteAccount(Context context, String Consumer_id) {
         try {
             String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
@@ -231,27 +243,67 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+    public static void saveNotification(Context context, ArrayList<NotificationCard> noti) {
+        if (noti != null && noti.size() > 0) {
+            for (NotificationCard notification : noti) {
+                ContentValues values = new ContentValues();
+                try {
+                    values.put(NotificationTable.Cols.TITLE, notification.title);
+                    values.put(NotificationTable.Cols.MSG, notification.message);
+                    values.put(NotificationTable.Cols.DATE, notification.date);
+                    values.put(NotificationTable.Cols.IS_READED, "false");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                DatabaseHelper dbHelper = new DatabaseHelper(context);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                long newRowId = db.insert(NotificationTable.TABLE_NAME, null, values);
+                Log.i("Tag", "saveValues:" + newRowId);
+            }
+        }
+    }
+
+    public static ArrayList<NotificationCard> getallNotfication(Context context) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + NotificationTable.TABLE_NAME;
+        Cursor c = db.rawQuery(selectQuery, null);
+        ArrayList<NotificationCard> noti = new ArrayList<NotificationCard>();
+
+        while (c.moveToNext()) {
+            NotificationCard nc=new NotificationCard();
+            nc.title = c.getString(c.getColumnIndex("title"));
+            nc.message= c.getString(c.getColumnIndex("msg"));
+            nc.date = c.getString(c.getColumnIndex("date"));
+            nc.is_readed = c.getString(c.getColumnIndex("is_readed"));
+
+            noti.add(nc);
+        }
+        db.close();
+        return noti;
+    }
 
 
+    public static void deleteNotification(Context context, String title) {
+        try {
+            String condition = NotificationTable.Cols.TITLE + "='" + title + "'";
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.delete("Notification", condition, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private static void saveAboutUs(Context context, Uri table, ContentValues values, String condition) {
 
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(AboutUsTable.TABLE_NAME, null, values);
-        // Log.i("Tag", "saveAboutUs:" + newRowId);
         Log.i("Tag", "saveAboutUs:" + newRowId);
     }
 
-    private static void saveimage(Context context, Uri table, ContentValues values, String condition) {
 
-
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long newRowId = db.insert(LoginTable.TABLE_NAME, null, values);
-        // Log.i("Tag", "saveAboutUs:" + newRowId);
-        Log.i("Tag", "saveAboutUs:" + newRowId);
-    }
 
 
     private static void savecontactdetail(Context context, Uri table, ContentValues values, String condition) {
@@ -294,9 +346,8 @@ public class DatabaseManager {
     }
 
 
-    private static void savecomplaint(Context context, Uri table, ContentValues values, String condition) {
-
-
+    private static void savecomplaint(Context context, Uri table, ContentValues values, String condition)
+    {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(ComplaintsTable.TABLE_NAME, null, values);
@@ -506,12 +557,14 @@ public class DatabaseManager {
 
     }
 
-    public static Consumer getImage(Context context) {
+    public static Consumer getImage(Context context,String consumerno) {
 
         Consumer con = new Consumer();
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + LoginTable.TABLE_NAME;
+//        String selectQuery = "SELECT * FROM " + LoginTable.TABLE_NAME;
+        String selectQuery = "SELECT * FROM LoginTable WHERE consumerid = '" + consumerno + "'";
+
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
@@ -698,9 +751,10 @@ public class DatabaseManager {
     }
 
 
-    public static GetInfo getProfileinfo(Context context, String isprimary) {
+    public static Consumer getProfileinfo(Context context, String isprimary) {
 
-        GetInfo getinfo = new GetInfo();
+        Consumer con=new Consumer();
+
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         //  String name = getinfo.consumerno.toString();
@@ -708,18 +762,18 @@ public class DatabaseManager {
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Cursor cursor = db.rawQuery("SELECT * FROM AboutUsTable", null);
         while (cursor.moveToNext()) {
-
             // getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
-            getinfo.mobileno = cursor.getString(cursor.getColumnIndex("alternate_contact_no"));
-            getinfo.consumerno = cursor.getString(cursor.getColumnIndex("consumer_id"));
-            getinfo.consumername = cursor.getString(cursor.getColumnIndex("consumer_name"));
-            getinfo.consumeraddress = cursor.getString(cursor.getColumnIndex("address"));
+            con.alternet_contact_no = cursor.getString(cursor.getColumnIndex("alternate_contact_no"));
+            con.consumer_no = cursor.getString(cursor.getColumnIndex("consumer_id"));
+            con.consumer_name = cursor.getString(cursor.getColumnIndex("consumer_name"));
+            con.address = cursor.getString(cursor.getColumnIndex("address"));
+            con.alternet_email_id=cursor.getString(cursor.getColumnIndex("alternate_email_id"));
             Log.i("Tag", "valueselectdb" + cursor);
 
             //aboutUs.about_us_msg=cursor.getString(cursor.getColumnIndex("about_us_msg"));
         }
 
-        return getinfo;
+        return con;
 
 
     }

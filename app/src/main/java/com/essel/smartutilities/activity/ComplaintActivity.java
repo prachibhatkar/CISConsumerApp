@@ -51,7 +51,6 @@ public class ComplaintActivity extends AppCompatActivity implements View.OnClick
 
         //noinspection SimplifiableIfStatement
 
-
         if (id == R.id.action_notifications)
         {
 
@@ -100,8 +99,6 @@ public class ComplaintActivity extends AppCompatActivity implements View.OnClick
         {
 
         }
-
-
         @Override
         public void onPageScrollStateChanged(int state)
         {

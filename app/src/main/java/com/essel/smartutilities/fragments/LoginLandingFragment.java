@@ -32,7 +32,8 @@ import com.essel.smartutilities.activity.ServiceActivity;
  * Use the {@link LoginLandingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginLandingFragment extends Fragment implements View.OnClickListener {
+public class LoginLandingFragment extends Fragment implements View.OnClickListener
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -50,7 +51,8 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
 
     private OnFragmentInteractionListener mListener;
 
-    public LoginLandingFragment() {
+    public LoginLandingFragment()
+    {
         // Required empty public constructor
     }
 
@@ -63,7 +65,8 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
      * @return A new instance of fragment LandingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoginLandingFragment newInstance(String param1, String param2) {
+    public static LoginLandingFragment newInstance(String param1, String param2)
+    {
         LoginLandingFragment fragment = new LoginLandingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -73,9 +76,11 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -83,7 +88,8 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_login_landing, container, false);
         setupUI(layout);
@@ -91,7 +97,8 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
 
     }
 
-    private void setupUI(View layout) {
+    private void setupUI(View layout)
+    {
         actionmore=(LinearLayout)layout.findViewById(R.id.action_more_menu);
         actionservices = (LinearLayout)layout.findViewById(R.id.action_services);
         actioncomplaints = (LinearLayout)layout.findViewById(R.id.action_complaints);
@@ -112,64 +119,77 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
+    public void onButtonPressed(Uri uri)
+    {
+        if (mListener != null)
+        {
             mListener.onFragmentInteraction(uri);
         }
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
         mListener = null;
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
 
-        if(view==actionmore) {
+        if(view==actionmore)
+        {
             Fragment fragment = new LoginLandingmoreFragment();
             addFragment(fragment, true);
            getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
 
-        else if(view==actionservices){
+        else if(view==actionservices)
+        {
             Intent i = new Intent(getActivity(), ServiceActivity.class);
             startActivity(i);
         }
-        else if(view==actioncomplaints){
+        else if(view==actioncomplaints)
+        {
             Intent i = new Intent(getActivity(), ComplaintActivity.class);
             startActivity(i);
 
         }
-        else if(view==actionmanageaccount){
+        else if(view==actionmanageaccount)
+        {
             Intent i = new Intent(getActivity(), ManageAccountsActivity.class);
             startActivity(i);
 
 
         }
-        else if(view==actionquickpay){
+        else if(view==actionquickpay)
+        {
             Intent i = new Intent(getActivity(), QuickPayActivity.class);
             startActivity(i);
 
         }
 
-        else if(view==actionpaymenthistory){
+        else if(view==actionpaymenthistory)
+        {
             Intent i = new Intent(getActivity(), PaymentHistoryActivity.class);
             startActivity(i);
         }
-        else if(view==actioncontactus){
+        else if(view==actioncontactus)
+        {
             Intent i = new Intent(getActivity(), Contact_Us_Activity.class);
             startActivity(i);
 
         }
-        else if(view==actionmyprofile){
+        else if(view==actionmyprofile)
+        {
             Intent i = new Intent(getActivity(), ProfileActivity.class);
             startActivity(i);
 
@@ -177,7 +197,8 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
 
     }
 
-    public void addFragment(Fragment fragment, boolean withAnimation) {
+    public void addFragment(Fragment fragment, boolean withAnimation)
+    {
         String backStateName = fragment.getClass().getName();
         FragmentManager manager = getFragmentManager();
         int entryCount = manager.getBackStackEntryCount();
@@ -186,11 +207,14 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
         if (entryCount > 0)
             fragName = manager.getBackStackEntryAt(entryCount - 1).getName();
 
-        if (!backStateName.equals(fragName)) {
+        if (!backStateName.equals(fragName))
+        {
             boolean poped = manager.popBackStackImmediate(backStateName, 0);//int index= getBackStackEntryIndex(backStateName);
-            if (!poped && manager.findFragmentByTag(backStateName) == null) {
+            if (!poped && manager.findFragmentByTag(backStateName) == null)
+            {
                 FragmentTransaction ft = manager.beginTransaction();
-                if (withAnimation) {
+                if (withAnimation)
+                {
                     ft.setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_enter, R.anim.slide_exit);
 
                 }
@@ -212,7 +236,8 @@ public class LoginLandingFragment extends Fragment implements View.OnClickListen
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener
+    {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }

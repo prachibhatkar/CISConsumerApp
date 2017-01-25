@@ -1,12 +1,14 @@
-
 package com.essel.smartutilities.utility;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender.SendIntentException;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -187,7 +189,7 @@ public class LocationManager implements LocationListener, ConnectionCallbacks,
 
     @Override
     public void onConnectionSuspended(int arg0) {
-            mGoogleApiClient.connect();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -204,6 +206,16 @@ public class LocationManager implements LocationListener, ConnectionCallbacks,
     private void getCurrentLocation() {
         // LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
         // mLocationRequest, this);
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (mLocation != null) {

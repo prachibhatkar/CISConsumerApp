@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.NotificationCardAdapter;
+import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.NotificationCard;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class NotificationActivity extends Activity implements View.OnClickListen
     private TextView title;
     private ImageView imgBack;
     private Typeface regular;
+    public int j=0;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -39,7 +41,7 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(this);
         title=(TextView)findViewById(R.id.title_bar);
-        title.setTypeface(regular);
+        title.setOnClickListener(this);
 
         loadRecyclerView();
     }
@@ -51,21 +53,22 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
-        setnotificationArrayList();
-
-        NotificationCardAdapter adapter = new NotificationCardAdapter(mContext,notification);
+            setnotificationArrayList();
+           NotificationCardAdapter adapter = new NotificationCardAdapter(mContext, DatabaseManager.getallNotfication(this));
         recyclerView.setAdapter(adapter);
     }
 
     private void setnotificationArrayList()
     {
+        notification =new ArrayList<>();
 
-         notification=new ArrayList<>();
-            NotificationCard mNotificationCard = new NotificationCard();
-            for (int i = 0; i < 5; i++) {
+            for (int i=0; i <20; i++)
+            {
+                NotificationCard mNotificationCard = new NotificationCard();
                 mNotificationCard.message="hfg dsfhojd sdfsdnj hvjhv ikgg bg dbvjbv fdnldsj sfnsld sfd ";
                 mNotificationCard.date="Aug 20";
-                mNotificationCard.title="Power Cut";
+                mNotificationCard.title="Power Cut "+i;
+                mNotificationCard.is_readed="false";
                 notification.add(mNotificationCard);
             }
         }
@@ -74,9 +77,12 @@ public class NotificationActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v)
     {if (v == imgBack)
-        {
-            finish();
+        {finish();
         }
+        if (v == title)
+        {setnotificationArrayList();
+            DatabaseManager.saveNotification(this, notification);
 
+        }
     }
 }

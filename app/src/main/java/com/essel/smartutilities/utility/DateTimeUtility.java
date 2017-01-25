@@ -20,7 +20,8 @@ public class DateTimeUtility {
      * @param pDate
      * @return
      */
-    public static Date convertToLocal(Date pDate) {
+    public static Date convertToLocal(Date pDate)
+    {
         TimeZone lTimeZone = TimeZone.getDefault();
         // Log.d("TAG", "UTC Date = " + pDate);
         // Date lDate = new Date(pDate.getTime() + lTimeZone.getRawOffset());
@@ -36,7 +37,8 @@ public class DateTimeUtility {
      * @param pDate
      * @return
      */
-    public static Date convertToUTC(Date pDate) {
+    public static Date convertToUTC(Date pDate)
+    {
         TimeZone lTimeZone = TimeZone.getDefault();
 
         return new Date(pDate.getTime()

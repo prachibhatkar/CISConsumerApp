@@ -90,16 +90,17 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_detail_view)
         {
-            expandableLayout_newserviceconnection.collapse();
-            expandableLayout_changeofownership.collapse();
-            expandableLayout_changeofconnectiontype.collapse();
-            expandableLayout_loadextensionreduction.collapse();
-            expandableLayout_permanantdisconnect.collapse();
-            expandablelayout6.collapse();
-            expandablelayout7.collapse();
-            expandablelayout8.collapse();
-            expandablelayout9.collapse();
-            expandablelayout10.collapse();
+//            expandableLayout_newserviceconnection.collapse();
+            tv_1.setVisibility(View.GONE);
+            tv_2.setVisibility(View.GONE);
+            tv_3.setVisibility(View.GONE);
+            tv_4.setVisibility(View.GONE);
+            tv_5.setVisibility(View.GONE);
+            tv_6.setVisibility(View.GONE);
+            tv_7.setVisibility(View.GONE);
+            tv_8.setVisibility(View.GONE);
+            tv_9.setVisibility(View.GONE);
+            tv_10.setVisibility(View.GONE);
 
             return true;
 
@@ -145,7 +146,6 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         btn9.setOnClickListener(this);
         btn10.setOnClickListener(this);
 
-        expandableLayout_newserviceconnection = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_newconnection);
 
 
         tv_1=(TextView)findViewById(R.id.tv_newconnection);
@@ -161,9 +161,6 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
        // tv_1.setMovementMethod(LinkMovementMethod.getInstance());
 
-
-
-
         tvarray.add(0,tv_1);
         tvarray.add(1,tv_2);
         tvarray.add(2,tv_3);
@@ -176,28 +173,28 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
         tvarray.add(9,tv_10);
 
 
+//        //expandableLayout_newserviceconnection = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_newconnection);
+//        expandableLayout_changeofownership = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofownership);
+//        expandableLayout_loadextensionreduction = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_loadextensionreduction);
+//        expandableLayout_permanantdisconnect = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_permanantdisconnect);
+//        expandableLayout_changeofconnectiontype = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofconnection);
+//
+//        expandablelayout6 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout6);
+//        expandablelayout7 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout7);
+//        expandablelayout8 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout8);
+//        expandablelayout9 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout9);
+//        expandablelayout10 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout10);
 
-        expandableLayout_changeofownership = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofownership);
-        expandableLayout_loadextensionreduction = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_loadextensionreduction);
-        expandableLayout_permanantdisconnect = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_permanantdisconnect);
-        expandableLayout_changeofconnectiontype = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout_changeofconnection);
-
-        expandablelayout6 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout6);
-        expandablelayout7 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout7);
-        expandablelayout8 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout8);
-        expandablelayout9 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout9);
-        expandablelayout10 = (ExpandableRelativeLayout)findViewById(R.id.expandableLayout10);
-
-        explayoutarray.add(0,expandableLayout_changeofownership);
-        explayoutarray.add(1,expandableLayout_loadextensionreduction);
-        explayoutarray.add(2,expandableLayout_permanantdisconnect);
-        explayoutarray.add(3,expandableLayout_changeofconnectiontype);
-        explayoutarray.add(4,expandablelayout6);
-        explayoutarray.add(5,expandablelayout7);
-        explayoutarray.add(6,expandablelayout8);
-        explayoutarray.add(7,expandablelayout9);
-        explayoutarray.add(8,expandablelayout10);
-        explayoutarray.add(9,expandablelayout6);
+//        explayoutarray.add(0,expandableLayout_changeofownership);
+//        explayoutarray.add(1,expandableLayout_loadextensionreduction);
+//        explayoutarray.add(2,expandableLayout_permanantdisconnect);
+//        explayoutarray.add(3,expandableLayout_changeofconnectiontype);
+//        explayoutarray.add(4,expandablelayout6);
+//        explayoutarray.add(5,expandablelayout7);
+//        explayoutarray.add(6,expandablelayout8);
+//        explayoutarray.add(7,expandablelayout9);
+//        explayoutarray.add(8,expandablelayout10);
+//        explayoutarray.add(9,expandablelayout6);
 
 
         if( CommonUtils.isNetworkAvaliable(this))
@@ -257,62 +254,88 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
         if (v == expandablebutton_newserviceconnection)
         {
-
-            expandableLayout_newserviceconnection.toggle();
+           if(tv_1.getVisibility()==View.VISIBLE)
+               tv_1.setVisibility(View.GONE);
+            else
+               tv_1.setVisibility(View.VISIBLE);
+//            expandableLayout_newserviceconnection.toggle();
         }
 
         if (v == expandablebutton_changeofownership)
         {
 
-            expandableLayout_changeofownership.toggle();
+            if(tv_2.getVisibility()==View.VISIBLE)
+                tv_2.setVisibility(View.GONE);
+            else
+                tv_2.setVisibility(View.VISIBLE);
 
         }
         if (v == expandablebutton_changeofconnectiontype)
         {
 
-            expandableLayout_changeofconnectiontype.toggle();
+            if(tv_3.getVisibility()==View.VISIBLE)
+                tv_3.setVisibility(View.GONE);
+            else
+                tv_3.setVisibility(View.VISIBLE);
 
         }
         if (v == expandablebutton_loadextensionreduction)
         {
 
-            expandableLayout_loadextensionreduction.toggle();
+            if(tv_4.getVisibility()==View.VISIBLE)
+                tv_4.setVisibility(View.GONE);
+            else
+                tv_4.setVisibility(View.VISIBLE);
         }
         if (v == expandablebutton_permanantdisconnec)
         {
 
-            expandableLayout_permanantdisconnect.toggle();
+            if(tv_5.getVisibility()==View.VISIBLE)
+                tv_5.setVisibility(View.GONE);
+            else
+                tv_5.setVisibility(View.VISIBLE);
 
         }
         if (v == btn6)
         {
 
-           expandablelayout6.toggle();
+            if(tv_6.getVisibility()==View.VISIBLE)
+                tv_6.setVisibility(View.GONE);
+            else
+                tv_6.setVisibility(View.VISIBLE);
 
         }
         if (v == btn7)
         {
 
-            expandablelayout7.toggle();
+            if(tv_7.getVisibility()==View.VISIBLE)
+                tv_7.setVisibility(View.GONE);
+            else
+                tv_7.setVisibility(View.VISIBLE);
 
         }
         if (v == btn8)
         {
 
-            expandablelayout8.toggle();
+            if(tv_8.getVisibility()==View.VISIBLE)
+                tv_8.setVisibility(View.GONE);
+            else
+                tv_8.setVisibility(View.VISIBLE);
 
         }
         if (v == btn9)
-        {
-
-            expandablelayout9.toggle();
-
+        {if(tv_9.getVisibility()==View.VISIBLE)
+            tv_9.setVisibility(View.GONE);
+        else
+            tv_9.setVisibility(View.VISIBLE);
         }
         if (v == btn10)
         {
 
-            expandablelayout10.toggle();
-
+            if(tv_10.getVisibility()==View.VISIBLE)
+                tv_10.setVisibility(View.GONE);
+            else
+                tv_10.setVisibility(View.VISIBLE);
         }
 
     }
@@ -340,11 +363,6 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
                 {
                     if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.SUCCESS)) {
 
-
-//                            DatabaseManager.saveJobCards(mContext, jsonResponse.responsedata.jobcards);
-//                        Toast.makeText(mContext, jsonResponse.message != null ? jsonResponse.message : "", Toast.LENGTH_LONG).show();
-//                        Log.i(label, "responseeeeeeeeeeee:" + jsonResponse);
-//                        Log.i(label, "Faqqqqqqqqqqqqqqqqq:" + jsonResponse.faqs);
                         if (jsonResponse.faqs.size() == 0)
                         {
                             dismissDialog();
@@ -365,49 +383,8 @@ public class FAQActivity extends AppCompatActivity implements View.OnClickListen
 
                                 tvarray1.add(jsonResponse.faqs.get(i).answer.toString().trim());
                                 btnarray1.add(jsonResponse.faqs.get(i).question.toString());
-
-                                Faq faq=new Faq();
-
-//                                faq.answer=tvarray1.get(i).toString();
-//                                faq.question=btnarray1.get(i).toString();
-                               // faq.arrayanswer=tvarray1;
-                               // faq.arrayquestion=btnarray1;
-
-//                                faq.arrayquestion.add(i,btnarray1.get(i));
-//                                faq.arrayanswer.add(i,tvarray1.get(i));
-
                             }
                             DatabaseManager.saveFAQ(this,jsonResponse.faqs);
-                               /* tv_1.setText(jsonResponse.faqs.get(0).answer.toString().trim());
-                                expandablebutton_newserviceconnection.setText(jsonResponse.faqs.get(0).question);
-
-
-                                tv_2.setText(jsonResponse.faqs.get(1).answer.toString().trim());
-                                expandablebutton_changeofownership.setText(jsonResponse.faqs.get(1).question);
-
-                                tv_3.setText(jsonResponse.faqs.get(2).answer.toString().trim());
-                                expandablebutton_changeofconnectiontype.setText(jsonResponse.faqs.get(2).question);
-
-                                tv_4.setText(jsonResponse.faqs.get(3).answer.toString().trim());
-                                expandablebutton_permanantdisconnec.setText(jsonResponse.faqs.get(3).question);
-
-                                tv_5.setText(jsonResponse.faqs.get(4).answer.toString().trim());
-                                expandablebutton_loadextensionreduction.setText(jsonResponse.faqs.get(4).question);
-
-                                tv_6.setText(jsonResponse.faqs.get(5).answer.toString().trim());
-                                btn6.setText(jsonResponse.faqs.get(5).question);
-
-                                tv_7.setText(jsonResponse.faqs.get(6).answer.toString().trim());
-                                btn7.setText(jsonResponse.faqs.get(6).question);
-
-                                tv_8.setText(jsonResponse.faqs.get(7).answer.toString().trim());
-                                btn8.setText(jsonResponse.faqs.get(7).question);
-
-                                tv_9.setText(jsonResponse.faqs.get(8).answer.toString().trim());
-                                btn9.setText(jsonResponse.faqs.get(8).question);
-
-                               tv_10.setText(jsonResponse.faqs.get(9).answer.toString().trim());
-                                btn10.setText(jsonResponse.faqs.get(9).question);*/
 
 
 

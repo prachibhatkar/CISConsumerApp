@@ -159,8 +159,6 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                     JsonObjectRequest request = WebRequests.feedbackrequest(this, Request.Method.POST, AppConstants.URL_POST_FEEDBACK, AppConstants.REQUEST_FEEDBACK, this, count, remark, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
                     App.getInstance().addToRequestQueue(request, AppConstants.REQUEST_FEEDBACK);
                     // flag=true;
-
-
                 }
 
                 else {
@@ -175,52 +173,32 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         {
             count="STAR1";
             tv_rate.setText("bad");
-           // Toast.makeText(this.getApplicationContext(), "you have rated 5", Toast.LENGTH_SHORT).show();
-
              refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
         }
         else if(v==image2)
         {
             count="STAR2";
             tv_rate.setText("ok");
-           // Toast.makeText(this.getApplicationContext(), " you have rated 4", Toast.LENGTH_SHORT).show();
-
-
 
         }
         else if(v==image3)
         {
             count="STAR3";
             tv_rate.setText("like it");
-          //Toast.makeText(this.getApplicationContext(), "you have rated 3", Toast.LENGTH_SHORT).show();
-
-
 
         }
         else if(v==image4)
         {
             count="STAR4";
             tv_rate.setText("Good");
-           //Toast.makeText(this.getApplicationContext(), "you have rated 2", Toast.LENGTH_SHORT).show();
-            Log.i("jknkjk", "Refreshed token: " + refreshedToken);
-
-
-
+           Log.i("jknkjkkkkkkkkkkkkkkkkkk", "Refreshed token: " + refreshedToken);
         }
         else if(v==image5)
         {
             count="STAR5";
             tv_rate.setText("loved it");
-            //Toast.makeText(this.getApplicationContext(), "you have rated 1", Toast.LENGTH_SHORT).show();
-
         }
-
-
-
     }
-
-
 
 
     @Override
@@ -256,7 +234,6 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                     {
                         dismissDialog();
 
-
                     }
 
                     break;
@@ -288,8 +265,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     }
     public static Boolean getflag()
     {
-
-        Log.i("Tag","valuegetflg" +flag);
+///        Log.i("Tag","valuegetflg" +flag);
         return flag;
 
 

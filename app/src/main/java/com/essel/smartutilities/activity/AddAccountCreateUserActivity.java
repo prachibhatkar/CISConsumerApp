@@ -188,6 +188,11 @@ public class AddAccountCreateUserActivity extends AppCompatActivity implements V
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + message);
                 Log.i(label, AppConstants.REQUEST_GET_ACCOUNTS + response);
                 dismissDialog();
+                if(response.statusCode==401)
+                {Intent intent=new Intent(this,LoginActivity.class);
+                    startActivity(intent);
+                    SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
+                }
             }
             break;
         }

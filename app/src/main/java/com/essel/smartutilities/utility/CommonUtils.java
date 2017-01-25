@@ -25,19 +25,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class CommonUtils {
+public class CommonUtils
+{
 
     private static CommonUtils nUtilsHelper;
     private static Context mContext;
 
-    public static CommonUtils getInstance(Context context) {
-        if (nUtilsHelper == null) {
+    public static CommonUtils getInstance(Context context)
+    {
+        if (nUtilsHelper == null)
+        {
             mContext = context;
             nUtilsHelper = new CommonUtils();
         }
         return nUtilsHelper;
     }
-    public static boolean emailValidator(String email) {
+    public static boolean emailValidator(String email)
+    {
         Pattern pattern;
         Matcher matcher;
         final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
@@ -45,7 +49,8 @@ public class CommonUtils {
         matcher = pattern.matcher(email);
         return matcher.matches();
     }
-    public boolean isValidEmail(CharSequence target) {
+    public boolean isValidEmail(CharSequence target)
+    {
         if (target == null) {
             return false;
         } else {
@@ -53,7 +58,8 @@ public class CommonUtils {
         }
     }
 
-    public boolean isValidNumber(String number) {
+    public boolean isValidNumber(String number)
+    {
         return android.util.Patterns.PHONE.matcher(number).matches();
     }
 
@@ -74,21 +80,26 @@ public class CommonUtils {
 //        SharedPrefManager.saveValue(context, AppConstants.CONSUMER_LOGGED_IN_DATE,date);
     }
 
-    public static void saveAuthToken(Context context, String authToken) {
+    public static void saveAuthToken(Context context, String authToken)
+    {
         SharedPrefManager.saveValue(context, SharedPrefManager.AUTH_TOKEN, authToken);
     }
 
-    public static void saveConsumerCity(Context context, String city) {
+    public static void saveConsumerCity(Context context, String city)
+    {
         SharedPrefManager.saveValue(context, SharedPrefManager.CONSUMER_CITY, city);
     }
 
-    public static void saveConsumerNo(Context context, String consumer_no) {
+    public static void saveConsumerNo(Context context, String consumer_no)
+    {
         SharedPrefManager.saveValue(context, SharedPrefManager.CONSUMER_NO, consumer_no);
     }
 
 
-    public static String getBitmapEncodedString(Bitmap pBitmap) {
-        if (pBitmap != null) {
+    public static String getBitmapEncodedString(Bitmap pBitmap)
+    {
+        if (pBitmap != null)
+        {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             pBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
@@ -99,7 +110,8 @@ public class CommonUtils {
     }
 
 
-    public static boolean isNetworkAvaliable(Context context) {
+    public static boolean isNetworkAvaliable(Context context)
+    {
         final ConnectivityManager conn_manager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo network_info = conn_manager.getActiveNetworkInfo();
@@ -113,11 +125,14 @@ public class CommonUtils {
         return false;
     }
 
-    public static int getColor(Context context, int id) {
+    public static int getColor(Context context, int id)
+    {
         final int version = Build.VERSION.SDK_INT;
-        if (version >= 23) {
+        if (version >= 23)
+        {
             return ContextCompat.getColor(context, id);
-        } else {
+        } else
+        {
             return context.getResources().getColor(id);
         }
     }
@@ -129,18 +144,21 @@ public class CommonUtils {
         //we will store this in a global list to access later.
         final ArrayList<String> permissionsRejected = findRejectedPermissions(context, App.getInstance().permissions);
 
-        if (permissionsToRequest.size() > 0) {//we need to ask for permissions
+        if (permissionsToRequest.size() > 0)
+        {//we need to ask for permissions
             //but have we already asked for them?
 
             ((Activity) context).requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), AppConstants.ALL_PERMISSIONS_RESULT);
 
             //mark all these as asked..
-            for (String perm : permissionsToRequest) {
+            for (String perm : permissionsToRequest)
+            {
                 markAsAsked(context, perm);
             }
         } else {
 
-            if (permissionsRejected.size() > 0) {
+            if (permissionsRejected.size() > 0)
+            {
                 //we have none to request but some previously rejected..tell the user.
                 //It may be better to show a dialog here in a prod application
                 showPostPermissionsShackBar(context, ll_main_view, permissionsRejected);
@@ -151,7 +169,8 @@ public class CommonUtils {
     public static void showPostPermissionsShackBar(final Context context, LinearLayout ll_mail_view, final ArrayList<String> permissionsRejected) {
         Snackbar snackBarView = Snackbar
                 .make(ll_mail_view, String.valueOf(permissionsRejected.size()) + context.getString(R.string.permission_rejected_already), Snackbar.LENGTH_LONG)
-                .setAction(R.string.allow_to_ask_permission_again, new View.OnClickListener() {
+                .setAction(R.string.allow_to_ask_permission_again, new View.OnClickListener()
+                {
                     @Override
                     public void onClick(View v) {
                         for (String perm : permissionsRejected) {
@@ -174,8 +193,10 @@ public class CommonUtils {
      * @return
      */
 
-    public static boolean hasPermission(Context context, String permission) {
-        if (canMakeSmores()) {
+    public static boolean hasPermission(Context context, String permission)
+    {
+        if (canMakeSmores())
+        {
             return (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED);
         }
         return true;
@@ -187,7 +208,8 @@ public class CommonUtils {
      *
      * @param permission
      */
-    public static void markAsAsked(Context context, String permission) {
+    public static void markAsAsked(Context context, String permission)
+    {
         SharedPrefManager.saveValue(context, permission, false);
     }
 
@@ -197,7 +219,8 @@ public class CommonUtils {
      *
      * @param permission
      */
-    public static void clearMarkAsAsked(Context context, String permission) {
+    public static void clearMarkAsAsked(Context context, String permission)
+    {
         SharedPrefManager.saveValue(context, permission, true);
     }
 
@@ -212,7 +235,9 @@ public class CommonUtils {
     public static ArrayList<String> findUnAskedPermissions(Context context, ArrayList<String> wanted) {
         ArrayList<String> result = new ArrayList<String>();
 
-        for (String perm : wanted) {
+        for (String perm : wanted)
+
+        {
             if (!hasPermission(context, perm) && SharedPrefManager.shouldWeAskPermission(context, perm)) {
                 result.add(perm);
             }
@@ -233,7 +258,8 @@ public class CommonUtils {
     public static ArrayList<String> findRejectedPermissions(Context context, ArrayList<String> wanted) {
         ArrayList<String> result = new ArrayList<String>();
 
-        for (String perm : wanted) {
+        for (String perm : wanted)
+        {
             if (!hasPermission(context, perm) && !SharedPrefManager.shouldWeAskPermission(context, perm)) {
                 result.add(perm);
             }
@@ -241,7 +267,8 @@ public class CommonUtils {
 
         return result;
     }
-    public static int randInt(int min, int max) {
+    public static int randInt(int min, int max)
+    {
         // Usually this should be a field rather than a method variable so
         // that it is not re-seeded every call.
         Random rand = new Random();
@@ -253,7 +280,8 @@ public class CommonUtils {
         return randomNum;
     }
 
-    public static boolean isLoggedIn(Context context) {
+    public static boolean isLoggedIn(Context context)
+    {
         String boo=SharedPrefManager.getStringValue(context,SharedPrefManager.AUTH_TOKEN);
         if (!boo.equalsIgnoreCase("no"))
             return true;
@@ -261,11 +289,10 @@ public class CommonUtils {
             return false;
     }
 
-
-    private static boolean canMakeSmores() {
+    private static boolean canMakeSmores()
+    {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
-
 
 
 }
