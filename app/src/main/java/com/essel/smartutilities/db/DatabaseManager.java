@@ -86,7 +86,6 @@ public class DatabaseManager {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         db.update(LoginTable.TABLE_NAME, values, LoginTable.Cols.CONSUMER_ID + " = ?",
                 new String[] { String.valueOf(consumer.consumer_no)});
-//        long newRowId = db.insert(LoginTable.TABLE_NAME, null, values);
         Log.i("Tag", "ManageDB Updated Image:");
 
     }
@@ -210,7 +209,6 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(ManageAccountsTable.TABLE_NAME, null, values);
-//        Log.i("Tag", "saveValues:" + newRowId);
     }
     public static ArrayList<Consumer> getAllManageAccounts(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
@@ -233,6 +231,7 @@ public class DatabaseManager {
         db.close();
         return consumers;
     }
+
     public static void deleteAccount(Context context, String Consumer_id) {
         try {
             String condition = ManageAccountsTable.Cols.CONSUMER_ID + "='" + Consumer_id + "'";
@@ -243,7 +242,7 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-    public static void saveNotification(Context context, ArrayList<NotificationCard> noti) {
+    public static void saveNotifications(Context context, ArrayList<NotificationCard> noti) {
         if (noti != null && noti.size() > 0) {
             for (NotificationCard notification : noti) {
                 ContentValues values = new ContentValues();
@@ -262,7 +261,23 @@ public class DatabaseManager {
             }
         }
     }
-
+    public static void saveNotification(Context context,NotificationCard noti) {
+        if (noti != null ) {
+                ContentValues values = new ContentValues();
+                try {
+                    values.put(NotificationTable.Cols.TITLE, noti.title);
+                    values.put(NotificationTable.Cols.MSG, noti.message);
+                    values.put(NotificationTable.Cols.DATE, noti.date);
+                    values.put(NotificationTable.Cols.IS_READED, "false");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                DatabaseHelper dbHelper = new DatabaseHelper(context);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                long newRowId = db.insert(NotificationTable.TABLE_NAME, null, values);
+                Log.i("Tag", "saveValues:" + newRowId);
+        }
+    }
     public static ArrayList<NotificationCard> getallNotfication(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -282,8 +297,36 @@ public class DatabaseManager {
         db.close();
         return noti;
     }
+    public static int getcount(Context context,String flag) {
+        int i=0;
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + NotificationTable.TABLE_NAME +" where  " + NotificationTable.Cols.IS_READED+ " = '"+flag+"'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        ArrayList<NotificationCard> noti = new ArrayList<NotificationCard>();
 
+        while (c.moveToNext()) {
+            i++;
+            NotificationCard nc=new NotificationCard();
+            nc.title = c.getString(c.getColumnIndex("title"));
+            nc.message= c.getString(c.getColumnIndex("msg"));
+            nc.date = c.getString(c.getColumnIndex("date"));
+            nc.is_readed = c.getString(c.getColumnIndex("is_readed"));
 
+            noti.add(nc);
+        }
+        db.close();
+        return i;
+    }
+    public static void setReadNootification(Context context,String title) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(NotificationTable.Cols.IS_READED, "true");
+        String[] args = new String[]{title};
+        db.update(NotificationTable.TABLE_NAME, values, "title=?" , args);
+
+    }
     public static void deleteNotification(Context context, String title) {
         try {
             String condition = NotificationTable.Cols.TITLE + "='" + title + "'";
@@ -372,7 +415,6 @@ public class DatabaseManager {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRowId = db.insert(TipsTable.TABLE_NAME, null, values);
-        // Log.i("Tag", "savetips:" + newRowId);
     }
 
 

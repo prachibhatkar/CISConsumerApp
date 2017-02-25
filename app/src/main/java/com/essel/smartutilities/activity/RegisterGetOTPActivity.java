@@ -153,8 +153,6 @@ public class RegisterGetOTPActivity extends BaseActivity implements View.OnClick
         {
             if (validate())
                 callRegisteruser();
-//            Intent i = new Intent(this, RegisterVerifyOTPActivity.class);
-//            startActivity(i);
         }
 
     }
@@ -178,7 +176,7 @@ public class RegisterGetOTPActivity extends BaseActivity implements View.OnClick
                     } else
                         Toast.makeText(this, "Retype valid Password", Toast.LENGTH_SHORT).show();
                 } else
-                    Toast.makeText(this, "Enter valid Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Enter  Password length Should be between 6 To 20", Toast.LENGTH_SHORT).show();
             } else
                 Toast.makeText(this, "Retype valid Mobile", Toast.LENGTH_SHORT).show();
         } else
@@ -254,7 +252,6 @@ public class RegisterGetOTPActivity extends BaseActivity implements View.OnClick
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE)) {
                         dismissDialog();
                         DialogCreator.showMessageDialog(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null));
-                        // Toast.makeText(this, jsonResponse.message != null ? jsonResponse.message : getString(R.string.login_error_null), Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(this, R.string.er_data_not_avaliable, Toast.LENGTH_LONG).show();

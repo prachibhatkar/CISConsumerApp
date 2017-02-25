@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.utility.AppConstants;
 import com.essel.smartutilities.utility.CommonUtils;
 import com.essel.smartutilities.utility.SharedPrefManager;
 
@@ -44,8 +45,8 @@ public class BillHistoryActivity extends Activity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_history);
-        base = "http://192.168.0.5:8000/mobileapi/get-bill-pdf/?";
-        base = base + "city=" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY);
+//        base = "http://192.168.0.5:8000/mobileapi/get-bill-pdf/?";
+        base = AppConstants.bill + "city=" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_CITY);
         intialize();
         image_uri = Uri.parse(base);
         con=this;
@@ -155,14 +156,19 @@ public class BillHistoryActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if (CommonUtils.isNetworkAvaliable(this)) {
-            initProgressDialog();
-            if (pDialog != null && !pDialog.isShowing()) {
-                pDialog.setMessage("Downloding, please wait..");
-                pDialog.show();
-            }
-            String b;
-            switch (view.getId()) {
+        if (CommonUtils.isNetworkAvaliable(this))
+        {  /* long freeBytesInternal = new File(BillHistoryActivity.con.getFilesDir().getAbsoluteFile().toString()).getFreeSpace();
+            long freeBytesExternal = new File(getExternalFilesDir(null).toString()).getFreeSpace();*/
+//            if(freeBytesInternal>1000)
+//            {
+                initProgressDialog();
+                if (pDialog != null && !pDialog.isShowing())
+                {   pDialog.setMessage("Downloding, please wait..");
+                    pDialog.show();
+                }
+                String b;
+                switch (view.getId())
+                {
                 case R.id.download1:
                     fileName = "MY Bill" + "(" + SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NO) + ")" + MyBillActivity.month[0] + ".pdf";
                      b=base+"&&bill_id=" + MyBillActivity.billid[0];
@@ -193,9 +199,12 @@ public class BillHistoryActivity extends Activity implements View.OnClickListene
                     b=base+"&&bill_id=" + MyBillActivity.billid[5];
                     new DownloadFile().execute(b, fileName);
                     break;
-            }
-        } else
-            Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
+                }
+//            }else
+//                Toast.makeText(this, "Please Make Sure You Have Free Space To Save Downloaded Bills", Toast.LENGTH_LONG).show();
+
+        }   else
+                 Toast.makeText(this, R.string.error_internet_not_connected, Toast.LENGTH_LONG).show();
 
     }
 
@@ -225,10 +234,22 @@ public class BillHistoryActivity extends Activity implements View.OnClickListene
 
         @Override
         protected void onPostExecute(Void result)
-        {
-            Log.i("Bill History", "onPostExecute");
-            Toast.makeText(BillHistoryActivity.con,"Bill is Saved in "+" Essel bills "+" Folder",Toast.LENGTH_LONG).show();
+        {   /*Log.i("Bill History", "onPostExecute");*/
+//            File pdfFile = new File(Environment.getExternalStorageDirectory() + "/Essel bills/" + fileName);  // -> filename = maven.pdf
+//            Uri path = Uri.fromFile(pdfFile);
+//            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+//            pdfIntent.setDataAndType(path, "application/pdf");
+//            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//            try{
+//                startActivity(pdfIntent);
+//            }catch(Exception e){
+//                e.printStackTrace();
+//                Toast.makeText(BillHistoryActivity.con, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
+//            }
             dismissDialog();
+            Toast.makeText(BillHistoryActivity.con,"Bill is Saved in "+" Essel bills "+" Folder",Toast.LENGTH_LONG).show();
+
         }
         @Override
         protected Void doInBackground(String... strings) {

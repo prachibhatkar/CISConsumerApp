@@ -41,6 +41,9 @@ public class NotificationActivity extends Activity implements View.OnClickListen
         imgBack = (ImageView) findViewById(R.id.img_back);
         imgBack.setOnClickListener(this);
         title=(TextView)findViewById(R.id.title_bar);
+        int i= DatabaseManager.getcount(this,"false");
+
+        title.setText("Notification(" +i+")");
         title.setOnClickListener(this);
 
         loadRecyclerView();
@@ -49,6 +52,7 @@ public class NotificationActivity extends Activity implements View.OnClickListen
 
     private void loadRecyclerView()
     {
+
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(mContext);
@@ -79,10 +83,10 @@ public class NotificationActivity extends Activity implements View.OnClickListen
     {if (v == imgBack)
         {finish();
         }
-        if (v == title)
-        {setnotificationArrayList();
-            DatabaseManager.saveNotification(this, notification);
-
-        }
+//        if (v == title)
+//        {setnotificationArrayList();
+//            DatabaseManager.saveNotifications(this, notification);
+//
+//        }
     }
 }

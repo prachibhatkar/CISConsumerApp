@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -80,8 +81,8 @@ public class WebViewActivity extends BaseActivity
             params.add(new BasicNameValuePair(WebViewActivity.ORDER_ID, mainIntent.getStringExtra(PayNowActivity.ORDER_ID)));
 
             String vResponse = sh.makeServiceCall(mainIntent.getStringExtra(WebViewActivity.RSA_KEY_URL), ServiceHandler.POST, params);
-            System.out.println(vResponse);
-            if(!vResponse.equals("") ){
+            Log.i("Web View payment","Resp"+vResponse);
+            if(!vResponse.equals("")&&vResponse.indexOf("ERROR")==-1){
                 StringBuffer vEncVal = new StringBuffer("");
                 vEncVal.append(ServiceUtility.addToPostParams(WebViewActivity.AMOUNT, mainIntent.getStringExtra(WebViewActivity.AMOUNT)));
                 vEncVal.append(ServiceUtility.addToPostParams(WebViewActivity.CURRENCY, mainIntent.getStringExtra(WebViewActivity.CURRENCY)));
@@ -130,7 +131,7 @@ public class WebViewActivity extends BaseActivity
                 public void onPageFinished(WebView view, String url)
                 {
                     super.onPageFinished(webview, url);
-                    if(url.indexOf("/ccavResponseHandler.jsp")!=-1)
+                    if(url.indexOf("/ccavResponseHandler.php")!=-1)
                     {
                         webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     }

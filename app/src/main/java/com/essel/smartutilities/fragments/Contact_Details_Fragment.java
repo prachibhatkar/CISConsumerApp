@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -327,20 +328,49 @@ public class Contact_Details_Fragment extends Fragment implements ServiceCaller,
 
         if(v==tv_onlinecomplaintno)
         {
-            Intent send = new Intent(Intent.ACTION_SENDTO);
-            String uriText = "mailto:" + Uri.encode(tv_onlinecomplaintno.getText().toString()) +
-                    "?subject=" + Uri.encode("") +
-                    "&body=" + Uri.encode("");
-            Uri uri = Uri.parse(uriText);
-            send.setData(uri);
-            startActivity(Intent.createChooser(send, "Send mail..."));
-
-            if (send.resolveActivity(getActivity().getPackageManager()) != null) {
-                startActivity(send);
-
-            }else
-                DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
-
+//            Intent send = new Intent(Intent.ACTION_SENDTO);
+//            String uriText = "mailto:" + Uri.encode(tv_onlinecomplaintno.getText().toString()) +
+//                    "?subject=" + Uri.encode("") +
+//                    "&body=" + Html.fromHtml("<!DOCTYPE html>" +
+//                    "<html>" +
+//                    "<head>" +
+//                    "<title>HTML Table Header</title>" +
+//                    "</head>" +
+//                    "<body>" +
+//                    "<table border="+1+">" +
+//                    "<tr>" +
+//                    "<th>Name</th>" +
+//                    "<th>Salary</th>" +
+//                    "</tr>" +
+//                    "<tr>" +
+//                    "<td>Ramesh Raman</td>" +
+//                    "<td>5000</td>" +
+//                    "</tr>" +
+//                    "<tr>" +
+//                    "<td>Shabbir Hussein</td>" +
+//                    "<td>7000</td>" +
+//                    "</tr>" +
+//                    "</table>" +
+//                    "</body>" +
+//                    "</html>");
+//            Uri uri = Uri.parse(uriText);
+//            send.setData(uri);
+//            startActivity(Intent.createChooser(send, "Send mail..."));
+//
+//            if (send.resolveActivity(getActivity().getPackageManager()) != null) {
+//                startActivity(send);
+//
+//            }else
+//                DialogCreator.showMessageDialog(getActivity(), "No Apps Can Perform This Action ");
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setType("text/html");
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]
+                    {"[EMAIL PROTECTED]"});
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                    "Subject");
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                    Html.fromHtml("<html><body><h1><img width=\"100\" src=\"http://cdn2-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-8.jpg\"> Hello World </h1><table><tr><td>aaaa</td><td>bbbb</td><td>cccc</td></tr></table></body></html>"));
+            this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
 
         if(v==tv_electricitytheftno)

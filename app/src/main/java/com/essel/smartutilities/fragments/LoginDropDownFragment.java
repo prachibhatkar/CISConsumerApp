@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +22,7 @@ import com.essel.smartutilities.models.Consumer;
 import java.util.ArrayList;
 
 
-public class LoginDropDownFragment extends Fragment implements View.OnClickListener
+public class LoginDropDownFragment extends DialogFragment implements View.OnClickListener
 {
 
     private Context mContext;

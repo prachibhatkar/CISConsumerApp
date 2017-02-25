@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.essel.smartutilities.R;
+import com.essel.smartutilities.db.DatabaseManager;
 import com.essel.smartutilities.models.Consumer;
 import com.essel.smartutilities.models.NotificationCard;
 
@@ -21,14 +24,16 @@ import java.util.ArrayList;
 /**
  * Created by hp on 10/10/2016.
  */
-public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCardAdapter.NotificationCardHolder> {
+public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCardAdapter.NotificationCardHolder>
+{
 
 
     public Context mcontext;
     private ArrayList<NotificationCard> mNotificationCard;
     private ManageAccountAdapter.OnRecycleItemClickListener listener;
 
-    public NotificationCardAdapter() {
+    public NotificationCardAdapter()
+    {
     }
 
     public NotificationCardAdapter(Context context, ArrayList<NotificationCard> NotificationCards) {
@@ -47,23 +52,31 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
     }
 
     @Override
-    public void onBindViewHolder(final NotificationCardHolder holder, final int position) {
+    public void onBindViewHolder(final NotificationCardHolder holder, final int position)
+    {
         holder.bind(mcontext, mNotificationCard.get(position));
-        holder.delete.setOnClickListener(new View.OnClickListener() {
+        holder.delete.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(final View view) {
-                if (view.getId() == R.id.delete) {
+            public void onClick(final View view)
+            {
+                if (view.getId() == R.id.delete)
+                {
+                    DatabaseManager.setReadNootification(mcontext,mNotificationCard.get(position).title);
                     AlertDialog.Builder dialog = new AlertDialog.Builder(mcontext);
-                    dialog.setMessage("Are you sure want to remove this notification ?");
+                    dialog.setMessage("Are you sure want to Remove " +mNotificationCard.get(position).title +" ?" );
                     dialog.setCancelable(true);
                     dialog.setPositiveButton(
                             "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                            new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    Log.i("Notification Adapter", "onClick:position "+position +" title :"+mNotificationCard.get(position).title);
+                                    DatabaseManager.deleteNotification(mcontext,mNotificationCard.get(position).title);
                                     mNotificationCard.remove(holder.getAdapterPosition());
                                     notifyDataSetChanged();
                                     dialog.cancel();
-//                                    DatabaseManager.deleteNotification(mcontext,mNotificationCard.get(holder.getAdapterPosition()).title);
                                     Snackbar snack = Snackbar.make(view, "Notification Deleted", Snackbar.LENGTH_LONG);
                                     snack.show();
                                 }
@@ -71,8 +84,10 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
 
                     dialog.setNegativeButton(
                             "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                            new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
                                     dialog.cancel();
                                 }
                             });
@@ -82,6 +97,7 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
                 }
             }
         });
+
     }
 
     @Override
@@ -93,35 +109,42 @@ public class NotificationCardAdapter extends RecyclerView.Adapter<NotificationCa
     }
 
 
-    public class NotificationCardHolder extends RecyclerView.ViewHolder {
+    public class NotificationCardHolder extends RecyclerView.ViewHolder
+    {
         public RelativeLayout rl_notification_card;
         public TextView msg, date, title;
         public ImageView delete;
+        public CardView card;
 
-        public NotificationCardHolder(View itemView) {
+        public NotificationCardHolder(View itemView)
+        {
             super(itemView);
             rl_notification_card = (RelativeLayout) itemView.findViewById(R.id.rl_notification_card);
+            card = (CardView) itemView.findViewById(R.id.cv);
             msg = (TextView) itemView.findViewById(R.id.tv_message);
             date = (TextView) itemView.findViewById(R.id.tv_date);
             delete = (ImageView) itemView.findViewById(R.id.delete);
             title = (TextView) itemView.findViewById(R.id.tv_title);
         }
 
-        public void bind(final Context context, final NotificationCard notificationCard) {
+        public void bind(final Context context, final NotificationCard notificationCard)
+        {
             msg.setText(notificationCard.message);
             date.setText(notificationCard.date);
             title.setText(notificationCard.title);
-
-            rl_notification_card.setOnClickListener(new View.OnClickListener() {
+            card.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-
+                public void onClick(View view) {
+                    DatabaseManager.setReadNootification(mcontext,notificationCard.title);
                 }
             });
+
         }
+
     }
 
-    public interface OnRecycleItemClickListener {
+    public interface OnRecycleItemClickListener
+    {
         void onItemClick(Consumer consumer);
     }
 }

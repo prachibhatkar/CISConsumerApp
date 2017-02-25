@@ -212,20 +212,13 @@ public class Locate_Us_Fragment extends Fragment implements AdapterView.OnItemSe
                 }
                 googleMap.setMyLocationEnabled(true);
 
-                // For dropping a marker at a point on the Map
-                /* LatLng all_csd = new LatLng(20.5937, 78.9629);
-                 googleMap.addMarker(new MarkerOptions().position(all_csd).title("Amgola Road").snippet("Marker Description"));
 
-                 //For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(all_csd).zoom(10).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
 
             }
 
         });
 
         csdcenters = new ArrayList<>(12);
-      //  csdcenters.add(0,"Select CSD Centers");
 
 
         if (CommonUtils.isNetworkAvaliable(getActivity()))

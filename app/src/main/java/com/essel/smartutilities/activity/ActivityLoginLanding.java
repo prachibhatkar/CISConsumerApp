@@ -4,12 +4,14 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.appdynamics.eumagent.runtime.Instrumentation;
 import com.eftimoff.viewpagertransformers.CubeOutTransformer;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.adapter.SlidingImageAdapter;
@@ -48,6 +51,7 @@ import com.essel.smartutilities.webservice.WebRequests;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.ksoap2.SoapEnvelope;
@@ -55,6 +59,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
@@ -71,12 +76,15 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
     private ArrayList<String> ImagesArray = new ArrayList<String>();
     private ArrayList<BrandingImages> ImagesArray1 = new ArrayList<BrandingImages>();
     private String TAG = "Landingscreennnnnnnnn";
+    public Menu Mymenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_landing);
+        Instrumentation.start("AD-AAB-AAD-EHP", getApplicationContext());
+
         callGetAccounts();
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
         mAdView = (AdView) findViewById(R.id.ad_view);
@@ -88,7 +96,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         button = (LinearLayout) findViewById(R.id.linear_lay_button);
         table = (LinearLayout) findViewById(R.id.container);
         ImageView drop = (ImageView) findViewById(R.id.img_drowdown);
-        drop.setOnClickListener(this);
+        drop.
+                setOnClickListener(this);
         maintitle = (TextView) findViewById(R.id.title_bar);
          subtitle = (TextView) findViewById(R.id.subtitle_bar);
         setTitle();
@@ -154,12 +163,12 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
         }
 
         maintitle.setOnClickListener(this);
-//        if (!SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME).isEmpty())
-//            subtitle.setText(SharedPrefManager.getStringValue(this, SharedPrefManager.CONSUMER_NAME));
         subtitle.setOnClickListener(this);
     }
     public void callGetAccounts()
-    {
+    { long freeBytesInternal = new File(this.getFilesDir().getAbsoluteFile().toString()).getFreeSpace();
+        long freeBytesExternal = new File(getExternalFilesDir(null).toString()).getFreeSpace();
+//        Toast.makeText(this, "External: "+freeBytesExternal+"   Internal:  "+freeBytesInternal, Toast.LENGTH_SHORT).show();
         if (CommonUtils.isNetworkAvaliable(this)) {
             initProgressDialog();
             if (pDialog != null && !pDialog.isShowing()) {
@@ -178,9 +187,13 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_right_menu, menu);
+        Drawable dre= ContextCompat.getDrawable(this,R.drawable.ic_action_notification);
+        int count=DatabaseManager.getcount(this,"false");
+        if (count > 0)
+            ActionItemBadge.update(this, menu.findItem(R.id.action_notifications),dre, ActionItemBadge.BadgeStyles.DARK_GREY, count);
+        Mymenu=menu;
         return true;
     }
 
@@ -328,7 +341,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             Fragment fragment = new LoginDropDownFragment();
             FragmentManager fragmanager = this.getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmanager.beginTransaction();
-            fragmentTransaction.replace(R.id.big_container, fragment);
+            fragmentTransaction.add(R.id.big_container, fragment);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             App.dropdown = false;
         } else
@@ -529,8 +543,8 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
 
     @Override
     protected void onResume()
-    {
-        super.onResume();
+    {        super.onResume();
+        this.invalidateOptionsMenu();
         if (CommonUtils.isNetworkAvaliable(this))
         {
             JsonObjectRequest request = WebRequests.getAccounts(this, Request.Method.GET, AppConstants.URL_GET_ACCOUNTS, AppConstants.REQUEST_GET_ACCOUNTS, this, SharedPrefManager.getStringValue(this, SharedPrefManager.AUTH_TOKEN));
@@ -636,11 +650,11 @@ public class ActivityLoginLanding extends AppCompatActivity implements View.OnCl
             {
                 Log.i(label, "REQUEST_LOGOUT " + response);
                 dismissDialog();
-                if(response.statusCode==401)
-                {Intent intent=new Intent(this,LoginActivity.class);
+                    if(response.statusCode==401)
+                    {Intent intent=new Intent(this,LoginActivity.class);
                     startActivity(intent);
                     SharedPrefManager.saveValue(this, SharedPrefManager.CONSUMER_LOGGED, "false");
-                }
+                    }
             }
             break;
             case AppConstants.REQUEST_GET_ACCOUNTS:

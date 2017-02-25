@@ -34,10 +34,10 @@
                 android:background="@drawable/top_bg"
                 app:layout_collapseMode="parallax" />
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/smartutilitieslogo"/>
+                android:src="@drawable/bynry_blue_logo"/>
 
 
 

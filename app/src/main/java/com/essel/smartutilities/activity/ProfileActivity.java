@@ -532,13 +532,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             {
                                 flag = true;
                             } else
-                                Toast.makeText(this, "Password Does not Match", Toast.LENGTH_SHORT).show();
-                            } else
-                                Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Passwords Does not Match", Toast.LENGTH_SHORT).show();
                         } else
-                            Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Please Enter Confirm Password length between 6 to 20", Toast.LENGTH_SHORT).show();
                     } else
-                        Toast.makeText(this, "Please Enter all Fields", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Please Enter New Password length between 6 to 20", Toast.LENGTH_SHORT).show();
+                } else
+                        Toast.makeText(this, "Please Enter Old Password length between 6 to 20", Toast.LENGTH_SHORT).show();
 
             return flag;
         }

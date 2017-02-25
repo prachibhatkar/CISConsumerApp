@@ -21,6 +21,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.appdynamics.eumagent.runtime.Instrumentation;
 import com.essel.smartutilities.R;
 import com.essel.smartutilities.callers.ServiceCaller;
 import com.essel.smartutilities.db.DatabaseManager;
@@ -102,7 +103,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v)
     {
-
 
         if (v == btnLogin)
         {
@@ -243,6 +243,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 inputLayoutUsername.setError("");
                 if (isValidPassword()) {
                     inputLayoutPassword.setError("");
+
                     initProgressDialog();
                     if (pDialog != null && !pDialog.isShowing()) {
                         pDialog.setMessage("Logging in, please wait..");

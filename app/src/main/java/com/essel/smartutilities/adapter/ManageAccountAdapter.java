@@ -155,7 +155,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
                                                 @Override
                                                 public Map<String, String> getHeaders() throws AuthFailureError {
                                                     HashMap<String, String> params = new HashMap<>();
-                                                    params.put("Content-Type", "application/json");
+//                                                    params.put("Content-Type", "application/json");
                                                     params.put("Authorization", SharedPrefManager.getStringValue(mContext, SharedPrefManager.AUTH_TOKEN));
                                                     return params;
                                                 }

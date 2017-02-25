@@ -219,11 +219,9 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
 
 
                         Log.i(label, "hygt " + jsonResponse);
-                        // Log.i(label, "hyif " + jsonResponse.complaint_type);
 
                         if (jsonResponse.complaints.size()== 0)
                         {
-                           // linearLayout.setVisibility(View.VISIBLE);
                             complaintid.setEnabled(false);
                             tv_nocomplaintfound.setText("No Complaints Found");
                         }
@@ -247,7 +245,6 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                         if (jsonResponse.authorization != null)
                         {
                             CommonUtils.saveAuthToken(getActivity(), jsonResponse.authorization);
-//                            Log.i(label, "Authorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:" + jsonResponse.authorization);
                         }
                     } else if (jsonResponse.result != null && jsonResponse.result.equals(JsonResponse.FAILURE))
                     {
@@ -362,16 +359,25 @@ public class Complaint_Status_Fragment extends Fragment implements View.OnClickL
                             linearLayout.setVisibility(View.VISIBLE);
                             tv_consumerid.setText(com);
                             tv_complaintstatus.setText(status);
-                            tv_complainttype.setText(type);
+                            if(type.equalsIgnoreCase("no power complaint"))
+                               tv_complainttype.setText("No Power");
+                            else  if(type.equalsIgnoreCase("MANUAL BILL ADJUSTMENT"))
+                                tv_complainttype.setText("Bill Complaint");
+                            else  if(type.equalsIgnoreCase("Meter Testing"))
+                                tv_complainttype.setText("Meter Complaint");
+                            else  if(type.equalsIgnoreCase("Phase Correction"))
+                                tv_complainttype.setText("Connection Problem");
+                                else
+                                tv_complainttype.setText(type);
                         }
                     });
 
 
 
-                    Log.i(TAG, "caseId" + status);
-                    Log.i(TAG, "caseId" + type);
-                    Log.i(TAG, "caseId" + accid);
-                    Log.i(TAG, "caseId" + status);
+//                    Log.i(TAG, "caseId" + status);
+//                    Log.i(TAG, "caseId" + type);
+//                    Log.i(TAG, "caseId" + accid);
+//                    Log.i(TAG, "caseId" + status);
                     // final SoapObject response = (SoapObject) soapEnvelope.getResponse();
                     // SoapPrimitive response1 = (SoapPrimitive) soapEnvelope.getResponse();
 

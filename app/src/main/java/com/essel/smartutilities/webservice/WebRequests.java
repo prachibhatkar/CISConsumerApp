@@ -73,7 +73,7 @@ public class WebRequests {
             public Map<String, String> getHeaders() throws AuthFailureError
             {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
+//                params.put("Content-Type", "application/json");
                 return params;
             }
         };
@@ -123,7 +123,7 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
+//                params.put("Content-Type", "application/json");
                 return params;
             }
         };
@@ -171,7 +171,7 @@ public class WebRequests {
             public Map<String, String> getHeaders() throws AuthFailureError
             {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
+//                params.put("Content-Type", "application/json");
                 return params;
             }
         };
@@ -220,7 +220,7 @@ public class WebRequests {
             public Map<String, String> getHeaders() throws AuthFailureError
             {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
+//                params.put("Content-Type", "application/json");
                 params.put("Authorization", Token);
                 return params;
             }
@@ -269,7 +269,7 @@ public class WebRequests {
             public Map<String, String> getHeaders() throws AuthFailureError
             {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
+//                params.put("Content-Type", "application/json");
                 return params;
             }
         };
@@ -589,8 +589,8 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json; charset=utf-8");
-                params.put("Accept", "application/json");
+//                params.put("Content-Type", "application/json; charset=utf-8");
+//                params.put("Accept", "application/json");
                 // params.put("Authorization", token);
                 return params;
             }
@@ -946,8 +946,8 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                params.put("Accept", "application/json");
+//                params.put("Content-Type", "application/json");
+//                params.put("Accept", "application/json");
                 params.put("Authorization", token);
                 return params;
             }
@@ -989,8 +989,8 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                params.put("Accept", "application/json");
+//                params.put("Content-Type", "application/json");
+//                params.put("Accept", "application/json");
                 params.put("Authorization", token);
                 return params;
             }
@@ -1032,8 +1032,8 @@ public class WebRequests {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                params.put("Accept", "application/json");
+//                params.put("Content-Type", "application/json");
+//                params.put("Accept", "application/json");
                 params.put("Authorization", token);
                 return params;
             }

@@ -108,13 +108,13 @@ public class PayNowActivity extends BaseActivity implements View.OnClickListener
 
     private void callwebview()
     {
-        String vAccessCode = "4YRUXLSRO20O8NIH";//"AVVT64DC39AU91TVUA";4YRUXLSRO20O8NIH\\AVOU64DD84AY49UOYA
-        String vMerchantId = "2";//"92360";
+        String vAccessCode ="AVOU64DD84AY49UOYA";//4YRUXLSRO20O8NIH
+        String vMerchantId = "92360";
         String vCurrency = "INR";
         String vAmount = amtpay.getText().toString().trim();
-        String redirect = "http://122.182.6.216/merchant/ccavResponseHandler.jsp";//"http://123.63.20.166:81/merchant/ccavResponseHandler.jsp";//"http://122.182.6.216/merchant/ccavResponseHandler.jsp";
-        String cancel ="http://122.182.6.216/merchant/ccavResponseHandler.jsp";//"http://123.63.20.166:81/merchant/ccavResponseHandler.jsp";// "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
-        String rsakey ="http://122.182.6.216/merchant/GetRSA.jsp"; //"http://123.63.20.166:81/merchant/GetRSA.jsp";//"http://122.182.6.216/merchant/GetRSA.jsp";
+        String redirect = "http://tungstenbigdata.com/CCAvenuePayment/PHP/ccavResponseHandler.php";//"http://122.182.6.216/merchant/ccavResponseHandler.jsp";
+        String cancel ="http://tungstenbigdata.com/CCAvenuePayment/PHP/ccavResponseHandler.php";// "http://122.182.6.216/merchant/ccavResponseHandler.jsp";
+        String rsakey ="http://tungstenbigdata.com/CCAvenuePayment/PHP/GetRSA.php"; //"http://122.182.6.216/merchant/GetRSA.jsp";
         Integer orderid = CommonUtils.randInt(0, 9999999);
         String od = orderid.toString();
         if (!vAccessCode.equals("") && !vMerchantId.equals("") && !vCurrency.equals("") && !vAmount.equals(""))

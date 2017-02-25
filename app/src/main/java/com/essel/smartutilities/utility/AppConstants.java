@@ -4,12 +4,16 @@ package com.essel.smartutilities.utility;
 public class AppConstants {
 
    //   public static final String BASE_URL = "http://192.168.0.4:8080/mobileapi/";
-  public static final String BASE_URL = "http://192.168.0.15:8080/mobileapi/";
-    // public static final String BASE_URL=  "http://192.168.10.100:9999/mobileapi/";
+ public static final String BASE_URL = "http://192.168.0.15:8080/mobileapi/";
+ // public static final String BASE_URL = "http://192.168.0.10:8080/mobileapi/";
+  // public static final String BASE_URL=  "http://ec2-52-66-115-38.ap-south-1.compute.amazonaws.com/mobileapi/";
+   // public static final String BASE_URL=  "http://123.63.20.166:81/mobileapi/";
     // All static app constants are here except String , array of strings, color, dimentions etc
  // public static final String BASE_URL = " http://192.168.0.29:8000/mobileapi/";
     public static final String REQUEST_LOGIN = "login/";
     public static final String URL_LOGIN = BASE_URL + REQUEST_LOGIN;
+
+    public static final String  bill = BASE_URL+"get-bill-pdf/?";
 
     public static final String REQUEST_GET_COMPLAINT_ID = "get-complaints/";
     public static final String URL_GET_COMPLAINT_ID = BASE_URL + REQUEST_GET_COMPLAINT_ID;
