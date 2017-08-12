@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.essel.smartutilities.fragments.Contact_Details_Fragment">
+    tools:context="com.bynry.cisconsumerapp.com.essel.cisconsumerapp.fragments.Contact_Details_Fragment">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

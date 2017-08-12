@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.essel.smartutilities.fragments.Complaint_Status_Fragment">
+    tools:context="com.bynry.cisconsumerapp.com.essel.cisconsumerapp.fragments.Complaint_Status_Fragment">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

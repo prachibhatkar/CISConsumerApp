@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.essel.smartutilities.activity.LoginActivity">
+    tools:context="com.bynry.cisconsumerapp.com.essel.cisconsumerapp.activity.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/button_height"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/red_button_rounded"
+                        android:background="@drawable/gradient_layer"
                         android:text="@string/action_sign_in"
                         android:textAllCaps="true"
                         android:textAppearance="@style/AlertDialog.AppCompat.Light"

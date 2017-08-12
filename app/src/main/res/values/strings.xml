@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart Utilities</string>
+    <string name="app_name">ConsumerApp</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">LoginActivity</string>
 
@@ -232,7 +232,7 @@
     <string name="error_internet_not_connected">Please Check Internet Connection and Try Again</string>
     <string name="title_activity_add_account2">AddAccountActivity2</string>
 
-    <string name="FCM_PREF">com.essel.smartutilities.fcm_pref</string>
-    <string name="FCM_TOKEN">com.essel.smartutilities.fcm_token</string>
+    <string name="FCM_PREF">com.bynry.cisconsumerapp.smartutilities.fcm_pref</string>
+    <string name="FCM_TOKEN">com.bynry.cisconsumerapp.smartutilities.fcm_token</string>
 
 </resources>

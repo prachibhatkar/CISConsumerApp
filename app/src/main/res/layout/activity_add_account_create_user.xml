@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context="com.essel.smartutilities.activity.AddAccountActivity4">
+    tools:context="com.bynry.cisconsumerapp.activity.AddAccountActivity4">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

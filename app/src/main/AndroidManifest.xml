@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.essel.smartutilities">
+    package="com.bynry.cisconsumerapp">
 
     <!-- permission -->
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -16,14 +16,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".utility.App"
+        android:name="com.bynry.cisconsumerapp.utility.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.DesignDemo">
-        <activity android:name=".activity.SplashScreenActivity">
+        <activity android:name="com.bynry.cisconsumerapp.activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,54 +35,69 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activity.LandingSkipLoginActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.LandingSkipLoginActivity" />
         <activity
-            android:name=".activity.ForgotRequestActivity"
+            android:name="com.bynry.cisconsumerapp.activity.ForgotRequestActivity"
             android:theme="@style/Theme.DesignDemo" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.LoginActivity" />
         <activity
-            android:name=".activity.ActivityLoginLanding"
+            android:name="com.bynry.cisconsumerapp.activity.ActivityLoginLanding"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ComplaintActivity" />
-        <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.Contact_Us_Activity" />
-        <activity android:name=".activity.FAQActivity" />
-        <activity android:name=".activity.FeedBackActivity" />
-        <activity android:name=".activity.NewConnectionRequestActivity" />
-        <activity android:name=".activity.RegisterGetUserActivity" />
-        <activity android:name=".activity.ServiceActivity" />
-        <activity android:name=".activity.TipsActivity" />
-        <activity android:name=".activity.TraiffActivity" />
-        <activity android:name=".activity.AboutUsActivity" />
-        <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.ServiceStatusActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.ComplaintActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.WebViewActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.Contact_Us_Activity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.FAQActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.FeedBackActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.NewConnectionRequestActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.RegisterGetUserActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.ServiceActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.TipsActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.TraiffActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.AboutUsActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.ProfileActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.ServiceStatusActivity" />
         <activity
-            android:name=".activity.MyBillActivity"
+            android:name="com.bynry.cisconsumerapp.activity.MyBillActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.BillHistoryActivity" />
-        <activity android:name=".activity.PayNowActivity" />
-        <activity android:name=".activity.QuickPayActivity" />
-        <activity android:name=".activity.NotificationActivity" />
-        <activity android:name=".activity.ManageAccountsActivity" />
-        <activity android:name=".activity.NewConnectionSuccessActivity" />
-        <activity android:name=".activity.RegisterGetOTPActivity" />
-        <activity android:name=".activity.RegisterVerifyOTPActivity" />
-        <activity android:name=".activity.RegisterCreateUserActivity4" />
-        <activity android:name=".activity.PaymentHistoryActivity" />
-        <activity android:name=".activity.GetComplaintIdActivity" />
-        <activity android:name=".activity.ForgotSuccessActivity" />
-        <activity android:name=".activity.AddAccountGetUserActivity" />
-        <activity android:name=".activity.AddAccountVerifyOTPActivity" />
-        <activity android:name=".activity.AddAccountCreateUserActivity" />
-        <activity
-            android:name=".activity.AddAccountGetOTPActivity"
-            android:theme="@style/Theme.DesignDemo"></activity>
-        <service android:name=".Services.MyFirebaseMessagingService">
+
+
+
+
+        <service android:name=".adapter.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Services.FirebaseIDService">
+        <service android:name=".adapter.FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.bynry.cisconsumerapp.activity.BillHistoryActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.PayNowActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.QuickPayActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.NotificationActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.ManageAccountsActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.NewConnectionSuccessActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.RegisterGetOTPActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.RegisterVerifyOTPActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.RegisterCreateUserActivity4" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.PaymentHistoryActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.GetComplaintIdActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.ForgotSuccessActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.AddAccountGetUserActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.AddAccountVerifyOTPActivity" />
+        <activity android:name="com.bynry.cisconsumerapp.activity.AddAccountCreateUserActivity" />
+        <activity
+            android:name="com.bynry.cisconsumerapp.activity.AddAccountGetOTPActivity"
+            android:theme="@style/Theme.DesignDemo"></activity>
+        <service android:name="com.bynry.cisconsumerapp.Services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.bynry.cisconsumerapp.Services.FirebaseIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

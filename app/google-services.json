@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "411564351257",
-    "firebase_url": "https://esselconsumer.firebaseio.com",
-    "project_id": "esselconsumer",
-    "storage_bucket": "esselconsumer.appspot.com"
+    "project_number": "853146083399",
+    "firebase_url": "https://cisconsumerapp.firebaseio.com",
+    "project_id": "cisconsumerapp",
+    "storage_bucket": "cisconsumerapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:411564351257:android:ea8e14cdd631f379",
+        "mobilesdk_app_id": "1:853146083399:android:e31df75d28bf1d19",
         "android_client_info": {
-          "package_name": "com.essel.smartutilities"
+          "package_name": "com.bynry.cisconsumerapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "411564351257-jec5ir90oat661ivhvifbd3fmdhq5sbo.apps.googleusercontent.com",
+          "client_id": "853146083399-j7iht7grspe25uan3mg6bqvrdtu03u1j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAdT6XXB2kH0oPZ3th0TrrKiwESjau_mRY"
+          "current_key": "AIzaSyBQORLq7xZJMJwhPjlbjCcASlXn8D5G75Y"
         }
       ],
       "services": {
